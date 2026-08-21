@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.datos-mascota {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detalle-mascota {
+    flex: 1;
+}
+
+.detalle-mascota article {
+    border: 1px solid #000;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.imagen-mascota {
+    width: 250px;
+    height: 250px;
+    border: 1px solid #000;
+}
