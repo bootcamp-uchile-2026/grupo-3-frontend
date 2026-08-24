@@ -24,39 +24,15 @@ section {
     width: 100%;
 }
 
-.slider {
-    display: flex;
-    position: relative;
-}
-
-.slide img {
-    width: 100%;
-}
-
-#hero-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 100%;
-    margin-top: 10px;
-    padding: 0 30px;
-}
-
-#hero-content h1 {
-    margin: 0;
+main {
+    margin: 30px 0;
 }
 
 .titulo-seccion {
     margin-bottom: 20px;
 }
 
-button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 .container {
     display: flex;
@@ -66,128 +42,146 @@ button {
     padding: 0 30px;
 }
 
-.categorias-home {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.categoria-card-home img {
-    border-radius: 50%;
-    width: 100%;
-}
-
-.productos-ofertas {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.producto-card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.producto-card img {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.producto-card-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 10px;
-    margin-bottom: 10px;
-}
-
-.producto-card-actions {
-    display: flex;
-    justify-content: center;
-}
-
-.producto-card-actions button {
-    border: none;
-    padding: 10px 20px;
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.ver-mas {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.ver-mas button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.banner {
-    position: relative;
-}
-
-.banner img {
-    width: 100%;
-
-}
-
-.banner-content {
-    position: absolute;
-    top: 50%;
+.tab-content {
     padding: 20px;
+    border: 1px solid #e0e0e0;
 }
 
-.banner-content button {
+.btn-1 {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.filtro-productos {
-    display: grid;
-    gap: 20px;
-    margin: 30px 0;
-    grid-template-columns: auto minmax(0, 1fr);
-
+.btn-add {
+    margin-bottom: 20px;
+    align-self: end;
 }
 
-.filtro {
+.tab-content {
     display: flex;
     flex-direction: column;
+}
+
+.tab-head-vacuna {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.tab-head-examen {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-bottom: 20px;
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+#examenes {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
     gap: 20px;
 }
 
-.filtro-opciones {
+#examenes .tabla-wrapper {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+#examenes .visual-examen {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    overflow-y: auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.visual-examen img {
+    width: 100%;
+}
+
+.tab-btn {
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.form-column {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.productos-lista {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-}
-.range-slider {
-  position: relative;
-  width: 300px;
-  height: 30px;
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
-.range-slider input[type="range"] {
-  position: absolute;
-  width: auto;
-  top: 50%;
-  margin: 0;
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+thead th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.tabla-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filtro-tabla {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+}
+
+.modal-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+    background-color: #06060650;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 70vw;
+    padding: 0 30px;
+    max-width: 100%
+}
+
+.form-row .form-group{
+ width: 100%;
+}
+
+#form-examen .form-row:last-child{
+    justify-content: flex-end;
 }
