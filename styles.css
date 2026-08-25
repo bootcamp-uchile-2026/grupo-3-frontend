@@ -102,7 +102,7 @@ main {
 .form-group {
     display: flex;
     flex-direction: column;
-
+    margin-bottom: 10px;
 }
 
 .visual-examen img {
@@ -181,7 +181,12 @@ tbody tr:nth-child(even) {
 .form-row .form-group{
  width: 100%;
 }
+.modal-container{
+    padding:30px;
+    background-color: #ffffff;
+    border: solid 2px #e0e0e0;
+}
 
-#form-examen .form-row:last-child{
+.modal-container .form-row:last-child{
     justify-content: flex-end;
 }

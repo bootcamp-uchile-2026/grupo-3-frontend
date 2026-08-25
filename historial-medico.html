@@ -395,10 +395,84 @@
                 </div>
             </div>
         </section>
-        <section class="modal-section">
-            <div id="modal-examen" class="modal-container">
-                <h3>Agregar / Editar exámen</h3>
-                <form id="form-examen">
+        <section id="modal-consulta" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar consulta</h3>
+                <form id="form-consulta" method="post">
+                    <div class="form-group">
+                        <label for="clinica-consulta">Clinica</label>
+                        <input type="text" name="clinica-consulta" id="clinica-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="veterinario-consulta">Veterinario</label>
+                        <input type="text" name="veterinario-consulta" id="veterinario-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-consulta">Fecha</label>
+                        <input type="date" id="fecha-consulta" name="fecha-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion-consulta">Descripción</label>
+                        <textarea name="descripcion-consulta" id="descripcion-consulta" rows="10"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <button type="button">Cancel</button>
+                        <button type="submit">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="modal-vacuna" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar vacuna</h3>
+                <form id="form-vacuna" method="post">
+                    <div class="form-group">
+                        <label for="clinica-vacuna">Clinica</label>
+                        <input type="text" name="clinica-vacuna" id="clinica-vacuna">
+                    </div>
+                    <div class="form-group">
+                        <label for="veterinario-vacuna">Veterinario</label>
+                        <input type="text" name="veterinario-vacuna" id="veterinario-vacuna">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre-vacuna">Vacuna</label>
+                            <select name="nombre-vacuna" id="nombre-vacuna">
+                                <option value="vacuna-1">Vacuna 1</option>
+                                <option value="vacuna-2">Vacuna 2</option>
+                                <option value="vacuna-3">Vacuna 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="marca-vacuna">Vacuna</label>
+                            <select name="marca-vacuna" id="marca-vacuna">
+                                <option value="marca-1">Marca 1</option>
+                                <option value="marca-2">Marca 2</option>
+                                <option value="marca-3">Marca 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-vacuna">Fecha</label>
+                            <input type="date" id="fecha-vacuna" name="fecha-vacuna">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-proxima-vacuna">Proxima Dosis</label>
+                            <input type="date" id="fecha-proxima-vacuna" name="fecha-proxima-vacuna">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="button">Cancel</button>
+                        <button type="submit">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="modal-examen" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar exámen</h3>
+                <form id="form-examen" method="post">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nombre-examen">Examen</label>
