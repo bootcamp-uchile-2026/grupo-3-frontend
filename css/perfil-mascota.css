@@ -30,3 +30,29 @@ main {
     height: 250px;
     border: 1px solid #000;
 }
+
+.encabezado-bloque {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.fila-detalle {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+}
+
+.acciones-detalle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.boton-opciones {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+}
