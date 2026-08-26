@@ -45,6 +45,15 @@ main {
 .tab-content {
     padding: 20px;
     border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-btn {
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
 .btn-1 {
@@ -59,10 +68,6 @@ main {
     align-self: end;
 }
 
-.tab-content {
-    display: flex;
-    flex-direction: column;
-}
 
 .tab-head-vacuna {
     display: flex;
@@ -109,12 +114,7 @@ main {
     width: 100%;
 }
 
-.tab-btn {
-    border: 1px solid #e0e0e0;
-    background-color: #ffffff;
-    padding: 10px 20px;
-    cursor: pointer;
-}
+
 
 .form-column {
     display: flex;
@@ -178,15 +178,16 @@ tbody tr:nth-child(even) {
     max-width: 100%
 }
 
-.form-row .form-group{
- width: 100%;
+.form-row .form-group {
+    width: 100%;
 }
-.modal-container{
-    padding:30px;
+
+.modal-container {
+    padding: 30px;
     background-color: #ffffff;
     border: solid 2px #e0e0e0;
 }
 
-.modal-container .form-row:last-child{
+.modal-container .form-row:last-child {
     justify-content: flex-end;
 }
