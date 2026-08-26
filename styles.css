@@ -43,118 +43,49 @@ button {
     padding: 0 30px;
 }
 
-.container-carrito {
+.producto-individual {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-template-rows: auto 1fr;
-    gap: 30px;
-    margin: 30px 0;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: solid #ccc 1px;
 }
 
-#carrito-compras {
-    grid-column: 1/2;
-    grid-row: 1/3;
+.producto-individual img {
+    width: 100%;
 }
 
-#cupon {
-    grid-column: 2/3;
-    grid-row: 1/2;
-}
-
-#resumen-pedido {
-    grid-column: 2/3;
-    grid-row: 2/3;
-
-}
-
-#carrito-compras h1 {
-    padding: 20px;
-    border: solid #ccc 1px;
-}
-
-.productos-cart {
-    display: flex;
-    flex-direction: column;
-}
-
-.producto-cart {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    padding: 20px;
-    border: solid #ccc 1px;
-    border-collapse: collapse;
-}
-
-.info-producto-cart {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-}
-
-.accion-producto-cart {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-}
-.eliminar-producto-cart{
+.breadcrumbs button {
     background-color: #ffffff;
-    color: red;
     padding: 0;
-}
-.eliminar-producto-cart::before{
-    content:"X "
-}
-.contador-ctrl-producto-cart {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
+    margin-bottom: 10px;
 }
 
-.contador-cantidad {
-    width: 30px;
-    text-align: center;
+.nombre-producto-individual {
+    margin-bottom: 20px;
 }
 
-#cupon {
-    border: solid #ccc 1px;
-    padding: 20px;
-}
-
-#form-cupon {
-    display: flex;
-    padding: 20px;
-}
-
-#resumen-pedido {
-    display: grid;
-    grid-template-rows: 1fr auto;
-}
-
-.resumen-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    row-gap: 10px;
-    padding: 20px;
-    border: solid #ccc 1px;
-}
-
-.resumen-info-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end
-}
-#subtotal{
+.precio-normal-producto-individual {
     font-weight: 600;
+    text-decoration: line-through;
+    margin-bottom: 10px;
 }
-#total{
-    font-weight: 600;
+
+.precio-oferta-producto-individual {
+    font-weight: 700;
     font-size: larger;
-    color: blue;
+    margin-bottom: 10px;
+}
+.descripcion-corta-producto-individual{
+    margin-bottom: 20px;
+}
+.botones-producto-individual{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+.comprar-ahora{
+    background-color: darkgray;
 }
 .slider {
     display: grid;
@@ -162,17 +93,21 @@ button {
     gap: 20px;
     margin-bottom: 30px;
 }
-.carrusel{
+
+.carrusel {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
-.slide-left{
+
+.slide-left {
     background-color: #ffffff;
 }
-.slide-right{
+
+.slide-right {
     background-color: #ffffff;
 }
+
 .producto-card {
     display: flex;
     flex-direction: column;
