@@ -49,6 +49,7 @@ button {
     gap: 20px;
     padding: 30px;
     border-bottom: solid #ccc 1px;
+    margin-bottom: 30px;
 }
 
 .producto-individual img {
@@ -87,6 +88,8 @@ button {
 .comprar-ahora{
     background-color: darkgray;
 }
+
+
 .slider {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
