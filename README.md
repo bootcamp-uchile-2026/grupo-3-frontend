@@ -9,3 +9,7 @@ Vista inicial desarrollada en HTML y CSS a partir del wireframe de baja fidelida
 
 ### Perfil de Mascota
 Vista inicial desarrollada en HTML y CSS a partir del wireframe de baja fidelidad proporcionado por el equipo UX/UI. Incluye la estructura base para los datos de la mascota, información general, historial médico y registro de vacunas.
+
+### Agendar Veterinario - Profesional
+
+Vista desarrollada en HTML y CSS a partir del wireframe de baja fidelidad proporcionado por el equipo UX/UI. Incluye la selección de profesionales veterinarios, indicador de pasos del proceso de agendamiento, resumen de la consulta y botón de confirmación.
