@@ -44,139 +44,126 @@ button {
     padding: 0 30px;
 }
 
-.hero img {
-    width: 100%
-}
-
-.hero .titulo-seccion {
-    text-align: center;
-}
-
-.orden-productos {
+.checkout-container {
     display: grid;
-    grid-template-columns: 1fr auto;
-    justify-items: center;
-    grid-column: 2/3;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: auto;
+    gap: 30px;
+    margin: 50px 0;
 }
 
-.producto-card {
+.checkout-container>div:not(:last-child) {
+    padding: 20px;
+    border: solid #ccc 1px;
+}
+
+.datos-envio-div {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+
+    grid-column: 1/2;
+    grid-row: 1/2
 }
 
-.producto-card img {
-    width: 100%;
-    margin-bottom: 10px;
+.metodo-envio-div {
+    grid-column: 1/2;
+    grid-row: 2/3
 }
 
-.producto-card-content {
+.metodo-pago-div {
+    grid-column: 1/2;
+    grid-row: 3/4
+}
+
+.resumen-pedido-div {
+    grid-column: 2/3;
+    grid-row: 1/4
+}
+
+.titulo-icono {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 0 10px;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.producto-card-actions {
-    display: flex;
-    justify-content: center;
-}
-
-.producto-card-actions button {
-    border: none;
-    padding: 10px 20px;
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.ver-mas {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.ver-mas button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.banner {
-    position: relative;
-}
-
-.banner img {
-    width: 100%;
-
-}
-
-.banner-content {
-    position: absolute;
-    top: 50%;
-    padding: 20px;
-}
-
-.banner-content button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.filtro-productos {
-    display: grid;
-    gap: 20px;
-    margin: 30px 0;
-    grid-template-columns: auto minmax(0, 1fr);
-
-}
-
-.filtro {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-#filtro-form {
+#datos-envio {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.productos-lista {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-}
-
-.range-slider {
-    position: relative;
-    width: 300px;
-    height: 30px;
-}
-
-.range-slider input[type="range"] {
-    position: absolute;
-    width: auto;
-    top: 50%;
-    margin: 0;
-}
-
-.ver-mas-categoria {
-    grid-column: 2/3;
+.form-row {
     display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
-.ver-mas button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+.form-row input {
+    width: 100%;
+}
+.sel-metodos{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+.sel-metodos p{
+    font-weight: 600;
+    font-size: large;
+}
+.sel-metodo {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    border: solid #ccc 1px;
+    align-items: center;
+}
+.resumen-pedido-div{
+    border: solid #ccc 1px;
+    padding: 20px 0;
+}
+.resumen-pedido-div>.titulo-icono{
+    padding: 0 20px;
+    justify-content: center;
+}
+
+.productos-resumen-pedido{
+    display: flex;
+    flex-direction: column;
+}
+.producto-resumen-pedido{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: solid #ccc 1px;
+}
+.producto-resumen-pedido .info-producto{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.cupon-descuento{
+    padding: 20px
+}
+
+#codigo-cupon{
+    display: flex;
+    flex-direction: row;
+    
+}
+.subtotal-total-resumen-div{
+    padding: 20px;
+}
+#finalizar-compra{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+
 }
