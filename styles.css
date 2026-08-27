@@ -43,6 +43,13 @@ button {
     max-width: 100%;
     padding: 0 30px;
 }
+.hero img{
+    width: 100%
+}
+
+.hero .titulo-seccion{
+    text-align: center;
+}
 
 .categorias-home {
     display: grid;
