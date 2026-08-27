@@ -58,9 +58,6 @@ button {
     justify-items: center;
     grid-column: 2/3;
 }
-.botones-forma-orden {
-    
-}
 
 .producto-card {
     display: flex;
