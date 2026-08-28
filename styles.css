@@ -66,6 +66,59 @@ button {
     padding: 0 30px;
 }
 
+.producto-individual {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: solid #ccc 1px;
+    margin-bottom: 30px;
+}
+
+.producto-individual img {
+    width: 100%;
+}
+
+.breadcrumbs button {
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.nombre-producto-individual {
+    margin-bottom: 20px;
+}
+
+.precio-normal-producto-individual {
+    font-weight: 600;
+    text-decoration: line-through;
+    margin-bottom: 10px;
+}
+
+.precio-oferta-producto-individual {
+    font-weight: 700;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.descripcion-corta-producto-individual {
+    margin-bottom: 20px;
+}
+
+.botones-producto-individual {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.comprar-ahora {
+    background-color: darkgray;
+}
+
+.tabs-container {
+    margin-bottom: 30px;
+}
+
 .container-carrito {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -125,14 +178,17 @@ button {
     justify-content: space-between;
     align-items: baseline;
 }
-.eliminar-producto-cart{
+
+.eliminar-producto-cart {
     background-color: #ffffff;
     color: red;
     padding: 0;
 }
-.eliminar-producto-cart::before{
-    content:"X "
+
+.eliminar-producto-cart::before {
+    content: "X "
 }
+
 .contador-ctrl-producto-cart {
     display: flex;
     flex-direction: row;
@@ -174,31 +230,38 @@ button {
     justify-content: space-between;
     align-items: flex-end
 }
-#subtotal{
+
+#subtotal {
     font-weight: 600;
 }
-#total{
+
+#total {
     font-weight: 600;
     font-size: larger;
     color: blue;
 }
+
 .slider-productos {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
     margin-bottom: 30px;
 }
-.carrusel{
+
+.carrusel {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
-.slide-left{
+
+.slide-left {
     background-color: #ffffff;
 }
-.slide-right{
+
+.slide-right {
     background-color: #ffffff;
 }
+
 .tab-btn {
     border: 1px solid #e0e0e0;
     background-color: #ffffff;
@@ -220,6 +283,7 @@ button {
     justify-items: center;
     grid-column: 2/3;
 }
+
 .categorias-home {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -272,7 +336,6 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 .ver-mas {
     display: flex;
@@ -360,10 +423,10 @@ button {
     cursor: pointer;
 }
 
-.form-column{
- display: flex;
- flex-direction: column;
- gap: 10px;
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .filtro-productos {
