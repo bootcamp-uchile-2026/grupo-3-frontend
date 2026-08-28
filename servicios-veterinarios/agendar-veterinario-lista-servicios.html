@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetLove - Agendar Servicios</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+    <!-- IMPORTA TU HEADER EXISTENTE -->
+    <div id="header-placeholder"></div>
+
+    <main class="page-agendar">
+        <!-- SELECCION DE MASCOTA -->
+        <section class="card-box">
+            <h2 class="section-title">Selecciona tu mascota <span>Selecciona tu mascota para continuar.</span></h2>
+            
+            <div class="mascotas-container">
+                <label class="mascota-card">
+                    <div class="mascota-img"></div>
+                    <span class="mascota-nombre">Luna</span>
+                    <input type="radio" name="mascota" value="luna">
+                    <span class="check"></span>
+                </label>
+
+                <label class="mascota-card">
+                    <div class="mascota-img"></div>
+                    <span class="mascota-nombre">Firulais</span>
+                    <input type="radio" name="mascota" value="firulais">
+                    <span class="check"></span>
+                </label>
+
+                <button class="agregar-mascota">
+                    <span>+</span>
+                    Agregar mascota
+                </button>
+            </div>
+        </section>
+
+        <!-- SERVICIOS VETERINARIOS -->
+        <section class="card-box">
+            <h2 class="section-title">Servicios Veterinarios</h2>
+
+            <div class="servicios-grid">
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria</h3>
+                        <span class="precio">$9.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <button class="btn-agendar">Agendar servicio</button>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria + Vacunas</h3>
+                        <span class="precio">$23.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <button class="btn-agendar">Agendar servicio</button>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria + Certificado de viaje</h3>
+                        <span class="precio">$31.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <button class="btn-agendar">Agendar servicio</button>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta + Implantación de Microchip</h3>
+                        <span class="precio">$25.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <button class="btn-agendar">Agendar servicio</button>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- IMPORTA TU FOOTER EXISTENTE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Script simple para importar header.html y footer.html -->
+    <script>
+        fetch('header.html').then(r => r.text()).then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+        });
+        fetch('footer.html').then(r => r.text()).then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+        });
+    </script>
+</body>
+</html>
