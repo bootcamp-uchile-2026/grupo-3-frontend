@@ -5,65 +5,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Producto Individual</title>
+    <title>Carrito de Compras</title>
 </head>
 
 <body>
     <main>
         <section>
-            <div class="container producto-individual">
-                <img src="https://placehold.co/600x600" alt="">
-                <div class="info-producto-individual">
-                    <span class="breadcrumbs">
-                        <button>Home</button>
-                        <span>></span>
-                        <button>Gatos</button>
-                        <span>></span>
-                        <button>Accesorios</button>
-                    </span>
-                    <h1 class="nombre-producto-individual">Comedero Elevado 450 ml</h1>
-                    <p class="precio-normal-producto-individual">Normal <span class="precio">$4.610</span></p>
-                    <p class="precio-oferta-producto-individual">Oferta Web <span class="precio">$3.690</span></p>
-                    <p class="descripcion-corta-producto-individual">Comedero Elevad Estilo Gatitos, dale un toque de
-                        estilo
-                        y ternura a la alimentación de tu mascota con este práctico comedero. Su tamaño compacto de 400
-                        ml
-                        lo convierte en la opción ideal para gatos, cachorros o mascotas pequeñas, perfecto para servir
-                        tanto agua como alimento de manera cómoda y segura.</p>
-                    <div class="botones-producto-individual">
-                        <button class="agregar-carrito">Agregar al carrito</button>
-                        <button class="comprar-ahora">Comprar ahora</button>
+            <div class="container container-carrito">
+                <div id="carrito-compras">
+                    <h1>Carrito de compras (n articulos)</h1>
+                    <div class="productos-cart">
+                        <article class="producto-cart">
+                            <div class="info-producto-cart">
+                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <p class="precio-producto-cart">$5000</p>
+                            </div>
+                            <div class="accion-producto-cart">
+                                <button class="eliminar-producto-cart">Eliminar</button>
+                                <div class="contador-ctrl-producto-cart">
+                                    <button class="contador-mas">+</button>
+                                    <p class="contador-cantidad">1</p>
+                                    <button class="contado-menos">-</button>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="producto-cart">
+                            <div class="info-producto-cart">
+                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <p class="precio-producto-cart">$5000</p>
+                            </div>
+                            <div class="accion-producto-cart">
+                                <button class="eliminar-producto-cart">Eliminar</button>
+                                <div class="contador-ctrl-producto-cart">
+                                    <button class="contador-mas">+</button>
+                                    <p class="contador-cantidad">1</p>
+                                    <button class="contado-menos">-</button>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="producto-cart">
+                            <div class="info-producto-cart">
+                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <p class="precio-producto-cart">$5000</p>
+                            </div>
+                            <div class="accion-producto-cart">
+                                <button class="eliminar-producto-cart">Eliminar</button>
+                                <div class="contador-ctrl-producto-cart">
+                                    <button class="contador-mas">+</button>
+                                    <p class="contador-cantidad">1</p>
+                                    <button class="contado-menos">-</button>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="producto-cart">
+                            <div class="info-producto-cart">
+                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <p class="precio-producto-cart">$5000</p>
+                            </div>
+                            <div class="accion-producto-cart">
+                                <button class="eliminar-producto-cart">Eliminar</button>
+                                <div class="contador-ctrl-producto-cart">
+                                    <button class="contador-mas">+</button>
+                                    <p class="contador-cantidad">1</p>
+                                    <button class="contado-menos">-</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div id="cupon">
+                    <h2>Cupón</h2>
+                    <form id="form-cupon">
+                        <input type="text" name="nombre-cupon" id="nombre-cupon"
+                            placeholder="Introduce el código promocional">
+                        <button type="submit" id="aplicar-cupon">Aplicar</button>
+                    </form>
+                </div>
+                <div id="resumen-pedido">
+                    <div class="resumen-div">
+                        <h2>Resumen del pedido</h2>
+                        <div class="resumen-info-div">
+                            <p class="texto-resumen">Subtotal: </p>
+                            <p id="subtotal">$50.000</p>
+                        </div>
+                    </div>
+                    <div class="resumen-div">
+                        <div class="resumen-info-div">
+                            <p class="texto-resumen">Total: </p>
+                            <p id="total">$50.000</p>
+                        </div>
+                        <button id="finalizar-compra">Finalizar Compra</button>
                     </div>
                 </div>
             </div>
         </section>
         <section>
             <div class="container">
-                <div class="tabs-container">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active">Descripción</button>
-                        <button class="tab-btn">Formas de entrega</button>
-                    </div>
-                    <div id="" class="tab-content active">
-                        <p class="descripcion-producto-individual">
-                            El comedero elevado estilo gatitos es una opción practica y encantadora para la
-                            alimaentación diraria de tu mascota. Con una capacidad de 400 ml, es ideal para gatos,
-                            cachorros y animales de tamaño pequeño, permitiendo servir tanto agua como alimento de
-                            una forma cómoda y segura. Su diseño con detalles de gatitos aporta un toque decorativo
-                            que hace más agradable el espacio de alimentación en el hogar.</span>
-                            <br><br>Fabricado en plástico resistente, liviano y fácil de limpiar, está pensado para un
-                            uso
-                            diario sin complicaciones. Su estructura elevada favorece una postura más comoda al
-                            comer, ayudando a reducir la tensión en el cuello de la mascota, mientras que su base
-                            estable evita derrames y deslizamientos, manteniendo el área limpia y ordenada en todo
-                            momento.
-                        </p>
-                    </div>
-                </div>
-        </section>
-        <section>
-            <div class="container">
-                <h2 class="titulo-seccion">Productos Destacados</h2>
+                <h2 class="titulo-seccion">¿Te faltó algo?</h2>
                 <div class="carrusel">
                     <button class="slide-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
