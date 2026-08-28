@@ -9,116 +9,116 @@
 </head>
 
 <body>
-<header class="site-header">
-    <!-- BARRA SUPERIOR OSCURA -->
-    <div class="top-bar">
-        <div class="left">
-            <button class="menu-btn" aria-label="Menú">☰</button>
-            <a href="/" class="logo">
-                <img src="/logo-petlove.svg" alt="Petlove">
-            </a>
-        </div>
-
-        <div class="center">
-            <form class="search-form" action="/buscar" method="GET" role="search">
-                <span class="search-icon">⌕</span>
-                <input type="search" name="q" placeholder="Buscar">
-            </form>
-        </div>
-
-        <div class="right">
-            <a href="/login" class="login-link">Iniciar sesión / registrar</a>
-            <a href="/cuenta" aria-label="Mi cuenta">👤</a>
-            <a href="/carrito" aria-label="Carrito">🛒</a>
-        </div>
-    </div>
-
-    <!-- BARRA INFERIOR DE CATEGORÍAS -->
-    <nav class="bottom-bar" aria-label="Categorías principales">
-        <ul>
-            <li><a href="/categorias">☰ Categorías</a></li>
-            <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
-            <li><a href="/farmacia">💊 Farmacia</a></li>
-            <li><a href="/gato">🐱 Gato</a></li>
-            <li><a href="/perro">🐶 Perro</a></li>
-            <li><a href="/outlet">🏷️ Outlet</a></li>
-            <li><a href="/contacto">📞 Contacto</a></li>
-        </ul>
-    </nav>
-</header>
-    <main>
-
-        <section class="datos-mascota">
-
-            <div class="imagen-mascota">
-            <img src="https://placehold.co/250x250" alt="Imagen de la mascota">
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
             </div>
 
-            <h1>Nombre de Mascota</h1>
-            <p>Raza - Edad - Género</p>
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
 
-        </section>
+            <div class="right">
+                <a href="/login" class="login-link">Iniciar sesión / registrar</a>
+                <a href="/cuenta" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito" aria-label="Carrito">🛒</a>
+            </div>
+        </div>
 
-        <section class="detalle-mascota">
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                <li><a href="/categorias">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
+                <li><a href="/farmacia">💊 Farmacia</a></li>
+                <li><a href="/gato">🐱 Gato</a></li>
+                <li><a href="/perro">🐶 Perro</a></li>
+                <li><a href="/outlet">🏷️ Outlet</a></li>
+                <li><a href="/contacto">📞 Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="datos-detalle-mascota">
+            <section class="datos-mascota">
 
-            <article class="bloque-informacion">
-
-                <div class="encabezado-bloque">
-                    <h2>Información</h2>
-                    <button type="button" class="boton-opciones">⋮</button>
+                <div class="imagen-mascota">
+                    <img src="https://placehold.co/250x250" alt="Imagen de la mascota">
                 </div>
 
-                <p>Registro de peso, enfermedades, alergias, etc.</p>
+                <h1>Nombre de Mascota</h1>
+                <p>Raza - Edad - Género</p>
 
-            </article>
+            </section>
 
-            <article class="bloque-historial">
+            <section class="detalle-mascota">
 
-                <div class="encabezado-bloque">
-                    <h2>Historial Médico</h2>
-                    <button type="button" class="boton-opciones">⋮</button>
-                </div>
+                <article class="bloque-informacion">
 
-                <p>Últimas citas veterinarias registradas, muestra fecha y razón:</p>
-
-                <div class="fila-detalle">
-
-                    <p>Control por peso</p>
-
-                    <div class="acciones-detalle">
-                        <span>17/08/2026</span>
-                        <a href="#">Ver historial completo</a>
+                    <div class="encabezado-bloque">
+                        <h2>Información</h2>
+                        <button type="button" class="boton-opciones">⋮</button>
                     </div>
 
-                </div>
+                    <p>Registro de peso, enfermedades, alergias, etc.</p>
 
-            </article>
+                </article>
 
-            <article class="bloque-vacunas">
+                <article class="bloque-historial">
 
-                <div class="encabezado-bloque">
-                    <h2>Registro de vacunas</h2>
-                    <button type="button" class="boton-opciones">⋮</button>
-                </div>
-
-                <p>Últimas vacunas registradas, muestra tipo y fecha de renovación:</p>
-
-                <div class="fila-detalle">
-
-                    <p>Vacuna Antibiótica</p>
-
-                    <div class="acciones-detalle">
-                        <span>17/08/2026</span>
-                        <span>Renovar 17/08/2029</span>
-                        <a href="#">Ver registro completo</a>
+                    <div class="encabezado-bloque">
+                        <h2>Historial Médico</h2>
+                        <button type="button" class="boton-opciones">⋮</button>
                     </div>
 
-                </div>
+                    <p>Últimas citas veterinarias registradas, muestra fecha y razón:</p>
 
-            </article>
+                    <div class="fila-detalle">
 
-        </section>
+                        <p>Control por peso</p>
 
+                        <div class="acciones-detalle">
+                            <span>17/08/2026</span>
+                            <a href="#">Ver historial completo</a>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article class="bloque-vacunas">
+
+                    <div class="encabezado-bloque">
+                        <h2>Registro de vacunas</h2>
+                        <button type="button" class="boton-opciones">⋮</button>
+                    </div>
+
+                    <p>Últimas vacunas registradas, muestra tipo y fecha de renovación:</p>
+
+                    <div class="fila-detalle">
+
+                        <p>Vacuna Antibiótica</p>
+
+                        <div class="acciones-detalle">
+                            <span>17/08/2026</span>
+                            <span>Renovar 17/08/2029</span>
+                            <a href="#">Ver registro completo</a>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+        </div>
     </main>
 
 </body>

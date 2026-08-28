@@ -9,154 +9,156 @@
 </head>
 
 <body>
-<header class="site-header">
-    <!-- BARRA SUPERIOR OSCURA -->
-    <div class="top-bar">
-        <div class="left">
-            <button class="menu-btn" aria-label="Menú">☰</button>
-            <a href="/" class="logo">
-                <img src="/logo-petlove.svg" alt="Petlove">
-            </a>
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
+            </div>
+
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
+
+            <div class="right">
+                <a href="/login" class="login-link">Iniciar sesión / registrar</a>
+                <a href="/cuenta" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito" aria-label="Carrito">🛒</a>
+            </div>
         </div>
 
-        <div class="center">
-            <form class="search-form" action="/buscar" method="GET" role="search">
-                <span class="search-icon">⌕</span>
-                <input type="search" name="q" placeholder="Buscar">
-            </form>
-        </div>
-
-        <div class="right">
-            <a href="/login" class="login-link">Iniciar sesión / registrar</a>
-            <a href="/cuenta" aria-label="Mi cuenta">👤</a>
-            <a href="/carrito" aria-label="Carrito">🛒</a>
-        </div>
-    </div>
-
-    <!-- BARRA INFERIOR DE CATEGORÍAS -->
-    <nav class="bottom-bar" aria-label="Categorías principales">
-        <ul>
-            <li><a href="/categorias">☰ Categorías</a></li>
-            <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
-            <li><a href="/farmacia">💊 Farmacia</a></li>
-            <li><a href="/gato">🐱 Gato</a></li>
-            <li><a href="/perro">🐶 Perro</a></li>
-            <li><a href="/outlet">🏷️ Outlet</a></li>
-            <li><a href="/contacto">📞 Contacto</a></li>
-        </ul>
-    </nav>
-</header>
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                <li><a href="/categorias">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
+                <li><a href="/farmacia">💊 Farmacia</a></li>
+                <li><a href="/gato">🐱 Gato</a></li>
+                <li><a href="/perro">🐶 Perro</a></li>
+                <li><a href="/outlet">🏷️ Outlet</a></li>
+                <li><a href="/contacto">📞 Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
 
         <section class="pasos">
-            <ol>
-                <li>
-                    <span class="numero-paso">1</span>
-                    <span>Fecha y hora</span>
-                </li>
+            <div class="container">
+                <ol>
+                    <li>
+                        <span class="numero-paso">1</span>
+                        <span>Fecha y hora</span>
+                    </li>
 
-                <li>
-                    <span class="numero-paso">2</span>
-                    <span>Profesional</span>
-                </li>
+                    <li>
+                        <span class="numero-paso">2</span>
+                        <span>Profesional</span>
+                    </li>
 
-                <li class="paso-activo">
-                    <span class="numero-paso">3</span>
-                    <span>Datos de contacto</span>
-                </li>
-            </ol>
+                    <li class="paso-activo">
+                        <span class="numero-paso">3</span>
+                        <span>Datos de contacto</span>
+                    </li>
+                </ol>
+            </div>
         </section>
 
         <section class="contenedor-contacto">
+            <div class="container">
+                <div class="contenido-contacto">
 
-            <div class="contenido-contacto">
+                    <section class="formulario-contacto">
 
-                <section class="formulario-contacto">
+                        <h1>Datos de contacto</h1>
 
-                    <h1>Datos de contacto</h1>
+                        <form>
 
-                    <form>
+                            <div class="fila-formulario">
 
-                        <div class="fila-formulario">
+                                <div class="campo">
+                                    <label for="nombre">
+                                        Nombre <span class="obligatorio">*</span>
+                                    </label>
+                                    <input type="text" id="nombre" name="nombre" required>
+                                </div>
 
-                            <div class="campo">
-                                <label for="nombre">
-                                    Nombre <span class="obligatorio">*</span>
-                                </label>
-                                <input type="text" id="nombre" name="nombre" required>
+                                <div class="campo">
+                                    <label for="apellido">
+                                        Apellido <span class="obligatorio">*</span>
+                                    </label>
+                                    <input type="text" id="apellido" name="apellido" required>
+                                </div>
+
                             </div>
 
-                            <div class="campo">
-                                <label for="apellido">
-                                    Apellido <span class="obligatorio">*</span>
-                                </label>
-                                <input type="text" id="apellido" name="apellido" required>
+                            <div class="fila-formulario">
+
+                                <div class="campo">
+                                    <label for="email">
+                                        Email <span class="obligatorio">*</span>
+                                    </label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+
+                                <div class="campo">
+                                    <label for="telefono">
+                                        Teléfono <span class="obligatorio">*</span>
+                                    </label>
+                                    <input type="tel" id="telefono" name="telefono" required>
+                                </div>
+
                             </div>
 
+                            <div class="campo campo-rut">
+                                <label for="rut">
+                                    Rut <span class="obligatorio">*</span>
+                                </label>
+                                <input type="text" id="rut" name="rut" required>
+                            </div>
+
+                            <div class="campo campo-comentarios">
+                                <div class="encabezado-comentarios">
+                                    <label for="comentarios">Comentarios/Observaciones</label>
+                                    <span>Opcional</span>
+                                </div>
+
+                                <textarea id="comentarios" name="comentarios"></textarea>
+                            </div>
+
+                            <button type="submit" class="boton-agendar">
+                                Agendar
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                    <aside class="resumen-consulta">
+
+                        <h2>Resumen de tu consulta</h2>
+
+                        <div class="detalle-consulta">
+                            <p>📅 26 de agosto de 2026</p>
+                            <p>🕒 10:30 am - 11:00 am</p>
+                            <p>👤 Dr. Fernando Guerrero</p>
+                            <p>🏠 Francisco Bilbao</p>
                         </div>
 
-                        <div class="fila-formulario">
-
-                            <div class="campo">
-                                <label for="email">
-                                    Email <span class="obligatorio">*</span>
-                                </label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-
-                            <div class="campo">
-                                <label for="telefono">
-                                    Teléfono <span class="obligatorio">*</span>
-                                </label>
-                                <input type="tel" id="telefono" name="telefono" required>
-                            </div>
-
+                        <div class="costo-consulta">
+                            <p>Costo total</p>
+                            <p>💲 $9.990</p>
                         </div>
 
-                        <div class="campo campo-rut">
-                            <label for="rut">
-                                Rut <span class="obligatorio">*</span>
-                            </label>
-                            <input type="text" id="rut" name="rut" required>
-                        </div>
+                    </aside>
 
-                        <div class="campo campo-comentarios">
-                            <div class="encabezado-comentarios">
-                                <label for="comentarios">Comentarios/Observaciones</label>
-                                <span>Opcional</span>
-                            </div>
-
-                            <textarea id="comentarios" name="comentarios"></textarea>
-                        </div>
-
-                        <button type="submit" class="boton-agendar">
-                            Agendar
-                        </button>
-
-                    </form>
-
-                </section>
-
-                <aside class="resumen-consulta">
-
-                    <h2>Resumen de tu consulta</h2>
-
-                    <div class="detalle-consulta">
-                        <p>📅 26 de agosto de 2026</p>
-                        <p>🕒 10:30 am - 11:00 am</p>
-                        <p>👤 Dr. Fernando Guerrero</p>
-                        <p>🏠 Francisco Bilbao</p>
-                    </div>
-
-                    <div class="costo-consulta">
-                        <p>Costo total</p>
-                        <p>💲 $9.990</p>
-                    </div>
-
-                </aside>
-
+                </div>
             </div>
-
         </section>
 
     </main>

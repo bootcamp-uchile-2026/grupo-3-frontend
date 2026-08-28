@@ -10,99 +10,99 @@
 </head>
 
 <body>
-<header class="site-header">
-    <!-- BARRA SUPERIOR OSCURA -->
-    <div class="top-bar">
-        <div class="left">
-            <button class="menu-btn" aria-label="Menú">☰</button>
-            <a href="/" class="logo">
-                <img src="/logo-petlove.svg" alt="Petlove">
-            </a>
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
+            </div>
+
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
+
+            <div class="right">
+                <a href="/login" class="login-link">Iniciar sesión / registrar</a>
+                <a href="/cuenta" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito" aria-label="Carrito">🛒</a>
+            </div>
         </div>
 
-        <div class="center">
-            <form class="search-form" action="/buscar" method="GET" role="search">
-                <span class="search-icon">⌕</span>
-                <input type="search" name="q" placeholder="Buscar">
-            </form>
-        </div>
-
-        <div class="right">
-            <a href="/login" class="login-link">Iniciar sesión / registrar</a>
-            <a href="/cuenta" aria-label="Mi cuenta">👤</a>
-            <a href="/carrito" aria-label="Carrito">🛒</a>
-        </div>
-    </div>
-
-    <!-- BARRA INFERIOR DE CATEGORÍAS -->
-    <nav class="bottom-bar" aria-label="Categorías principales">
-        <ul>
-            <li><a href="/categorias">☰ Categorías</a></li>
-            <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
-            <li><a href="/farmacia">💊 Farmacia</a></li>
-            <li><a href="/gato">🐱 Gato</a></li>
-            <li><a href="/perro">🐶 Perro</a></li>
-            <li><a href="/outlet">🏷️ Outlet</a></li>
-            <li><a href="/contacto">📞 Contacto</a></li>
-        </ul>
-    </nav>
-</header>
-    <main>
-
-        <nav class="menu-perfil">
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
             <ul>
-                <li><a href="#">Mis mascotas</a></li>
-                <li><a href="#">Seguimiento de pedido</a></li>
-                <li><a href="#">Detalles de la cuenta</a></li>
-                <li><a href="#">Configuración</a></li>
-                <li><a href="#">Métodos de pago</a></li>
-                <li><a href="#">Historial de compras</a></li>
-                <li><a href="#">Direcciones</a></li>
+                <li><a href="/categorias">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
+                <li><a href="/farmacia">💊 Farmacia</a></li>
+                <li><a href="/gato">🐱 Gato</a></li>
+                <li><a href="/perro">🐶 Perro</a></li>
+                <li><a href="/outlet">🏷️ Outlet</a></li>
+                <li><a href="/contacto">📞 Contacto</a></li>
             </ul>
         </nav>
+    </header>
+    <main>
+        <div class="menu-contenido-perfil-usuario">
+            <nav class="menu-perfil">
+                <ul>
+                    <li><a href="#">Mis mascotas</a></li>
+                    <li><a href="#">Seguimiento de pedido</a></li>
+                    <li><a href="#">Detalles de la cuenta</a></li>
+                    <li><a href="#">Configuración</a></li>
+                    <li><a href="#">Métodos de pago</a></li>
+                    <li><a href="#">Historial de compras</a></li>
+                    <li><a href="#">Direcciones</a></li>
+                </ul>
+            </nav>
 
-        <section class="contenido-perfil">
+            <section class="contenido-perfil">
 
-            <h1>Hola, Usuario!</h1>
+                <h1>Hola, Usuario!</h1>
 
-            <div class="tarjetas-perfil">
+                <div class="tarjetas-perfil">
 
-                <a href="#" class="tarjeta-perfil">
-                    <h2>Seguimiento de pedido</h2>
-                </a>
+                    <a href="#" class="tarjeta-perfil">
+                        <h2>Seguimiento de pedido</h2>
+                    </a>
 
-                <a href="#" class="tarjeta-perfil">
-                    <h2>Mis mascotas</h2>
-                </a>
+                    <a href="#" class="tarjeta-perfil">
+                        <h2>Mis mascotas</h2>
+                    </a>
 
-                <a href="#" class="tarjeta-perfil">
-                    <h2>Historial de compras</h2>
-                </a>
+                    <a href="#" class="tarjeta-perfil">
+                        <h2>Historial de compras</h2>
+                    </a>
 
-                <a href="#" class="tarjeta-perfil">
-                    <h2>Direcciones</h2>
-                </a>
+                    <a href="#" class="tarjeta-perfil">
+                        <h2>Direcciones</h2>
+                    </a>
 
-            </div>
+                </div>
 
-            <div class="opciones-agregar">
+                <div class="opciones-agregar">
 
-                <a href="#" class="opcion-agregar">
-                    <p>Añade tu mascota</p>
-                </a>
+                    <a href="#" class="opcion-agregar">
+                        <p>Añade tu mascota</p>
+                    </a>
 
-                <a href="#" class="opcion-agregar">
-                    <p>Añade tu número de teléfono</p>
-                </a>
+                    <a href="#" class="opcion-agregar">
+                        <p>Añade tu número de teléfono</p>
+                    </a>
 
-                <a href="#" class="opcion-agregar">
-                    <p>Añade nuevo método de pago</p>
-                </a>
+                    <a href="#" class="opcion-agregar">
+                        <p>Añade nuevo método de pago</p>
+                    </a>
 
-            </div>
+                </div>
 
-        </section>
-
+            </section>
+        </div>
     </main>
 
 </body>

@@ -1597,7 +1597,6 @@ tbody tr:nth-child(even) {
 /* RESUMEN */
 
 .resumen-consulta {
-    width: 28%;
     border: 1px solid #000;
 }
 
@@ -1785,7 +1784,10 @@ tbody tr:nth-child(even) {
 .detalle-mascota {
     flex: 1;
 }
-
+.datos-detalle-mascota{
+    display: flex;
+    padding: 30px;
+}
 .detalle-mascota article {
     border: 1px solid #000;
     padding: 20px;
@@ -1822,6 +1824,10 @@ tbody tr:nth-child(even) {
     background: none;
     font-size: 24px;
     cursor: pointer;
+}
+.menu-contenido-perfil-usuario{
+    display: flex;
+    padding: 30px;
 }
 .menu-perfil {
     width: 25%;
