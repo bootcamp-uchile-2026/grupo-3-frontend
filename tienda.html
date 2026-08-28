@@ -9,6 +9,43 @@
 </head>
 
 <body>
+    <header class="site-header">
+    <!-- BARRA SUPERIOR OSCURA -->
+    <div class="top-bar">
+        <div class="left">
+            <button class="menu-btn" aria-label="Menú">☰</button>
+            <a href="/" class="logo">
+                <img src="/logo-petlove.svg" alt="Petlove">
+            </a>
+        </div>
+
+        <div class="center">
+            <form class="search-form" action="/buscar" method="GET" role="search">
+                <span class="search-icon">⌕</span>
+                <input type="search" name="q" placeholder="Buscar">
+            </form>
+        </div>
+
+        <div class="right">
+            <a href="/login" class="login-link">Iniciar sesión / registrar</a>
+            <a href="/cuenta" aria-label="Mi cuenta">👤</a>
+            <a href="/carrito" aria-label="Carrito">🛒</a>
+        </div>
+    </div>
+
+    <!-- BARRA INFERIOR DE CATEGORÍAS -->
+    <nav class="bottom-bar" aria-label="Categorías principales">
+        <ul>
+            <li><a href="/categorias">☰ Categorías</a></li>
+            <li><a href="/servicios-veterinarios">🩺 Servicios veterinarios</a></li>
+            <li><a href="/farmacia">💊 Farmacia</a></li>
+            <li><a href="/gato">🐱 Gato</a></li>
+            <li><a href="/perro">🐶 Perro</a></li>
+            <li><a href="/outlet">🏷️ Outlet</a></li>
+            <li><a href="/contacto">📞 Contacto</a></li>
+        </ul>
+    </nav>
+</header>
     <main>
         <section>
             <div class="container filtro-productos">
