@@ -13,3 +13,7 @@ Vista inicial desarrollada en HTML y CSS a partir del wireframe de baja fidelida
 ### Agendar Veterinario - Profesional
 
 Vista desarrollada en HTML y CSS a partir del wireframe de baja fidelidad proporcionado por el equipo UX/UI. Incluye la selección de profesionales veterinarios, indicador de pasos del proceso de agendamiento, resumen de la consulta y botón de confirmación.
+
+### Agendar Veterinario - Datos de contacto
+
+Vista desarrollada en HTML y CSS a partir del wireframe de baja fidelidad proporcionado por el equipo UX/UI. Incluye formulario de datos de contacto, campos obligatorios, sección opcional de comentarios u observaciones, indicador de pasos del proceso de agendamiento, resumen de la consulta y botón para agendar.
