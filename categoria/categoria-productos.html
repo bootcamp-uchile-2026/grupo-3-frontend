@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Tienda</title>
+    <link rel="stylesheet" href="../styles.css">
+    <title>Categoria</title>
 </head>
 
 <body>
@@ -49,7 +49,25 @@
     </header>
     <main>
         <section>
+            <div class="hero">
+                <img src="https://placehold.co/1920x600" alt="">
+                <h1 class="titulo-seccion">Categoria</h1>
+            </div>
+        </section>
+        <section>
+
             <div class="container filtro-productos">
+                <div class="orden-productos">
+                    <div class="botones-forma-orden">
+                        <button>X</button>
+                        <button>X</button>
+                    </div>
+                    <select name="ordenar-productos" id="ordenar-productos">
+                        <option>Orden: Popularidad</option>
+                        <option>Orden precio: Mayor a Menor</option>
+                        <option>Orden precio: Menor a Mayor</option>
+                    </select>
+                </div>
                 <div class="filtro">
                     <h2>Filtros</h2>
                     <div class="filtro-opciones">
@@ -189,6 +207,9 @@
                             <button>Agregar al carrito</button>
                         </div>
                     </article>
+                </div>
+                <div class="ver-mas-categoria">
+                    <button>Mostrar más</button>
                 </div>
             </div>
         </section>
