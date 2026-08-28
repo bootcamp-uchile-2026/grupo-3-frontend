@@ -48,159 +48,160 @@
         </nav>
     </header>
     <main>
-    <section>
-        <div class="container checkout-container">
-            <div class="datos-envio-div">
-                <div class="titulo-icono">
-                    <img src="https://placehold.co/30x30" alt="">
-                    <h2>Datos para el despacho</h2>
-                </div>
-                <form action="" id="datos-envio">
-                    <div class="form-row">
-                        <input type="text" name="nombre-envio" id="nombre-envio" placeholder="Nombre*">
-                        <input type="text" name="apellidos-envio" id="apellidos-envio" placeholder="Apellidos*">
-                    </div>
-                    <div class="form-row">
-                        <input type="text" name="direccion-envio" id="direccion-envio"
-                            placeholder="Dirección, calle y número*">
-                        <input type="text" name="direccion-detalle-envio" id="direccion-detalle-envio"
-                            placeholder="N° depto, oficina, etc. (Opcional)">
-                    </div>
-                    <select name="region-envio" id="region-envio">
-                        <option value="" disabled selected>Selecciona una región</option>
-                        <option value="region-1">Región 1</option>
-                        <option value="region-2">Región 2</option>
-                        <option value="region-3">Región 3</option>
-                    </select>
-                    <select name="comuna-envio" id="comuna-envio">
-                        <option value="" disabled selected>Comuna</option>
-                        <option value="comuna-1">Comuna 1</option>
-                        <option value="comuna-2">Comuna 2</option>
-                        <option value="comuna-3">Comuna 3</option>
-                    </select>
-                    <div class="form-row">
-                        <input type="email" name="email-envio" id="email-envio" placeholder="Correo electrónico*">
-                        <input type="tel" name="telefono-envio" id="telefono-envio" placeholder="Teléfono*">
-                    </div>
-                    <select name="boleta-factura-envio" id="boleta-factura-envio">
-                        <option value="" disabled selected>¿Boleta o factura?*</option>
-                        <option value="boleta">Boleta</option>
-                        <option value="Factura">Factura</option>
-                    </select>
-                    <input type="number" name="rut-envio" id="rut-envio" placeholder="Rut*">
-                </form>
-            </div>
-            <div class="metodo-envio-div">
-                <div class="titulo-icono">
-                    <img src="https://placehold.co/30x30" alt="">
-                    <h2>¿Recibes o retiras tu pedido?</h2>
-                </div>
-                <form action="" class="sel-metodos">
-                    <div class="sel-metodo">
-                        <div class="input-label">
-                            <input type="radio" name="metodo-envio" id="envio-normal">
-                            <label for="envio-normal">Envío Normal</label>
-                        </div>
-                        <p>$3.990</p>
-                    </div>
-                    <div class="sel-metodo">
-                        <div class="input-label">
-                            <input type="radio" name="metodo-envio" id="retiro-tienda">
-                            <label for="retiro-tienda">Retiro gratis en tienda.</label>
-                        </div>
-                        <p>Gratis</p>
-                    </div>
-                </form>
-            </div>
-            <div class="metodo-pago-div">
-                <div class="titulo-icono">
-                    <img src="https://placehold.co/30x30" alt="">
-                    <h2>¿Cómo vas a pagar?</h2>
-                </div>
-                <form action="" id="metodo-pago" class="sel-metodos">
-                    <div class="sel-metodo">
-                        <div class="input-label">
-                            <input type="radio" name="metodo-pago" id="mercado-pago">
-                            <label for="mercado-pago">Mercado Pago</label>
-                        </div>
-                        <img src="https://placehold.co/45x30" alt="">
-                    </div>
-                    <div class="sel-metodo">
-                        <div class="input-label">
-                            <input type="radio" name="metodo-pago" id="tarjetas">
-                            <label for="tarjetas">Tarjeta crédito, débito y prepago.</label>
-                        </div>
-                    </div>
-                    <div class="sel-metodo">
-                        <div class="input-label">
-                            <input type="radio" name="metodo-pago" id="webpay-plus">
-                            <label for="webpay-plus">Webpay Plus</label>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="resumen-pedido-div">
-                <div class="titulo-icono">
-                    <img src="https://placehold.co/30x30" alt="">
-                    <h2>Resumen del pedido</h2>
-                </div>
-                <div class="productos-resumen-pedido">
-                    <article class="producto-resumen-pedido">
-                        <div class="info-producto">
-                            <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
-                            <p class="nombre-producto-resumen">Nombre de producto</p>
-                        </div>
-                        <p class="precio-producto-resumen">$7.490</p>
-                    </article>
-                    <article class="producto-resumen-pedido">
-                        <div class="info-producto">
-                            <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
-                            <p class="nombre-producto-resumen">Nombre de producto</p>
-                        </div>
-                        <p class="precio-producto-resumen">$7.490</p>
-                    </article>
-                    <article class="producto-resumen-pedido">
-                        <div class="info-producto">
-                            <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
-                            <p class="nombre-producto-resumen">Nombre de producto</p>
-                        </div>
-                        <p class="precio-producto-resumen">$7.490</p>
-                    </article>
-                </div>
-                <div class="cupon-descuento">
+        <section>
+            <div class="container checkout-container">
+                <div class="datos-envio-div">
                     <div class="titulo-icono">
                         <img src="https://placehold.co/30x30" alt="">
-                        <h3>Cupón de descuento o Giftcard</h3>
+                        <h2>Datos para el despacho</h2>
                     </div>
-                    <form action="" id="codigo-cupon">
-                        <input type="text" name="codigo" id="codigo" placeholder="Introduce el código promocional">
-                        <button type="submit">Aplicar</button>
+                    <form action="" id="datos-envio">
+                        <div class="form-row">
+                            <input type="text" name="nombre-envio" id="nombre-envio" placeholder="Nombre*">
+                            <input type="text" name="apellidos-envio" id="apellidos-envio" placeholder="Apellidos*">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" name="direccion-envio" id="direccion-envio"
+                                placeholder="Dirección, calle y número*">
+                            <input type="text" name="direccion-detalle-envio" id="direccion-detalle-envio"
+                                placeholder="N° depto, oficina, etc. (Opcional)">
+                        </div>
+                        <select name="region-envio" id="region-envio">
+                            <option value="" disabled selected>Selecciona una región</option>
+                            <option value="region-1">Región 1</option>
+                            <option value="region-2">Región 2</option>
+                            <option value="region-3">Región 3</option>
+                        </select>
+                        <select name="comuna-envio" id="comuna-envio">
+                            <option value="" disabled selected>Comuna</option>
+                            <option value="comuna-1">Comuna 1</option>
+                            <option value="comuna-2">Comuna 2</option>
+                            <option value="comuna-3">Comuna 3</option>
+                        </select>
+                        <div class="form-row">
+                            <input type="email" name="email-envio" id="email-envio" placeholder="Correo electrónico*">
+                            <input type="tel" name="telefono-envio" id="telefono-envio" placeholder="Teléfono*">
+                        </div>
+                        <select name="boleta-factura-envio" id="boleta-factura-envio">
+                            <option value="" disabled selected>¿Boleta o factura?*</option>
+                            <option value="boleta">Boleta</option>
+                            <option value="Factura">Factura</option>
+                        </select>
+                        <input type="number" name="rut-envio" id="rut-envio" placeholder="Rut*">
                     </form>
                 </div>
-                <div class="subtotal-total-resumen-div">
-                    <div class="subtotal-div">
-                        <p>Subtotal: </p>
-                        <p>$29.960</p>
+                <div class="metodo-envio-div">
+                    <div class="titulo-icono">
+                        <img src="https://placehold.co/30x30" alt="">
+                        <h2>¿Recibes o retiras tu pedido?</h2>
                     </div>
-                    <div class="total-div">
-                        <p>Total</p>
-                        <span>$29.960</span>
-                    </div>
+                    <form action="" class="sel-metodos">
+                        <div class="sel-metodo">
+                            <div class="input-label">
+                                <input type="radio" name="metodo-envio" id="envio-normal">
+                                <label for="envio-normal">Envío Normal</label>
+                            </div>
+                            <p>$3.990</p>
+                        </div>
+                        <div class="sel-metodo">
+                            <div class="input-label">
+                                <input type="radio" name="metodo-envio" id="retiro-tienda">
+                                <label for="retiro-tienda">Retiro gratis en tienda.</label>
+                            </div>
+                            <p>Gratis</p>
+                        </div>
+                    </form>
                 </div>
-                <form action="" id="finalizar-compra">
-                    <div class="check-terminos">
-                
-                    <input type="checkbox" name="terminos-condiciones" id="terminos-condiciones">
-                    <label for="terminos-condiciones">He leído y estoy de acuerdo con los <a href="#" target="_blank"> términos y condiciones.</a></label>
-                    
+                <div class="metodo-pago-div">
+                    <div class="titulo-icono">
+                        <img src="https://placehold.co/30x30" alt="">
+                        <h2>¿Cómo vas a pagar?</h2>
                     </div>
-                    <button type="submit">Finalizar compra</button>
-                </form>
+                    <form action="" id="metodo-pago" class="sel-metodos">
+                        <div class="sel-metodo">
+                            <div class="input-label">
+                                <input type="radio" name="metodo-pago" id="mercado-pago">
+                                <label for="mercado-pago">Mercado Pago</label>
+                            </div>
+                            <img src="https://placehold.co/45x30" alt="">
+                        </div>
+                        <div class="sel-metodo">
+                            <div class="input-label">
+                                <input type="radio" name="metodo-pago" id="tarjetas">
+                                <label for="tarjetas">Tarjeta crédito, débito y prepago.</label>
+                            </div>
+                        </div>
+                        <div class="sel-metodo">
+                            <div class="input-label">
+                                <input type="radio" name="metodo-pago" id="webpay-plus">
+                                <label for="webpay-plus">Webpay Plus</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="resumen-pedido-div">
+                    <div class="titulo-icono">
+                        <img src="https://placehold.co/30x30" alt="">
+                        <h2>Resumen del pedido</h2>
+                    </div>
+                    <div class="productos-resumen-pedido">
+                        <article class="producto-resumen-pedido">
+                            <div class="info-producto">
+                                <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
+                                <p class="nombre-producto-resumen">Nombre de producto</p>
+                            </div>
+                            <p class="precio-producto-resumen">$7.490</p>
+                        </article>
+                        <article class="producto-resumen-pedido">
+                            <div class="info-producto">
+                                <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
+                                <p class="nombre-producto-resumen">Nombre de producto</p>
+                            </div>
+                            <p class="precio-producto-resumen">$7.490</p>
+                        </article>
+                        <article class="producto-resumen-pedido">
+                            <div class="info-producto">
+                                <img src="https://placehold.co/80x80" alt="" class="imagen-producto-resumen">
+                                <p class="nombre-producto-resumen">Nombre de producto</p>
+                            </div>
+                            <p class="precio-producto-resumen">$7.490</p>
+                        </article>
+                    </div>
+                    <div class="cupon-descuento">
+                        <div class="titulo-icono">
+                            <img src="https://placehold.co/30x30" alt="">
+                            <h3>Cupón de descuento o Giftcard</h3>
+                        </div>
+                        <form action="" id="codigo-cupon">
+                            <input type="text" name="codigo" id="codigo" placeholder="Introduce el código promocional">
+                            <button type="submit">Aplicar</button>
+                        </form>
+                    </div>
+                    <div class="subtotal-total-resumen-div">
+                        <div class="subtotal-div">
+                            <p>Subtotal: </p>
+                            <p>$29.960</p>
+                        </div>
+                        <div class="total-div">
+                            <p>Total</p>
+                            <span>$29.960</span>
+                        </div>
+                    </div>
+                    <form action="" id="finalizar-compra">
+                        <div class="check-terminos">
+
+                            <input type="checkbox" name="terminos-condiciones" id="terminos-condiciones">
+                            <label for="terminos-condiciones">He leído y estoy de acuerdo con los <a href="#"
+                                    target="_blank"> términos y condiciones.</a></label>
+
+                        </div>
+                        <button type="submit">Finalizar compra</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     </main>
-        <footer class="site-footer">
+    <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-logo">
                 <a href="/">
