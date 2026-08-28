@@ -80,6 +80,20 @@ button {
     cursor: pointer;
 }
 
+.hero img {
+    width: 100%
+}
+
+.hero .titulo-seccion {
+    text-align: center;
+}
+
+.orden-productos {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-items: center;
+    grid-column: 2/3;
+}
 .categorias-home {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -332,4 +346,19 @@ tbody tr:nth-child(even) {
     width: auto;
     top: 50%;
     margin: 0;
+}
+
+
+.ver-mas-categoria {
+    grid-column: 2/3;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.ver-mas button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
