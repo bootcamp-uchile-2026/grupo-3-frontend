@@ -66,6 +66,20 @@ button {
     padding: 0 30px;
 }
 
+.hero img {
+    width: 100%
+}
+
+.hero .titulo-seccion {
+    text-align: center;
+}
+
+.orden-productos {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-items: center;
+    grid-column: 2/3;
+}
 .categorias-home {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -179,15 +193,30 @@ button {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
+
 .range-slider {
-  position: relative;
-  width: 300px;
-  height: 30px;
+    position: relative;
+    width: 300px;
+    height: 30px;
 }
 
 .range-slider input[type="range"] {
-  position: absolute;
-  width: auto;
-  top: 50%;
-  margin: 0;
+    position: absolute;
+    width: auto;
+    top: 50%;
+    margin: 0;
+}
+
+.ver-mas-categoria {
+    grid-column: 2/3;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.ver-mas button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
