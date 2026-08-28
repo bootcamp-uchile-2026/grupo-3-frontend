@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetLove - Agendar Servicios</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/index.html" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
+            </div>
+
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
+
+            <div class="right">
+                <a href="#" class="login-link">Iniciar sesión / registrar</a>
+                <a href="#" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito-compras.html" aria-label="Carrito">🛒</a>
+            </div>
+        </div>
+
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                <li><a href="#">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios/agendar-veterinario-lista-servicios.html">🩺 Servicios
+                        veterinarios</a></li>
+                <li><a href="/categoria/categoria-productos.html">💊 Farmacia</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐱 Gato</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐶 Perro</a></li>
+                <li><a href="/categoria/categoria-productos.html">🏷️ Outlet</a></li>
+                <li><a href="#">📞 Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="page-agendar">
+        <!-- SELECCION DE MASCOTA -->
+        <section class="card-box">
+            <h2 class="section-title">Selecciona tu mascota <span>Selecciona tu mascota para continuar.</span></h2>
+
+            <div class="mascotas-container">
+                <label class="mascota-card">
+                    <div class="mascota-img"></div>
+                    <span class="mascota-nombre">Luna</span>
+                    <input type="radio" name="mascota" value="luna">
+                    <span class="check"></span>
+                </label>
+
+                <label class="mascota-card">
+                    <div class="mascota-img"></div>
+                    <span class="mascota-nombre">Firulais</span>
+                    <input type="radio" name="mascota" value="firulais">
+                    <span class="check"></span>
+                </label>
+
+                <button class="agregar-mascota">
+                    <span>+</span>
+                    Agregar mascota
+                </button>
+            </div>
+        </section>
+
+        <!-- SERVICIOS VETERINARIOS -->
+        <section class="card-box">
+            <h2 class="section-title">Servicios Veterinarios</h2>
+
+            <div class="servicios-grid">
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria</h3>
+                        <span class="precio">$9.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <a href="agendar-veterinario-profesional.html"><button class="btn-agendar">Agendar
+                            servicio</button></a>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria + Vacunas</h3>
+                        <span class="precio">$23.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <a href="agendar-veterinario-profesional.html"><button class="btn-agendar">Agendar
+                            servicio</button></a>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta Veterinaria + Certificado de viaje</h3>
+                        <span class="precio">$31.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <a href="agendar-veterinario-profesional.html"><button class="btn-agendar">Agendar
+                            servicio</button></a>
+                </article>
+
+                <article class="servicio-card">
+                    <div class="servicio-header">
+                        <h3>Consulta + Implantación de Microchip</h3>
+                        <span class="precio">$25.990</span>
+                    </div>
+                    <p>Información sobre la consulta y qué incluye.</p>
+                    <a href="agendar-veterinario-profesional.html"><button class="btn-agendar">Agendar
+                            servicio</button></a>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <a href="/">
+                    <div class="logo-placeholder"></div>
+                    <span>PetLove</span>
+                </a>
+            </div>
+
+            <div class="footer-links">
+                <ul>
+                    <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="/terminos-condiciones">Términos y condiciones</a></li>
+                    <li><a href="/politicas-privacidad">Políticas de privacidad</a></li>
+                    <li><a href="/cambios-devoluciones">Cambios y devoluciones</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/nosotros">Nosotros</a></li>
+                    <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="/horario-atencion">Horario de atención</a></li>
+                    <li><a href="/sugerencias-reclamos">Sugerencias y reclamos</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Company name. All Rights Reserved</p>
+            <div class="social">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Instagram">◎</a>
+                <a href="#" aria-label="YouTube">▶</a>
+                <a href="#" aria-label="TikTok">♪</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- IMPORTA TU FOOTER EXISTENTE 
+    <div id="footer-placeholder"></div>
+-->
+    <!-- Script simple para importar header.html y footer.html -->
+    <!--
+    <script>
+        fetch('header.html').then(r => r.text()).then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+        });
+        fetch('footer.html').then(r => r.text()).then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+        });
+    </script>
+    -->
+</body>
+
+</html>

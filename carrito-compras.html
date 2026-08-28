@@ -9,6 +9,44 @@
 </head>
 
 <body>
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/index.html" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
+            </div>
+
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
+
+            <div class="right">
+                <a href="#" class="login-link">Iniciar sesión / registrar</a>
+                <a href="#" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito-compras.html" aria-label="Carrito">🛒</a>
+            </div>
+        </div>
+
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                <li><a href="#">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios/agendar-veterinario-lista-servicios.html">🩺 Servicios
+                        veterinarios</a></li>
+                <li><a href="/categoria/categoria-productos.html">💊 Farmacia</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐱 Gato</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐶 Perro</a></li>
+                <li><a href="/categoria/categoria-productos.html">🏷️ Outlet</a></li>
+                <li><a href="#">📞 Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
         <section>
             <div class="container container-carrito">
@@ -17,7 +55,9 @@
                     <div class="productos-cart">
                         <article class="producto-cart">
                             <div class="info-producto-cart">
-                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <a href="/categoria/productos/producto-individual.html">
+                                    <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                </a>
                                 <p class="precio-producto-cart">$5000</p>
                             </div>
                             <div class="accion-producto-cart">
@@ -31,7 +71,9 @@
                         </article>
                         <article class="producto-cart">
                             <div class="info-producto-cart">
-                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <a href="/categoria/productos/producto-individual.html">
+                                    <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                </a>
                                 <p class="precio-producto-cart">$5000</p>
                             </div>
                             <div class="accion-producto-cart">
@@ -45,7 +87,9 @@
                         </article>
                         <article class="producto-cart">
                             <div class="info-producto-cart">
-                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <a href="/categoria/productos/producto-individual.html">
+                                    <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                </a>
                                 <p class="precio-producto-cart">$5000</p>
                             </div>
                             <div class="accion-producto-cart">
@@ -59,7 +103,9 @@
                         </article>
                         <article class="producto-cart">
                             <div class="info-producto-cart">
-                                <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                <a href="/categoria/productos/producto-individual.html">
+                                    <h3 class="nombre-producto-cart">Nombre de producto</h3>
+                                </a>
                                 <p class="precio-producto-cart">$5000</p>
                             </div>
                             <div class="accion-producto-cart">
@@ -94,7 +140,8 @@
                             <p class="texto-resumen">Total: </p>
                             <p id="total">$50.000</p>
                         </div>
-                        <button id="finalizar-compra">Finalizar Compra</button>
+                        <a href="/carrito-compras/checkout.html"><button id="finalizar-compra">Finalizar
+                                Compra</button></a>
                     </div>
                 </div>
             </div>
@@ -112,61 +159,69 @@
                         </svg></button>
                     <div class="slider-productos">
                         <article class="producto-card">
-                            <img src="https://placehold.co/400x400" alt="Producto 1">
-                            <div class="producto-card-content">
-                                <div class="producto-info">
-                                    <h3>Producto 1</h3>
-                                    <p>Categoría 1</p>
+                            <a href="/categoria/productos/producto-individual.html">
+                                <img src="https://placehold.co/400x400" alt="Producto 1">
+                                <div class="producto-card-content">
+                                    <div class="producto-info">
+                                        <h3>Producto 1</h3>
+                                        <p>Categoría 1</p>
+                                    </div>
+                                    <div class="producto-precio">
+                                        <p>Precio:<br>$50</p>
+                                    </div>
                                 </div>
-                                <div class="producto-precio">
-                                    <p>Precio:<br>$50</p>
-                                </div>
-                            </div>
+                            </a>
                             <div class="producto-card-actions">
                                 <button>Agregar al carrito</button>
                             </div>
                         </article>
                         <article class="producto-card">
-                            <img src="https://placehold.co/400x400" alt="Producto 1">
-                            <div class="producto-card-content">
-                                <div class="producto-info">
-                                    <h3>Producto 1</h3>
-                                    <p>Categoría 1</p>
+                            <a href="/categoria/productos/producto-individual.html">
+                                <img src="https://placehold.co/400x400" alt="Producto 1">
+                                <div class="producto-card-content">
+                                    <div class="producto-info">
+                                        <h3>Producto 1</h3>
+                                        <p>Categoría 1</p>
+                                    </div>
+                                    <div class="producto-precio">
+                                        <p>Precio:<br>$50</p>
+                                    </div>
                                 </div>
-                                <div class="producto-precio">
-                                    <p>Precio:<br>$50</p>
-                                </div>
-                            </div>
+                            </a>
                             <div class="producto-card-actions">
                                 <button>Agregar al carrito</button>
                             </div>
                         </article>
                         <article class="producto-card">
-                            <img src="https://placehold.co/400x400" alt="Producto 1">
-                            <div class="producto-card-content">
-                                <div class="producto-info">
-                                    <h3>Producto 1</h3>
-                                    <p>Categoría 1</p>
+                            <a href="/categoria/productos/producto-individual.html">
+                                <img src="https://placehold.co/400x400" alt="Producto 1">
+                                <div class="producto-card-content">
+                                    <div class="producto-info">
+                                        <h3>Producto 1</h3>
+                                        <p>Categoría 1</p>
+                                    </div>
+                                    <div class="producto-precio">
+                                        <p>Precio:<br>$50</p>
+                                    </div>
                                 </div>
-                                <div class="producto-precio">
-                                    <p>Precio:<br>$50</p>
-                                </div>
-                            </div>
+                            </a>
                             <div class="producto-card-actions">
                                 <button>Agregar al carrito</button>
                             </div>
                         </article>
                         <article class="producto-card">
-                            <img src="https://placehold.co/400x400" alt="Producto 1">
-                            <div class="producto-card-content">
-                                <div class="producto-info">
-                                    <h3>Producto 1</h3>
-                                    <p>Categoría 1</p>
+                            <a href="/categoria/productos/producto-individual.html">
+                                <img src="https://placehold.co/400x400" alt="Producto 1">
+                                <div class="producto-card-content">
+                                    <div class="producto-info">
+                                        <h3>Producto 1</h3>
+                                        <p>Categoría 1</p>
+                                    </div>
+                                    <div class="producto-precio">
+                                        <p>Precio:<br>$50</p>
+                                    </div>
                                 </div>
-                                <div class="producto-precio">
-                                    <p>Precio:<br>$50</p>
-                                </div>
-                            </div>
+                            </a>
                             <div class="producto-card-actions">
                                 <button>Agregar al carrito</button>
                             </div>
@@ -184,6 +239,41 @@
             </div>
         </section>
     </main>
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <a href="/">
+                    <div class="logo-placeholder"></div>
+                    <span>PetLove</span>
+                </a>
+            </div>
+
+            <div class="footer-links">
+                <ul>
+                    <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="/terminos-condiciones">Términos y condiciones</a></li>
+                    <li><a href="/politicas-privacidad">Políticas de privacidad</a></li>
+                    <li><a href="/cambios-devoluciones">Cambios y devoluciones</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/nosotros">Nosotros</a></li>
+                    <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="/horario-atencion">Horario de atención</a></li>
+                    <li><a href="/sugerencias-reclamos">Sugerencias y reclamos</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Company name. All Rights Reserved</p>
+            <div class="social">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Instagram">◎</a>
+                <a href="#" aria-label="YouTube">▶</a>
+                <a href="#" aria-label="TikTok">♪</a>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
