@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Historial Médico</title>
+</head>
+
+<body>
+    <main>
+        <section>
+            <div class="container">
+                <h1 class="titulo-seccion">Historial Médico</h1>
+                <div class="tabs-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active">Consultas</button>
+                        <button class="tab-btn">Vacunas</button>
+                        <button class="tab-btn">Examenes</button>
+                    </div>
+                    <div id="consultas" class="tab-content active">
+                        <button class="btn-1 btn-add" id="agregar-consulta">Agregar Consulta</button>
+                        <div class="filtro-tabla">
+                            <div class="filtro-wrapper">
+                                <form class="form-column" id="filtro-form-consultas" method="get">
+                                    <label for="filtro-clinica">Clinica</label>
+                                    <select name="filtro-clinica" id="filtro-clincia">
+                                        <option value="clinica-1">Clinica 1</option>
+                                        <option value="clinica-2">Clinica 2</option>
+                                        <option value="clinica-3">Clinica 3</option>
+                                    </select>
+                                    <label for="filtro-veterinario">Veterinario</label>
+                                    <select name="filtro-veterinario" id="filtro-veterinario">
+                                        <option value="vet-1">Veterinario 1</option>
+                                        <option value="vet-2">Veterinario 2</option>
+                                        <option value="vet-3">Veterinario 3</option>
+                                    </select>
+                                    <label for="filtro-fecha-desde">Desde</label>
+                                    <input type="date" id="filtro-fecha-desde" name="filtro-fecha-desde">
+                                    <label for="filtro-fecha-hasta">Hasta</label>
+                                    <input type="date" id="filtro-fecha-hasta" name="filtro-fecha-hasta">
+                                    <button class="btn-1">Buscar</button>
+                                </form>
+                            </div>
+                            <div class="tabla-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Clinica</th>
+                                            <th>Veterinario</th>
+                                            <th>Fecha</th>
+                                            <th>Descripción</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="vacunas" class="tab-content">
+                        <div class="tab-head-vacuna">
+                            <input type="text" name="buscar" id="buscar" placeholder="Buscar">
+                            <button class="btn-1" id="agregar-vacuna">Agregar Vacuna</button>
+                        </div>
+                        <div class="filtro-tabla">
+                            <div class="filtro-wrapper">
+                                <form class="form-column" id="filtro-form-vacunas" method="get">
+                                    <label for="filtro-clinica">Clinica</label>
+                                    <select name="filtro-clinica" id="filtro-clincia">
+                                        <option value="clinica-1">Clinica 1</option>
+                                        <option value="clinica-2">Clinica 2</option>
+                                        <option value="clinica-3">Clinica 3</option>
+                                    </select>
+                                    <label for="filtro-veterinario">Veterinario</label>
+                                    <select name="filtro-veterinario" id="filtro-veterinario">
+                                        <option value="vet-1">Veterinario 1</option>
+                                        <option value="vet-2">Veterinario 2</option>
+                                        <option value="vet-3">Veterinario 3</option>
+                                    </select>
+                                    <label for="filtro-fecha-desde">Desde</label>
+                                    <input type="date" id="filtro-fecha-desde" name="filtro-fecha-desde">
+                                    <label for="filtro-fecha-hasta">Hasta</label>
+                                    <input type="date" id="filtro-fecha-hasta" name="filtro-fecha-hasta">
+                                    <button class="btn-1">Buscar</button>
+                                </form>
+                            </div>
+                            <div class="tabla-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Clinica</th>
+                                            <th>Veterinario</th>
+                                            <th>Fecha</th>
+                                            <th>Vacuna</th>
+                                            <th>Detalles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="examenes" class="tab-content">
+                        <div class="tab-head-examen">
+                            <div class="filtro-wrapper">
+                                <form class="form-row" id="filtro-form-examenes" method="get">
+                                    <div class="form-group">
+                                        <label for="filtro-examen">Examen</label>
+                                        <input type="text" name="buscar" id="buscar" placeholder="Buscar">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filtro-tipo">Tipo</label>
+                                        <select name="filtro-tipo" id="filtro-tipo">
+                                            <option value="tipo-1">Tipo 1</option>
+                                            <option value="tipo-2">Tipo 2</option>
+                                            <option value="tipo-3">Tipo 3</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filtro-fecha">Fecha</label>
+                                        <input type="date" id="filtro-fecha" name="filtro-fecha">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filtro-clinica">Clinica</label>
+                                        <select name="filtro-clinica" id="filtro-clinica">
+                                            <option value="clinica-1">Clinica 1</option>
+                                            <option value="clinica-2">Clinica 2</option>
+                                            <option value="clinica-3">Clinica 3</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <button class="btn-1" id="agregar-vacuna">Agregar Examen</button>
+                        </div>
+                        <div class="tabla-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Clinica</th>
+                                        <th>Veterinario</th>
+                                        <th>Fecha</th>
+                                        <th>Vacuna</th>
+                                        <th>Detalles</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="visual-examen">
+                            <img src="https://placehold.co/612x792.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="modal-consulta" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar consulta</h3>
+                <form id="form-consulta" method="post">
+                    <div class="form-group">
+                        <label for="clinica-consulta">Clinica</label>
+                        <input type="text" name="clinica-consulta" id="clinica-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="veterinario-consulta">Veterinario</label>
+                        <input type="text" name="veterinario-consulta" id="veterinario-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-consulta">Fecha</label>
+                        <input type="date" id="fecha-consulta" name="fecha-consulta">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion-consulta">Descripción</label>
+                        <textarea name="descripcion-consulta" id="descripcion-consulta" rows="10"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <button type="button">Cancel</button>
+                        <button type="submit">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="modal-vacuna" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar vacuna</h3>
+                <form id="form-vacuna" method="post">
+                    <div class="form-group">
+                        <label for="clinica-vacuna">Clinica</label>
+                        <input type="text" name="clinica-vacuna" id="clinica-vacuna">
+                    </div>
+                    <div class="form-group">
+                        <label for="veterinario-vacuna">Veterinario</label>
+                        <input type="text" name="veterinario-vacuna" id="veterinario-vacuna">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre-vacuna">Vacuna</label>
+                            <select name="nombre-vacuna" id="nombre-vacuna">
+                                <option value="vacuna-1">Vacuna 1</option>
+                                <option value="vacuna-2">Vacuna 2</option>
+                                <option value="vacuna-3">Vacuna 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="marca-vacuna">Vacuna</label>
+                            <select name="marca-vacuna" id="marca-vacuna">
+                                <option value="marca-1">Marca 1</option>
+                                <option value="marca-2">Marca 2</option>
+                                <option value="marca-3">Marca 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-vacuna">Fecha</label>
+                            <input type="date" id="fecha-vacuna" name="fecha-vacuna">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-proxima-vacuna">Proxima Dosis</label>
+                            <input type="date" id="fecha-proxima-vacuna" name="fecha-proxima-vacuna">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="button">Cancel</button>
+                        <button type="submit">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="modal-examen" class="modal-section">
+            <div class="modal-container">
+                <h3 class="modal-title">Agregar / Editar exámen</h3>
+                <form id="form-examen" method="post">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre-examen">Examen</label>
+                            <input type="text" name="nombre-examen" id="nombre-examen">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo-examen">Tipo</label>
+                            <select name="tipo-examen" id="tipo-examen">
+                                <option value="tipo-1">Tipo 1</option>
+                                <option value="tipo-2">Tipo 2</option>
+                                <option value="tipo-3">Tipo 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-examen">Fecha</label>
+                            <input type="date" id="fecha-examen" name="fecha-examen">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clinica-examen">Clinica</label>
+                            <input type="text" name="clinica-examen" id="clinica-examen">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="doc-examen">Documento</label>
+                        <input type="file" name="doc-examen" id="doc-examen">
+                    </div>
+                    <div class="form-row">
+                        <button type="button">Cancel</button>
+                        <button type="submit">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
