@@ -66,6 +66,20 @@ button {
     padding: 0 30px;
 }
 
+.tab-content {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-btn {
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
 .hero img {
     width: 100%
 }
@@ -146,6 +160,57 @@ button {
     cursor: pointer;
 }
 
+.btn-add {
+    margin-bottom: 20px;
+    align-self: end;
+}
+
+
+.tab-head-vacuna {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.tab-head-examen {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-bottom: 20px;
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+#examenes {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+}
+
+#examenes .tabla-wrapper {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+#examenes .visual-examen {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    overflow-y: auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.visual-examen img {
+    width: 100%;
+}
+
 .banner {
     position: relative;
 }
@@ -168,6 +233,12 @@ button {
     cursor: pointer;
 }
 
+.form-column{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
 .filtro-productos {
     display: grid;
     gap: 20px;
@@ -188,6 +259,76 @@ button {
     gap: 10px;
 }
 
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+thead th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.tabla-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filtro-tabla {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+}
+
+.modal-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+    background-color: #06060650;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 70vw;
+    padding: 0 30px;
+    max-width: 100%
+}
+
+.form-row .form-group {
+    width: 100%;
+}
+
+.modal-container {
+    padding: 30px;
+    background-color: #ffffff;
+    border: solid 2px #e0e0e0;
+}
+
+.modal-container .form-row:last-child {
+    justify-content: flex-end;
+}
+
 .productos-lista {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -206,6 +347,7 @@ button {
     top: 50%;
     margin: 0;
 }
+
 
 .ver-mas-categoria {
     grid-column: 2/3;
