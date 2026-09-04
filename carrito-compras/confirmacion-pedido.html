@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <title>Confirmación de pedido</title>
+</head>
+
+<body>
+    <header class="site-header">
+        <!-- BARRA SUPERIOR OSCURA -->
+        <div class="top-bar">
+            <div class="left">
+                <button class="menu-btn" aria-label="Menú">☰</button>
+                <a href="/index.html" class="logo">
+                    <img src="/logo-petlove.svg" alt="Petlove">
+                </a>
+            </div>
+
+            <div class="center">
+                <form class="search-form" action="/buscar" method="GET" role="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" name="q" placeholder="Buscar">
+                </form>
+            </div>
+
+            <div class="right">
+                <a href="#" class="login-link">Iniciar sesión / registrar</a>
+                <a href="/mi-perfil/perfil-usuario.html" aria-label="Mi cuenta">👤</a>
+                <a href="/carrito-compras.html" aria-label="Carrito">🛒</a>
+            </div>
+        </div>
+
+        <!-- BARRA INFERIOR DE CATEGORÍAS -->
+        <nav class="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                <li><a href="#">☰ Categorías</a></li>
+                <li><a href="/servicios-veterinarios/agendar-veterinario-lista-servicios.html">🩺 Servicios
+                        veterinarios</a></li>
+                <li><a href="/categoria/categoria-productos.html">💊 Farmacia</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐱 Gato</a></li>
+                <li><a href="/categoria/categoria-productos.html">🐶 Perro</a></li>
+                <li><a href="/categoria/categoria-productos.html">🏷️ Outlet</a></li>
+                <li><a href="#">📞 Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="container confirmacion-container">
+                <div class="info-confirmacion">
+                    <div class="confirmacion-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 12l5 5l10 -10" />
+                        </svg>
+                        <h1>¡Recibimos tu pedido!</h1>
+                        <p>Muchas gracias por comprar con nosotros.</p>
+                    </div>
+                    <div class="detalles-entrega">
+                        <h2>Detalles de entrega</h2>
+                        <div class="content-detalle-entrega">
+                            <h3>Entrega para: </h3>
+                            <p>Nombre: John Doe</p>
+                            <p>Numero de teléfono: 123-456-7890</p>
+                        </div>
+                        <div class="content-detalle-entrega">
+                            <h3>Modo de entrega: </h3>
+                            <p>Delivery</p>
+                            <p>2 a 3 días</p>
+                        </div>
+                        <div class="content-detalle-entrega">
+                            <h3>Dirección de entrega: </h3>
+                            <p>123 Main Street</p>
+                            <p>Comuna, Ciudad</p>
+                        </div>
+                    </div>
+                    <div class="resumen-pedido">
+                        <h2>Resumen del pedido</h2>
+                        <article class="producto-cart-confirmacion">
+                            <img src="https://placehold.co/40x40" alt="" class="thumbnail-producto-cart">
+                            <div class="info-producto-cart-confirmacion">
+                                <div class="nombre-cantidad">
+                                    <a href="/categoria/productos/producto-individual.html">
+                                        <h3 class="nombre-producto-cart-confirmacion">Nombre de producto</h3>
+                                    </a>
+                                    <p class="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
+                                </div>
+                                <p class="precio-producto-cart-confirmacion">$5000</p>
+                            </div>
+                        </article>
+                        <article class="producto-cart-confirmacion">
+                            <img src="https://placehold.co/40x40" alt="" class="thumbnail-producto-cart">
+                            <div class="info-producto-cart-confirmacion">
+                                <div class="nombre-cantidad">
+                                    <a href="/categoria/productos/producto-individual.html">
+                                        <h3 class="nombre-producto-cart-confirmacion">Nombre de producto</h3>
+                                    </a>
+                                    <p class="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
+                                </div>
+                                <p class="precio-producto-cart-confirmacion">$5000</p>
+                            </div>
+                        </article>
+                        <article class="producto-cart-confirmacion">
+                            <img src="https://placehold.co/40x40" alt="" class="thumbnail-producto-cart">
+                            <div class="info-producto-cart-confirmacion">
+                                <div class="nombre-cantidad">
+                                    <a href="/categoria/productos/producto-individual.html">
+                                        <h3 class="nombre-producto-cart-confirmacion">Nombre de producto</h3>
+                                    </a>
+                                    <p class="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
+                                </div>
+                                <p class="precio-producto-cart-confirmacion">$5000</p>
+                            </div>
+                        </article>
+                        <article class="producto-cart-confirmacion">
+                            <img src="https://placehold.co/40x40" alt="" class="thumbnail-producto-cart">
+                            <div class="info-producto-cart-confirmacion">
+                                <div class="nombre-cantidad">
+                                    <a href="/categoria/productos/producto-individual.html">
+                                        <h3 class="nombre-producto-cart-confirmacion">Nombre de producto</h3>
+                                    </a>
+                                    <p class="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
+                                </div>
+                                <p class="precio-producto-cart-confirmacion">$5000</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <button class="seguimiento-pedido">Seguimiento del pedido</button>
+                <button class="seguir-comprando">Seguir comprando</button>
+            </div>
+
+
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <a href="/">
+                    <div class="logo-placeholder"></div>
+                    <span>PetLove</span>
+                </a>
+            </div>
+
+            <div class="footer-links">
+                <ul>
+                    <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="/terminos-condiciones">Términos y condiciones</a></li>
+                    <li><a href="/politicas-privacidad">Políticas de privacidad</a></li>
+                    <li><a href="/cambios-devoluciones">Cambios y devoluciones</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/nosotros">Nosotros</a></li>
+                    <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="/horario-atencion">Horario de atención</a></li>
+                    <li><a href="/sugerencias-reclamos">Sugerencias y reclamos</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Company name. All Rights Reserved</p>
+            <div class="social">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Instagram">◎</a>
+                <a href="#" aria-label="YouTube">▶</a>
+                <a href="#" aria-label="TikTok">♪</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
