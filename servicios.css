@@ -1,0 +1,209 @@
+.carrito-page{
+    max-width:1100px;
+    margin:20px auto;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:1fr 320px;
+    gap:20px;
+    font-family:Arial,sans-serif
+}
+.carrito-left{
+    border:1px solid #333;
+    background:#fff;
+    padding:15px
+}
+.carrito-title{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:5px
+}
+.carrito-empty{
+    text-align:center;
+    padding:40px 0;
+    font-size:12px;
+    color:#888
+}
+.carrito-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+    padding:14px 0
+}
+.item-info{
+    display:flex;
+    flex-direction:column;
+    gap:6px
+}
+.item-nombre{
+    font-size:12px;
+    font-weight:700;
+    line-height:1.2
+}
+.item-mascota{
+    font-size:10px;
+    color:#666
+}
+.item-eliminar{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    background:none;
+    border:none;
+    color:#c00;
+    font-size:10px;
+    cursor:pointer;
+    padding:0
+}
+.item-eliminar svg{stroke:#c00}
+.item-eliminar:hover{color:#900;text-decoration:underline}
+
+.item-right{
+    display:flex;
+    align-items:center;
+    gap:20px
+}
+.item-precio{
+    font-size:12px;
+    font-weight:700;
+    min-width:60px;
+    text-align:right
+}
+.qty-box{
+    display:flex;
+    border:1px solid #333
+}
+.qty-box button{
+    width:24px;
+    height:22px;
+    border:none;
+    cursor:pointer;
+    font-size:12px
+}
+.qty-box button:first-child{background:#7fb6e6;color:#fff}
+.qty-box button:last-child{background:#fff;color:#333;border-left:1px solid #333}
+.qty-box span{
+    width:30px;
+    text-align:center;
+    font-size:11px;
+    line-height:22px;
+    border-left:1px solid #333;
+    border-right:1px solid #333;
+    background:#fff
+}
+
+/* Columna derecha */
+.carrito-right{
+    display:flex;
+    flex-direction:column;
+    gap:15px
+}
+.box-borde{
+    border:1px solid #333;
+    background:#fff;
+    padding:12px
+}
+.box-title{
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:8px
+}
+.cupon-row{
+    display:flex;
+    gap:5px
+}
+.cupon-row input{
+    flex:1;
+    border:1px solid #333;
+    padding:7px;
+    font-size:11px
+}
+.cupon-row button{
+    border:1px solid #333;
+    background:#f2f2f2;
+    padding:7px 10px;
+    font-size:10px;
+    cursor:pointer
+}
+.resumen-line{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    margin:8px 0
+}
+.resumen-total{
+    border-top:1px solid #333;
+    padding-top:10px;
+    margin-top:10px;
+    font-weight:700
+}
+.resumen-total span:last-child{
+    color:#2a7bff;
+    font-size:15px
+}
+.btn-finalizar{
+    width:100%;
+    background:#5a5a5a;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:11px;
+    margin-top:12px;
+    font-size:12px;
+    cursor:pointer
+}
+.btn-finalizar:disabled{
+    background:#999;
+    opacity:.4;
+    cursor:not-allowed
+}
+
+/* Te falto algo */
+.falto-algo{grid-column:1 / -1}
+.falto-algo h3{font-size:14px;margin:15px 0}
+.carrusel{display:flex;align-items:center;gap:10px}
+.carrusel-btn{
+    background:none;
+    border:1px solid #333;
+    width:28px;
+    height:28px;
+    cursor:pointer;
+    font-size:18px
+}
+.carrusel-items{
+    display:flex;
+    gap:15px;
+    overflow-x:auto;
+    flex:1;
+    scroll-behavior:smooth
+}
+.carrusel-card{
+    border:1px solid #333;
+    min-width:130px;
+    height:110px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    gap:8px
+}
+.img-x{
+    width:60px;
+    height:50px;
+    border:1px solid #999;
+    background:
+      linear-gradient(to top right, transparent 49%, #999 49%, #999 51%, transparent 51%),
+      linear-gradient(to bottom right, transparent 49%, #999 49%, #999 51%, transparent 51%)
+}
+.carrusel-card button{
+    font-size:8px;
+    border:1px solid #333;
+    background:#fff;
+    padding:3px 8px;
+    cursor:pointer
+}
+
+@media(max-width:800px){
+   .carrito-page{grid-template-columns:1fr}
+}

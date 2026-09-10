@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetLove - Agendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main class="page-agendar">
+    <div class="stepper-container">
+        <div class="stepper">
+            <div class="step active"><div class="step-circle">1</div><span>Fecha y hora</span></div>
+            <div class="step-line active-line"></div>
+            <div class="step"><div class="step-circle">2</div><span>Profesional</span></div>
+            <div class="step-line"></div>
+            <div class="step"><div class="step-circle">3</div><span>Datos de contacto</span></div>
+        </div>
+    </div>
+
+    <section class="card-box">
+        <h2 class="section-title">Selecciona fecha y hora de tu servicio</h2>
+
+        <div class="week-nav">
+            <button id="prevWeek">◀</button>
+            <div class="week-label">
+                <strong id="rangoSemana"></strong>
+                <span>Lunes a Sábado</span>
+            </div>
+            <button id="nextWeek">▶</button>
+        </div>
+
+        <div class="gcal-wrapper">
+            <div class="gcal-header" id="gcalHeader"></div>
+            <div class="gcal-body" id="gcalBody"></div>
+        </div>
+
+        <div class="horas-detalle-box" id="horasBox">
+            <p class="hint-box">Selecciona recuadros del calendario para agregar horas aquí</p>
+        </div>
+    </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script>
+fetch('header.html').then(r=>r.text()).then(h=>document.getElementById('header-placeholder').innerHTML=h);
+fetch('footer.html').then(r=>r.text()).then(h=>document.getElementById('footer-placeholder').innerHTML=h);
+
+const horasSemana = ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"];
+const gcalHeader = document.getElementById('gcalHeader');
+const gcalBody = document.getElementById('gcalBody');
+const horasBox = document.getElementById('horasBox');
+const rangoSemana = document.getElementById('rangoSemana');
+
+let fechaActual = new Date(); // Este año
+let seleccionadas = [];
+let boxInicializado = false;
+
+function getLunes(d){
+    const date = new Date(d);
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0? -6 : 1); // Lunes
+    return new Date(date.setDate(diff));
+}
+
+function renderSemana(){
+    const lunes = getLunes(fechaActual);
+    const dias = [];
+    for(let i=0;i<6;i++){
+        const d = new Date(lunes);
+        d.setDate(lunes.getDate()+i);
+        dias.push(d);
+    }
+
+    // Muestra año en curso
+    rangoSemana.textContent = `Semana del ${dias[0].getDate()} al ${dias[5].getDate()} de ${dias[5].toLocaleString('es',{month:'long'})} ${dias[5].getFullYear()}`;
+
+    gcalHeader.innerHTML = `<div class="gcal-hour-label"></div>` + dias.map(d=>`
+        <div class="gcal-day ${d.toDateString() === new Date().toDateString()? 'hoy' : ''}">
+            <span>${d.toLocaleString('es',{weekday:'short'}).toUpperCase()}</span><b>${d.getDate()}</b>
+        </div>
+    `).join('');
+
+    gcalBody.innerHTML = '';
+    horasSemana.forEach(hora=>{
+        const row = document.createElement('div');
+        row.className = 'gcal-row';
+        let html = `<div class="gcal-hour">${hora}</div>`;
+        dias.forEach((d)=>{
+            const fechaStr = d.toISOString().split('T')[0];
+            const esPasado = d < new Date(new Date().setHours(0,0,0,0));
+            const disponible =!esPasado && Math.random() > 0.4;
+            html += `<div class="gcal-cell ${disponible?'disponible':''} ${esPasado?'pasado':''}" data-fecha="${fechaStr}" data-dia="${d.getDate()}" data-hora="${hora}"></div>`;
+        });
+        row.innerHTML = html;
+        gcalBody.appendChild(row);
+    });
+
+    // Restaurar seleccionados
+    document.querySelectorAll('.gcal-cell').forEach(cell=>{
+        const key = `${cell.dataset.fecha}-${cell.dataset.hora}`;
+        if(seleccionadas.find(s=>s.key===key)){
+            cell.classList.add('cell-selected');
+        }
+    });
+}
+
+// Navegación
+document.getElementById('prevWeek').addEventListener('click', ()=>{
+    fechaActual.setDate(fechaActual.getDate()-7);
+    renderSemana();
+});
+document.getElementById('nextWeek').addEventListener('click', ()=>{
+    fechaActual.setDate(fechaActual.getDate()+7);
+    renderSemana();
+});
+
+function clasificarHora(hora){
+    const h = parseInt(hora.split(':')[0]);
+    if(h < 12) return 'Mañana';
+    if(h < 18) return 'Tarde';
+    return 'Noche';
+}
+
+function agregarHora(fecha, dia, hora){
+    const key = `${fecha}-${hora}`;
+    if(seleccionadas.find(s=>s.key===key)) return;
+    if(!boxInicializado){
+        horasBox.innerHTML = `<div id="contenedorHoras"></div><button class="btn-confirmar-dark" id="btnConfirmar">Confirmar</button>`;
+        boxInicializado = true;
+    }
+    seleccionadas.push({key, fecha, dia, hora, bloque: clasificarHora(hora)});
+    renderHorasAgregadas();
+}
+
+function renderHorasAgregadas(){
+    const cont = document.getElementById('contenedorHoras');
+    if(!cont) return;
+    cont.innerHTML = '';
+    const grupos = { Mañana: [], Tarde: [], Noche: [] };
+    seleccionadas.forEach(s=> grupos[s.bloque].push(s));
+
+    for(let bloque in grupos){
+        if(grupos[bloque].length===0) continue;
+        const div = document.createElement('div');
+        div.className = 'bloque-hora';
+        div.innerHTML = `<h4>${bloque}</h4><div class="horas-lista"></div>`;
+        const lista = div.querySelector('.horas-lista');
+        grupos[bloque].forEach(s=>{
+            const btn = document.createElement('button');
+            btn.className = 'hora-pill selected';
+            btn.innerHTML = `${s.hora} <span style="font-size:9px">Día ${s.dia}</span> <i style="margin-left:6px;cursor:pointer" data-del="${s.key}">x</i>`;
+            lista.appendChild(btn);
+        });
+        cont.appendChild(div);
+    }
+
+    cont.querySelectorAll('[data-del]').forEach(x=>{
+        x.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            eliminarHora(x.dataset.del);
+        });
+    });
+}
+
+function eliminarHora(key){
+    seleccionadas = seleccionadas.filter(s=>s.key!==key);
+    document.querySelectorAll('.gcal-cell').forEach(c=>{
+        if(`${c.dataset.fecha}-${c.dataset.hora}`===key) c.classList.remove('cell-selected');
+    });
+    if(seleccionadas.length===0){
+        horasBox.innerHTML = `<p class="hint-box">Selecciona recuadros del calendario para agregar horas aquí</p>`;
+        boxInicializado = false;
+    } else {
+        renderHorasAgregadas();
+    }
+}
+
+gcalBody.addEventListener('click', e=>{
+    if(e.target.classList.contains('disponible')){
+        const fecha = e.target.dataset.fecha;
+        const dia = e.target.dataset.dia;
+        const hora = e.target.dataset.hora;
+        const key = `${fecha}-${hora}`;
+        if(e.target.classList.contains('cell-selected')){
+            e.target.classList.remove('cell-selected');
+            eliminarHora(key);
+        } else {
+            e.target.classList.add('cell-selected');
+            agregarHora(fecha, dia, hora);
+        }
+    }
+});
+
+renderSemana();
+</script>
+</body>
+</html>

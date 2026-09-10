@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recibo Pedido - PetLove</title>
+<link rel="stylesheet" href="recibo-pedido.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <span>☰ Categorias</span>
+    <span>Servicios veterinarios</span>
+    <span>Farmacia</span>
+    <span>Gato</span>
+    <span>Perro</span>
+    <span>Outlet</span>
+    <span>Contacto</span>
+  </div>
+  <div>🔍 🛒 Usuario</div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <div class="check">✓</div>
+    <h1>¡Recibimos tu pedido!</h1>
+    <p class="subtitle">Muchas gracias por comprar con nosotros</p>
+
+    <h3>Detalles de entrega</h3>
+    <div class="grid2">
+      <div>
+        <b>Entrega para:</b>
+        <span id="nombreUsuario">Nombre de usuario</span><br>
+        <span id="telefonoUsuario">Número de teléfono</span>
+        <br><br>
+        <b>Dirección de entrega:</b>
+        <span id="direccionUsuario">Dirección<br>Comuna, Ciudad</span>
+      </div>
+      <div>
+        <b>Modo de entrega:</b>
+        Delivery<br>
+        2 a 3 días
+      </div>
+    </div>
+
+    <hr>
+    <h3>Resumen del pedido</h3>
+    
+    <div id="resumenPedido">
+      <div class="producto">
+        <div class="img-box"></div>
+        <div class="prod-info">Nombre producto<br>Cantidad</div>
+        <div class="prod-price">$7.490</div>
+      </div>
+      <div class="producto">
+        <div class="img-box"></div>
+        <div class="prod-info">Nombre producto<br>Cantidad</div>
+        <div class="prod-price">$7.490</div>
+      </div>
+      <div class="producto">
+        <div class="img-box"></div>
+        <div class="prod-info">Nombre producto<br>Cantidad</div>
+        <div class="prod-price">$7.490</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="btn" id="btnSeguimiento">Seguimiento del pedido</button>
+    <button class="btn dark" id="btnSeguirComprando">Seguir comprando</button>
+  </div>
+</div>
+
+<footer>
+  <div class="logo-foot">☒<br>PetLove</div>
+  <div>
+    <b>Reservas</b>
+    Correo de contacto<br>
+    Teléfono: +56 9...<br>
+    Políticas de privacidad<br>
+    Cambios y devoluciones
+  </div>
+  <div>
+    <b>Preguntas frecuentes</b>
+    Términos y condiciones<br>
+    Políticas de privacidad<br>
+    Cambios y devoluciones
+  </div>
+  <div>
+    <b>Nosotros</b>
+    Sobre nosotros<br>
+    Ponle de clientes<br>
+    Sugerencias y reclamos
+  </div>
+</footer>
+
+<script src="recibo-pedido.js"></script>
+</body>
+</html>
