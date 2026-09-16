@@ -1,0 +1,46 @@
+<header class="site-header">
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="left">
+            <button class="menu-btn" aria-label="Menú">☰</button>
+            <a href="../index.html" class="logo">
+                <img src="../logo-petlove.svg" alt="Petlove">
+            </a>
+        </div>
+        <div class="center">
+            <form class="search-form" action="/buscar" method="GET" role="search">
+                <span class="search-icon">⌕</span>
+                <input type="search" name="q" placeholder="Buscar">
+            </form>
+        </div>
+        <div class="right">
+            <a href="/login" class="login-link">Iniciar sesión / registrar</a>
+            <a href="/cuenta" aria-label="Mi cuenta">👤</a>
+            <a href="/carrito" aria-label="Carrito">🛒</a>
+        </div>
+    </div>
+
+    <!-- BARRA INFERIOR CATEGORÍAS -->
+    <nav class="bottom-bar" aria-label="Categorías principales">
+        <ul>
+            <li><a href="#">☰ Categorías</a></li>
+            <li class="has-dropdown">
+                <a href="../servicios-veterinarios/agendar-veterinario.html" id="servicios-toggle">🩺 Servicios veterinarios ▾</a>
+                <ul class="dropdown-menu" id="dropdown-servicios">
+                    <li><a href="agendar-veterinario.html">1. Lista de servicios</a></li>
+                    <li><a href="agendar-fecha-hora-veterinario.html">2. Calendario / Fecha</a></li>
+                    <li><a href="agendar-veterinario-profesional.html">3. Profesionales</a></li>
+                    <li><a href="agendar-veterinario-datos-contacto.html">4. Datos contacto</a></li>
+                    <li><a href="agendar-veterinario-confirmacion.html">5. Confirmación</a></li>
+                </ul>
+            </li>
+            <li><a href="../categoria/categoria-productos.html">💊 Farmacia</a></li>
+            <li><a href="../categoria/categoria-productos.html">🐱 Gato</a></li>
+            <li><a href="../categoria/categoria-productos.html">🐶 Perro</a></li>
+            <li><a href="../categoria/categoria-productos.html">🦜 Aves</a></li>
+            <li><a href="../categoria/categoria-productos.html">🦎 Exóticos</a></li>
+            <li><a href="../categoria/categoria-productos.html">🏷️ Outlet</a></li>
+            <li><a href="#">📞 Contacto</a></li>
+        </ul>
+    </nav>
+</header>
