@@ -39,6 +39,6 @@ btnsAgendar.forEach(btn=>{
             tipo: localStorage.getItem('tipoMascota') 
         });
         localStorage.setItem('serviciosPetLove', JSON.stringify(carrito));
-        window.location.href = 'serviciosMascotas.html';
+        window.location.href = 'servicios-mascotas.html';
     });
 });

@@ -1,0 +1,189 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1, h2 {
+     color: #2c3e50; 
+     text-align: center; 
+    }
+
+.container { 
+    max-width: 1000px; 
+    margin: auto; 
+    background: white; 
+    padding: 25px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+}
+
+/* === TABLA CONTACTOS === */
+.tabla { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+}
+
+.tabla th { 
+    background: #3498db; 
+    color: white; 
+    padding: 12px; 
+    text-align: left; 
+}
+
+.tabla td { 
+    padding: 12px; 
+    border-bottom: 1px solid #ddd; 
+}
+
+.tabla tr:hover { 
+    background: #ecf0f1; 
+}
+
+.btn { 
+    padding: 6px 12px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    font-size: 14px; 
+    margin: 0 2px; 
+    display: inline-block; 
+}
+
+.btn-ver { 
+    background: #2ecc71; 
+    color: white; 
+}
+
+.btn-editar { 
+    background: #f1c40f; 
+    color: white; 
+}
+
+.btn-eliminar { 
+    background: #e74c3c; 
+    color: white; 
+}
+
+.btn:hover { 
+    opacity: 0.8; 
+}
+
+/* === FICHA CONTACTO === */
+.info-contacto { 
+    background: #ecf0f1; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+}
+
+.mascotas-grid { 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.mascota-card {
+    width: 180px; 
+    text-align: center; 
+    background: #fff; 
+    border: 2px solid #3498db;
+    border-radius: 10px; 
+    padding: 15px; 
+    text-decoration: none; 
+    color: #333;
+    transition: transform 0.2s;
+}
+
+.mascota-card:hover { 
+    transform: scale(1.05); 
+    box-shadow: 0 4px 10px rgba(52,152,219,0.3); 
+}
+
+.mascota-card img { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 10px; 
+}
+
+/* === FICHA MASCOTA === */
+.ficha { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr; 
+    gap: 20px; 
+}
+
+.ficha-foto { 
+    text-align: center; 
+}
+
+.ficha-foto img { 
+    width: 200px; 
+    height: 200px; 
+    border-radius: 10px; 
+    object-fit: cover; 
+    border: 3px solid #3498db; 
+}
+
+.ficha-datos p { 
+    margin: 8px 0; 
+}
+
+.ficha-datos strong { 
+    color: #2c3e50; 
+}
+
+.volver { 
+    display: inline-block; 
+    margin-top: 20px; 
+    color: #3498db; 
+    text-decoration: none; 
+}
+
+.volver:hover { 
+    text-decoration: underline; 
+}
+
+/* === TABLA CONTROLES MASCOTA === */
+.tabla-controles { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 15px; 
+}
+
+.tabla-controles th { 
+    background: #34495e; 
+    color: white; 
+    padding: 10px; 
+    text-align: left; 
+}
+.tabla-controles td { 
+    padding: 10px; 
+    border-bottom: 1px solid #ddd; 
+}
+
+.tabla-controles tr:nth-child(even) { 
+    background: #f9f9f9; 
+}
+
+.emergencia { 
+    color: #f39c12; 
+    font-weight: bold; 
+}
+.icono-alert { 
+    font-size: 18px; 
+    margin-right: 5px; 
+}
+
+.seccion-controles { 
+    margin-top: 30px; 
+    border-top: 2px solid #ecf0f1; 
+    padding-top: 20px; 
+}
