@@ -1,3 +1,6 @@
+import { CardCategoria } from "../components/CardCategoria"
+import { CardProducto } from "../components/CardProducto"
+
 export function Home() {
     return (
         <>
@@ -17,122 +20,71 @@ export function Home() {
             </section>
             <section>
                 <div className="container categorias-home">
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 1</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 2</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 3</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 4</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 5</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 6</h3>
-                        </a>
-                    </article>
-                    <article className="categoria-card-home">
-                        <a href="/categoria/categoria-productos.html">
-                            <img src="https://placehold.co/250x250" alt="Imagen 1" />
-                            <h3>Categoría 7</h3>
-                        </a>
-                    </article>
+                    <CardCategoria
+                        titulo="Categoría 1"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 2"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 3"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 4"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 5"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 6"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
+                    <CardCategoria
+                        titulo="Categoría 7"
+                        urlImagen="https://placehold.co/250x250"
+                        urlLink="/categoria/categoria-productos.html"
+                    />
                 </div>
             </section>
             <section>
                 <div className="container">
                     <h2 className="titulo-seccion">Ofertas</h2>
                     <div className="productos-ofertas">
-                        <article className="producto-card">
-                            <a href="/categoria/productos/producto-individual.html">
-                                <img src="https://placehold.co/400x400" alt="Producto 1" />
-                                <div className="producto-card-content">
-                                    <div className="producto-info">
-                                        <h3>Producto 1</h3>
-                                        <p>Categoría 1</p>
-                                    </div>
-                                    <div className="producto-precio">
-                                        <p>Precio:<br />$50</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="producto-card-actions">
-                                <button>Agregar al carrito</button>
-                            </div>
-                        </article>
-                        <article className="producto-card">
-                            <a href="/categoria/productos/producto-individual.html">
-                                <img src="https://placehold.co/400x400" alt="Producto 1" />
-                                <div className="producto-card-content">
-                                    <div className="producto-info">
-                                        <h3>Producto 1</h3>
-                                        <p>Categoría 1</p>
-                                    </div>
-                                    <div className="producto-precio">
-                                        <p>Precio:<br />$50</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="producto-card-actions">
-                                <button>Agregar al carrito</button>
-                            </div>
-                        </article>
-                        <article className="producto-card">
-                            <a href="/categoria/productos/producto-individual.html">
-                                <img src="https://placehold.co/400x400" alt="Producto 1" />
-                                <div className="producto-card-content">
-                                    <div className="producto-info">
-                                        <h3>Producto 1</h3>
-                                        <p>Categoría 1</p>
-                                    </div>
-                                    <div className="producto-precio">
-                                        <p>Precio:<br />$50</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="producto-card-actions">
-                                <button>Agregar al carrito</button>
-                            </div>
-                        </article>
-                        <article className="producto-card">
-                            <a href="/categoria/productos/producto-individual.html">
-                                <img src="https://placehold.co/400x400" alt="Producto 1" />
-                                <div className="producto-card-content">
-                                    <div className="producto-info">
-                                        <h3>Producto 1</h3>
-                                        <p>Categoría 1</p>
-                                    </div>
-                                    <div className="producto-precio">
-                                        <p>Precio:<br />$50</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="producto-card-actions">
-                                <button>Agregar al carrito</button>
-                            </div>
-                        </article>
+                        <CardProducto
+                            titulo="Producto 1"
+                            urlImagen="https://placehold.co/400x400"
+                            precio={50}
+                            categoria="Categoría 1"
+                        />
+                        <CardProducto
+                            titulo="Producto 2"
+                            urlImagen="https://placehold.co/400x400"
+                            precio={75}
+                            categoria="Categoría 2"
+                        />
+                        <CardProducto
+                            titulo="Producto 3"
+                            urlImagen="https://placehold.co/400x400"
+                            precio={100}
+                            categoria="Categoría 3"
+                        />
+                        <CardProducto
+                            titulo="Producto 4"
+                            urlImagen="https://placehold.co/400x400"
+                            precio={125}
+                            categoria="Categoría 4"
+                        />
                     </div>
                     <div className="ver-mas">
                         <button>Mostrar más</button>
@@ -150,7 +102,6 @@ export function Home() {
                     </div>
                 </div>
             </section>
-
         </>
     )
 }
