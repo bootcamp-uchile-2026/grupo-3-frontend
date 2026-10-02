@@ -2,7 +2,9 @@ import './App.css'
 import { Route, Routes } from 'react-router/internal/react-server-client'
 import { MainLayout } from './layout/MainLayout'
 import { Home } from './pages/Home'
+import { Tienda } from './pages/Tienda'
 import { HistorialMedico } from './pages/HistorialMedico'
+
 
 function App() {
 
@@ -11,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="tienda" element={<Tienda />} />
           <Route path="mi-perfil/perfil-mascota/historial-medico" element={<HistorialMedico />} />
         </Route>
       </Routes>
