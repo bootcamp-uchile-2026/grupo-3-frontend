@@ -1,3 +1,8 @@
+@import url(./components/FiltroTienda/FiltroTienda.css);
+@import url(./components/HeroTienda/HeroTienda.css);
+@import url(./components/OrdenTienda/OrdenTienda.css);
+
+
 body {
     margin: 0;
     padding: 0;
@@ -322,21 +327,6 @@ button {
     cursor: pointer;
 }
 
-.hero img {
-    width: 100%
-}
-
-.hero .titulo-seccion {
-    text-align: center;
-}
-
-.orden-productos {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    justify-items: center;
-    grid-column: 2/3;
-}
-
 .categorias-home {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -488,18 +478,6 @@ button {
     margin: 30px 0;
     grid-template-columns: auto minmax(0, 1fr);
 
-}
-
-.filtro {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-#filtro-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .form-row {

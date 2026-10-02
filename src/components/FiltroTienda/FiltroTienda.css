@@ -1,0 +1,10 @@
+.filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#filtro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
