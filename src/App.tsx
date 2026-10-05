@@ -1,8 +1,23 @@
 import './App.css'
-import AgendarVeterinarioDatosContacto from './pages/AgendarVeterinarioDatosContacto'
+import { Route, Routes } from 'react-router/internal/react-server-client'
+import { MainLayout } from './layout/MainLayout'
+import { Home } from './pages/Home'
+import { HistorialMedico } from './pages/HistorialMedico'
 
 function App() {
-  return <AgendarVeterinarioDatosContacto />
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="mi-perfil/perfil-mascota/historial-medico"
+            element={<HistorialMedico />}
+          />
+        </Route>
+      </Routes>
+    </>
+  )
 }
 
-export default App
+export { App }
