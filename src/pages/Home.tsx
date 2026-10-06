@@ -1,5 +1,5 @@
 import { CardCategoria } from "../components/CardCategoria"
-import { CardProducto } from "../components/CardProducto"
+import { CardProducto } from "../components/CardProducto/CardProducto"
 
 export function Home() {
     return (

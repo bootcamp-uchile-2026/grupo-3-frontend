@@ -1,0 +1,33 @@
+.producto-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.producto-card img {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.producto-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.producto-card-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.producto-card-actions button {
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -2,7 +2,7 @@ export function OrdenTienda() {
 
     return (
         <div className="orden-productos">
-            <div>
+            <div className="orden-productos-botones">
                 <button>X</button>
                 <button>X</button>
             </div>

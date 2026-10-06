@@ -1,4 +1,4 @@
-import { CardProducto } from "../components/CardProducto";
+import { CardProducto } from "../components/CardProducto/CardProducto";
 import { FiltroTienda } from "../components/FiltroTienda/FiltroTienda";
 import { HeroTienda } from "../components/HeroTienda/HeroTienda";
 import { OrdenTienda } from "../components/OrdenTienda/OrdenTienda";

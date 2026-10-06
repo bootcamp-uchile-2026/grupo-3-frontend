@@ -8,3 +8,16 @@
     flex-direction: column;
     gap: 10px;
 }
+#filtro-form fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: none;
+    margin-bottom: 10px;
+}
+
+#filtro-form legend {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}

@@ -4,35 +4,46 @@ export function FiltroTienda() {
         <div className="filtro">
             <h2>Filtros</h2>
             <div className="filtro-opciones">
-                <form id="filtro-form" method="get">
-                    <label htmlFor="categoria">Categoría:</label>
-                    <select id="categoria" name="categoria">
-                        <option value="">Todas</option>
-                        <option value="perros">Perros</option>
-                        <option value="gatos">Gatos</option>
-                        <option value="aves">Aves</option>
-                        <option value="peces">Peces</option>
-                    </select>
+                <form id="filtro-form">
+                    <fieldset>
+                        <legend>Tipo de Mascota</legend>
+                        <label><input type="checkbox" name="tipo-mascota" value="perro" /> Perro</label>
+                        <label><input type="checkbox" name="tipo-mascota" value="gato" /> Gato</label>
+                        <label><input type="checkbox" name="tipo-mascota" value="ave" /> Ave</label>
+                        <label><input type="checkbox" name="tipo-mascota" value="reptil" /> Reptil</label>
+                        <label><input type="checkbox" name="tipo-mascota" value="roedores" /> Roedores</label>
+                        <label><input type="checkbox" name="tipo-mascota" value="huron" /> Hurón</label>
+                    </fieldset>
 
-                    <label htmlFor="precio">Precio:</label>
-                    <select id="precio" name="precio">
-                        <option value="">Todos</option>
-                        <option value="0-50">$0 - $50</option>
-                        <option value="51-100">$51 - $100</option>
-                        <option value="101-200">$101 - $200</option>
-                        <option value="201-500">$201 - $500</option>
-                    </select>
+                    <fieldset>
+                        <legend>Tipo de Producto</legend>
+                        <label><input type="checkbox" name="tipo-producto" value="alimento" /> Alimento</label>
+                        <label><input type="checkbox" name="tipo-producto" value="accesorio" /> Accesorio</label>
+                        <label><input type="checkbox" name="tipo-producto" value="salud" /> Salud</label>
+                        <label><input type="checkbox" name="tipo-producto" value="farmacia" /> Farmacia</label>
+                    </fieldset>
 
-                    <label htmlFor="marca">Marca:</label>
-                    <select id="marca" name="marca">
-                        <option value="">Todas</option>
-                        <option value="marca1">Marca 1</option>
-                        <option value="marca2">Marca 2</option>
-                        <option value="marca3">Marca 3</option>
-                    </select>
-                    <label htmlFor="edad">Edad:</label>
-                    <input id="edad" name="edad" type="range" min="0" max="25" value="2" />
-                    <button>Aplicar filtros</button>
+                    <fieldset>
+                        <legend>Edad de la mascota</legend>
+                        <label><input type="checkbox" name="edad" value="adulto" /> Adulto</label>
+                        <label><input type="checkbox" name="edad" value="senior" /> Senior</label>
+                        <label><input type="checkbox" name="edad" value="cachorro" /> Cachorro</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Material</legend>
+                        <label><input type="checkbox" name="material" value="acero" /> Acero</label>
+                        <label><input type="checkbox" name="material" value="ceramica" /> Cerámica</label>
+                        <label><input type="checkbox" name="material" value="plastico" /> Plástico</label>
+                        <label><input type="checkbox" name="material" value="silicona" /> Silicona</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Marca</legend>
+                        <label><input type="checkbox" name="marca" value="marca1" /> Marca 1</label>
+                        <label><input type="checkbox" name="marca" value="marca2" /> Marca 2</label>
+                        <label><input type="checkbox" name="marca" value="marca3" /> Marca 3</label>
+                    </fieldset>
                 </form>
             </div>
         </div>
