@@ -5,6 +5,7 @@ import { Home } from './pages/Home'
 import { Tienda } from './pages/Tienda'
 import { HistorialMedico } from './pages/HistorialMedico'
 import { Checkout } from './pages/Checkout/Checkout'
+import { ConfirmacionPedido } from './pages/ConfirmacionPedido/ConfirmacionPedido'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="tienda" element={<Tienda />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="confirmacion-pedido" element={<ConfirmacionPedido />} />
           <Route path="mi-perfil/perfil-mascota/historial-medico" element={<HistorialMedico />} />
         </Route>
       </Routes>

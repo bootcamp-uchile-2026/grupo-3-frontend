@@ -1,3 +1,5 @@
+import { CardProductoConfirmacion } from "../../components/CardProductoConfirmacion/CardProductoConfirmacion";
+
 export function ConfirmacionPedido() {
     return (
         <section>
@@ -33,54 +35,10 @@ export function ConfirmacionPedido() {
                     </div>
                     <div className="resumen-pedido">
                         <h2>Resumen del pedido</h2>
-                        <article className="producto-cart-confirmacion">
-                            <img src="https://placehold.co/40x40" alt="" className="thumbnail-producto-cart" / >
-                                <div className="info-producto-cart-confirmacion">
-                                    <div className="nombre-cantidad">
-                                        <a href="/categoria/productos/producto-individual.html">
-                                            <h3 className="nombre-producto-cart-confirmacion">Nombre de producto</h3>
-                                        </a>
-                                        <p className="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
-                                    </div>
-                                    <p className="precio-producto-cart-confirmacion">$5000</p>
-                                </div>
-                        </article>
-                        <article className="producto-cart-confirmacion">
-                            <img src="https://placehold.co/40x40" alt="" className="thumbnail-producto-cart" />
-                                <div className="info-producto-cart-confirmacion">
-                                    <div className="nombre-cantidad">
-                                        <a href="/categoria/productos/producto-individual.html">
-                                            <h3 className="nombre-producto-cart-confirmacion">Nombre de producto</h3>
-                                        </a>
-                                        <p className="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
-                                    </div>
-                                    <p className="precio-producto-cart-confirmacion">$5000</p>
-                                </div>
-                        </article>
-                        <article className="producto-cart-confirmacion">
-                            <img src="https://placehold.co/40x40" alt="" className="thumbnail-producto-cart" />
-                                <div className="info-producto-cart-confirmacion">
-                                    <div className="nombre-cantidad">
-                                        <a href="/categoria/productos/producto-individual.html">
-                                            <h3 className="nombre-producto-cart-confirmacion">Nombre de producto</h3>
-                                        </a>
-                                        <p className="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
-                                    </div>
-                                    <p className="precio-producto-cart-confirmacion">$5000</p>
-                                </div>
-                        </article>
-                        <article className="producto-cart-confirmacion">
-                            <img src="https://placehold.co/40x40" alt="" className="thumbnail-producto-cart" />
-                                <div className="info-producto-cart-confirmacion">
-                                    <div className="nombre-cantidad">
-                                        <a href="/categoria/productos/producto-individual.html">
-                                            <h3 className="nombre-producto-cart-confirmacion">Nombre de producto</h3>
-                                        </a>
-                                        <p className="cantidad-producto-cart-confirmacion">Cantidad: 1</p>
-                                    </div>
-                                    <p className="precio-producto-cart-confirmacion">$5000</p>
-                                </div>
-                        </article>
+                        <CardProductoConfirmacion nombreProducto="Producto 1" cantidad={1} precio={5000} imagenUrl="https://placehold.co/40x40" />
+                        <CardProductoConfirmacion nombreProducto="Producto 2" cantidad={2} precio={10000} imagenUrl="https://placehold.co/40x40" />
+                        <CardProductoConfirmacion nombreProducto="Producto 3" cantidad={1} precio={7500} imagenUrl="https://placehold.co/40x40" />
+                        <CardProductoConfirmacion nombreProducto="Producto 4" cantidad={3} precio={15000} imagenUrl="https://placehold.co/40x40" />
                     </div>
                 </div>
                 <button className="seguimiento-pedido">Seguimiento del pedido</button>
