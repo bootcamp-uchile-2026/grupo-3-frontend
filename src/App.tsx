@@ -4,6 +4,7 @@ import { MainLayout } from './layout/MainLayout'
 import { Home } from './pages/Home'
 import { HistorialMedico } from './pages/HistorialMedico'
 import PerfilMascota from './pages/PerfilMascota'
+import CarritoCompras from './pages/CarritoCompras'
 
 function App() {
   return (
@@ -11,10 +12,17 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
+
+          <Route
+            path="carrito-compras"
+            element={<CarritoCompras />}
+          />
+
           <Route
             path="mi-perfil/perfil-mascota"
             element={<PerfilMascota />}
           />
+
           <Route
             path="mi-perfil/perfil-mascota/historial-medico"
             element={<HistorialMedico />}
