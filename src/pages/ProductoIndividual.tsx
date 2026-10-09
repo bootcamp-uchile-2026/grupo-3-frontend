@@ -1,6 +1,6 @@
 import "./css/ProductoIndividual.css";
-import Tabs from "../components/Tabs";
-import Carrusel from "../components/Carrusel";
+import Tabs from "../components/CardTabs";
+import Carrusel from "../components/CardCarrusel";
 
 function ProductoIndividual() {
   return (
@@ -11,9 +11,9 @@ function ProductoIndividual() {
           <div className="info-producto-individual">
             <span className="breadcrumbs">
               <button>Home</button>
-              <span>></span>
+              <span> -> </span>
               <button>Gatos</button>
-              <span>></span>
+              <span> -> </span>
               <button>Accesorios</button>
             </span>
             <h1 className="nombre-producto-individual">Comedero Elevado 450 ml</h1>
