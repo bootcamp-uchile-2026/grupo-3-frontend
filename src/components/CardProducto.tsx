@@ -3,10 +3,16 @@ type CardProductoProps = {
     urlImagen: string;
     precio: number;
     categoria: string;
+    rating?: number;
+    badge?: string;
+    descuento?: number;
 
 }
 
-export function CardProducto({ titulo, urlImagen, precio, categoria }: CardProductoProps) {
+export function CardProducto({ titulo, urlImagen, precio, categoria, rating, badge, descuento }: CardProductoProps) {
+
+    const precioFinal = descuento ? precio - (precio * descuento) /100 : precio;
+
     return (
         <article className="producto-card">
             <a href="/categoria/productos/producto-individual.html">
@@ -15,9 +21,14 @@ export function CardProducto({ titulo, urlImagen, precio, categoria }: CardProdu
                     <div className="producto-info">
                         <h3>{titulo}</h3>
                         <p>{categoria}</p>
+                        {badge && <span className="badge">{badge}</span>}
                     </div>
                     <div className="producto-precio">
-                        <p>Precio:<br />${precio.toFixed(2)}</p>
+                        <p>Precio:<br />
+                        ${precioFinal.toFixed(2)}
+                        {descuento && <span className="precio-original"> ${precio.toFixed(2)}</span>}
+                        </p>
+                        {rating && <p>⭐ {rating}/5</p>}
                     </div>
                 </div>
             </a>
