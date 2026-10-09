@@ -1,25 +1,13 @@
-import { CardCategoria } from "../components/CardCategoria"
-import { CardProducto } from "../components/CardProducto/CardProducto"
+import { CardCategoria } from "../../components/CardCategoria/CardCategoria"
+import { CardPetLove } from "../../components/CardPetLove/CardPetLove"
+import { CardProducto } from "../../components/CardProducto/CardProducto"
 
 export function Home() {
     return (
         <>
-            <section id="hero">
-                <div className="slider">
-                    <div className="slide">
-                        <img src="https://placehold.co/1920x600" alt="Slide 1" />
-                    </div>
-                </div>
-                <div id="hero-content">
-                    <h1 id="hero-title">Cómprale lo mejor en un solo lugar</h1>
-                    <div>
-                        <a href="tienda.html"><button>Ver productos</button></a>
-                        <a href="#"><button>Nuestra clínica</button></a>
-                    </div>
-                </div>
-            </section>
             <section>
-                <div className="container categorias-home">
+                <div className="container">
+                    <div className="categorias-home">
                     <CardCategoria
                         titulo="Categoría 1"
                         urlImagen="https://placehold.co/250x250"
@@ -55,6 +43,15 @@ export function Home() {
                         urlImagen="https://placehold.co/250x250"
                         urlLink="/categoria/categoria-productos.html"
                     />
+                    </div>
+                </div>
+            </section>
+            <section id="hero">
+                <div className="slider">
+                    <div className="slide">
+                        <img src="https://placehold.co/1920x600" alt="Slide 1" />
+                        <button className="btn-slide">Registra tu Mascota</button>
+                    </div>
                 </div>
             </section>
             <section>
@@ -93,12 +90,12 @@ export function Home() {
             </section>
             <section>
                 <div className="container">
-                    <h2 className="titulo-seccion">Perfil personalizado de la mascota</h2>
-                </div>
-                <div className="banner">
-                    <img src="https://placehold.co/1920x800" alt="Banner" />
-                    <div className="banner-content">
-                        <a href="#"><button>Registrar tu mascota</button></a>
+                    <h2 className="titulo-seccion titulo-center">¡Conoce a la familia PetLove!</h2>
+                    <div className="petlove-cards">
+                        <CardPetLove urlImagen="https://placehold.co/400x400" />
+                        <CardPetLove urlImagen="https://placehold.co/400x400" />
+                        <CardPetLove urlImagen="https://placehold.co/400x400" />
+                        <CardPetLove urlImagen="https://placehold.co/400x400" />
                     </div>
                 </div>
             </section>

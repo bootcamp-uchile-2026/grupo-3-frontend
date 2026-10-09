@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router/internal/react-server-client'
 import { MainLayout } from './layout/MainLayout'
-import { Home } from './pages/Home'
+import { Home } from './pages/Home/Home'
 import { Tienda } from './pages/Tienda'
 import { HistorialMedico } from './pages/HistorialMedico'
 import { Checkout } from './pages/Checkout/Checkout'
