@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes } from 'react-router/internal/react-server-client'
+import { Route, Routes } from 'react-router-dom'
 import { MainLayout } from './layout/MainLayout'
 import { Home } from './pages/Home'
 import { HistorialMedico } from './pages/HistorialMedico'
