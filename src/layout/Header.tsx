@@ -1,13 +1,17 @@
 import { NavLink } from "react-router-dom";
 
 interface HeaderProps {
-  logoSrc: string;
-  logoAlt: string;
-  accountIconSrc: string;
-  cartIconSrc: string;
+  logoSrc?: string;
+  logoAlt?: string;
+  accountIconSrc?: string;
+  cartIconSrc?: string;
 }
 
-export function Header({ logoSrc, logoAlt, accountIconSrc, cartIconSrc }: HeaderProps) {
+export function Header({ 
+        logoSrc="/assets/images/logo-petlove.svg",
+         logoAlt="Petlove",
+        accountIconSrc="/assets/images/user.svg",
+        cartIconSrc="/assets/images/cart.svg" }: HeaderProps) {
     return (
         <header className="site-header">
                 <div className="top-bar">
