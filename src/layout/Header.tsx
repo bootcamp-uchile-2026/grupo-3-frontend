@@ -1,12 +1,29 @@
-export function Header() {
+import { NavLink } from "react-router-dom";
+import { useCarrito } from "../context/CarritoContext";
+
+interface HeaderProps {
+  logoSrc?: string;
+  logoAlt?: string;
+  accountIconSrc?: string;
+  cartIconSrc?: string;
+}
+
+export function Header({ 
+        logoSrc="/assets/images/logo-petlove.svg",
+         logoAlt="Petlove",
+        accountIconSrc="/assets/images/user.svg",
+        cartIconSrc="/assets/images/cart.svg" }: HeaderProps) {
+    
+    const { state } = useCarrito();
+    const totalItems = state.productos.reduce((acc, p) => acc + p.cantidad, 0);
     return (
         <header className="site-header">
                 <div className="top-bar">
                     <div className="left">
                         <button className="menu-btn" aria-label="Menú">☰</button>
-                        <a href="/index.html" className="logo">
-                            <img src="/logo-petlove.svg" alt="Petlove" />
-                        </a>
+                        <NavLink to="/" className="logo">
+                            <img src={logoSrc} alt={logoAlt} />
+                        </NavLink>
                     </div>
 
                     <div className="center">
@@ -17,23 +34,27 @@ export function Header() {
                     </div>
 
                     <div className="right">
-                        <a href="#" className="login-link">Iniciar sesión / registrar</a>
-                        <a href="/mi-perfil/perfil-usuario.html" aria-label="Mi cuenta">👤</a>
-                        <a href="/carrito-compras.html" aria-label="Carrito">🛒</a>
+                        <NavLink to="/login" className="login-link">Iniciar sesión / registrar</NavLink>
+                        <NavLink to="/mi-perfil/perfil-usuario" aria-label="Mi cuenta">
+                            👤<img src={accountIconSrc} alt="Mi cuenta" />
+                        </NavLink>
+                        <NavLink to="/carrito-compras" aria-label="Carrito">
+                            🛒<img src={cartIconSrc} alt="Carrito" />
+                            {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
+                        </NavLink>
                     </div>
                 </div>
 
 
                 <nav className="bottom-bar" aria-label="Categorías principales">
                     <ul>
-                        <li><a href="#">☰ Categorías</a></li>
-                        <li><a href="/servicios-veterinarios/agendar-veterinario-lista-servicios.html">🩺 Servicios
-                            veterinarios</a></li>
-                        <li><a href="/categoria/categoria-productos.html">💊 Farmacia</a></li>
-                        <li><a href="/categoria/categoria-productos.html">🐱 Gato</a></li>
-                        <li><a href="/categoria/categoria-productos.html">🐶 Perro</a></li>
-                        <li><a href="/categoria/categoria-productos.html">🏷️ Outlet</a></li>
-                        <li><a href="#">📞 Contacto</a></li>
+                        <li><NavLink to="/categorias">☰ Categorías</NavLink></li>
+                        <li><NavLink to="/servicios-veterinarios/agendar-veterinario-lista-servicios">🩺 Servicios veterinarios</NavLink></li>
+                        <li><NavLink to="/categoria/categoria-productos">💊 Farmacia</NavLink></li>
+                        <li><NavLink to="/categoria/gato">🐱 Gato</NavLink></li>
+                        <li><NavLink to="/categoria/perro">🐶 Perro</NavLink></li>
+                        <li><NavLink to="/categoria/outlet">🏷️ Outlet</NavLink></li>
+                        <li><NavLink to="#">📞 Contacto</NavLink></li>
                     </ul>
                 </nav>
             </header>
