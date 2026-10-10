@@ -15,6 +15,10 @@ export function CarritoCompras() {
     dispatch({ type: "CAMBIAR_CANTIDAD", id, delta });
   };
 
+   const handleVaciar = () => {
+    dispatch({ type: "LIMPIAR" });
+  };
+
   const subtotal = productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
   const total = subtotal; 
 
@@ -81,6 +85,15 @@ export function CarritoCompras() {
               ))}
             </div>
           </div>
+
+          {/* Aca es donde yo vacío el carrito */}
+            {productos.length > 0 && (
+                <div className="acciones-carrito">
+                    <button className="vaciar-carrito" onClick={handleVaciar}>
+                    Vaciar carrito
+                    </button>
+                </div>
+            )}
 
           {/* Cupón */}
           <div id="cupon">
