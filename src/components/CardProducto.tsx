@@ -1,4 +1,7 @@
+import { useCarrito } from "../context/CarritoContext";
+
 type CardProductoProps = {
+    idProducto: number;
     titulo: string;
     urlImagen: string;
     precio: number;
@@ -9,9 +12,26 @@ type CardProductoProps = {
 
 }
 
-export function CardProducto({ titulo, urlImagen, precio, categoria, rating, badge, descuento }: CardProductoProps) {
+export function CardProducto({
+  idProducto,
+  titulo,
+  urlImagen,
+  precio,
+  categoria,
+  rating,
+  badge,
+  descuento,
+}: CardProductoProps) {
+  const { dispatch } = useCarrito();
 
     const precioFinal = descuento ? precio - (precio * descuento) /100 : precio;
+
+    const handleAgregar = () => {
+    dispatch({
+      type: "AGREGAR",
+      producto: { idProducto, titulo, precio: precioFinal, cantidad: 1 },
+    });
+  };
 
     return (
         <article className="producto-card">
@@ -33,7 +53,7 @@ export function CardProducto({ titulo, urlImagen, precio, categoria, rating, bad
                 </div>
             </a>
             <div className="producto-card-actions">
-                <button>Agregar al carrito</button>
+                <button onClick={handleAgregar}>Agregar al carrito</button>
             </div>
         </article>
     )

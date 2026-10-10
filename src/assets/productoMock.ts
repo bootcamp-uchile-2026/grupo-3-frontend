@@ -1,5 +1,5 @@
 export type Producto = {
-  id: number;
+  idProducto: number;
   titulo: string;
   urlImagen: string;
   precio: number;
@@ -11,7 +11,7 @@ export type Producto = {
 
 export const productosMock: Producto[] = [
   {
-    id: 1,
+    idProducto: 1,
     titulo: "Alimento Premium Perro",
     categoria: "Perros",
     precio: 50,
@@ -21,7 +21,7 @@ export const productosMock: Producto[] = [
     descuento: 5,
   },
   {
-    id: 2,
+    idProducto: 2,
     titulo: "Arena para Gatos",
     categoria: "Gatos",
     precio: 75,
@@ -29,7 +29,7 @@ export const productosMock: Producto[] = [
     rating: 5,
   },
   {
-    id: 3,
+    idProducto: 3,
     titulo: "Jaula para Aves",
     categoria: "Aves",
     precio: 120,
@@ -38,7 +38,7 @@ export const productosMock: Producto[] = [
     descuento: 10,
   },
   {
-    id: 4,
+    idProducto: 4,
     titulo: "Filtro para Pecera",
     categoria: "Peces",
     precio: 200,
@@ -46,7 +46,7 @@ export const productosMock: Producto[] = [
     rating: 4.2,
   },
   {
-    id: 5,
+    idProducto: 5,
     titulo: "Collar Antipulgas",
     categoria: "Perros",
     precio: 35,
@@ -55,7 +55,7 @@ export const productosMock: Producto[] = [
     rating: 4,
   },
   {
-    id: 6,
+    idProducto: 6,
     titulo: "Comedero para Canarios",
     categoria: "Aves",
     precio: 25,
@@ -63,7 +63,7 @@ export const productosMock: Producto[] = [
     rating: 4.1,
   },
   {
-    id: 7,
+    idProducto: 7,
     titulo: "Alimento para Loros",
     categoria: "Aves",
     precio: 60,
@@ -72,7 +72,7 @@ export const productosMock: Producto[] = [
     descuento: 15,
   },
   {
-    id: 8,
+    idProducto: 8,
     titulo: "Decoración Acuario Rocas Naturales",
     categoria: "Peces",
     precio: 45,
@@ -80,7 +80,7 @@ export const productosMock: Producto[] = [
     rating: 4.3,
   },
   {
-    id: 9,
+    idProducto: 9,
     titulo: "Alimento Escamas Tropicales",
     categoria: "Peces",
     precio: 30,
@@ -89,7 +89,7 @@ export const productosMock: Producto[] = [
     badge: "Top Ventas",
   },
   {
-    id: 10,
+    idProducto: 10,
     titulo: "Alimento para Hurones",
     categoria: "Exóticos",
     precio: 80,
@@ -97,7 +97,7 @@ export const productosMock: Producto[] = [
     rating: 4.4,
   },
   {
-    id: 11,
+    idProducto: 11,
     titulo: "Terrario para Gecko",
     categoria: "Exóticos",
     precio: 150,
@@ -106,7 +106,7 @@ export const productosMock: Producto[] = [
     descuento: 20,
   },
   {
-    id: 12,
+    idProducto: 12,
     titulo: "Lámpara UVB para Iguanas",
     categoria: "Exóticos",
     precio: 95,

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CardProducto } from "../components/CardProducto";
 
 type Producto = {
-  id: number;
+  idProducto: number;
   titulo: string;
   urlImagen: string;
   precio: number;
@@ -34,7 +34,7 @@ export default function Tienda({ productos }: TiendaProps) {
     );
   }
 
-  // Filtrar por rango de precio
+  // Flag filtro rango precio
   if (precio) {
     const [min, max] = precio.split("-").map(Number);
     filtroProducto = filtroProducto.filter(
@@ -42,20 +42,21 @@ export default function Tienda({ productos }: TiendaProps) {
     );
   }
 
-  // Filtrar por marca (si tu modelo de producto tiene marca)
+  // Flag filtro marca
   if (marca) {
     filtroProducto = filtroProducto.filter(
       (p) => p.badge?.toLowerCase() === marca.toLowerCase()
     );
   }
 
-  // Filtrar por edad (ejemplo: si descuento depende de edad)
+  // Flag filtro edad
   if (edad) {
     filtroProducto = filtroProducto.filter(
       (p) => !p.descuento || p.descuento <= edad
     );
   }
 
+  //Flag revision
   console.log("Productos filtrados:", filtroProducto);
   setProductosVisibles(filtroProducto);
   };
@@ -158,7 +159,7 @@ export default function Tienda({ productos }: TiendaProps) {
           {/* Lista de productos */}
           <div className="productos-lista">
             {productosVisibles.map((producto) => (
-              <CardProducto key={producto.id} {...producto} />
+              <CardProducto key={producto.idProducto} {...producto} />
             ))}
           </div>
         </section>
