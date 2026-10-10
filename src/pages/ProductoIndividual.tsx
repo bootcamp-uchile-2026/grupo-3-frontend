@@ -7,7 +7,7 @@ function ProductoIndividual() {
     <main>
       <section>
         <div className="container producto-individual">
-          <img src="https://placehold.co/600x600" alt="Comedero Elevado" />
+          <img src="https://placehold.co/200x200" alt="Comedero Elevado" />
           <div className="info-producto-individual">
             <span className="breadcrumbs">
               <button>Home</button>
@@ -66,10 +66,10 @@ function ProductoIndividual() {
           <h2 className="titulo-seccion">Productos Destacados</h2>
           <Carrusel
             productos={[
-              { titulo: "Producto 1", urlImagen: "https://placehold.co/400x400", precio: 5000, categoria: "Categoría 1" },
-              { titulo: "Producto 2", urlImagen: "https://placehold.co/400x400", precio: 7500, categoria: "Categoría 2" },
-              { titulo: "Producto 3", urlImagen: "https://placehold.co/400x400", precio: 10500, categoria: "Categoría 3" },
-              { titulo: "Producto 4", urlImagen: "https://placehold.co/400x400", precio: 12000, categoria: "Categoría 4" },
+              { titulo: "Producto 1", urlImagen: "https://placehold.co/200x200", precio: 5000, categoria: "Categoría 1" },
+              { titulo: "Producto 2", urlImagen: "https://placehold.co/200x200", precio: 7500, categoria: "Categoría 2" },
+              { titulo: "Producto 3", urlImagen: "https://placehold.co/200x200", precio: 10500, categoria: "Categoría 3" },
+              { titulo: "Producto 4", urlImagen: "https://placehold.co/200x200", precio: 12000, categoria: "Categoría 4" },
             ]}
           />
         </div>
