@@ -7,6 +7,9 @@ type CardProductoProps = {
   urlImagen: string
   precio: number
   categoria: string
+  rating?: number
+  badge?: string
+  descuento?: number
 }
 
 export function CardProducto({
@@ -15,14 +18,21 @@ export function CardProducto({
   urlImagen,
   precio,
   categoria,
+  rating,
+  badge,
+  descuento,
 }: CardProductoProps) {
   const { agregarProducto } = useCarrito()
+
+  const precioFinal = descuento
+    ? precio - (precio * descuento) / 100
+    : precio
 
   function handleAgregarAlCarrito() {
     agregarProducto({
       id: idProducto,
       nombre: titulo,
-      precio: precio,
+      precio: precioFinal,
       cantidad: 1,
     })
   }
@@ -36,20 +46,34 @@ export function CardProducto({
           <div className="producto-info">
             <h3>{titulo}</h3>
             <p>{categoria}</p>
+
+            {badge && <span className="badge">{badge}</span>}
           </div>
 
           <div className="producto-precio">
             <p>
               Precio:
               <br />
-              ${precio.toFixed(2)}
+              ${precioFinal.toFixed(2)}
+
+              {descuento && (
+                <span className="precio-original">
+                  {' '}
+                  ${precio.toFixed(2)}
+                </span>
+              )}
             </p>
+
+            {rating && <p>⭐ {rating}/5</p>}
           </div>
         </div>
       </a>
 
       <div className="producto-card-actions">
-        <button type="button" onClick={handleAgregarAlCarrito}>
+        <button
+          type="button"
+          onClick={handleAgregarAlCarrito}
+        >
           Agregar al carrito
         </button>
       </div>

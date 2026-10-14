@@ -14,12 +14,30 @@ export type ProductoCarritoItem = {
   cantidad: number
 }
 
+type ProductoCarritoDevelop = {
+  idProducto: number
+  titulo: string
+  precio: number
+  cantidad: number
+}
+
+type CarritoAction =
+  | { type: 'AGREGAR'; producto: ProductoCarritoDevelop }
+  | { type: 'ELIMINAR'; id: number }
+  | { type: 'CAMBIAR_CANTIDAD'; id: number; delta: number }
+  | { type: 'LIMPIAR' }
+
 type CarritoContextType = {
   productos: ProductoCarritoItem[]
   agregarProducto: (producto: ProductoCarritoItem) => void
   eliminarProducto: (id: number) => void
   aumentarCantidad: (id: number) => void
   disminuirCantidad: (id: number) => void
+  vaciarCarrito: () => void
+  state: {
+    productos: ProductoCarritoDevelop[]
+  }
+  dispatch: (action: CarritoAction) => void
 }
 
 const CarritoContext = createContext<CarritoContextType | undefined>(
@@ -100,11 +118,64 @@ export function CarritoProvider({
   function disminuirCantidad(id: number) {
     setProductos((anteriores) =>
       anteriores.map((producto) =>
-        producto.id === id && producto.cantidad > 1
-          ? { ...producto, cantidad: producto.cantidad - 1 }
+        producto.id === id
+          ? {
+              ...producto,
+              cantidad: Math.max(1, producto.cantidad - 1),
+            }
           : producto
       )
     )
+  }
+
+  function vaciarCarrito() {
+    setProductos([])
+  }
+
+  function dispatch(action: CarritoAction) {
+    switch (action.type) {
+      case 'AGREGAR':
+        agregarProducto({
+          id: action.producto.idProducto,
+          nombre: action.producto.titulo,
+          precio: action.producto.precio,
+          cantidad: action.producto.cantidad,
+        })
+        break
+
+      case 'ELIMINAR':
+        eliminarProducto(action.id)
+        break
+
+      case 'CAMBIAR_CANTIDAD':
+        setProductos((anteriores) =>
+          anteriores.map((producto) =>
+            producto.id === action.id
+              ? {
+                  ...producto,
+                  cantidad: Math.max(
+                    1,
+                    producto.cantidad + action.delta
+                  ),
+                }
+              : producto
+          )
+        )
+        break
+
+      case 'LIMPIAR':
+        vaciarCarrito()
+        break
+    }
+  }
+
+  const state = {
+    productos: productos.map((producto) => ({
+      idProducto: producto.id,
+      titulo: producto.nombre,
+      precio: producto.precio,
+      cantidad: producto.cantidad,
+    })),
   }
 
   return (
@@ -115,6 +186,9 @@ export function CarritoProvider({
         eliminarProducto,
         aumentarCantidad,
         disminuirCantidad,
+        vaciarCarrito,
+        state,
+        dispatch,
       }}
     >
       {children}

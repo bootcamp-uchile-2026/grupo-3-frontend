@@ -1,18 +1,42 @@
 
-import { Link } from "react-router";
+import { NavLink } from 'react-router-dom'
+import { useCarrito } from '../context/CarritoContext'
 
-export function Header() {
+interface HeaderProps {
+  logoSrc?: string
+  logoAlt?: string
+  accountIconSrc?: string
+  cartIconSrc?: string
+}
+
+export function Header({
+  logoSrc = '/assets/images/logo-petlove.svg',
+  logoAlt = 'Petlove',
+  accountIconSrc = '/assets/images/user.svg',
+  cartIconSrc = '/assets/images/cart.svg',
+}: HeaderProps) {
+  const { productos } = useCarrito()
+
+  const totalItems = productos.reduce(
+    (total, producto) => total + producto.cantidad,
+    0
+  )
+
   return (
     <header className="site-header">
       <div className="top-bar">
         <div className="left">
-          <button className="menu-btn" aria-label="Menú">
+          <button
+            type="button"
+            className="menu-btn"
+            aria-label="Menú"
+          >
             ☰
           </button>
 
-          <Link to="/" className="logo">
-            <img src="/logo-petlove.svg" alt="Petlove" />
-          </Link>
+          <NavLink to="/" className="logo">
+            <img src={logoSrc} alt={logoAlt} />
+          </NavLink>
         </div>
 
         <div className="center">
@@ -23,29 +47,40 @@ export function Header() {
             role="search"
           >
             <span className="search-icon">⌕</span>
+
             <input
               type="search"
               name="q"
               placeholder="Buscar"
+              aria-label="Buscar productos"
             />
           </form>
         </div>
 
         <div className="right">
-          <a href="#" className="login-link">
+          <NavLink to="/login" className="login-link">
             Iniciar sesión / registrar
-          </a>
+          </NavLink>
 
-          <a
-            href="/mi-perfil/perfil-usuario.html"
+          <NavLink
+            to="/mi-perfil/perfil-usuario"
             aria-label="Mi cuenta"
           >
-            👤
-          </a>
+            <img src={accountIconSrc} alt="Mi cuenta" />
+          </NavLink>
 
-          <Link to="/carrito-compras" aria-label="Carrito">
-            🛒
-          </Link>
+          <NavLink
+            to="/carrito-compras"
+            aria-label={`Carrito de compras: ${totalItems} productos`}
+          >
+            <img src={cartIconSrc} alt="Carrito" />
+
+            {totalItems > 0 && (
+              <span className="cart-count">
+                {totalItems}
+              </span>
+            )}
+          </NavLink>
         </div>
       </div>
 
@@ -55,38 +90,48 @@ export function Header() {
       >
         <ul>
           <li>
-            <a href="#">☰ Categorías</a>
+            <NavLink to="/categorias">
+              ☰ Categorías
+            </NavLink>
           </li>
+
           <li>
-            <a href="/servicios-veterinarios/agendar-veterinario-lista-servicios.html">
+            <NavLink to="/servicios-veterinarios/agendar-veterinario-lista-servicios">
               🩺 Servicios veterinarios
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="/categoria/categoria-productos.html">
+            <NavLink to="/categoria/categoria-productos">
               💊 Farmacia
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="/categoria/categoria-productos.html">
+            <NavLink to="/categoria/gato">
               🐱 Gato
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="/categoria/categoria-productos.html">
+            <NavLink to="/categoria/perro">
               🐶 Perro
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="/categoria/categoria-productos.html">
+            <NavLink to="/categoria/outlet">
               🏷️ Outlet
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="#">📞 Contacto</a>
+            <NavLink to="/contacto">
+              📞 Contacto
+            </NavLink>
           </li>
         </ul>
       </nav>
     </header>
-  );
+  )
 }
