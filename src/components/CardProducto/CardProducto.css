@@ -31,3 +31,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.producto-precio-original {
+    text-decoration: line-through;
+}
