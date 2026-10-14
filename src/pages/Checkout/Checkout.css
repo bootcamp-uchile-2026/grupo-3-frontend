@@ -1,0 +1,146 @@
+.checkout-container {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: auto;
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.checkout-container>div:not(:last-child) {
+    padding: 20px;
+    border: solid #ccc 1px;
+}
+
+.datos-envio-div {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1/2;
+    grid-row: 1/2
+}
+
+
+
+.metodo-envio-div {
+    grid-column: 1/2;
+    grid-row: 2/3
+}
+
+.metodo-pago-div {
+    grid-column: 1/2;
+    grid-row: 3/4
+}
+
+.resumen-pedido-div {
+    grid-column: 2/3;
+    grid-row: 1/4
+}
+
+.titulo-icono {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#datos-envio {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sel-metodos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.sel-metodos p {
+    font-weight: 600;
+    font-size: large;
+}
+
+.sel-metodo {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    border: solid #ccc 1px;
+    align-items: center;
+}
+
+.resumen-pedido-div {
+    border: solid #ccc 1px;
+    padding: 20px 0;
+}
+
+.resumen-pedido-div>.titulo-icono {
+    padding: 0 20px;
+    justify-content: center;
+}
+
+.productos-resumen-pedido {
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-resumen-pedido {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: solid #ccc 1px;
+}
+
+.producto-resumen-pedido .info-producto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.cupon-descuento {
+    padding: 20px
+}
+
+#codigo-cupon {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.subtotal-total-resumen-div {
+    padding: 0 30px;
+}
+
+.subtotal-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: solid #ccc 1px;
+    margin-bottom: 10px;
+}
+
+.total-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#finalizar-compra {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px 20px 0 20px;
+}
+
+.check-termino {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
