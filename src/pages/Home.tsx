@@ -1,3 +1,4 @@
+
 import { CardCategoria } from "../components/CardCategoria"
 import { CardProducto } from "../components/CardProducto"
 
@@ -18,6 +19,7 @@ export function Home() {
                     </div>
                 </div>
             </section>
+
             <section>
                 <div className="container categorias-home">
                     <CardCategoria
@@ -57,48 +59,68 @@ export function Home() {
                     />
                 </div>
             </section>
+
             <section>
                 <div className="container">
                     <h2 className="titulo-seccion">Ofertas</h2>
+
                     <div className="productos-ofertas">
                         <CardProducto
+                            idProducto={1}
                             titulo="Producto 1"
                             urlImagen="https://placehold.co/400x400"
                             precio={50}
                             categoria="Categoría 1"
                         />
+
                         <CardProducto
+                            idProducto={2}
                             titulo="Producto 2"
                             urlImagen="https://placehold.co/400x400"
                             precio={75}
                             categoria="Categoría 2"
                         />
+
                         <CardProducto
+                            idProducto={3}
                             titulo="Producto 3"
                             urlImagen="https://placehold.co/400x400"
                             precio={100}
                             categoria="Categoría 3"
                         />
+
                         <CardProducto
+                            idProducto={4}
                             titulo="Producto 4"
                             urlImagen="https://placehold.co/400x400"
                             precio={125}
                             categoria="Categoría 4"
                         />
                     </div>
+
                     <div className="ver-mas">
                         <button>Mostrar más</button>
                     </div>
                 </div>
             </section>
+
             <section>
                 <div className="container">
-                    <h2 className="titulo-seccion">Perfil personalizado de la mascota</h2>
+                    <h2 className="titulo-seccion">
+                        Perfil personalizado de la mascota
+                    </h2>
                 </div>
+
                 <div className="banner">
-                    <img src="https://placehold.co/1920x800" alt="Banner" />
+                    <img
+                        src="https://placehold.co/1920x800"
+                        alt="Banner"
+                    />
+
                     <div className="banner-content">
-                        <a href="#"><button>Registrar tu mascota</button></a>
+                        <a href="#">
+                            <button>Registrar tu mascota</button>
+                        </a>
                     </div>
                 </div>
             </section>

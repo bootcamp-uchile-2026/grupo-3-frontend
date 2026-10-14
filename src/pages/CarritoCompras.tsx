@@ -1,73 +1,22 @@
-import { useState } from 'react'
-import './CarritoCompras.css'
-import { ProductoCarrito } from '../components/ProductoCarrito'
 
-type Producto = {
-  id: number
-  nombre: string
-  precio: number
-  cantidad: number
-}
+import { useState, type FormEvent } from 'react'
+import { useCarrito } from '../context/CarritoContext'
+import { ProductoCarrito } from '../components/ProductoCarrito'
+import './CarritoCompras.css'
 
 function CarritoCompras() {
+  const {
+    productos,
+    eliminarProducto,
+    aumentarCantidad,
+    disminuirCantidad,
+  } = useCarrito()
+
   const [cupon, setCupon] = useState('')
   const [mensajeCupon, setMensajeCupon] = useState('')
   const [cuponAplicado, setCuponAplicado] = useState(false)
 
-  const [productos, setProductos] = useState<Producto[]>([
-    {
-      id: 1,
-      nombre: 'Nombre de producto',
-      precio: 5000,
-      cantidad: 1,
-    },
-    {
-      id: 2,
-      nombre: 'Nombre de producto',
-      precio: 5000,
-      cantidad: 1,
-    },
-    {
-      id: 3,
-      nombre: 'Nombre de producto',
-      precio: 5000,
-      cantidad: 1,
-    },
-    {
-      id: 4,
-      nombre: 'Nombre de producto',
-      precio: 5000,
-      cantidad: 1,
-    },
-  ])
-
-  function eliminarProducto(id: number) {
-    setProductos(
-      productos.filter((producto) => producto.id !== id)
-    )
-  }
-
-  function aumentarCantidad(id: number) {
-    setProductos(
-      productos.map((producto) =>
-        producto.id === id
-          ? { ...producto, cantidad: producto.cantidad + 1 }
-          : producto
-      )
-    )
-  }
-
-  function disminuirCantidad(id: number) {
-    setProductos(
-      productos.map((producto) =>
-        producto.id === id && producto.cantidad > 1
-          ? { ...producto, cantidad: producto.cantidad - 1 }
-          : producto
-      )
-    )
-  }
-
-  function aplicarCupon(event: React.FormEvent<HTMLFormElement>) {
+  function aplicarCupon(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (cupon.trim() === '') {
@@ -91,9 +40,7 @@ function CarritoCompras() {
     0
   )
 
-  const descuento = cuponAplicado
-    ? subtotal * 0.1
-    : 0
+  const descuento = cuponAplicado ? subtotal * 0.1 : 0
 
   const total = subtotal - descuento
 
@@ -110,27 +57,28 @@ function CarritoCompras() {
         </h1>
 
         <div className="productos-cart">
-          {productos.map((producto) => (
-            <ProductoCarrito
-              key={producto.id}
-              nombre={producto.nombre}
-              precio={producto.precio}
-              cantidad={producto.cantidad}
-              onAumentar={() => aumentarCantidad(producto.id)}
-              onDisminuir={() => disminuirCantidad(producto.id)}
-              onEliminar={() => eliminarProducto(producto.id)}
-            />
-          ))}
+          {productos.length === 0 ? (
+            <p>Tu carrito está vacío. ¡Agrega productos desde la tienda!</p>
+          ) : (
+            productos.map((producto) => (
+              <ProductoCarrito
+                key={producto.id}
+                nombre={producto.nombre}
+                precio={producto.precio}
+                cantidad={producto.cantidad}
+                onAumentar={() => aumentarCantidad(producto.id)}
+                onDisminuir={() => disminuirCantidad(producto.id)}
+                onEliminar={() => eliminarProducto(producto.id)}
+              />
+            ))
+          )}
         </div>
       </div>
 
       <div id="cupon">
         <h2>Cupón</h2>
 
-        <form
-          id="form-cupon"
-          onSubmit={aplicarCupon}
-        >
+        <form id="form-cupon" onSubmit={aplicarCupon}>
           <input
             type="text"
             name="nombre-cupon"
@@ -140,18 +88,13 @@ function CarritoCompras() {
             onChange={(event) => setCupon(event.target.value)}
           />
 
-          <button
-            type="submit"
-            id="aplicar-cupon"
-          >
+          <button type="submit" id="aplicar-cupon">
             Aplicar
           </button>
         </form>
 
         {mensajeCupon && (
-          <p className="mensaje-cupon">
-            {mensajeCupon}
-          </p>
+          <p className="mensaje-cupon">{mensajeCupon}</p>
         )}
       </div>
 
@@ -160,10 +103,7 @@ function CarritoCompras() {
           <h2>Resumen del pedido</h2>
 
           <div className="resumen-info-div">
-            <p className="texto-resumen">
-              Subtotal:
-            </p>
-
+            <p className="texto-resumen">Subtotal:</p>
             <p id="subtotal">
               ${subtotal.toLocaleString('es-CL')}
             </p>
@@ -174,7 +114,6 @@ function CarritoCompras() {
               <p className="texto-resumen">
                 Descuento (10%):
               </p>
-
               <p id="descuento">
                 -${descuento.toLocaleString('es-CL')}
               </p>
@@ -184,19 +123,13 @@ function CarritoCompras() {
 
         <div className="resumen-div">
           <div className="resumen-info-div">
-            <p className="texto-resumen">
-              Total:
-            </p>
-
+            <p className="texto-resumen">Total:</p>
             <p id="total">
               ${total.toLocaleString('es-CL')}
             </p>
           </div>
 
-          <button
-            type="button"
-            id="finalizar-compra"
-          >
+          <button type="button" id="finalizar-compra">
             Finalizar Compra
           </button>
         </div>
