@@ -1,3 +1,4 @@
+
 import './App.css'
 import { Route, Routes } from 'react-router/internal/react-server-client'
 import { MainLayout } from './layout/MainLayout'
@@ -11,7 +12,6 @@ import { productosMock } from './assets/productoMock';
 import { CarritoCompras } from './pages/CarritoCompras';
 
 function App() {
-
   return (
     <>
       <Routes>

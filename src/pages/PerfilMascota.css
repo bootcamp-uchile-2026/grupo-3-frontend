@@ -1,0 +1,44 @@
+/* ========================================
+   PERFIL MASCOTA
+======================================== */
+
+.datos-detalle-mascota {
+  display: flex;
+  padding: 30px;
+}
+
+.detalle-mascota {
+  flex: 1;
+}
+
+.detalle-mascota article {
+  border: 1px solid #000;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.encabezado-bloque {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.fila-detalle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.acciones-detalle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.boton-opciones {
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+}
