@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type CardCategoriaProps = {
     titulo: string;
     urlImagen: string;
@@ -7,10 +9,10 @@ type CardCategoriaProps = {
 export function CardCategoria({ titulo, urlImagen, urlLink }: CardCategoriaProps) {
     return (
         <article className="categoria-card-home">
-            <a href={urlLink}>
+            <Link to={urlLink}>
                 <img src={urlImagen} alt={titulo} />
                 <h3 className="titulo-center">{titulo}</h3>
-            </a>
+            </Link>
         </article>
     )
 }

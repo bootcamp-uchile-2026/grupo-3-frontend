@@ -1,20 +1,23 @@
 import { createContext, useContext, useReducer, type ReactNode } from "react";
+import type { CarritoApiResponse, ItemCarritoApi } from "../services/carrito";
 
-type ProductoCarrito = {
-  idProducto: number;
-  titulo: string;
-  precio: number;
-  cantidad: number;
-};
+type ProductoCarrito = ItemCarritoApi;
+
+type ResumenCarritoApi = Pick<
+  CarritoApiResponse,
+  "totalArticulos" | "subtotal" | "cuponAplicado" | "descuentoCupon" | "total"
+>;
 
 type CarritoState = {
   productos: ProductoCarrito[];
+  resumenApi?: ResumenCarritoApi;
 };
 
 type CarritoAction =
   | { type: "AGREGAR"; producto: ProductoCarrito }
-  | { type: "ELIMINAR"; id: number }
-  | { type: "CAMBIAR_CANTIDAD"; id: number; delta: number }
+  | { type: "ELIMINAR"; id: string }
+  | { type: "CAMBIAR_CANTIDAD"; id: string; delta: number }
+  | { type: "SINCRONIZAR"; carrito: CarritoApiResponse }
   | { type: "LIMPIAR" };
 
 const initialState: CarritoState = {
@@ -24,12 +27,16 @@ const initialState: CarritoState = {
 function carritoReducer(state: CarritoState, action: CarritoAction): CarritoState {
   switch (action.type) {
     case "AGREGAR": {
-      const existe = state.productos.find((p) => p.idProducto === action.producto.idProducto);
+      const existe = state.productos.find((p) => p.productoId === action.producto.productoId);
       if (existe) {
         return {
           productos: state.productos.map((p) =>
-            p.idProducto === action.producto.idProducto
-              ? { ...p, cantidad: p.cantidad + action.producto.cantidad }
+            p.productoId === action.producto.productoId
+              ? {
+                  ...p,
+                  cantidad: p.cantidad + action.producto.cantidad,
+                  subtotal: p.precioUnitario * (p.cantidad + action.producto.cantidad),
+                }
               : p
           ),
         };
@@ -37,14 +44,32 @@ function carritoReducer(state: CarritoState, action: CarritoAction): CarritoStat
       return { productos: [...state.productos, action.producto] };
     }
     case "ELIMINAR":
-      return { productos: state.productos.filter((p) => p.idProducto !== action.id) };
+      return {
+        productos: state.productos.filter((p) => p.productoId !== action.id),
+      };
     case "CAMBIAR_CANTIDAD":
       return {
         productos: state.productos.map((p) =>
-          p.idProducto === action.id
-            ? { ...p, cantidad: Math.max(1, p.cantidad + action.delta) }
+          p.productoId === action.id
+            ? {
+                ...p,
+                cantidad: Math.max(1, p.cantidad + action.delta),
+                subtotal: p.precioUnitario * Math.max(1, p.cantidad + action.delta),
+              }
             : p
         ),
+      };
+    case "SINCRONIZAR":
+      // Mantener los identificadores y nombres del API evita perder productos al renderizar el carrito.
+      return {
+        productos: action.carrito.items,
+        resumenApi: {
+          totalArticulos: action.carrito.totalArticulos,
+          subtotal: action.carrito.subtotal,
+          cuponAplicado: action.carrito.cuponAplicado,
+          descuentoCupon: action.carrito.descuentoCupon,
+          total: action.carrito.total,
+        },
       };
     case "LIMPIAR":
       return { productos: [] };

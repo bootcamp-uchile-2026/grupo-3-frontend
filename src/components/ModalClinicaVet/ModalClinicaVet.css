@@ -1,0 +1,27 @@
+.modal-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+    background-color: #06060650;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 70vw;
+    padding: 0 30px;
+    max-width: 100%
+}
+
+.modal-container {
+    padding: 30px;
+    background-color: #ffffff;
+    border: solid 2px #e0e0e0;
+}
+
+.modal-container .form-row:last-child {
+    justify-content: flex-end;
+}
