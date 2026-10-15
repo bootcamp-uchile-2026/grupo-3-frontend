@@ -1,0 +1,114 @@
+.site-header {
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+.top-bar {
+    background-color: #4a4a4a;
+    /* gris oscuro del wireframe */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 20px;
+}
+
+.top-bar .left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.logo img {
+    height: 30px;
+    background: white;
+}
+
+.center {
+    flex: 1;
+    max-width: 500px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.search-form .search-icon {
+    color: #888;
+    margin-right: 8px;
+}
+
+.search-form input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+.top-bar .right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.top-bar .right a,
+.top-bar .right span {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.login-link {
+    white-space: nowrap;
+}
+.bottom-bar {
+    background-color: #a9a9a9;
+    /* gris claro del wireframe */
+    padding: 10px 20px;
+}
+
+.bottom-bar ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+    overflow-x: auto;
+}
+
+.bottom-bar ul li a,
+.bottom-bar ul li span {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.bottom-bar ul li a:hover {
+    color: #000;
+}
+.logo-placeholder {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+    background:
+        linear-gradient(to top right, transparent 49.5%, #000 49.5%, #000 50.5%, transparent 50.5%),
+        linear-gradient(to bottom right, transparent 49.5%, #000 49.5%, #000 50.5%, transparent 50.5%);
+}

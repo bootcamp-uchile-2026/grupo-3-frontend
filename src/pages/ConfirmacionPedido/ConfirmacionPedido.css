@@ -48,3 +48,15 @@
     background: #4a4a4a;
     color: white;
 }
+
+.resumen-totales-confirmacion {
+    display: grid;
+    gap: 8px;
+    border-top: 1px solid #ccc;
+    padding-top: 16px;
+}
+
+.confirmacion-estado {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
