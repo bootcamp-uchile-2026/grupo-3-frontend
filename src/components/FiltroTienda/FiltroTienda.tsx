@@ -1,115 +1,201 @@
-import type { FormEvent } from 'react';
+export type FiltroClave =
+  | 'mascota'
+  | 'tipoProducto'
+  | 'edad'
+  | 'tipoComida'
+  | 'sabor'
+  | 'formato'
+  | 'material'
+  | 'marca';
 
-type CampoFiltro = 'categoria' | 'precio' | 'marca';
+export type SeleccionesFiltro = Record<FiltroClave, string[]>;
+
+type OpcionFiltro = { valor: string; etiqueta: string };
+
+type GrupoFiltro = {
+  clave: FiltroClave;
+  titulo: string;
+  opciones: OpcionFiltro[];
+};
 
 type FiltroTiendaProps = {
-  categoria: string;
-  precio: string;
-  marca: string;
-  edad: number;
-  onCategoriaChange: (value: string) => void;
-  onPrecioChange: (value: string) => void;
-  onMarcaChange: (value: string) => void;
-  onEdadChange: (value: number) => void;
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  selecciones: SeleccionesFiltro;
+  onSelectionChange: (clave: FiltroClave, valor: string, seleccionado: boolean) => void;
   onClear: () => void;
 };
 
-const filtrosSelect: Array<{
-  label: string;
-  name: CampoFiltro;
-  options: Array<{ value: string; text: string }>;
-}> = [
+const gruposFiltro: GrupoFiltro[] = [
   {
-    label: 'Categoría:',
-    name: 'categoria',
-    options: [
-      { value: '', text: 'Todas' },
-      { value: 'perros', text: 'Perros' },
-      { value: 'gatos', text: 'Gatos' },
-      { value: 'aves', text: 'Aves' },
-      { value: 'peces', text: 'Peces' },
-      { value: 'exoticos', text: 'Exóticos' },
+    clave: 'mascota',
+    titulo: 'Tipo de mascota',
+    opciones: [
+      { valor: 'Gato', etiqueta: 'Gato' },
+      { valor: 'Perro', etiqueta: 'Perro' },
+      { valor: 'Periquito', etiqueta: 'Periquito' },
+      { valor: 'Canario', etiqueta: 'Canario' },
+      { valor: 'Loro', etiqueta: 'Loro' },
+      { valor: 'Ninfa', etiqueta: 'Ninfa' },
+      { valor: 'Agapornis', etiqueta: 'Agapornis' },
+      { valor: 'Tortuga', etiqueta: 'Tortuga' },
+      { valor: 'Gecko', etiqueta: 'Gecko' },
+      { valor: 'Serpiente', etiqueta: 'Serpiente' },
+      { valor: 'Dragón barbudo', etiqueta: 'Dragón barbudo' },
+      { valor: 'Iguana', etiqueta: 'Iguana' },
+      { valor: 'Hámster', etiqueta: 'Hámster' },
+      { valor: 'Cobaya (Cuy)', etiqueta: 'Cobaya (Cuy)' },
+      { valor: 'Rata', etiqueta: 'Rata' },
+      { valor: 'Ratón', etiqueta: 'Ratón' },
+      { valor: 'Chinchilla', etiqueta: 'Chinchilla' },
+      { valor: 'Conejo', etiqueta: 'Conejo' },
+      { valor: 'Hurón', etiqueta: 'Hurón' },
     ],
   },
   {
-    label: 'Precio:',
-    name: 'precio',
-    options: [
-      { value: '', text: 'Todos' },
-      { value: '0-50', text: '$0 - $50' },
-      { value: '51-100', text: '$51 - $100' },
-      { value: '101-200', text: '$101 - $200' },
-      { value: '201-500', text: '$201 - $500' },
+    clave: 'tipoProducto',
+    titulo: 'Tipo de producto',
+    opciones: [
+      { valor: 'Alimento', etiqueta: 'Alimento' },
+      { valor: 'Accesorio', etiqueta: 'Accesorio' },
+      { valor: 'Salud', etiqueta: 'Salud' },
+      { valor: 'Farmacia', etiqueta: 'Farmacia' },
     ],
   },
   {
-    label: 'Marca:',
-    name: 'marca',
-    options: [
-      { value: '', text: 'Todas' },
-      { value: 'marca1', text: 'Marca 1' },
-      { value: 'marca2', text: 'Marca 2' },
-      { value: 'marca3', text: 'Marca 3' },
+    clave: 'edad',
+    titulo: 'Edad de la mascota',
+    opciones: [
+      { valor: 'Adulto', etiqueta: 'Adulto' },
+      { valor: 'Senior', etiqueta: 'Senior' },
+      { valor: 'En crecimiento', etiqueta: 'En crecimiento' },
+    ],
+  },
+  {
+    clave: 'tipoComida',
+    titulo: 'Tipo de comida',
+    opciones: [
+      { valor: 'Húmedo', etiqueta: 'Húmedo' },
+      { valor: 'Semihúmedo', etiqueta: 'Semihúmedo' },
+      { valor: 'Seco', etiqueta: 'Seco' },
+    ],
+  },
+  {
+    clave: 'sabor',
+    titulo: 'Sabor de comida',
+    opciones: [
+      { valor: 'Pollo', etiqueta: 'Pollo' },
+      { valor: 'Pescado', etiqueta: 'Pescado' },
+      { valor: 'Cerdo', etiqueta: 'Cerdo' },
+      { valor: 'Pato', etiqueta: 'Pato' },
+      { valor: 'Cordero', etiqueta: 'Cordero' },
+    ],
+  },
+  {
+    clave: 'formato',
+    titulo: 'Formato de comida',
+    opciones: [
+      { valor: 'Lata', etiqueta: 'Lata' },
+      { valor: 'Saco grande (10kg)', etiqueta: 'Saco grande (10kg)' },
+      { valor: 'Saco mediano (5-10kg)', etiqueta: 'Saco mediano (5-10kg)' },
+      { valor: 'Saco pequeño (5kg)', etiqueta: 'Saco pequeño (5kg)' },
+    ],
+  },
+  {
+    clave: 'material',
+    titulo: 'Material',
+    opciones: [
+      { valor: 'Acero', etiqueta: 'Acero' },
+      { valor: 'Cerámica', etiqueta: 'Cerámica' },
+      { valor: 'Plástico', etiqueta: 'Plástico' },
+      { valor: 'Silicona', etiqueta: 'Silicona' },
+    ],
+  },
+  {
+    clave: 'marca',
+    titulo: 'Marca',
+    opciones: [
+      { valor: 'Acana', etiqueta: 'Acana' },
+      { valor: 'Royal Canin', etiqueta: 'Royal Canin' },
+      { valor: 'Pro plan', etiqueta: 'Pro plan' },
+      { valor: 'Taste of the wild', etiqueta: 'Taste of the wild' },
+      { valor: 'Brit', etiqueta: 'Brit' },
     ],
   },
 ];
 
+const especiesDirectas = ['Gato', 'Perro', 'Conejo', 'Hurón'];
+const subcategoriasMascota = [
+  { titulo: 'Aves', opciones: ['Periquito', 'Canario', 'Loro', 'Ninfa', 'Agapornis'] },
+  { titulo: 'Reptiles', opciones: ['Tortuga', 'Gecko', 'Serpiente', 'Dragón barbudo', 'Iguana'] },
+  { titulo: 'Roedores', opciones: ['Hámster', 'Cobaya (Cuy)', 'Rata', 'Ratón', 'Chinchilla'] },
+];
+
+function renderizarOpcion(
+  grupo: GrupoFiltro,
+  opcion: OpcionFiltro,
+  selecciones: SeleccionesFiltro,
+  onSelectionChange: FiltroTiendaProps['onSelectionChange'],
+) {
+  return (
+    <label key={opcion.valor}>
+      <input
+        type="checkbox"
+        name={grupo.clave}
+        value={opcion.valor}
+        checked={selecciones[grupo.clave].includes(opcion.valor)}
+        onChange={(event) =>
+          onSelectionChange(grupo.clave, opcion.valor, event.target.checked)}
+      />{' '}
+      {opcion.etiqueta}
+    </label>
+  );
+}
+
 export function FiltroTienda({
-  categoria,
-  precio,
-  marca,
-  edad,
-  onCategoriaChange,
-  onPrecioChange,
-  onMarcaChange,
-  onEdadChange,
-  onSubmit,
+  selecciones,
+  onSelectionChange,
   onClear,
 }: FiltroTiendaProps) {
-  const valores = { categoria, precio, marca };
-  const cambios = {
-    categoria: onCategoriaChange,
-    precio: onPrecioChange,
-    marca: onMarcaChange,
-  };
+  const grupoMascota = gruposFiltro[0];
 
   return (
     <div className="filtro">
       <h2>Filtros</h2>
       <div className="filtro-opciones">
-        <form id="filtro-form" onSubmit={onSubmit}>
-          {filtrosSelect.map((filtro) => (
-            <div key={filtro.name}>
-              <label htmlFor={filtro.name}>{filtro.label}</label>
-              <select
-                id={filtro.name}
-                value={valores[filtro.name]}
-                onChange={(event) => cambios[filtro.name](event.target.value)}
-              >
-                {filtro.options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.text}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <form id="filtro-form">
+          {gruposFiltro.map((grupo) => (
+            <details className="filtro-grupo" key={grupo.clave}>
+              <summary>{grupo.titulo}</summary>
+              {grupo.clave === 'mascota' ? (
+                <div className="filtro-opciones-grupo">
+                  {grupo.opciones
+                    .filter((opcion) => especiesDirectas.includes(opcion.valor))
+                    .map((opcion) =>
+                      renderizarOpcion(grupo, opcion, selecciones, onSelectionChange))}
+                  {subcategoriasMascota.map((subcategoria) => (
+                    <details className="filtro-subgrupo" key={subcategoria.titulo}>
+                      <summary>{subcategoria.titulo}</summary>
+                      <div className="filtro-opciones-grupo">
+                        {subcategoria.opciones.map((especie) =>
+                          renderizarOpcion(
+                            grupoMascota,
+                            { valor: especie, etiqueta: especie },
+                            selecciones,
+                            onSelectionChange,
+                          ))}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              ) : (
+                <div className="filtro-opciones-grupo">
+                  {grupo.opciones.map((opcion) =>
+                    renderizarOpcion(grupo, opcion, selecciones, onSelectionChange))}
+                </div>
+              )}
+            </details>
           ))}
-
-          <label htmlFor="edad">Edad:</label>
-          <input
-            id="edad"
-            type="range"
-            min="0"
-            max="25"
-            value={edad}
-            onChange={(event) => onEdadChange(Number(event.target.value))}
-          />
-          <span>{edad} años</span>
-
-          <button type="submit">Aplicar filtros</button>
           <button type="button" onClick={onClear}>
-            Limpiar filtros
+            Resetear filtros
           </button>
         </form>
       </div>
