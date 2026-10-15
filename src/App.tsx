@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import { productosMock } from './assets/productoMock'
 import { MainLayout } from './layout/MainLayout'
 import { AgendarVeterinarioDatosContacto } from './pages/AgendarVeterinarioDatosContacto/AgendarVeterinarioDatosContacto'
 import { AgendarVeterinarioProfesional } from './pages/AgendarVeterinarioProfesional/AgendarVeterinarioProfesional'
@@ -20,8 +19,8 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
 
-        <Route path="tienda" element={<Tienda productos={productosMock} />} />
-        <Route path="categoria/*" element={<Tienda productos={productosMock} />} />
+        <Route path="tienda" element={<Tienda />} />
+        <Route path="categoria/*" element={<Tienda />} />
         <Route path="producto-individual" element={<ProductoIndividual />} />
         <Route path="producto-individual/:id" element={<ProductoIndividual />} />
 
@@ -41,7 +40,7 @@ function App() {
           element={<AgendarVeterinarioProfesional />}
         />
         <Route
-          path="servicios-veterinarios/agendar-veterinario-datos-contacto.html"
+          path="servicios-veterinarios/agendar-veterinario-datos-contacto"
           element={<AgendarVeterinarioDatosContacto />}
         />
       </Route>

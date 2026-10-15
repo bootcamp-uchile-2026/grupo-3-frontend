@@ -1,7 +1,12 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCarrito } from "../../context/CarritoContext";
 import { Link } from "react-router-dom";
+import {
+  actualizarCantidadProducto,
+  eliminarProductoDelCarrito,
+  obtenerCarrito,
+} from "../../services/carrito";
 
 export function CarritoCompras() {
   const { state, dispatch } = useCarrito();
@@ -9,26 +14,101 @@ export function CarritoCompras() {
 
   const [cupon, setCupon] = useState("");
   const [cuponAplicado, setCuponAplicado] = useState("");
+  const [cargando, setCargando] = useState(true);
+  const [actualizandoProductoId, setActualizandoProductoId] = useState<string | null>(null);
+  const [eliminandoProductoId, setEliminandoProductoId] = useState<string | null>(null);
+  const [errorCarrito, setErrorCarrito] = useState<string | null>(null);
 
-  const handleEliminar = (id: number) => {
-    dispatch({ type: "ELIMINAR", id });
-  };
+  useEffect(() => {
+    let activo = true;
 
-  const handleCantidad = (id: number, delta: number) => {
-    dispatch({ type: "CAMBIAR_CANTIDAD", id, delta });
-  };
+    async function cargarCarrito() {
+      try {
+        // Hidratar el contexto al entrar para mostrar también el carrito ya guardado en el servidor.
+        const carrito = await obtenerCarrito();
+        if (activo) {
+          dispatch({ type: "SINCRONIZAR", carrito });
+        }
+      } catch (error) {
+        if (activo) {
+          console.error("No se pudo cargar el carrito.", error);
+          setErrorCarrito(
+            error instanceof Error ? error.message : "No se pudo cargar el carrito.",
+          );
+        }
+      } finally {
+        if (activo) {
+          setCargando(false);
+        }
+      }
+    }
+
+    void cargarCarrito();
+    return () => {
+      activo = false;
+    };
+  }, [dispatch]);
+
+  async function handleEliminar(id: string) {
+    if (cargando || actualizandoProductoId !== null || eliminandoProductoId !== null) return;
+
+    setEliminandoProductoId(id);
+    setErrorCarrito(null);
+    try {
+      // Reflejar la eliminación solo al recibir el carrito actualizado del servidor.
+      const carrito = await eliminarProductoDelCarrito(id);
+      dispatch({ type: "SINCRONIZAR", carrito });
+    } catch (error) {
+      console.error("No se pudo eliminar el producto del carrito.", error);
+      setErrorCarrito(
+        error instanceof Error
+          ? error.message
+          : "No se pudo eliminar el producto del carrito.",
+      );
+    } finally {
+      setEliminandoProductoId(null);
+    }
+  }
+
+  async function handleCantidad(id: string, delta: number) {
+    if (actualizandoProductoId !== null || eliminandoProductoId !== null || cargando) return;
+
+    const producto = productos.find((item) => item.productoId === id);
+    if (!producto) return;
+
+    const cantidad = Math.max(1, producto.cantidad + delta);
+    if (cantidad === producto.cantidad) return;
+
+    setActualizandoProductoId(id);
+    setErrorCarrito(null);
+    try {
+      // No cambiar la vista de forma optimista; aplicar solo el carrito confirmado por el API.
+      const carrito = await actualizarCantidadProducto(id, cantidad);
+      dispatch({ type: "SINCRONIZAR", carrito });
+    } catch (error) {
+      console.error("No se pudo actualizar la cantidad del producto.", error);
+      setErrorCarrito(
+        error instanceof Error
+          ? error.message
+          : "No se pudo actualizar la cantidad del producto.",
+      );
+    } finally {
+      setActualizandoProductoId(null);
+    }
+  }
 
   const handleVaciar = () => {
     dispatch({ type: "LIMPIAR" });
     setCuponAplicado("");
   };
 
-  const subtotal = productos.reduce(
-    (acc, p) => acc + p.precio * p.cantidad,
+  const subtotalCalculado = productos.reduce(
+    (acc, p) => acc + p.subtotal,
     0
   );
+  const subtotal = state.resumenApi?.subtotal ?? subtotalCalculado;
 
-  let total = subtotal;
+  let total = state.resumenApi?.total ?? subtotal;
 
   switch (cuponAplicado) {
     case "CUPONCLIENTENUEVO":
@@ -67,10 +147,14 @@ export function CarritoCompras() {
         dispatch({
           type: "AGREGAR",
           producto: {
-            idProducto: 999,
-            titulo: "Producto de regalo",
-            precio: 0,
+            productoId: "regalo",
+            nombre: "Producto de regalo",
+            marca: "PetLove",
+            imagen: "",
+            precioOriginal: 0,
+            precioUnitario: 0,
             cantidad: 1,
+            subtotal: 0,
           },
         });
         break;
@@ -87,39 +171,51 @@ export function CarritoCompras() {
         <div className="container container-carrito">
           <div id="carrito-compras">
             <h1>
-              Carrito de compras ({productos.length} artículos)
+              Carrito de compras ({state.resumenApi?.totalArticulos ?? productos.reduce((totalItems, p) => totalItems + p.cantidad, 0)} artículos)
             </h1>
+
+            {cargando && <p role="status">Cargando carrito...</p>}
+            {errorCarrito && <p role="alert">{errorCarrito}</p>}
 
             <div className="productos-cart">
               {productos.map((p) => (
                 <article
-                  key={p.idProducto}
+                  key={p.productoId}
                   className="producto-cart"
                 >
+                  {p.imagen && <img src={p.imagen} alt={p.nombre} />}
                   <div className="info-producto-cart">
-                    <Link to={`/producto-individual/${p.idProducto}`}>
+                    <Link to={`/producto-individual/${encodeURIComponent(p.productoId)}`}>
                       <h3 className="nombre-producto-cart">
-                        {p.titulo}
+                        {p.nombre}
                       </h3>
                     </Link>
 
                     <p className="precio-producto-cart">
-                      ${p.precio}
+                      ${p.precioUnitario}
                     </p>
+                    {p.precioOriginal > p.precioUnitario && (
+                      <p>Precio original: ${p.precioOriginal}</p>
+                    )}
+                    <p>{p.marca}</p>
                   </div>
 
                   <div className="accion-producto-cart">
                     <button
                       className="eliminar-producto-cart"
-                      onClick={() => handleEliminar(p.idProducto)}
+                      type="button"
+                      disabled={cargando || actualizandoProductoId !== null || eliminandoProductoId !== null}
+                      onClick={() => handleEliminar(p.productoId)}
                     >
-                      Eliminar
+                      {eliminandoProductoId === p.productoId ? "Eliminando..." : "Eliminar"}
                     </button>
 
                     <div className="contador-ctrl-producto-cart">
                       <button
+                        type="button"
+                        disabled={cargando || actualizandoProductoId !== null || eliminandoProductoId !== null}
                         onClick={() =>
-                          handleCantidad(p.idProducto, +1)
+                          handleCantidad(p.productoId, +1)
                         }
                       >
                         +
@@ -128,10 +224,13 @@ export function CarritoCompras() {
                       <p className="contador-cantidad">
                         {p.cantidad}
                       </p>
+                      {actualizandoProductoId === p.productoId && <span role="status">Actualizando...</span>}
 
                       <button
+                        type="button"
+                        disabled={cargando || actualizandoProductoId !== null || eliminandoProductoId !== null || p.cantidad <= 1}
                         onClick={() =>
-                          handleCantidad(p.idProducto, -1)
+                          handleCantidad(p.productoId, -1)
                         }
                       >
                         -

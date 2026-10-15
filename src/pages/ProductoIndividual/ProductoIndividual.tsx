@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CardProducto } from "../../components/CardProducto/CardProducto";
+import { useCarrito } from "../../context/CarritoContext";
 import { agregarProductoAlCarrito } from "../../services/carrito";
 
 type ProductoDetalle = {
@@ -50,6 +51,8 @@ type ProductoRelacionado = {
     categoria: string;
 };
 
+type EstadoAccionCarrito = "idle" | "agregando" | "agregado" | "error";
+
 function esProductoRelacionado(value: unknown): value is ProductoRelacionado {
     return typeof value === "object" && value !== null
         && "id" in value && typeof value.id === "string"
@@ -82,6 +85,7 @@ function formatoPrecio(precio: number): string {
 
 export function ProductoIndividual() {
     const { id } = useParams();
+    const { dispatch } = useCarrito();
     const sliderRef = useRef<HTMLDivElement>(null);
     const [estadoProducto, setEstadoProducto] = useState({
         id,
@@ -97,7 +101,12 @@ export function ProductoIndividual() {
     });
     const [puedeRetroceder, setPuedeRetroceder] = useState(false);
     const [puedeAvanzar, setPuedeAvanzar] = useState(false);
-    const [estadoCarrito, setEstadoCarrito] = useState<"idle" | "agregando" | "agregado" | "error">("idle");
+    // Vincular el estado al ID evita que otro producto herede el resultado anterior.
+    const [estadoCarrito, setEstadoCarrito] = useState<{
+        id: string | undefined;
+        estado: EstadoAccionCarrito;
+    }>({ id, estado: "idle" });
+    const estadoCarritoActual = estadoCarrito.id === id ? estadoCarrito.estado : "idle";
 
     const desplazarCarrusel = useCallback((direccion: -1 | 1) => {
         const slider = sliderRef.current;
@@ -116,13 +125,15 @@ export function ProductoIndividual() {
     async function manejarAgregarAlCarrito() {
         if (!id) return;
 
-        setEstadoCarrito("agregando");
+        setEstadoCarrito({ id, estado: "agregando" });
         try {
-            await agregarProductoAlCarrito(producto?.id ?? id, 1);
-            setEstadoCarrito("agregado");
+            // Sincronizar la vista del carrito con el DTO que entrega el API.
+            const carrito = await agregarProductoAlCarrito(producto?.id ?? id, 1);
+            dispatch({ type: "SINCRONIZAR", carrito });
+            setEstadoCarrito({ id, estado: "agregado" });
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
-            setEstadoCarrito("error");
+            setEstadoCarrito({ id, estado: "error" });
         }
     }
 
@@ -292,19 +303,22 @@ export function ProductoIndividual() {
                             <button
                                 className="agregar-carrito"
                                 type="button"
-                                disabled={!id || estadoCarrito === "agregando"}
+                                disabled={!id || estadoCarritoActual === "agregando"}
                                 onClick={manejarAgregarAlCarrito}
                             >
-                                {estadoCarrito === "agregando"
+                                {estadoCarritoActual === "agregando"
                                     ? "Agregando..."
-                                    : estadoCarrito === "agregado"
+                                    : estadoCarritoActual === "agregado"
                                         ? "Agregado al carrito"
                                         : "Agregar al carrito"}
                             </button>
-                            <button className="comprar-ahora">Comprar ahora</button>
+                            <button className="comprar-ahora" type="button">Comprar ahora</button>
                         </div>
-                        {estadoCarrito === "error" && (
+                        {estadoCarritoActual === "error" && (
                             <p role="alert">No se pudo agregar el producto. Inténtalo nuevamente.</p>
+                        )}
+                        {estadoCarritoActual === "agregado" && (
+                            <p role="status">Producto agregado al carrito.</p>
                         )}
                     </div>
                 </div>

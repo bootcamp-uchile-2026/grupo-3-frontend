@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCarrito } from "../../context/CarritoContext";
 import { agregarProductoAlCarrito } from "../../services/carrito";
 
 type CardProductoProps = {
@@ -13,14 +14,20 @@ type CardProductoProps = {
 }
 
 export function CardProducto({ id, titulo, urlImagen, precio, precioOriginal, categoria }: CardProductoProps) {
+    const { dispatch } = useCarrito();
     const [estadoCarrito, setEstadoCarrito] = useState<"idle" | "agregando" | "agregado" | "error">("idle");
 
     async function manejarAgregarAlCarrito() {
-        if (!id) return;
+        if (!id) {
+            setEstadoCarrito("error");
+            return;
+        }
 
         setEstadoCarrito("agregando");
         try {
-            await agregarProductoAlCarrito(id, 1);
+            // Actualizar el contexto con el carrito real devuelto por el API.
+            const carrito = await agregarProductoAlCarrito(id, 1);
+            dispatch({ type: "SINCRONIZAR", carrito });
             setEstadoCarrito("agregado");
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
