@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useParams } from "react-router-dom";
 import { CardProducto } from "../../components/CardProducto/CardProducto";
 import { agregarProductoAlCarrito } from "../../services/carrito";
 

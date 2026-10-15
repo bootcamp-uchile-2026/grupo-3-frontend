@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type CardProductoConfirmacionProps ={
     nombreProducto: string;
     cantidad: number;
@@ -12,9 +14,9 @@ export function CardProductoConfirmacion({ nombreProducto, cantidad, precio, ima
             <img src={imagenUrl} alt="" className="thumbnail-producto-cart" />
             <div className="info-producto-cart-confirmacion">
                 <div className="nombre-cantidad">
-                    <a href="/categoria/productos/producto-individual.html">
+                    <Link to="/producto-individual">
                         <h3 className="nombre-producto-cart-confirmacion">{nombreProducto}</h3>
-                    </a>
+                    </Link>
                     <p className="cantidad-producto-cart-confirmacion">Cantidad: {cantidad}</p>
                 </div>
                 <p className="precio-producto-cart-confirmacion">${precio}</p>

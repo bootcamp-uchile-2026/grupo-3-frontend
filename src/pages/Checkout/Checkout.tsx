@@ -308,9 +308,9 @@ export function Checkout() {
                 checked={terminos} onChange={(e) => setTerminos(e.target.checked)} required />
               <label htmlFor="terminos-condiciones">
                 He leído y estoy de acuerdo con los{" "}
-                <a href="/terminos-y-condiciones" target="_blank" rel="noopener noreferrer">
+                <span aria-disabled="true">
                   términos y condiciones.
-                </a>
+                </span>
               </label>
             </div>
 

@@ -8,3 +8,10 @@
     display: flex;
     gap: 10px;
 }
+
+.orden-productos {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-items: center;
+    grid-column: 2/3;
+}
