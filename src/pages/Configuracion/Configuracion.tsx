@@ -1,7 +1,7 @@
  
 import { Link } from "react-router-dom";
 
-function Configuracion() {
+export function Configuracion() {
   return (
     <>
       <div className="menu-contenido-perfil-usuario">
@@ -150,5 +150,3 @@ function Configuracion() {
     </>
   )
 }
-
-export default Configuracion

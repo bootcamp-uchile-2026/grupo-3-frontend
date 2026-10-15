@@ -1,8 +1,6 @@
- 
-
 import { Link } from "react-router-dom";
 
-function PerfilUsuario() {
+export function PerfilUsuario() {
   return (
     <>
       <div className="menu-contenido-perfil-usuario">
@@ -103,5 +101,3 @@ function PerfilUsuario() {
     </>
   )
 }
-
-export default PerfilUsuario

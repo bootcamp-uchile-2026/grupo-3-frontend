@@ -4,7 +4,7 @@ import { ResumenHistorialMascota } from '../../components/ResumenHistorialMascot
 import { ResumenVacunasMascota } from '../../components/ResumenVacunasMascota/ResumenVacunasMascota'
 
 
-function PerfilMascota() {
+export function PerfilMascota() {
   return (
     <>
       {/* CONTENIDO PRINCIPAL */}
@@ -25,5 +25,3 @@ function PerfilMascota() {
     </>
   )
 }
-
-export default PerfilMascota

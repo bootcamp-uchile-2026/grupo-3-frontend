@@ -1,282 +1,385 @@
-import { useState } from "react";
-import type { ChangeEvent, FormEvent } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCarrito } from "../../context/CarritoContext";
+import { USUARIO_ID_CARRITO, obtenerCarrito } from "../../services/carrito";
+import { crearPedido, type CreatePedidoDto } from "../../services/pedidos";
 
-type Producto ={
-  id: number;
-  nombre: string;
-  precio: number;
-  imagen: string;
-}
+type TipoComprobante = "Boleta" | "Factura";
+type TipoEntrega = "EnvioNormal" | "RetiroEnTienda";
+type MetodoPago = "MercadoPago" | "Tarjeta" | "WebpayPlus";
 
-type Opcion = {
-  value: string;
-  label: string;
-}
-
-type DatosEnvio = {
+type DatosCheckout = {
   nombre: string;
   apellidos: string;
-  direccion: string;
-  detalle: string;
+  correoElectronico: string;
+  telefono: string;
+  tipoComprobante: TipoComprobante | "";
+  rutDocumento: string;
   region: string;
   comuna: string;
-  email: string;
-  telefono: string;
-  documento: "" | "boleta" | "factura";
-  rut: string;
-}
-
-type MetodoEnvio = "" | "envio-normal" | "retiro-tienda";
-type MetodoPago = "" | "mercado-pago" | "tarjetas" | "webpay-plus";
-
-const PRODUCTOS: Producto[] = [
-  { id: 1, nombre: "Nombre de producto", precio: 7490, imagen: "https://placehold.co/80x80" },
-  { id: 2, nombre: "Nombre de producto", precio: 7490, imagen: "https://placehold.co/80x80" },
-  { id: 3, nombre: "Nombre de producto", precio: 7490, imagen: "https://placehold.co/80x80" },
-];
-
-const REGIONES: Opcion[] = [
-  { value: "region-1", label: "Región 1" },
-  { value: "region-2", label: "Región 2" },
-  { value: "region-3", label: "Región 3" },
-];
-
-const COMUNAS: Opcion[] = [
-  { value: "comuna-1", label: "Comuna 1" },
-  { value: "comuna-2", label: "Comuna 2" },
-  { value: "comuna-3", label: "Comuna 3" },
-];
-
-const COSTO_ENVIO: Record<string, number> = {
-  "envio-normal": 3990,
-  "retiro-tienda": 0,
+  direccion: string;
+  departamentoOficina: string;
+  referencia: string;
+  sucursalRetiro: string;
 };
 
-const formatoCLP = (n: number): string => `$${n.toLocaleString("es-CL")}`;
+const formatoCLP = (monto: number): string =>
+  `$${new Intl.NumberFormat("es-CL", { maximumFractionDigits: 0 }).format(monto)}`;
 
 export function Checkout() {
-  // const navigate = useNavigate();
-
-  const [datos, setDatos] = useState<DatosEnvio>({
-    nombre: "", apellidos: "", direccion: "", detalle: "",
-    region: "", comuna: "", email: "", telefono: "", documento: "", rut: "",
+  const navigate = useNavigate();
+  const { state, dispatch } = useCarrito();
+  const [datos, setDatos] = useState<DatosCheckout>({
+    nombre: "",
+    apellidos: "",
+    correoElectronico: "",
+    telefono: "",
+    tipoComprobante: "",
+    rutDocumento: "",
+    region: "",
+    comuna: "",
+    direccion: "",
+    departamentoOficina: "",
+    referencia: "",
+    sucursalRetiro: "",
   });
-  const [metodoEnvio, setMetodoEnvio] = useState<MetodoEnvio>("");
-  const [metodoPago, setMetodoPago] = useState<MetodoPago>("");
-  const [cupon, setCupon] = useState<string>("");
-  const [descuento, setDescuento] = useState<number>(0);
-  const [terminos, setTerminos] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [tipoEntrega, setTipoEntrega] = useState<TipoEntrega | "">("");
+  const [metodoPago, setMetodoPago] = useState<MetodoPago | "">("");
+  const [aceptaTerminos, setAceptaTerminos] = useState(false);
+  const [cargandoCarrito, setCargandoCarrito] = useState(true);
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const envioEnCurso = useRef(false);
 
-  // ---------- Cálculos ----------
-  const subtotal = PRODUCTOS.reduce((acc, p) => acc + p.precio, 0);
-  const costoEnvio = COSTO_ENVIO[metodoEnvio] ?? 0;
-  const total = subtotal + costoEnvio - descuento;
+  useEffect(() => {
+    let activo = true;
 
-  // ---------- Funciones (por implementar) ----------
-
-  // TODO: formatear RUT con puntos y guion (12.345.678-5)
-  const formatearRut = (rut: string): string => rut;
-
-  // TODO: validar formato + dígito verificador (módulo 11)
-  const validarRut = (_rut: string): boolean => true;
-
-  // TODO: validar teléfono chileno (+56 9 XXXX XXXX)
-  const validarTelefono = (_telefono: string): boolean => true;
-
-  // TODO: devolver solo las comunas de la región seleccionada (JSON/API)
-  const obtenerComunas = (_region: string): Opcion[] => COMUNAS;
-
-  const cambioInput = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = event.target;
-    setDatos((datos) => ({
-      ...datos,
-      [name]: name === "rut" ? formatearRut(value) : value,
-    }));
-  };
-
-  // TODO: al cambiar región, guardar la región y resetear datos.comuna
-  const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    cambioInput(e);
-  };
-
-  // TODO: validar cupón contra la API y hacer setDescuento(monto). Mostrar error si es inválido
-  const aplicarCupon = (): void => {
-    setDescuento(0);
-  };
-
-  // TODO: validar datos, armar el pedido, enviarlo a la API / pasarela de pago
-  // y navegar a la confirmación
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-
-    if (!validarRut(datos.rut)) return setError("RUT inválido");
-    if (!validarTelefono(datos.telefono)) return setError("Teléfono inválido");
-
-    setLoading(true);
-    try {
-      // const pedido = { ...datos, metodoEnvio, metodoPago, cupon, total };
-      // await fetch(...)
-      // navigate("/carrito-compras/confirmacion-pedido");
-    } catch {
-      setError("No se pudo procesar el pedido");
-    } finally {
-      setLoading(false);
+    async function cargarCarrito() {
+      try {
+        // Consultar el carrito real para que el checkout también funcione al abrirse directamente.
+        const carrito = await obtenerCarrito();
+        if (activo) {
+          dispatch({ type: "SINCRONIZAR", carrito });
+        }
+      } catch (cause) {
+        if (activo) {
+          console.error("No se pudo cargar el carrito para el checkout.", cause);
+          setError(cause instanceof Error ? cause.message : "No se pudo cargar el carrito.");
+        }
+      } finally {
+        if (activo) {
+          setCargandoCarrito(false);
+        }
+      }
     }
-  };
 
-  // ---------- Render ----------
+    void cargarCarrito();
+    return () => {
+      activo = false;
+    };
+  }, [dispatch]);
+
+  const subtotal = state.resumenApi?.subtotal
+    ?? state.productos.reduce((suma, producto) => suma + producto.subtotal, 0);
+  const descuento = state.resumenApi?.descuentoCupon ?? 0;
+  const totalCarrito = state.resumenApi?.total ?? subtotal - descuento;
+
+  function actualizarDato(campo: keyof DatosCheckout, valor: string) {
+    setDatos((actuales) => ({ ...actuales, [campo]: valor }));
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError(null);
+
+    if (envioEnCurso.current || enviando) return;
+    if (cargandoCarrito) {
+      setError("Espera a que cargue el carrito antes de finalizar la compra.");
+      return;
+    }
+    if (state.productos.length === 0) {
+      setError("No puedes crear un pedido con el carrito vacío.");
+      return;
+    }
+    if (!aceptaTerminos) {
+      setError("Debes aceptar los términos y condiciones para continuar.");
+      return;
+    }
+    if (!datos.tipoComprobante || !tipoEntrega || !metodoPago) {
+      setError("Completa los campos obligatorios antes de continuar.");
+      return;
+    }
+    if (
+      tipoEntrega === "EnvioNormal"
+      && (!datos.region.trim() || !datos.comuna.trim() || !datos.direccion.trim())
+    ) {
+      setError("Completa región, comuna y dirección para el envío.");
+      return;
+    }
+    if (tipoEntrega === "RetiroEnTienda" && !datos.sucursalRetiro.trim()) {
+      setError("Indica la sucursal donde retirarás el pedido.");
+      return;
+    }
+
+    const datosPedido: CreatePedidoDto = {
+      nombre: datos.nombre.trim(),
+      apellidos: datos.apellidos.trim(),
+      correoElectronico: datos.correoElectronico.trim(),
+      telefono: datos.telefono.trim(),
+      tipoComprobante: datos.tipoComprobante,
+      rutDocumento: datos.rutDocumento.trim(),
+      tipoEntrega,
+      metodoPago,
+      aceptaTerminos,
+      usuarioId: USUARIO_ID_CARRITO,
+      ...(tipoEntrega === "EnvioNormal" && {
+        region: datos.region.trim(),
+        comuna: datos.comuna.trim(),
+        direccion: datos.direccion.trim(),
+        ...(datos.departamentoOficina.trim() && {
+          departamentoOficina: datos.departamentoOficina.trim(),
+        }),
+        ...(datos.referencia.trim() && { referencia: datos.referencia.trim() }),
+      }),
+      ...(tipoEntrega === "RetiroEnTienda" && {
+        sucursalRetiro: datos.sucursalRetiro.trim(),
+      }),
+    };
+
+    // El ref bloquea dobles clics antes de que React alcance a renderizar el estado de carga.
+    envioEnCurso.current = true;
+    setEnviando(true);
+    try {
+      const pedido = await crearPedido(datosPedido);
+      // La consulta de confirmación recibe el ID únicamente tras una creación exitosa.
+      navigate(`/carrito-compras/confirmacion-pedido/${encodeURIComponent(pedido.id)}`);
+    } catch (cause) {
+      console.error("No se pudo crear el pedido.", cause);
+      setError(cause instanceof Error ? cause.message : "No se pudo crear el pedido.");
+    } finally {
+      envioEnCurso.current = false;
+      setEnviando(false);
+    }
+  }
+
   return (
     <section>
       <form onSubmit={handleSubmit} className="container checkout-container">
-
-        {/* DATOS DE ENVÍO */}
         <div className="datos-envio-div">
           <div className="titulo-icono">
-            <img src="https://placehold.co/30x30" alt="" />
-            <h2>Datos para el despacho</h2>
+            <h1>Datos de compra y entrega</h1>
           </div>
           <div id="datos-envio">
             <div className="form-row">
-              <input type="text" name="nombre" placeholder="Nombre*" autoComplete="given-name"
-                value={datos.nombre} onChange={cambioInput} required />
-              <input type="text" name="apellidos" placeholder="Apellidos*" autoComplete="family-name"
-                value={datos.apellidos} onChange={cambioInput} required />
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre*"
+                autoComplete="given-name"
+                value={datos.nombre}
+                onChange={(event) => actualizarDato("nombre", event.target.value)}
+                required
+              />
+              <input
+                type="text"
+                name="apellidos"
+                placeholder="Apellidos*"
+                autoComplete="family-name"
+                value={datos.apellidos}
+                onChange={(event) => actualizarDato("apellidos", event.target.value)}
+                required
+              />
             </div>
-            <div className="form-row">
-              <input type="text" name="direccion" placeholder="Dirección, calle y número*" autoComplete="street-address"
-                value={datos.direccion} onChange={cambioInput} required />
-              <input type="text" name="detalle" placeholder="N° depto, oficina, etc. (Opcional)"
-                value={datos.detalle} onChange={cambioInput} />
-            </div>
-
-            <select name="region" value={datos.region} onChange={handleRegionChange} required>
-              <option value="" disabled>Selecciona una región</option>
-              {REGIONES.map((r) => (
-                <option key={r.value} value={r.value}>{r.label}</option>
-              ))}
-            </select>
-
-            <select name="comuna" value={datos.comuna} onChange={cambioInput} required>
-              <option value="" disabled>Comuna</option>
-              {obtenerComunas(datos.region).map((c) => (
-                <option key={c.value} value={c.value}>{c.label}</option>
-              ))}
-            </select>
 
             <div className="form-row">
-              <input type="email" name="email" placeholder="Correo electrónico*" autoComplete="email"
-                value={datos.email} onChange={cambioInput} required />
-              <input type="tel" name="telefono" placeholder="Teléfono*" autoComplete="tel"
-                value={datos.telefono} onChange={cambioInput} required />
+              <input
+                type="text"
+                inputMode="email"
+                name="correoElectronico"
+                placeholder="Correo electrónico*"
+                autoComplete="email"
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Ingresa un correo válido, por ejemplo nombre@dominio.com"
+                value={datos.correoElectronico}
+                onChange={(event) => actualizarDato("correoElectronico", event.target.value)}
+                required
+              />
+              <input
+                type="tel"
+                name="telefono"
+                placeholder="Teléfono*"
+                autoComplete="tel"
+                value={datos.telefono}
+                onChange={(event) => actualizarDato("telefono", event.target.value)}
+                required
+              />
             </div>
 
-            <select name="documento" value={datos.documento} onChange={cambioInput} required>
-              <option value="" disabled>¿Boleta o factura?*</option>
-              <option value="boleta">Boleta</option>
-              <option value="factura">Factura</option>
+            <label htmlFor="tipo-comprobante">Tipo de comprobante*</label>
+            <select
+              id="tipo-comprobante"
+              value={datos.tipoComprobante}
+              onChange={(event) => actualizarDato("tipoComprobante", event.target.value)}
+              required
+            >
+              <option value="" disabled>Selecciona un comprobante</option>
+              <option value="Boleta">Boleta</option>
+              <option value="Factura">Factura</option>
             </select>
 
-            <input type="text" name="rut" placeholder="Rut*"
-              value={datos.rut} onChange={cambioInput} required />
+            <input
+              type="text"
+              name="rutDocumento"
+              placeholder="RUT o documento*"
+              value={datos.rutDocumento}
+              onChange={(event) => actualizarDato("rutDocumento", event.target.value)}
+              required
+            />
           </div>
         </div>
 
-        {/* MÉTODO DE ENVÍO */}
         <div className="metodo-envio-div">
           <div className="titulo-icono">
-            <img src="https://placehold.co/30x30" alt="" />
-            <h2>¿Recibes o retiras tu pedido?</h2>
+            <h2>Entrega o retiro</h2>
           </div>
           <div className="sel-metodos">
-            <div className="sel-metodo">
-              <div className="input-label">
-                <input type="radio" name="metodo-envio" id="envio-normal" value="envio-normal"
-                  checked={metodoEnvio === "envio-normal"}
-                  onChange={() => setMetodoEnvio("envio-normal")} required />
-                <label htmlFor="envio-normal">Envío Normal</label>
-              </div>
-              <p>{formatoCLP(COSTO_ENVIO["envio-normal"])}</p>
-            </div>
-            <div className="sel-metodo">
-              <div className="input-label">
-                <input type="radio" name="metodo-envio" id="retiro-tienda" value="retiro-tienda"
-                  checked={metodoEnvio === "retiro-tienda"}
-                  onChange={() => setMetodoEnvio("retiro-tienda")} required />
-                <label htmlFor="retiro-tienda">Retiro gratis en tienda.</label>
-              </div>
-              <p>Gratis</p>
-            </div>
+            <label className="sel-metodo" htmlFor="envio-normal">
+              <span>Envío normal</span>
+              <input
+                id="envio-normal"
+                type="radio"
+                name="tipoEntrega"
+                value="EnvioNormal"
+                checked={tipoEntrega === "EnvioNormal"}
+                onChange={() => setTipoEntrega("EnvioNormal")}
+                required
+              />
+            </label>
+            <label className="sel-metodo" htmlFor="retiro-tienda">
+              <span>Retiro en tienda</span>
+              <input
+                id="retiro-tienda"
+                type="radio"
+                name="tipoEntrega"
+                value="RetiroEnTienda"
+                checked={tipoEntrega === "RetiroEnTienda"}
+                onChange={() => setTipoEntrega("RetiroEnTienda")}
+                required
+              />
+            </label>
           </div>
+
+          {tipoEntrega === "EnvioNormal" && (
+            <div id="datos-envio">
+              <input
+                type="text"
+                name="region"
+                placeholder="Región*"
+                value={datos.region}
+                onChange={(event) => actualizarDato("region", event.target.value)}
+                required
+              />
+              <input
+                type="text"
+                name="comuna"
+                placeholder="Comuna*"
+                value={datos.comuna}
+                onChange={(event) => actualizarDato("comuna", event.target.value)}
+                required
+              />
+              <input
+                type="text"
+                name="direccion"
+                placeholder="Dirección, calle y número*"
+                autoComplete="street-address"
+                value={datos.direccion}
+                onChange={(event) => actualizarDato("direccion", event.target.value)}
+                required
+              />
+              <input
+                type="text"
+                name="departamentoOficina"
+                placeholder="Departamento u oficina (opcional)"
+                value={datos.departamentoOficina}
+                onChange={(event) => actualizarDato("departamentoOficina", event.target.value)}
+              />
+              <input
+                type="text"
+                name="referencia"
+                placeholder="Referencia para el repartidor (opcional)"
+                value={datos.referencia}
+                onChange={(event) => actualizarDato("referencia", event.target.value)}
+              />
+            </div>
+          )}
+
+          {tipoEntrega === "RetiroEnTienda" && (
+            <input
+              type="text"
+              name="sucursalRetiro"
+              placeholder="Sucursal de retiro*"
+              value={datos.sucursalRetiro}
+              onChange={(event) => actualizarDato("sucursalRetiro", event.target.value)}
+              required
+            />
+          )}
         </div>
 
-        {/* MÉTODO DE PAGO */}
         <div className="metodo-pago-div">
           <div className="titulo-icono">
-            <img src="https://placehold.co/30x30" alt="" />
-            <h2>¿Cómo vas a pagar?</h2>
+            <h2>Método de pago</h2>
           </div>
           <div id="metodo-pago" className="sel-metodos">
-            <div className="sel-metodo">
-              <div className="input-label">
-                <input type="radio" name="metodo-pago" id="mercado-pago" value="mercado-pago"
-                  checked={metodoPago === "mercado-pago"}
-                  onChange={() => setMetodoPago("mercado-pago")} required />
-                <label htmlFor="mercado-pago">Mercado Pago</label>
-              </div>
-              <img src="https://placehold.co/45x30" alt="Mercado Pago" />
-            </div>
-            <div className="sel-metodo">
-              <div className="input-label">
-                <input type="radio" name="metodo-pago" id="tarjetas" value="tarjetas"
-                  checked={metodoPago === "tarjetas"}
-                  onChange={() => setMetodoPago("tarjetas")} required />
-                <label htmlFor="tarjetas">Tarjeta crédito, débito y prepago.</label>
-              </div>
-            </div>
-            <div className="sel-metodo">
-              <div className="input-label">
-                <input type="radio" name="metodo-pago" id="webpay-plus" value="webpay-plus"
-                  checked={metodoPago === "webpay-plus"}
-                  onChange={() => setMetodoPago("webpay-plus")} required />
-                <label htmlFor="webpay-plus">Webpay Plus</label>
-              </div>
-            </div>
+            {([
+              ["MercadoPago", "Mercado Pago"],
+              ["Tarjeta", "Tarjeta crédito, débito y prepago"],
+              ["WebpayPlus", "Webpay Plus"],
+            ] as const).map(([value, label]) => (
+              <label className="sel-metodo" htmlFor={`pago-${value}`} key={value}>
+                <span>{label}</span>
+                <input
+                  id={`pago-${value}`}
+                  type="radio"
+                  name="metodoPago"
+                  value={value}
+                  checked={metodoPago === value}
+                  onChange={() => setMetodoPago(value)}
+                  required
+                />
+              </label>
+            ))}
           </div>
         </div>
 
-        {/* RESUMEN */}
         <div className="resumen-pedido-div">
           <div className="titulo-icono">
-            <img src="https://placehold.co/30x30" alt="" />
             <h2>Resumen del pedido</h2>
           </div>
 
+          {cargandoCarrito && <p role="status">Cargando carrito...</p>}
+          {!cargandoCarrito && state.productos.length === 0 && (
+            <p>El carrito está vacío.</p>
+          )}
           <div className="productos-resumen-pedido">
-            {PRODUCTOS.map((p) => (
-              <article key={p.id} className="producto-resumen-pedido">
+            {state.productos.map((producto) => (
+              <article key={producto.productoId} className="producto-resumen-pedido">
                 <div className="info-producto">
-                  <img src={p.imagen} alt={p.nombre} className="imagen-producto-resumen" />
-                  <p className="nombre-producto-resumen">{p.nombre}</p>
+                  {producto.imagen && (
+                    <img src={producto.imagen} alt={producto.nombre} className="imagen-producto-resumen" />
+                  )}
+                  <div>
+                    <p className="nombre-producto-resumen">{producto.nombre}</p>
+                    <p>Cantidad: {producto.cantidad}</p>
+                  </div>
                 </div>
-                <p className="precio-producto-resumen">{formatoCLP(p.precio)}</p>
+                <p className="precio-producto-resumen">
+                  {formatoCLP(producto.precioUnitario)} c/u
+                  <br />
+                  Subtotal: {formatoCLP(producto.subtotal)}
+                </p>
               </article>
             ))}
-          </div>
-
-          <div className="cupon-descuento">
-            <div className="titulo-icono">
-              <img src="https://placehold.co/30x30" alt="" />
-              <h3>Cupón de descuento o Giftcard</h3>
-            </div>
-            <div id="codigo-cupon">
-              <input type="text" name="codigo" placeholder="Introduce el código promocional"
-                value={cupon} onChange={(e) => setCupon(e.target.value)} />
-              <button type="button" onClick={aplicarCupon}>Aplicar</button>
-            </div>
           </div>
 
           <div className="subtotal-total-resumen-div">
@@ -284,40 +387,44 @@ export function Checkout() {
               <p>Subtotal:</p>
               <p>{formatoCLP(subtotal)}</p>
             </div>
-            {costoEnvio > 0 && (
-              <div className="subtotal-div">
-                <p>Envío:</p>
-                <p>{formatoCLP(costoEnvio)}</p>
-              </div>
-            )}
             {descuento > 0 && (
               <div className="subtotal-div">
-                <p>Descuento:</p>
+                <p>Descuento aplicado:</p>
                 <p>-{formatoCLP(descuento)}</p>
               </div>
             )}
+            <div className="subtotal-div">
+              <p>Envío:</p>
+              <p>Calculado al crear el pedido</p>
+            </div>
             <div className="total-div">
-              <p>Total</p>
-              <span>{formatoCLP(total)}</span>
+              <p>Total del carrito (sin envío):</p>
+              <span>{formatoCLP(totalCarrito)}</span>
             </div>
           </div>
 
           <div id="finalizar-compra">
-            <div className="check-terminos">
-              <input type="checkbox" name="terminos-condiciones" id="terminos-condiciones"
-                checked={terminos} onChange={(e) => setTerminos(e.target.checked)} required />
+            <div className="check-termino">
+              <input
+                type="checkbox"
+                name="aceptaTerminos"
+                id="terminos-condiciones"
+                checked={aceptaTerminos}
+                onChange={(event) => setAceptaTerminos(event.target.checked)}
+                required
+              />
               <label htmlFor="terminos-condiciones">
-                He leído y estoy de acuerdo con los{" "}
-                <span aria-disabled="true">
-                  términos y condiciones.
-                </span>
+                He leído y estoy de acuerdo con los términos y condiciones.
               </label>
             </div>
 
-            {error && <p className="error-checkout">{error}</p>}
+            {error && <p className="error-checkout" role="alert">{error}</p>}
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Procesando..." : "Finalizar compra"}
+            <button
+              type="submit"
+              disabled={cargandoCarrito || enviando || state.productos.length === 0}
+            >
+              {enviando ? "Creando pedido..." : "Finalizar compra"}
             </button>
           </div>
         </div>

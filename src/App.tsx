@@ -4,12 +4,12 @@ import { AgendarVeterinarioDatosContacto } from './pages/AgendarVeterinarioDatos
 import { AgendarVeterinarioProfesional } from './pages/AgendarVeterinarioProfesional/AgendarVeterinarioProfesional'
 import { CarritoCompras } from './pages/CarritoCompras/CarritoCompras'
 import { Checkout } from './pages/Checkout/Checkout'
-import Configuracion from './pages/Configuracion/Configuracion'
+import { Configuracion } from './pages/Configuracion/Configuracion'
 import { ConfirmacionPedido } from './pages/ConfirmacionPedido/ConfirmacionPedido'
 import { HistorialMedico } from './pages/HistorialMedico/HistorialMedico'
 import { Home } from './pages/Home/Home'
-import PerfilMascota from './pages/PerfilMascota/PerfilMascota'
-import PerfilUsuario from './pages/PerfilUsuario/PerfilUsuario'
+import { PerfilMascota } from './pages/PerfilMascota/PerfilMascota'
+import { PerfilUsuario } from './pages/PerfilUsuario/PerfilUsuario'
 import { ProductoIndividual } from './pages/ProductoIndividual/ProductoIndividual'
 import { Tienda } from './pages/Tienda/Tienda'
 
@@ -27,6 +27,8 @@ function App() {
         <Route path="carrito-compras" element={<CarritoCompras />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="carrito-compras/checkout" element={<Checkout />} />
+        <Route path="confirmacion-pedido/:id" element={<ConfirmacionPedido />} />
+        <Route path="carrito-compras/confirmacion-pedido/:id" element={<ConfirmacionPedido />} />
         <Route path="confirmacion-pedido" element={<ConfirmacionPedido />} />
         <Route path="carrito-compras/confirmacion-pedido" element={<ConfirmacionPedido />} />
 
