@@ -1,10 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
-<<<<<<< HEAD
-=======
-import { UIKitCategoryIcon } from "../../components/UIKit/UIIcons/UIKitCategoryIcon";
 import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
->>>>>>> gaboBranch
 
 interface HeaderProps {
   logoSrc?: string;
@@ -57,15 +53,11 @@ export function Header({
 
                 <nav className="bottom-bar" aria-label="Categorías principales">
                     <ul>
-<<<<<<< HEAD
-                        <li><NavLink to="/tienda">☰ Categorías</NavLink></li>
-=======
                         {headerOptions.map((headerOption) => (
                             <li>
                                 <NavLink to={headerOption.route}> <UIKitIcon name={headerOption.icon} iconColor={headerOption.color}/> {headerOption.name} </NavLink>
                             </li>
                         ))}
->>>>>>> gaboBranch
                         <li><NavLink to="/servicios-veterinarios/agendar-veterinario-lista-servicios">🩺 Servicios veterinarios</NavLink></li>
                         <li><NavLink to="/categoria/farmacia">💊 Farmacia</NavLink></li>
                         <li><NavLink to="/categoria/gatos">🐱 Gato</NavLink></li>
