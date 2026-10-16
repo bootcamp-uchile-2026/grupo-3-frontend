@@ -1,0 +1,114 @@
+.resumen-producto {
+    min-width: 0;
+}
+
+.resumen-producto__nombre {
+    margin: 0 0 12px;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.15;
+}
+
+.resumen-producto__valoracion {
+    margin-bottom: 14px;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.resumen-producto__descripcion {
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.resumen-producto__disponibilidad {
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+}
+
+.resumen-producto__disponibilidad span {
+    margin-right: 6px;
+}
+
+.resumen-producto__precios {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 1.25rem;
+}
+
+.resumen-producto__precio-original {
+    color: #666;
+    font-size: 0.95rem;
+    text-decoration: line-through;
+}
+
+.resumen-producto__acciones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.resumen-producto__boton {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    font: inherit;
+    font-size: 0.85rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.resumen-producto__boton--secundario {
+    background: #fff;
+    color: #222;
+}
+
+.resumen-producto__boton--principal {
+    border-color: #aaa;
+    background: #aaa;
+    color: #111;
+}
+
+.resumen-producto__boton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.resumen-producto__mensaje {
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.resumen-producto__metadatos {
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e3e3e3;
+    font-size: 0.75rem;
+}
+
+.resumen-producto__metadatos div {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+}
+
+.resumen-producto__metadatos dt {
+    font-weight: 600;
+}
+
+.resumen-producto__metadatos dd {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+    .resumen-producto__acciones {
+        grid-template-columns: 1fr;
+    }
+}
