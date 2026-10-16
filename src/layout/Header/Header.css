@@ -87,6 +87,7 @@
     gap: 30px;
     align-items: center;
     overflow-x: auto;
+    justify-content: center;
 }
 
 .bottom-bar ul li a,

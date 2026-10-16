@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
+import { UIKitCategoryIcon } from "../../components/UIKit/UIIcons/UIKitCategoryIcon";
+import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
 
 interface HeaderProps {
   logoSrc?: string;
@@ -7,6 +9,10 @@ interface HeaderProps {
   accountIconSrc?: string;
   cartIconSrc?: string;
 }
+
+const headerOptions = [
+    {route: "/tienda", name: "Categorias", icon: "categories", color: "#ffffff"}
+]
 
 export function Header({ 
         logoSrc="/assets/images/logo-petlove.svg",
@@ -48,7 +54,11 @@ export function Header({
 
                 <nav className="bottom-bar" aria-label="Categorías principales">
                     <ul>
-                        <li><NavLink to="/tienda">☰ Categorías</NavLink></li>
+                        {headerOptions.map((headerOption) => (
+                            <li>
+                                <NavLink to={headerOption.route}> <UIKitIcon name={headerOption.icon} iconColor={headerOption.color}/> {headerOption.name} </NavLink>
+                            </li>
+                        ))}
                         <li><NavLink to="/servicios-veterinarios/agendar-veterinario-lista-servicios">🩺 Servicios veterinarios</NavLink></li>
                         <li><NavLink to="/categoria/farmacia">💊 Farmacia</NavLink></li>
                         <li><NavLink to="/categoria/gatos">🐱 Gato</NavLink></li>
