@@ -157,6 +157,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+<<<<<<< HEAD
 }
 
 .producto-individual {
@@ -207,3 +208,55 @@
 .comprar-ahora {
     background-color: darkgray;
 }
+=======
+}
+
+.producto-individual {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: solid #ccc 1px;
+    margin-bottom: 30px;
+}
+
+.producto-individual img {
+    width: 100%;
+}
+
+.breadcrumbs button {
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.nombre-producto-individual {
+    margin-bottom: 20px;
+}
+
+.precio-normal-producto-individual {
+    font-weight: 600;
+    text-decoration: line-through;
+    margin-bottom: 10px;
+}
+
+.precio-oferta-producto-individual {
+    font-weight: 700;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.descripcion-corta-producto-individual {
+    margin-bottom: 20px;
+}
+
+.botones-producto-individual {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.comprar-ahora {
+    background-color: darkgray;
+}
+>>>>>>> gaboBranch

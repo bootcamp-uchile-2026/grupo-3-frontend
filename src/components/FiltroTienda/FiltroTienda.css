@@ -28,6 +28,7 @@
     cursor: pointer;
     font-weight: bold;
     font-size: 1.2rem;
+<<<<<<< HEAD
     list-style: none;
 }
 
@@ -47,6 +48,9 @@
 
 #filtro-form .filtro-subgrupo > summary {
     font-size: 1rem;
+=======
+    margin-bottom: 10px;
+>>>>>>> gaboBranch
 }
 
 .filtro-productos {
