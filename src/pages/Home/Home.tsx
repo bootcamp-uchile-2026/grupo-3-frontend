@@ -166,6 +166,7 @@ export function Home() {
                                 precio={producto.precio}
                                 precioOriginal={producto.precioOriginal}
                                 categoria={producto.categoria}
+                                variant="standard"
                             />
                         ))}
                     </div>

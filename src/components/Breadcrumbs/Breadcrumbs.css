@@ -1,4 +1,4 @@
-.producto-breadcrumbs {
+.breadcrumbs {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -8,6 +8,12 @@
     font-size: 0.75rem;
 }
 
-.producto-breadcrumbs a:hover {
+.breadcrumbs__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.breadcrumbs a:hover {
     text-decoration: underline;
 }

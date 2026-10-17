@@ -1,3 +1,5 @@
+import { subcategoriasMascota } from './subcategoriasMascota';
+
 export type FiltroClave =
   | 'mascota'
   | 'tipoProducto'
@@ -123,12 +125,6 @@ const gruposFiltro: GrupoFiltro[] = [
 ];
 
 const especiesDirectas = ['Gato', 'Perro', 'Conejo', 'Hurón'];
-const subcategoriasMascota = [
-  { titulo: 'Aves', opciones: ['Periquito', 'Canario', 'Loro', 'Ninfa', 'Agapornis'] },
-  { titulo: 'Reptiles', opciones: ['Tortuga', 'Gecko', 'Serpiente', 'Dragón barbudo', 'Iguana'] },
-  { titulo: 'Roedores', opciones: ['Hámster', 'Cobaya (Cuy)', 'Rata', 'Ratón', 'Chinchilla'] },
-];
-
 function renderizarOpcion(
   grupo: GrupoFiltro,
   opcion: OpcionFiltro,

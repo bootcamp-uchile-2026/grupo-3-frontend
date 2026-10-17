@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardCarrusel } from "../../components/CardCarrusel/CardCarrusel";
+import { Breadcrumbs } from "../../components/Breadcrumbs/Breadcrumbs";
 import { CardProducto } from "../../components/CardProducto/CardProducto";
-import { Breadcrumbs } from "../../components/ProductoIndividual/Breadcrumbs/Breadcrumbs";
 import { GaleriaProducto } from "../../components/ProductoIndividual/GaleriaProducto/GaleriaProducto";
 import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProducto/ResenasProducto";
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
@@ -252,11 +252,12 @@ export function ProductoIndividual() {
                         imagenes={producto.imagenes ?? []}
                     />
                     <div className="producto-detalle__informacion">
-                        <Breadcrumbs
-                            especie={producto.especie}
-                            categoria={producto.categoria}
-                            subcategoria={producto.subcategoria}
-                        />
+                        <Breadcrumbs items={[
+                            { label: "Inicio", to: "/" },
+                            { label: producto.especie, to: "/tienda" },
+                            { label: producto.categoria, to: "/tienda" },
+                            { label: producto.subcategoria, to: "/tienda" },
+                        ]} />
                         <ResumenProducto
                             nombre={producto.nombre}
                             descripcion={producto.descripcion}
@@ -301,6 +302,7 @@ export function ProductoIndividual() {
                                     precio={productoRelacionado.precio}
                                     precioOriginal={productoRelacionado.precioOriginal}
                                     categoria={productoRelacionado.categoria}
+                                    variant="standard"
                                 />
                             ))}
                         </CardCarrusel>
