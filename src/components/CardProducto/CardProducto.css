@@ -1,37 +1,202 @@
 .producto-card {
     display: flex;
+    height: 100%;
+    min-width: 0;
     flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    padding: 7px;
+    border: 7px solid #dedede;
+    border-radius: 12px;
+    background: #dedede;
 }
 
-.producto-card img {
+.producto-card__enlace {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    color: inherit;
+}
+
+.producto-card__imagen {
+    position: relative;
+    display: grid;
     width: 100%;
-    margin-bottom: 10px;
+    aspect-ratio: 1;
+    place-items: center;
+    overflow: hidden;
+    margin-bottom: 7px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.producto-card__imagen img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+}
+
+.producto-card__imagen.has-error::after,
+.producto-card__imagen-vacia {
+    color: #777;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.producto-card__insignia {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 4px 7px;
+    border-radius: 3px;
+    background: #fff;
+    color: #222;
+    font-size: 0.7rem;
+}
+
+.producto-card__imagen.has-error::after {
+    position: absolute;
+    content: "Imagen no disponible";
 }
 
 .producto-card-content {
+    display: grid;
+    min-width: 0;
+    flex: 1;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    gap: 8px;
+    padding: 0 2px;
+    margin-bottom: 7px;
+    font-size: 0.72rem;
+}
+
+.producto-info,
+.producto-precio {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 10px;
-    margin-bottom: 10px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
+    overflow-wrap: anywhere;
+}
+
+.producto-info__titulo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.producto-info__categoria,
+.producto-info__marca {
+    color: #555;
+}
+
+.producto-card__rating {
+    color: #333;
+    white-space: nowrap;
+}
+
+.producto-card__rating-numero {
+    margin-left: 5px;
+}
+
+.producto-precio {
+    max-width: 68px;
+    text-align: right;
+    font-size: 0.65rem;
+}
+
+.producto-precio-original {
+    color: #555;
+    text-decoration: line-through;
+    white-space: nowrap;
+}
+
+.producto-precio__actual {
+    font-weight: 600;
 }
 
 .producto-card-actions {
     display: flex;
     justify-content: center;
+    margin-top: auto;
 }
 
 .producto-card-actions button {
-    border: none;
-    padding: 10px 20px;
     width: 100%;
-    border-radius: 5px;
+    min-height: 32px;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 18px;
+    background: #aaa;
+    font-size: 0.72rem;
     cursor: pointer;
 }
 
-.producto-precio-original {
-    text-decoration: line-through;
+.producto-card-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.producto-card-actions p {
+    margin-top: 6px;
+    font-size: 0.75rem;
+}
+
+.producto-card--store-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+}
+
+.producto-card--store-list .producto-card__enlace {
+    display: grid;
+    grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+}
+
+.producto-card--store-list .producto-card__imagen {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    height: 140px;
+    aspect-ratio: auto;
+    margin: 0;
+}
+
+.producto-card--store-list .producto-card-content {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+}
+
+.producto-card--store-list .producto-card-actions {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    .producto-card {
+        padding: 5px;
+        border-width: 5px;
+    }
+
+    .producto-card-content {
+        gap: 4px;
+        font-size: 0.68rem;
+    }
+
+    .producto-info__titulo {
+        font-size: 0.72rem;
+    }
+
+    .producto-card--store-list .producto-card__enlace {
+        grid-template-columns: 96px minmax(0, 1fr);
+        column-gap: 10px;
+    }
+
+    .producto-card--store-list .producto-card__imagen {
+        height: 105px;
+    }
 }

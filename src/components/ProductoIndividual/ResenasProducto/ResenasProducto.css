@@ -1,0 +1,10 @@
+.resenas-producto {
+    padding: 34px 0 10px;
+}
+
+.resenas-producto__mensaje {
+    margin-top: 12px;
+    color: #555;
+    font-size: 0.8rem;
+    text-align: center;
+}

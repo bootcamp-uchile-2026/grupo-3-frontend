@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
+import type { Categoria, ProductoOferta } from "../../TDATypes";
+import HomeCategories from "./HomeDivisions/HomeCategories";
+import HomeOffers from "./HomeDivisions/HomeOffers";
+import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
 
-import { CardCategoria } from "../../components/CardCategoria/CardCategoria"
-import { CardPetLove } from "../../components/CardPetLove/CardPetLove"
-import { CardProducto } from "../../components/CardProducto/CardProducto"
-
-type Categoria = {
-    id: string;
-    nombre: string;
-    imagen: string;
-    ruta: string;
-};
+const urlPetLoveTeamImages = [
+    "https://placehold.co/400x400",
+    "https://placehold.co/400x400",
+    "https://placehold.co/400x400",
+    "https://placehold.co/400x400",
+]
 
 function esCategoria(value: unknown): value is Categoria {
     return typeof value === "object" && value !== null
@@ -19,14 +19,6 @@ function esCategoria(value: unknown): value is Categoria {
         && "ruta" in value && typeof value.ruta === "string";
 }
 
-type ProductoOferta = {
-    id: string;
-    nombre: string;
-    precio: number;
-    precioOriginal: number;
-    imagenes: string[];
-    categoria: string;
-};
 
 function esProductoOferta(value: unknown): value is ProductoOferta {
     return typeof value === "object" && value !== null
@@ -125,20 +117,7 @@ export function Home() {
     return (
         <>
             <section>
-                <div className="container">
-                    <div className="categorias-home">
-                        {cargandoCategorias && <p role="status">Cargando categorías...</p>}
-                        {errorCategorias && <p role="alert">{errorCategorias}</p>}
-                        {categorias.map((categoria) => (
-                            <CardCategoria
-                                key={categoria.id}
-                                titulo={categoria.nombre}
-                                urlImagen={categoria.imagen}
-                                urlLink={categoria.ruta}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias}/>
             </section>
             <section id="hero">
                 <div className="slider">
@@ -149,45 +128,10 @@ export function Home() {
                 </div>
             </section>
             <section>
-                <div className="container">
-                    <h2 className="titulo-seccion">Ofertas</h2>
-                    <div className="productos-ofertas">
-                        {cargandoOfertas && <p role="status">Cargando ofertas...</p>}
-                        {errorOfertas && <p role="alert">{errorOfertas}</p>}
-                        {!cargandoOfertas && !errorOfertas && productosOferta.length === 0 && (
-                            <p>No hay ofertas disponibles.</p>
-                        )}
-                        {productosOferta.slice(0, cantidadOfertasVisibles).map((producto) => (
-                            <CardProducto
-                                key={producto.id}
-                                id={producto.id}
-                                titulo={producto.nombre}
-                                urlImagen={producto.imagenes[0]}
-                                precio={producto.precio}
-                                precioOriginal={producto.precioOriginal}
-                                categoria={producto.categoria}
-                            />
-                        ))}
-                    </div>
-                    {productosOferta.length > cantidadOfertasVisibles && (
-                        <div className="ver-mas">
-                            <button onClick={() => setCantidadOfertasVisibles((cantidadActual) => cantidadActual + 4)}>
-                                Mostrar más
-                            </button>
-                        </div>
-                    )}
-                </div>
+                <HomeOffers isLoading={cargandoOfertas} errorMessage={errorOfertas} offers={productosOferta} visibleOffersAmount={cantidadOfertasVisibles} setVisibleOffersAmount={setCantidadOfertasVisibles}/>
             </section>
             <section>
-                <div className="container">
-                    <h2 className="titulo-seccion titulo-center">¡Conoce a la familia PetLove!</h2>
-                    <div className="petlove-cards">
-                        <CardPetLove urlImagen="https://placehold.co/400x400" />
-                        <CardPetLove urlImagen="https://placehold.co/400x400" />
-                        <CardPetLove urlImagen="https://placehold.co/400x400" />
-                        <CardPetLove urlImagen="https://placehold.co/400x400" />
-                    </div>
-                </div>
+                <HomePetloveTeam title={"¡Conoce a la familia PetLove!"} urlImages={urlPetLoveTeamImages}/>
             </section>
         </>
     )
