@@ -1,0 +1,52 @@
+.quantity-stepper {
+  display: inline-grid;
+  grid-template-columns: 32px 32px 32px;
+  min-height: 34px;
+  overflow: hidden;
+  border: 1px solid var(--cart-color-border);
+  border-radius: var(--cart-radius-pill);
+  background: var(--cart-color-surface);
+}
+
+.quantity-stepper__button {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: var(--cart-color-control);
+  color: var(--cart-color-text);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.quantity-stepper__button:last-child {
+  background: var(--cart-color-control-strong);
+  color: var(--cart-color-surface);
+}
+
+.quantity-stepper__button:hover:not(:disabled) {
+  background: var(--cart-color-control-hover);
+  color: var(--cart-color-surface);
+}
+
+.quantity-stepper__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.quantity-stepper__value {
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--cart-color-border);
+  border-left: 1px solid var(--cart-color-border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.quantity-stepper__button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--cart-color-focus);
+  outline-offset: -2px;
+}

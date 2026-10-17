@@ -1,0 +1,18 @@
+/* ========================================
+   PERFIL MASCOTA
+======================================== */
+
+.datos-detalle-mascota {
+  display: flex;
+  padding: 30px;
+}
+
+.detalle-mascota {
+  flex: 1;
+}
+
+.detalle-mascota article {
+  border: 1px solid #000;
+  padding: 20px;
+  margin-bottom: 10px;
+}

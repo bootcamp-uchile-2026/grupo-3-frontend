@@ -1,0 +1,188 @@
+:root {
+    --cart-color-background: #eeeeee;
+    --cart-color-surface: #ffffff;
+    --cart-color-placeholder: #d9d9d9;
+    --cart-color-field: #f0f0f0;
+    --cart-color-text: #272727;
+    --cart-color-muted: #777777;
+    --cart-color-border: #dddddd;
+    --cart-color-control: #eeeeee;
+    --cart-color-control-strong: #686868;
+    --cart-color-control-hover: #4d4d4d;
+    --cart-color-danger: #d93636;
+    --cart-color-danger-hover: #a91f1f;
+    --cart-color-success: #278244;
+    --cart-color-focus: #2375c7;
+    --cart-radius-small: 5px;
+    --cart-radius-card: 18px;
+    --cart-radius-pill: 999px;
+    --cart-space-small: 8px;
+    --cart-space-medium: 16px;
+    --cart-space-large: 24px;
+    --cart-shadow-card: 0 2px 8px rgb(0 0 0 / 5%);
+}
+
+.cart-page {
+    min-height: 100%;
+    background: var(--cart-color-background);
+    color: var(--cart-color-text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container.cart-page__container {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: 48px 28px 64px;
+}
+
+.cart-page__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(280px, 0.9fr);
+    align-items: start;
+    gap: var(--cart-space-large);
+}
+
+.cart-page__items {
+    min-width: 0;
+    overflow: hidden;
+    border-radius: var(--cart-radius-card);
+    background: var(--cart-color-surface);
+    box-shadow: var(--cart-shadow-card);
+}
+
+.cart-page__heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 62px;
+    padding: 14px 20px;
+    background: #c8c8c8;
+    color: var(--cart-color-text);
+    font-size: 1.05rem;
+    font-weight: 650;
+}
+
+.cart-page__product-list {
+    display: grid;
+}
+
+.cart-page__clear {
+    display: block;
+    margin: 12px 16px 16px auto;
+    padding: 7px 12px;
+    background: transparent;
+    color: var(--cart-color-muted);
+    font-size: 0.8rem;
+}
+
+.cart-page__clear:hover:not(:disabled) {
+    color: var(--cart-color-danger);
+    text-decoration: underline;
+}
+
+.cart-page__clear:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.cart-page__clear:focus-visible,
+.cart-page__catalog-link:focus-visible {
+    outline: 2px solid var(--cart-color-focus);
+    outline-offset: 3px;
+}
+
+.cart-page__sidebar {
+    position: sticky;
+    top: 20px;
+    display: grid;
+    gap: var(--cart-space-medium);
+}
+
+.cart-page__notice,
+.cart-page__error {
+    padding: 14px 18px;
+    background: var(--cart-color-surface);
+}
+
+.cart-page__error {
+    color: var(--cart-color-danger);
+}
+
+.cart-page__empty {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: 42px 20px;
+    text-align: center;
+}
+
+.cart-page__empty h2 {
+    font-size: 1.25rem;
+}
+
+.cart-page__empty p {
+    color: var(--cart-color-muted);
+}
+
+.cart-page__catalog-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    margin-top: 4px;
+    padding: 9px 18px;
+    border-radius: var(--cart-radius-pill);
+    background: var(--cart-color-control-strong);
+    color: var(--cart-color-surface);
+    font-weight: 650;
+}
+
+.cart-page__recommendations {
+    min-width: 0;
+    margin-top: 30px;
+}
+
+.cart-page__recommendations h2 {
+    margin-bottom: 14px;
+    color: var(--cart-color-text);
+    font-size: 1.35rem;
+}
+
+.cart-page__recommendations .card-carrusel {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .cart-page__layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cart-page__sidebar {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .container.cart-page__container {
+        padding: 32px 12px 40px;
+    }
+
+    .cart-page__layout {
+        gap: 14px;
+    }
+
+    .cart-page__heading {
+        min-height: 54px;
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+
+    .cart-page__sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cart-page__recommendations {
+        margin-top: 24px;
+    }
+}

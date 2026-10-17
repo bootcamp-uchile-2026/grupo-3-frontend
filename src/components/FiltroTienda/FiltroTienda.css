@@ -1,0 +1,59 @@
+.filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#filtro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#filtro-form .filtro-opciones-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0 0 12px;
+}
+
+#filtro-form .filtro-grupo,
+#filtro-form .filtro-subgrupo {
+    margin-bottom: 10px;
+}
+
+#filtro-form summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    list-style: none;
+}
+
+#filtro-form summary::-webkit-details-marker {
+    display: none;
+}
+
+#filtro-form summary::after {
+    content: "⌄";
+    font-size: 1rem;
+    transition: transform 150ms ease;
+}
+
+#filtro-form details[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+#filtro-form .filtro-subgrupo > summary {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.filtro-productos {
+    display: grid;
+    gap: 20px;
+    margin: 30px 0;
+    grid-template-columns: auto minmax(0, 1fr);
+
+}

@@ -1,0 +1,305 @@
+@import url('./App.css');
+@import url('./components/Breadcrumbs/Breadcrumbs.css');
+@import url('./components/CardCarrusel/CardCarrusel.css');
+@import url('./components/CardCategoria/CardCategoria.css');
+@import url('./components/CardPetLove/CardPetLove.css');
+@import url('./components/CardProducto/CardProducto.css');
+@import url('./components/CardProductoConfirmacion/CardProductoConfirmacion.css');
+@import url('./components/CardTabs/CardTabs.css');
+@import url('./components/CartItem/CartItem.css');
+@import url('./components/CouponBox/CouponBox.css');
+@import url('./components/DatosMascota/DatosMascota.css');
+@import url('./components/FiltroClinicaVet/FiltroClinicaVet.css');
+@import url('./components/FiltroTienda/FiltroTienda.css');
+@import url('./components/Hero/Hero.css');
+@import url('./components/HeroTienda/HeroTienda.css');
+@import url('./components/ModalClinicaVet/ModalClinicaVet.css');
+@import url('./components/OrdenTienda/OrdenTienda.css');
+@import url('./components/OrderSummary/OrderSummary.css');
+@import url('./components/ProductoIndividual/FichaTecnica/FichaTecnica.css');
+@import url('./components/ProductoIndividual/GaleriaProducto/GaleriaProducto.css');
+@import url('./components/ProductoIndividual/ListaResenas/ListaResenas.css');
+@import url('./components/ProductoIndividual/PaginacionResenas/PaginacionResenas.css');
+@import url('./components/ProductoIndividual/ResenasProducto/ResenasProducto.css');
+@import url('./components/ProductoIndividual/ResumenProducto/ResumenProducto.css');
+@import url('./components/ProductoIndividual/ResumenResenas/ResumenResenas.css');
+@import url('./components/ProductoIndividual/TabsProducto/TabsProducto.css');
+@import url('./components/QuantityStepper/QuantityStepper.css');
+@import url('./pages/Tienda/Tienda.css');
+@import url('./layout/Footer/Footer.css');
+@import url('./layout/Header/Header.css');
+@import url('./pages/AgendarVeterinarioDatosContacto/AgendarVeterinarioDatosContacto.css');
+@import url('./pages/AgendarVeterinarioProfesional/AgendarVeterinarioProfesional.css');
+@import url('./pages/CarritoCompras/CarritoCompras.css');
+@import url('./pages/Checkout/Checkout.css');
+@import url('./pages/Configuracion/Configuracion.css');
+@import url('./pages/ConfirmacionPedido/ConfirmacionPedido.css');
+@import url('./pages/HistorialMedico/HistorialMedico.css');
+@import url('./pages/Home/Home.css');
+@import url('./pages/PerfilMascota/PerfilMascota.css');
+@import url('./pages/PerfilUsuario/PerfilUsuario.css');
+@import url('./pages/ProductoIndividual/ProductoIndividual.css');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: #000000;
+}
+section {
+    width: 100%;
+}
+.titulo-seccion {
+    margin-bottom: 20px;
+}
+.titulo-center{
+    text-align: center;
+}
+button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 30px;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th,
+td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+thead th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+.form-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+.form-row input {
+    width: 100%;
+}
+.form-row .form-group {
+    width: 100%;
+}
+/* --- Barra Superior --- */
+/* --- Barra Inferior --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Parte superior */
+/* Cuadro con la X del logo */
+/* Links */
+/* Parte inferior - copyright */
+/* ===== PÁGINA AGENDAR SERVICIOS ===== */
+/* Mascotas */
+/* Servicios */
+/* ===== VISTA SEMANAL TIPO GOOGLE CALENDAR ===== */
+/* ===== STEPPER 1-2-3 ===== */
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    border: 1px solid #333;
+}
+.step.active .step-circle {
+    background: #4a4a4a;
+    color: #fff;
+}
+.step-text span {
+    font-size: 12px;
+    font-weight: 600;
+}
+.step.active .step-text span {
+    color: #000;
+}
+.step-line {
+    width: 120px;
+    height: 1px;
+    background: #999;
+    margin: 0 10px;
+    margin-bottom: 22px;
+}
+.step-line.active-line {
+    background: #4a4a4a;
+}
+/* CALENDARIO CON BOTON DENTRO */
+/* BOTON CONFIRMAR ABAJO DERECHA DEL CALENDARIO */
+/* RECUADRO FLOTANTE DEBAJO DEL CALENDARIO */
+/* PASOS */
+.pasos ol {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 35px;
+    position: relative;
+}
+.pasos ol::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    border-top: 1px solid #000;
+}
+.pasos li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+.numero-paso {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paso-activo .numero-paso {
+    background-color: #777;
+    color: white;
+    font-weight: bold;
+}
+/* CONTENEDOR GENERAL */
+/* FORMULARIO */
+/* RESUMEN */
+.resumen-consulta {
+    border: 1px solid #000;
+}
+.resumen-consulta h2 {
+    margin: 0;
+    padding: 15px 15px 5px;
+}
+.detalle-consulta {
+    padding: 0 15px 15px;
+}
+.detalle-consulta p {
+    margin: 12px 0;
+}
+.costo-consulta {
+    border-top: 1px solid #000;
+    padding: 12px 15px;
+}
+.costo-consulta p {
+    margin: 5px 0;
+}
+/* CAJA GENERAL */
+/* PROFESIONALES */
+/* RESUMEN */
+.encabezado-bloque {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.fila-detalle {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+}
+.acciones-detalle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.boton-opciones {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+.menu-contenido-perfil-usuario {
+    display: flex;
+    padding: 30px;
+}
+.menu-perfil {
+    width: 25%;
+    border-right: 1px solid #000;
+}
+.menu-perfil ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.menu-perfil a {
+    text-decoration: none;
+    color: #000;
+}
+.menu-perfil li {
+    margin-bottom: 20px;
+}
+/* =========================
+   CONFIGURACIÓN
+========================= */
+.menu-perfil li.activo {
+    background-color: #e5e5e5;
+}
+#finalizar-compra {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px 20px 0 20px;
+}

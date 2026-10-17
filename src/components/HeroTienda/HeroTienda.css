@@ -1,0 +1,14 @@
+.hero-tienda img {
+    display: block;
+    width: 100%;
+    max-height: 130px;
+    object-fit: cover;
+    background: #f3f3f3;
+}
+
+.hero-tienda .titulo-seccion {
+    text-align: center;
+    padding: 14px 20px;
+    margin: 0;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+}

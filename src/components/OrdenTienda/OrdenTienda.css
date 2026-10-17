@@ -1,0 +1,65 @@
+.orden-productos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 0 0 14px;
+}
+
+.orden-productos-botones {
+    display: flex;
+    gap: 6px;
+}
+
+.orden-productos-botones button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #555;
+    font-size: 1.15rem;
+}
+
+.orden-productos-botones button.is-active {
+    border-color: #777;
+    background: #eee;
+    color: #111;
+}
+
+.orden-productos__selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.orden-productos__selector select {
+    max-width: 100%;
+    padding: 8px 28px 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+@media (max-width: 480px) {
+    .orden-productos {
+        align-items: flex-start;
+    }
+
+    .orden-productos__selector {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        font-size: 0.75rem;
+    }
+
+    .orden-productos__selector select {
+        max-width: 210px;
+        padding: 7px 24px 7px 8px;
+    }
+}
