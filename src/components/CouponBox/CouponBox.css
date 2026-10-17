@@ -1,0 +1,81 @@
+.coupon-box {
+  padding: 18px;
+  border-radius: var(--cart-radius-card);
+  background: var(--cart-color-surface);
+  box-shadow: var(--cart-shadow-card);
+}
+
+.coupon-box__title {
+  margin-bottom: 12px;
+  color: var(--cart-color-text);
+  font-size: 1rem;
+}
+
+.coupon-box__field {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 8px;
+  border-radius: var(--cart-radius-pill);
+  background: var(--cart-color-field);
+}
+
+.coupon-box__icon {
+  flex: 0 0 auto;
+  margin: 0 8px;
+  color: var(--cart-color-muted);
+  font-weight: 700;
+}
+
+.coupon-box__input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cart-color-text);
+  font-size: 0.8rem;
+}
+
+.coupon-box__input:focus-visible {
+  outline: 2px solid var(--cart-color-focus);
+  outline-offset: 2px;
+}
+
+.coupon-box__submit {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border-radius: var(--cart-radius-pill);
+  background: transparent;
+  color: var(--cart-color-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.coupon-box__submit:hover:not(:disabled) {
+  background: var(--cart-color-control-strong);
+  color: var(--cart-color-surface);
+}
+
+.coupon-box__submit:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.coupon-box__error {
+  margin-top: 8px;
+  color: var(--cart-color-danger);
+  font-size: 0.82rem;
+}
+
+.coupon-box__visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}

@@ -6,6 +6,8 @@
 @import url('./components/CardProducto/CardProducto.css');
 @import url('./components/CardProductoConfirmacion/CardProductoConfirmacion.css');
 @import url('./components/CardTabs/CardTabs.css');
+@import url('./components/CartItem/CartItem.css');
+@import url('./components/CouponBox/CouponBox.css');
 @import url('./components/DatosMascota/DatosMascota.css');
 @import url('./components/FiltroClinicaVet/FiltroClinicaVet.css');
 @import url('./components/FiltroTienda/FiltroTienda.css');
@@ -13,6 +15,7 @@
 @import url('./components/HeroTienda/HeroTienda.css');
 @import url('./components/ModalClinicaVet/ModalClinicaVet.css');
 @import url('./components/OrdenTienda/OrdenTienda.css');
+@import url('./components/OrderSummary/OrderSummary.css');
 @import url('./components/ProductoIndividual/FichaTecnica/FichaTecnica.css');
 @import url('./components/ProductoIndividual/GaleriaProducto/GaleriaProducto.css');
 @import url('./components/ProductoIndividual/ListaResenas/ListaResenas.css');
@@ -21,6 +24,7 @@
 @import url('./components/ProductoIndividual/ResumenProducto/ResumenProducto.css');
 @import url('./components/ProductoIndividual/ResumenResenas/ResumenResenas.css');
 @import url('./components/ProductoIndividual/TabsProducto/TabsProducto.css');
+@import url('./components/QuantityStepper/QuantityStepper.css');
 @import url('./pages/Tienda/Tienda.css');
 @import url('./layout/Footer/Footer.css');
 @import url('./layout/Header/Header.css');
