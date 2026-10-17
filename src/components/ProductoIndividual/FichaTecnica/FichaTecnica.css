@@ -1,0 +1,45 @@
+.ficha-tecnica__contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.ficha-tecnica {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.ficha-tecnica th,
+.ficha-tecnica td {
+    padding: 9px 12px;
+    border: 1px solid #bbb;
+    text-align: left;
+    vertical-align: top;
+}
+
+.ficha-tecnica th {
+    width: 40%;
+    font-weight: 500;
+}
+
+.ficha-tecnica td {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.ficha-tecnica__vacia {
+    padding: 16px 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .ficha-tecnica {
+        font-size: 0.78rem;
+    }
+
+    .ficha-tecnica th,
+    .ficha-tecnica td {
+        padding: 8px;
+    }
+}
