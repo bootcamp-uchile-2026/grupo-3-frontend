@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
-import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
-import HeaderOptionsNavBar from "./HeaderDivisions/HeaderOptionsNavBar";
+import { HeaderOptionsNavBar} from "./HeaderDivisions/HeaderOptionsNavBar";
 import type { HeaderOption } from "../../TDATypes";
 interface HeaderProps {
     logoSrc?: string;
@@ -11,10 +10,10 @@ interface HeaderProps {
 }
 
 const headerOptions: HeaderOption[] = [
-    { route: "/tienda", name: "Categorias", icon: "categories", color: "black" },
-    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "stethoscope", color: "black" },
-    { route: "/categoria/farmacia", name: "Farmacia", icon: "hospital", color: "black" },
-    { route: "", name: "Contacto", icon: "telephone", color: "black" }
+    { route: "/tienda", name: "Categorias", icon: "Category", color: "black" },
+    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "Stethoscope", color: "black" },
+    { route: "/categoria/farmacia", name: "Farmacia", icon: "Hospital", color: "black" },
+    { route: "", name: "Contacto", icon: "Telephone", color: "black" }
 ]
 
 export function Header({

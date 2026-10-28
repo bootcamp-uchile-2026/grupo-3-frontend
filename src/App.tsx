@@ -12,12 +12,14 @@ import { PerfilMascota } from './pages/PerfilMascota/PerfilMascota'
 import { PerfilUsuario } from './pages/PerfilUsuario/PerfilUsuario'
 import { ProductoIndividual } from './pages/ProductoIndividual/ProductoIndividual'
 import { Tienda } from './pages/Tienda/Tienda'
+import { UIKitIcons } from './pages/UIKitIcons/UIKitIcons'
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path="ui-kit/icons" element={<UIKitIcons />} />
 
         <Route path="tienda" element={<Tienda />} />
         <Route path="categoria/*" element={<Tienda />} />
