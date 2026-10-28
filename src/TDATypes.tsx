@@ -1,6 +1,8 @@
+import type { UIKitIconName } from "./components/UIKit/UIIcons/UIKitIcon"
+
 export type HeaderOption = {
     route: string,
-    icon: string,
+    icon: UIKitIconName,
     color: string,
     name: string
 }

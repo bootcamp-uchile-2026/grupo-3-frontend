@@ -1,0 +1,16 @@
+import type { UIIconProps } from "./types"
+
+export function IconChevronRight({ color = "#ffffff", size, ...props }: UIIconProps) {
+    return (
+        <svg
+            {...props}
+            width={size ?? 23}
+            height={size ?? 24}
+            viewBox="0 0 23 24"
+            fill="none"
+            color={color}
+        >
+            <path d="M6.40274 2.41842C6.93972 1.86053 7.81013 1.86053 8.34711 2.41842L16.5973 10.9899C17.1342 11.5478 17.1342 12.4522 16.5973 13.0101L8.34711 21.5816C7.81013 22.1395 6.93972 22.1395 6.40274 21.5816C5.86575 21.0237 5.86575 20.1194 6.40274 19.5615L13.6807 12L6.40274 4.43853C5.86575 3.88064 5.86575 2.97632 6.40274 2.41842Z" fill="currentColor" />
+        </svg>
+    )
+}
