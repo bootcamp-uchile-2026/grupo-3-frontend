@@ -12,7 +12,8 @@ import { PerfilMascota } from './pages/PerfilMascota/PerfilMascota'
 import { PerfilUsuario } from './pages/PerfilUsuario/PerfilUsuario'
 import { ProductoIndividual } from './pages/ProductoIndividual/ProductoIndividual'
 import { Tienda } from './pages/Tienda/Tienda'
-import { UIKitIcons } from './pages/UIKitIcons/UIKitIcons'
+import { UIKitIcons } from './pages/UI/UIKitIcons/UIKitIcons'
+import { UIKitComponents } from './pages/UI/UIKitComponents'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="ui-kit/icons" element={<UIKitIcons />} />
+        <Route path="ui-kit/components" element={<UIKitComponents />} />
 
         <Route path="tienda" element={<Tienda />} />
         <Route path="categoria/*" element={<Tienda />} />
