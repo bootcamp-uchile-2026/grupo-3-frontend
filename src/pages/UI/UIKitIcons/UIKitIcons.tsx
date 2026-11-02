@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { iconRegistry } from "../../components/UIKit/UIIcons/iconRegistry"
-import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon"
-import type { UIKitIconName } from "../../components/UIKit/UIIcons/UIKitIcon"
+import { iconRegistry } from "../../../components/UIKit/UIIcons/iconRegistry"
+import { UIKitIcon } from "../../../components/UIKit/UIIcons/UIKitIcon"
+import type { UIKitIconName } from "../../../components/UIKit/UIIcons/UIKitIcon"
 
 const icons = (Object.keys(iconRegistry) as UIKitIconName[]).map((name) => [
     name,

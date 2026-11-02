@@ -1,0 +1,91 @@
+.ui-product-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ui-pagination-navigation-gap, 20px);
+}
+
+.ui-product-pagination__pages {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-pagination-page-gap, 40px);
+}
+
+.ui-product-pagination__page {
+    display: grid;
+    width: var(--ui-pagination-button-size, 60px);
+    height: var(--ui-pagination-button-size, 60px);
+    flex: 0 0 var(--ui-pagination-button-size, 60px);
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ui-pagination-inactive-background);
+    color: var(--ui-pagination-text-color);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.ui-product-pagination__page:hover:not(:disabled):not([aria-current="page"]) {
+    background-color: var(--ui-pagination-hover-background, #efc8a9);
+}
+
+.ui-product-pagination__page[aria-current="page"] {
+    background-color: var(--ui-pagination-active-background);
+    color: var(--ui-pagination-active-text-color);
+}
+
+.ui-product-pagination__page:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.ui-product-pagination__page:focus-visible,
+.ui-product-pagination__navigation:focus-visible {
+    outline: 3px solid var(--ui-pagination-focus-color, #71320f);
+    outline-offset: 3px;
+}
+
+.ui-product-pagination__page:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.ui-product-pagination__navigation {
+    display: grid;
+    width: var(--ui-pagination-navigation-size, 28px);
+    height: var(--ui-pagination-navigation-size, 40px);
+    flex: 0 0 var(--ui-pagination-navigation-size, 28px);
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ui-pagination-navigation-color);
+    cursor: pointer;
+    transition: color 150ms ease, opacity 150ms ease;
+}
+
+.ui-product-pagination__navigation:hover:not(:disabled) {
+    color: var(--ui-pagination-navigation-hover-color, #71320f);
+}
+
+.ui-product-pagination__navigation:active:not(:disabled) {
+    transform: scale(0.92);
+}
+
+.ui-product-pagination__navigation:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+@media (max-width: 600px) {
+    .ui-product-pagination {
+        --ui-pagination-page-gap: 12px;
+        --ui-pagination-navigation-gap: 8px;
+        --ui-pagination-button-size: 44px;
+        --ui-pagination-navigation-size: 24px;
+    }
+}

@@ -1,1 +1,8 @@
-
+:root{
+    --text-color: #007bff;
+    --ui-pagination-active-background: #b45120;
+    --ui-pagination-active-text-color: #ffffff;
+    --ui-pagination-inactive-background: #f7ddc4;
+    --ui-pagination-text-color: #241c19;
+    --ui-pagination-navigation-color: #b45120;
+}

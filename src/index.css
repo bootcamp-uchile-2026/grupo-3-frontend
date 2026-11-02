@@ -1,4 +1,6 @@
 @import url('./App.css');
+@import url('./components/UIKit/UIKit.css');
+@import url('./pages/UI/UIKitComponents.css');
 @import url('./components/Breadcrumbs/Breadcrumbs.css');
 @import url('./components/CardCarrusel/CardCarrusel.css');
 @import url('./components/CardCategoria/CardCategoria.css');
@@ -26,7 +28,7 @@
 @import url('./components/ProductoIndividual/TabsProducto/TabsProducto.css');
 @import url('./components/QuantityStepper/QuantityStepper.css');
 @import url('./pages/Tienda/Tienda.css');
-@import url('./pages/UIKitIcons/UIKitIcons.css');
+@import url('./pages/UI/UIKitIcons/UIKitIcons.css');
 @import url('./layout/Footer/Footer.css');
 @import url('./layout/Header/Header.css');
 @import url('./pages/AgendarVeterinarioDatosContacto/AgendarVeterinarioDatosContacto.css');

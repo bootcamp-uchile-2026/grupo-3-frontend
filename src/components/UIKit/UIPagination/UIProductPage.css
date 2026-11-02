@@ -1,0 +1,12 @@
+.ui-product-page{
+    display: flex;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+.bg-color-primary{
+    background-color: var(--text-color);
+}

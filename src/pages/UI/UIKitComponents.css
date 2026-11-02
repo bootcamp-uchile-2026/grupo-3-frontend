@@ -1,0 +1,30 @@
+.ui-kit-components {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ui-kit-components-page {
+    gap: 24px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.ui-kit-pagination-example {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #e8e1db;
+    border-radius: 8px;
+}
+
+.ui-kit-pagination-example h2 {
+    font-size: 1.125rem;
+}
+
+.ui-kit-pagination-example .ui-product-pagination {
+    align-self: center;
+    width: 100%;
+}
