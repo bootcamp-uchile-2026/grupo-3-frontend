@@ -2,17 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--ui-kit-carousel-pagination-gap, 16px);
+    gap: var(--space-base);
 }
 
 .ui-kit-carousel-pagination--md {
     --ui-kit-carousel-pagination-dot-size: 28px;
-    --ui-kit-carousel-pagination-gap: 16px;
 }
 
 .ui-kit-carousel-pagination--sm {
     --ui-kit-carousel-pagination-dot-size: 14px;
-    --ui-kit-carousel-pagination-gap: 8px;
+    gap: var(--space-xs);
 }
 
 .ui-kit-carousel-pagination__dot {

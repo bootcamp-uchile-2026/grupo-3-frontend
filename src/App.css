@@ -1,4 +1,7 @@
 :root {
+    /* ==========================
+       COLOR TOKENS
+    ========================== */
     /* Primario */
     --primario-10-color: #090000;
     --primario-20-color: #200000;
@@ -136,26 +139,121 @@
     --info-140-color: #97DDFF;
     --info-150-color: #C0F3FF;
 
-    /* Colores existentes del carrito */
-    --cart-color-background: var(--b-n-150-color);
-    --cart-color-surface: var(--b-n-blanco-color);
-    --cart-color-placeholder: var(--b-n-140-color);
-    --cart-color-field: #f0f0f0;
-    --cart-color-text: #272727;
-    --cart-color-muted: #777777;
-    --cart-color-border: #dddddd;
-    --cart-color-control: var(--b-n-150-color);
-    --cart-color-control-strong: #686868;
-    --cart-color-control-hover: #4d4d4d;
-    --cart-color-danger: #d93636;
-    --cart-color-danger-hover: #a91f1f;
-    --cart-color-success: #278244;
-    --cart-color-focus: #2375c7;
+    /* ==========================
+       RADIUS TOKENS
+    ========================== */
+    --radius-none: 0px;
+    --radius-sm: 2px;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 20px;
+    --radius-4xl: 32px;
+    --radius-5xl: 48px;
+    --radius-full: 999px;
 
-    /* Colores de paginacion sin equivalencia exacta en Figma */
-    --ui-pagination-active-background-color: #b45120;
-    --ui-pagination-active-text-color: var(--b-n-blanco-color);
-    --ui-pagination-inactive-background-color: #f7ddc4;
-    --ui-pagination-text-color: #241c19;
-    --ui-pagination-navigation-color: var(--ui-pagination-active-background-color);
+    /* ==========================
+       SIZE TOKENS
+    ========================== */
+    --size-zero: 0px;
+    --size-xxs: 2px;
+    --size-xs: 4px;
+    --size-sm: 8px;
+    --size-base: 12px;
+    --size-lg: 16px;
+    --size-xl: 20px;
+    --size-2xl: 24px;
+    --size-3xl: 32px;
+    --size-4xl: 40px;
+    --size-5xl: 48px;
+
+    /* ==========================
+       SPACE TOKENS
+    ========================== */
+    --space-zero: 0px;
+    --space-px: 1px;
+    --space-xxs: 2px;
+    --space-xs-2: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-base: 16px;
+    --space-md: 20px;
+    --space-lg: 24px;
+    --space-xl: 28px;
+    --space-xl-2: 32px;
+    --space-xl-3: 40px;
+    --space-xl-4: 48px;
+    --space-xl-5: 60px;
+    --space-xl-6: 72px;
+
+    /* ==========================
+       TYPOGRAPHY TOKENS
+    ========================== */
+    --font-family-primary: Lexend;
+    --font-family-secondary: Quicksand;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+
+    --font-size-body-l: 18px;
+    --line-height-body-l: 28px;
+    --letter-spacing-body-l: 0px;
+    --font-family-body-l: var(--font-family-primary);
+
+    --font-size-body-m: 16px;
+    --line-height-body-m: 24px;
+    --letter-spacing-body-m: 0px;
+    --font-family-body-m: var(--font-family-primary);
+
+    --font-size-body-s: 14px;
+    --line-height-body-s: 20px;
+    --letter-spacing-body-s: 0px;
+    --font-family-body-s: var(--font-family-primary);
+
+    --font-size-body-xs: 12px;
+    --line-height-body-xs: 16px;
+    --letter-spacing-body-xs: 0px;
+    --font-family-body-xs: var(--font-family-primary);
+
+    --font-size-heading-xs: 24px;
+    --line-height-heading-xs: 24px;
+    --letter-spacing-heading-xs: 0px;
+    --font-family-heading-xs: var(--font-family-primary);
+
+    --font-size-heading-s: 32px;
+    --line-height-heading-s: 38px;
+    --letter-spacing-heading-s: -0.20000000298023224px;
+    --font-family-heading-s: var(--font-family-secondary);
+
+    --font-size-heading-m: 40px;
+    --line-height-heading-m: 48px;
+    --letter-spacing-heading-m: -0.30000001192092896px;
+    --font-family-heading-m: var(--font-family-secondary);
+
+    --font-size-heading-l: 48px;
+    --line-height-heading-l: 48px;
+    --letter-spacing-heading-l: -0.30000001192092896px;
+    --font-family-heading-l: var(--font-family-secondary);
+
+    --font-size-heading-xl: 56px;
+    --line-height-heading-xl: 58px;
+    --letter-spacing-heading-xl: -0.4000000059604645px;
+    --font-family-heading-xl: var(--font-family-secondary);
+
+    --font-size-heading-xxl: 64px;
+    --line-height-heading-xxl: 76px;
+    --letter-spacing-heading-xxl: -0.800000011920929px;
+    --font-family-heading-xxl: var(--font-family-secondary);
+
+    --font-size-heading-xxxl: 72px;
+    --line-height-heading-xxxl: 80px;
+    --letter-spacing-heading-xxxl: 2px;
+    --font-family-heading-xxxl: var(--font-family-secondary);
+
+    --font-size-caption-1: 10px;
+    --line-height-caption-1: 12px;
+    --letter-spacing-caption-1: 0px;
+    --font-family-caption-1: var(--font-family-primary);
+
 }
