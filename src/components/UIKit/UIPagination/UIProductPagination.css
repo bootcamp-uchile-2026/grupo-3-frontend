@@ -21,7 +21,7 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background-color: var(--ui-pagination-inactive-background);
+    background-color: var(--ui-pagination-inactive-background-color);
     color: var(--ui-pagination-text-color);
     font: inherit;
     font-weight: 600;
@@ -34,7 +34,7 @@
 }
 
 .ui-product-pagination__page[aria-current="page"] {
-    background-color: var(--ui-pagination-active-background);
+    background-color: var(--ui-pagination-active-background-color);
     color: var(--ui-pagination-active-text-color);
 }
 

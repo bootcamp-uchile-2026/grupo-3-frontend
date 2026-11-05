@@ -1,18 +1,4 @@
 :root {
-    --cart-color-background: #eeeeee;
-    --cart-color-surface: #ffffff;
-    --cart-color-placeholder: #d9d9d9;
-    --cart-color-field: #f0f0f0;
-    --cart-color-text: #272727;
-    --cart-color-muted: #777777;
-    --cart-color-border: #dddddd;
-    --cart-color-control: #eeeeee;
-    --cart-color-control-strong: #686868;
-    --cart-color-control-hover: #4d4d4d;
-    --cart-color-danger: #d93636;
-    --cart-color-danger-hover: #a91f1f;
-    --cart-color-success: #278244;
-    --cart-color-focus: #2375c7;
     --cart-radius-small: 5px;
     --cart-radius-card: 18px;
     --cart-radius-pill: 999px;

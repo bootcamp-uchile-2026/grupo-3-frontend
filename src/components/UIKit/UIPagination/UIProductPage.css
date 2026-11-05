@@ -8,5 +8,5 @@
     font-weight: 700;
 }
 .bg-color-primary{
-    background-color: var(--text-color);
+    background-color: var(--error-110-color);
 }
