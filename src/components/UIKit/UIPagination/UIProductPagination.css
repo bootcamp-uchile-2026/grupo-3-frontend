@@ -3,13 +3,13 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--ui-pagination-navigation-gap, 20px);
+    gap: var(--space-md);
 }
 
 .ui-product-pagination__pages {
     display: flex;
     align-items: center;
-    gap: var(--ui-pagination-page-gap, 40px);
+    gap: var(--space-xl-3);
 }
 
 .ui-product-pagination__page {
@@ -21,8 +21,8 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background-color: var(--ui-pagination-inactive-background);
-    color: var(--ui-pagination-text-color);
+    background-color: var(--primario-150-color);
+    color: var(--b-n-40-color);
     font: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -30,12 +30,12 @@
 }
 
 .ui-product-pagination__page:hover:not(:disabled):not([aria-current="page"]) {
-    background-color: var(--ui-pagination-hover-background, #efc8a9);
+    background-color: var(--primario-140-color);
 }
 
 .ui-product-pagination__page[aria-current="page"] {
-    background-color: var(--ui-pagination-active-background);
-    color: var(--ui-pagination-active-text-color);
+    background-color: var(--primario-90-color);
+    color: var(--b-n-blanco-color);
 }
 
 .ui-product-pagination__page:active:not(:disabled) {
@@ -44,7 +44,7 @@
 
 .ui-product-pagination__page:focus-visible,
 .ui-product-pagination__navigation:focus-visible {
-    outline: 3px solid var(--ui-pagination-focus-color, #71320f);
+    outline: 3px solid var(--advertencia-70-color);
     outline-offset: 3px;
 }
 
@@ -63,13 +63,13 @@
     border: 0;
     border-radius: 4px;
     background: transparent;
-    color: var(--ui-pagination-navigation-color);
+    color: var(--primario-90-color);
     cursor: pointer;
     transition: color 150ms ease, opacity 150ms ease;
 }
 
 .ui-product-pagination__navigation:hover:not(:disabled) {
-    color: var(--ui-pagination-navigation-hover-color, #71320f);
+    color: var(--advertencia-70-color);
 }
 
 .ui-product-pagination__navigation:active:not(:disabled) {
@@ -83,9 +83,18 @@
 
 @media (max-width: 600px) {
     .ui-product-pagination {
-        --ui-pagination-page-gap: 12px;
-        --ui-pagination-navigation-gap: 8px;
+        gap: var(--space-xs);
+    }
+
+    .ui-product-pagination__pages {
+        gap: var(--space-sm);
+    }
+
+    .ui-product-pagination__page {
         --ui-pagination-button-size: 44px;
-        --ui-pagination-navigation-size: 24px;
+    }
+
+    .ui-product-pagination__navigation {
+        --ui-pagination-navigation-size: var(--size-2xl);
     }
 }
