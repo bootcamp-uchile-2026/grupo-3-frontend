@@ -1,0 +1,38 @@
+.ui-technical-sheet {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+}
+
+.ui-technical-sheet__row {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.65fr) minmax(0, 1.35fr);
+    align-items: start;
+    gap: var(--space-base);
+}
+
+.ui-technical-sheet__label {
+    color: var(--primario-90-color);
+}
+
+.ui-technical-sheet__value {
+    min-width: 0;
+    margin: 0;
+    color: var(--terciario-30-color);
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}
+
+.ui-technical-sheet__value ul {
+    display: grid;
+    gap: var(--space-xs-2);
+    margin: 0;
+    padding-left: var(--space-lg);
+}
+
+@media (max-width: 480px) {
+    .ui-technical-sheet__row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-xs-2);
+    }
+}

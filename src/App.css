@@ -1,8 +1,259 @@
-:root{
-    --text-color: #007bff;
-    --ui-pagination-active-background: #b45120;
-    --ui-pagination-active-text-color: #ffffff;
-    --ui-pagination-inactive-background: #f7ddc4;
-    --ui-pagination-text-color: #241c19;
-    --ui-pagination-navigation-color: #b45120;
+:root {
+    /* ==========================
+       COLOR TOKENS
+    ========================== */
+    /* Primario */
+    --primario-10-color: #090000;
+    --primario-20-color: #200000;
+    --primario-30-color: #350000;
+    --primario-40-color: #4C0000;
+    --primario-50-color: #630000;
+    --primario-60-color: #7A1100;
+    --primario-70-color: #922500;
+    --primario-80-color: #AB3600;
+    --primario-90-color: #C44808;
+    --primario-100-color: #DD5A21;
+    --primario-110-color: #EE7344;
+    --primario-120-color: #FF8C61;
+    --primario-130-color: #FFA57E;
+    --primario-140-color: #FFBE9B;
+    --primario-150-color: #FFDBC1;
+
+    /* Secundario */
+    --secundario-10-color: #000100;
+    --secundario-20-color: #040600;
+    --secundario-30-color: #0F1400;
+    --secundario-40-color: #1D2400;
+    --secundario-50-color: #2C3409;
+    --secundario-60-color: #3C4518;
+    --secundario-70-color: #4C5727;
+    --secundario-80-color: #5E6A36;
+    --secundario-90-color: #707C4A;
+    --secundario-100-color: #838F60;
+    --secundario-110-color: #97A276;
+    --secundario-120-color: #ABB68C;
+    --secundario-130-color: #C0CAA3;
+    --secundario-140-color: #D5DFBB;
+    --secundario-150-color: #EBF3D7;
+
+    /* Terciario */
+    --terciario-10-color: #020000;
+    --terciario-20-color: #0E0200;
+    --terciario-30-color: #1F0B01;
+    --terciario-40-color: #311909;
+    --terciario-50-color: #422918;
+    --terciario-60-color: #533A29;
+    --terciario-70-color: #654B3B;
+    --terciario-80-color: #775D4D;
+    --terciario-90-color: #897060;
+    --terciario-100-color: #9C8374;
+    --terciario-110-color: #AF9788;
+    --terciario-120-color: #C2AB9D;
+    --terciario-130-color: #D6C0B2;
+    --terciario-140-color: #E9D5C8;
+    --terciario-150-color: #FCEBE0;
+
+    /* Blanco y negro */
+    --b-n-20-color: #050505;
+    --b-n-30-color: #111111;
+    --b-n-40-color: #202020;
+    --b-n-50-color: #2F2F2F;
+    --b-n-60-color: #404040;
+    --b-n-70-color: #515151;
+    --b-n-80-color: #636363;
+    --b-n-90-color: #767676;
+    --b-n-100-color: #898989;
+    --b-n-110-color: #9C9C9C;
+    --b-n-120-color: #B0B0B0;
+    --b-n-130-color: #C4C4C4;
+    --b-n-140-color: #D9D9D9;
+    --b-n-150-color: #EEEEEE;
+    --b-n-negro-color: #000000;
+    --b-n-blanco-color: #FFFFFF;
+
+    /* Advertencia */
+    --advertencia-10-color: #030000;
+    --advertencia-20-color: #110100;
+    --advertencia-30-color: #220A00;
+    --advertencia-40-color: #331900;
+    --advertencia-50-color: #462900;
+    --advertencia-60-color: #583A00;
+    --advertencia-70-color: #6C4B00;
+    --advertencia-80-color: #805D00;
+    --advertencia-90-color: #957000;
+    --advertencia-100-color: #AA8300;
+    --advertencia-110-color: #C09612;
+    --advertencia-120-color: #D6AA29;
+    --advertencia-130-color: #EDBE3B;
+    --advertencia-140-color: #FDD46C;
+    --advertencia-150-color: #FFECB4;
+
+    /* Error */
+    --error-10-color: #0D0000;
+    --error-20-color: #270000;
+    --error-30-color: #3F0000;
+    --error-40-color: #580000;
+    --error-50-color: #710000;
+    --error-60-color: #8A0000;
+    --error-70-color: #A40000;
+    --error-80-color: #BF0000;
+    --error-90-color: #DA1616;
+    --error-100-color: #F5312A;
+    --error-110-color: #FF5649;
+    --error-120-color: #FF7565;
+    --error-130-color: #FF9281;
+    --error-140-color: #FFAF9E;
+    --error-150-color: #FFD1C3;
+
+    /* Exito */
+    --exito-10-color: #000100;
+    --exito-20-color: #000C00;
+    --exito-30-color: #001C00;
+    --exito-40-color: #002D00;
+    --exito-50-color: #003F06;
+    --exito-60-color: #005216;
+    --exito-70-color: #006626;
+    --exito-80-color: #007A35;
+    --exito-90-color: #008E45;
+    --exito-100-color: #0DA355;
+    --exito-110-color: #2CB966;
+    --exito-120-color: #57CB7F;
+    --exito-130-color: #7ADE99;
+    --exito-140-color: #9BF0B3;
+    --exito-150-color: #C5FFD3;
+
+    /* Info */
+    --info-10-color: #020019;
+    --info-20-color: #000032;
+    --info-30-color: #00014A;
+    --info-40-color: #001562;
+    --info-50-color: #00287A;
+    --info-60-color: #003A93;
+    --info-70-color: #004DAC;
+    --info-80-color: #0060C6;
+    --info-90-color: #0073E0;
+    --info-100-color: #0887FC;
+    --info-110-color: #339CFF;
+    --info-120-color: #57B2FF;
+    --info-130-color: #77C8FF;
+    --info-140-color: #97DDFF;
+    --info-150-color: #C0F3FF;
+
+    /* ==========================
+       RADIUS TOKENS
+    ========================== */
+    --radius-none: 0px;
+    --radius-sm: 2px;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 20px;
+    --radius-4xl: 32px;
+    --radius-5xl: 48px;
+    --radius-full: 999px;
+
+    /* ==========================
+       SIZE TOKENS
+    ========================== */
+    --size-zero: 0px;
+    --size-xxs: 2px;
+    --size-xs: 4px;
+    --size-sm: 8px;
+    --size-base: 12px;
+    --size-lg: 16px;
+    --size-xl: 20px;
+    --size-2xl: 24px;
+    --size-3xl: 32px;
+    --size-4xl: 40px;
+    --size-5xl: 48px;
+
+    /* ==========================
+       SPACE TOKENS
+    ========================== */
+    --space-zero: 0px;
+    --space-px: 1px;
+    --space-xxs: 2px;
+    --space-xs-2: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-base: 16px;
+    --space-md: 20px;
+    --space-lg: 24px;
+    --space-xl: 28px;
+    --space-xl-2: 32px;
+    --space-xl-3: 40px;
+    --space-xl-4: 48px;
+    --space-xl-5: 60px;
+    --space-xl-6: 72px;
+
+    /* ==========================
+       TYPOGRAPHY TOKENS
+    ========================== */
+    --font-family-primary: Lexend;
+    --font-family-secondary: Quicksand;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+
+    --font-size-body-l: 18px;
+    --line-height-body-l: 28px;
+    --letter-spacing-body-l: 0px;
+    --font-family-body-l: var(--font-family-primary);
+
+    --font-size-body-m: 16px;
+    --line-height-body-m: 24px;
+    --letter-spacing-body-m: 0px;
+    --font-family-body-m: var(--font-family-primary);
+
+    --font-size-body-s: 14px;
+    --line-height-body-s: 20px;
+    --letter-spacing-body-s: 0px;
+    --font-family-body-s: var(--font-family-primary);
+
+    --font-size-body-xs: 12px;
+    --line-height-body-xs: 16px;
+    --letter-spacing-body-xs: 0px;
+    --font-family-body-xs: var(--font-family-primary);
+
+    --font-size-heading-xs: 24px;
+    --line-height-heading-xs: 24px;
+    --letter-spacing-heading-xs: 0px;
+    --font-family-heading-xs: var(--font-family-primary);
+
+    --font-size-heading-s: 32px;
+    --line-height-heading-s: 38px;
+    --letter-spacing-heading-s: -0.20000000298023224px;
+    --font-family-heading-s: var(--font-family-secondary);
+
+    --font-size-heading-m: 40px;
+    --line-height-heading-m: 48px;
+    --letter-spacing-heading-m: -0.30000001192092896px;
+    --font-family-heading-m: var(--font-family-secondary);
+
+    --font-size-heading-l: 48px;
+    --line-height-heading-l: 48px;
+    --letter-spacing-heading-l: -0.30000001192092896px;
+    --font-family-heading-l: var(--font-family-secondary);
+
+    --font-size-heading-xl: 56px;
+    --line-height-heading-xl: 58px;
+    --letter-spacing-heading-xl: -0.4000000059604645px;
+    --font-family-heading-xl: var(--font-family-secondary);
+
+    --font-size-heading-xxl: 64px;
+    --line-height-heading-xxl: 76px;
+    --letter-spacing-heading-xxl: -0.800000011920929px;
+    --font-family-heading-xxl: var(--font-family-secondary);
+
+    --font-size-heading-xxxl: 72px;
+    --line-height-heading-xxxl: 80px;
+    --letter-spacing-heading-xxxl: 2px;
+    --font-family-heading-xxxl: var(--font-family-secondary);
+
+    --font-size-caption-1: 10px;
+    --line-height-caption-1: 12px;
+    --letter-spacing-caption-1: 0px;
+    --font-family-caption-1: var(--font-family-primary);
+
 }

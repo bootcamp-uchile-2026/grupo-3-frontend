@@ -1,13 +1,13 @@
 .coupon-box {
   padding: 18px;
   border-radius: var(--cart-radius-card);
-  background: var(--cart-color-surface);
+  background: var(--b-n-blanco-color);
   box-shadow: var(--cart-shadow-card);
 }
 
 .coupon-box__title {
   margin-bottom: 12px;
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 1rem;
 }
 
@@ -17,14 +17,14 @@
   min-width: 0;
   min-height: 42px;
   padding: 0 8px;
-  border-radius: var(--cart-radius-pill);
-  background: var(--cart-color-field);
+  border-radius: var(--radius-full);
+  background: var(--b-n-150-color);
 }
 
 .coupon-box__icon {
   flex: 0 0 auto;
   margin: 0 8px;
-  color: var(--cart-color-muted);
+  color: var(--b-n-90-color);
   font-weight: 700;
 }
 
@@ -35,28 +35,28 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 0.8rem;
 }
 
 .coupon-box__input:focus-visible {
-  outline: 2px solid var(--cart-color-focus);
+  outline: 2px solid var(--info-80-color);
   outline-offset: 2px;
 }
 
 .coupon-box__submit {
   flex: 0 0 auto;
   padding: 8px 10px;
-  border-radius: var(--cart-radius-pill);
+  border-radius: var(--radius-full);
   background: transparent;
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 0.78rem;
   font-weight: 700;
 }
 
 .coupon-box__submit:hover:not(:disabled) {
-  background: var(--cart-color-control-strong);
-  color: var(--cart-color-surface);
+  background: var(--b-n-80-color);
+  color: var(--b-n-blanco-color);
 }
 
 .coupon-box__submit:disabled {
@@ -66,7 +66,7 @@
 
 .coupon-box__error {
   margin-top: 8px;
-  color: var(--cart-color-danger);
+  color: var(--error-100-color);
   font-size: 0.82rem;
 }
 

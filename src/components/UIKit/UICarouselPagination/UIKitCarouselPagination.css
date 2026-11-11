@@ -1,0 +1,61 @@
+.ui-kit-carousel-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-base);
+}
+
+.ui-kit-carousel-pagination--md {
+    --ui-kit-carousel-pagination-dot-size: 28px;
+}
+
+.ui-kit-carousel-pagination--sm {
+    --ui-kit-carousel-pagination-dot-size: 14px;
+    gap: var(--space-xs);
+}
+
+.ui-kit-carousel-pagination__dot {
+    display: block;
+    width: var(--ui-kit-carousel-pagination-dot-size, 28px);
+    height: var(--ui-kit-carousel-pagination-dot-size, 28px);
+    flex: 0 0 var(--ui-kit-carousel-pagination-dot-size, 28px);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ui-kit-carousel-pagination-inactive-color, #a7aaa7);
+    cursor: default;
+    transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.ui-kit-carousel-pagination__dot[aria-current="true"] {
+    background-color: var(--ui-kit-carousel-pagination-active-color, #758157);
+}
+
+button.ui-kit-carousel-pagination__dot {
+    cursor: pointer;
+}
+
+button.ui-kit-carousel-pagination__dot:hover:not(:disabled) {
+    transform: scale(1.12);
+}
+
+.ui-kit-carousel-pagination__dot:focus-visible {
+    outline: 3px solid var(--ui-kit-carousel-pagination-focus-color, #758157);
+    outline-offset: 4px;
+}
+
+.ui-kit-carousel-pagination__dot:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.ui-kit-carousel-pagination[data-disabled="true"] .ui-kit-carousel-pagination__dot {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-kit-carousel-pagination__dot {
+        transition: none;
+    }
+}
