@@ -1,0 +1,55 @@
+.ui-product-card-button {
+    display: inline-flex;
+    width: 100%;
+    min-height: var(--size-4xl);
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    border: var(--space-zero) solid transparent;
+    border-radius: var(--radius-3xl);
+    background-color: var(--primario-90-color);
+    color: var(--b-n-blanco-color);
+    cursor: pointer;
+    font-family: var(--font-family-body-m);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.ui-product-card-button:hover:not(:disabled) {
+    background-color: var(--primario-80-color);
+}
+
+.ui-product-card-button:active:not(:disabled) {
+    background-color: var(--primario-70-color);
+}
+
+.ui-product-card-button:focus-visible {
+    outline: var(--space-xxs) solid var(--primario-90-color);
+    outline-offset: var(--space-xs-2);
+}
+
+.ui-product-card-button:disabled {
+    background-color: var(--terciario-130-color);
+    color: var(--terciario-80-color);
+    cursor: not-allowed;
+}
+
+.ui-product-card-button__icon {
+    width: var(--size-2xl);
+    height: var(--size-2xl);
+    flex: 0 0 auto;
+}
+
+.ui-product-card-button--loading .ui-product-card-button__icon {
+    animation: ui-product-card-button-spin 800ms linear infinite;
+}
+
+@keyframes ui-product-card-button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
