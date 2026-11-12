@@ -1,7 +1,7 @@
-export { UIKitCarouselPagination } from "./UICarouselPagination/UIKitCarouselPagination"
-export type { UIKitCarouselPaginationProps } from "./UICarouselPagination/UIKitCarouselPagination"
-export { UIProductPagination } from "./UIPagination/UIProductPagination"
-export type { UIKitPaginationProps } from "./UIPagination/UIProductPagination"
+export { UIKitCarouselPagination } from "./UICarouselPagination"
+export type { UIKitCarouselPaginationProps } from "./UICarouselPagination"
+export { UIProductPagination } from "./UIPagination"
+export type { UIKitPaginationProps } from "./UIPagination"
 export {
     UIProductDescription,
     UITechnicalSheet,

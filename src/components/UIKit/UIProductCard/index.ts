@@ -1,0 +1,8 @@
+export { UIProductCard } from "./UIProductCard"
+export type { UIProductCardProps } from "./UIProductCard"
+export { UIProductCardButton } from "./UIProductCardButton"
+export type { UIProductCardButtonProps } from "./UIProductCardButton"
+export { UIProductCardDiscount } from "./UIProductCardDiscount"
+export type { UIProductCardDiscountProps } from "./UIProductCardDiscount"
+export { UIProductCardRating } from "./UIProductCardRating"
+export type { UIProductCardRatingProps } from "./UIProductCardRating"
