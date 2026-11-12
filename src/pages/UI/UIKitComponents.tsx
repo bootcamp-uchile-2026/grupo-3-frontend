@@ -6,6 +6,21 @@ import {
     UIProductUsage,
     UITechnicalSheet,
 } from "../../components/UIKit"
+import {
+    UIProductCard,
+    UIProductCardButton,
+} from "../../components/UIKit/UIProductCard"
+
+const productCardExample = {
+    imageSrc: new URL(
+        "../../components/UIKit/UIProductCard/assets/product-card-example.png",
+        import.meta.url,
+    ).href,
+    imageAlt: "Caja de bolsas biodegradables Paw Bags",
+    name: "Bolsas Biodegradables Paw Bags (400 bolsas)",
+    price: "$8.993",
+    rating: 4,
+}
 
 type PaginationExampleProps = {
     title: string
@@ -192,6 +207,140 @@ export function UIKitComponents() {
                                 </dd>
                             </div>
                         </dl>
+                    </div>
+                </section>
+                <section className="ui-kit-pagination-example ui-kit-product-card-example">
+                    <h2>Tarjeta de producto</h2>
+                    <p>
+                        Tarjeta responsive para mostrar imagen, calificación, precio y descuento
+                        opcional. La variante de Figma corresponde al estado seleccionado.
+                    </p>
+                    <div className="ui-kit-product-card-example__cards">
+                        <div>
+                            <h3>Seleccionado con descuento (Figma)</h3>
+                            <UIProductCard
+                                {...productCardExample}
+                                discountPercentage={22}
+                                buttonLabel="Producto agregado"
+                                selected
+                                onAddToCart={() => undefined}
+                            />
+                        </div>
+                        <div>
+                            <h3>Sin descuento</h3>
+                            <UIProductCard
+                                {...productCardExample}
+                                buttonLabel="Agregar al carrito"
+                                onAddToCart={() => undefined}
+                            />
+                        </div>
+                    </div>
+                    <h3>UIProductCardButton</h3>
+                    <div className="ui-kit-product-card-example__buttons">
+                        <UIProductCardButton
+                            label="Agregar al carrito"
+                            onClick={() => undefined}
+                        />
+                        <UIProductCardButton
+                            label="Producto agregado"
+                            onClick={() => undefined}
+                            selected
+                        />
+                        <UIProductCardButton
+                            label="Cargando"
+                            onClick={() => undefined}
+                            loading
+                        />
+                        <UIProductCardButton
+                            label="No disponible"
+                            onClick={() => undefined}
+                            disabled
+                        />
+                    </div>
+                    <p>
+                        Prueba hover y active al pasar el puntero y hacer clic. Usa Tab para
+                        comprobar el foco visible. Sin stock no aparece en la selección de Figma;
+                        disabled se muestra como estado de botón.
+                    </p>
+                    <div className="ui-kit-product-card-example__api">
+                        <h3>Props de UIProductCard</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>imageSrc</td><td>string</td><td>Sí</td><td>—</td><td>URL o ruta de la imagen del producto.</td></tr>
+                                    <tr><td>imageAlt</td><td>string</td><td>Sí</td><td>—</td><td>Texto alternativo significativo.</td></tr>
+                                    <tr><td>name</td><td>string</td><td>Sí</td><td>—</td><td>Nombre que se muestra en la tarjeta.</td></tr>
+                                    <tr><td>price</td><td>string</td><td>Sí</td><td>—</td><td>Precio con formato de presentación.</td></tr>
+                                    <tr><td>rating</td><td>number</td><td>Sí</td><td>—</td><td>Calificación redondeada y limitada al rango de 0 a 5.</td></tr>
+                                    <tr><td>buttonLabel</td><td>string</td><td>Sí</td><td>—</td><td>Texto accesible del botón.</td></tr>
+                                    <tr><td>onAddToCart</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback al activar el botón.</td></tr>
+                                    <tr><td>discountPercentage</td><td>number</td><td>No</td><td>—</td><td>Porcentaje de descuento; si se omite, no se muestra la insignia.</td></tr>
+                                    <tr><td>selected</td><td>boolean</td><td>No</td><td>false</td><td>Representa el estado agregado del diseño.</td></tr>
+                                    <tr><td>className</td><td>string</td><td>No</td><td>&quot;&quot;</td><td>Clase adicional para el artículo.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Props de UIProductCardButton</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>label</td><td>string</td><td>Sí</td><td>—</td><td>Texto del botón.</td></tr>
+                                    <tr><td>onClick</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback de activación.</td></tr>
+                                    <tr><td>disabled</td><td>boolean</td><td>No</td><td>false</td><td>Deshabilita la activación.</td></tr>
+                                    <tr><td>loading</td><td>boolean</td><td>No</td><td>false</td><td>Muestra el indicador y deshabilita el botón.</td></tr>
+                                    <tr><td>selected</td><td>boolean</td><td>No</td><td>false</td><td>Muestra el check y expone el estado pulsado.</td></tr>
+                                    <tr><td>className</td><td>string</td><td>No</td><td>&quot;&quot;</td><td>Clase adicional para el botón.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Props de UIProductCardDiscount y UIProductCardRating</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Componente</th>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>UIProductCardDiscount</td><td>percentage</td><td>number</td><td>Sí</td><td>—</td><td>Porcentaje de descuento con su icono.</td></tr>
+                                    <tr><td>UIProductCardRating</td><td>rating</td><td>number</td><td>Sí</td><td>—</td><td>Calificación representada con cinco estrellas.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Uso</h3>
+                        <pre><code>{`<UIProductCard
+  imageSrc={product.image}
+  imageAlt={product.imageAlt}
+  name={product.name}
+  price={product.price}
+  rating={product.rating}
+  discountPercentage={product.discountPercentage}
+  buttonLabel="Agregar al carrito"
+  onAddToCart={handleAddToCart}
+/>`}</code></pre>
                     </div>
                 </section>
             </div>
