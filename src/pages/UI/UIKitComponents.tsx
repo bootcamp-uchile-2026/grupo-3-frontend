@@ -10,6 +10,7 @@ import {
     UIProductCard,
     UIProductCardButton,
 } from "../../components/UIKit/UIProductCard"
+import { UIAppointmentButton } from "../../components/UIKit/UIAppointmentButton"
 
 const productCardExample = {
     imageSrc: new URL(
@@ -340,6 +341,105 @@ export function UIKitComponents() {
   discountPercentage={product.discountPercentage}
   buttonLabel="Agregar al carrito"
   onAddToCart={handleAddToCart}
+/>`}</code></pre>
+                    </div>
+                </section>
+                <section className="ui-kit-pagination-example ui-kit-product-card-example">
+                    <h2>Botón de selección de agendamiento</h2>
+                    <p>
+                        Permite elegir entre agendar por fecha y hora o por veterinario.
+                        El estado seleccionado se representa con un fondo específico para cada opción.
+                    </p>
+                    <p>Selecciona o vuelve a presionar cada opción para alternar su estado.</p>
+                    <UIAppointmentButton
+                        appointmentType="date-time"
+                        title="Por fecha y hora"
+                        description="Revisa la disponibilidad de todos los veterinarios según el día."
+                        onClick={() => undefined}
+                    />
+                    <UIAppointmentButton
+                        appointmentType="veterinarian"
+                        title="Por veterinario"
+                        description="Elige un profesional y revisa sus horarios disponibles."
+                        onClick={() => undefined}
+                    />
+                    <p>
+                        El estado seleccionado cambia el fondo, sin agregar bordes al pasar el puntero
+                        o presionar. Usa Tab para comprobar el foco visible.
+                    </p>
+                    <div className="ui-kit-product-card-example__api">
+                        <h3>Props de UIAppointmentButton</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>appointmentType</td>
+                                        <td>&quot;date-time&quot; | &quot;veterinarian&quot;</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Tipo de agendamiento; determina el icono y el color al seleccionar.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>title</td>
+                                        <td>string</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Texto destacado del botón.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>description</td>
+                                        <td>string</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Descripción debajo del título.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>onClick</td>
+                                        <td>() =&gt; void</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Callback al activar la opción.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>state</td>
+                                        <td>&quot;default&quot; | &quot;selected&quot;</td>
+                                        <td>No</td>
+                                        <td>Interno: &quot;default&quot;; controlado: no aplica</td>
+                                        <td>Estado opcional controlado; si se omite, el botón alterna entre default y selected al activarse.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>onStateChange</td>
+                                        <td>(state: UIAppointmentButtonState) =&gt; void</td>
+                                        <td>No</td>
+                                        <td>—</td>
+                                        <td>Notifica el siguiente estado; junto con state permite controlar la selección desde el padre.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>className</td>
+                                        <td>string</td>
+                                        <td>No</td>
+                                        <td>&quot;&quot;</td>
+                                        <td>Clase CSS adicional.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Uso</h3>
+                        <pre><code>{`<UIAppointmentButton
+  appointmentType="date-time"
+  title="Por fecha y hora"
+  description="Revisa la disponibilidad según el día."
+  state="selected"
+  onClick={handleAppointmentTypeChange}
 />`}</code></pre>
                     </div>
                 </section>
