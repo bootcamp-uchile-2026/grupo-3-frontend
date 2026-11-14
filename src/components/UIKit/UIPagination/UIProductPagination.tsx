@@ -10,6 +10,7 @@ export type UIKitPaginationProps = {
     totalPages: number
     onPageChange: (page: number) => void
     visiblePages?: number
+    colorScheme?: "primary" | "secondary"
     disabled?: boolean
     className?: string
 }
@@ -19,6 +20,7 @@ export function UIProductPagination({
     totalPages,
     onPageChange,
     visiblePages = 5,
+    colorScheme = "primary",
     disabled = false,
     className = "",
 }: UIKitPaginationProps) {
@@ -39,7 +41,11 @@ export function UIProductPagination({
     )
     const isFirstPage = activePage <= 1
     const isLastPage = activePage >= pageCount
-    const rootClassName = ["ui-product-pagination", className].filter(Boolean).join(" ")
+    const rootClassName = [
+        "ui-product-pagination",
+        `ui-product-pagination--${colorScheme}`,
+        className,
+    ].filter(Boolean).join(" ")
 
     return (
         <nav className={rootClassName} aria-label="Paginación">
