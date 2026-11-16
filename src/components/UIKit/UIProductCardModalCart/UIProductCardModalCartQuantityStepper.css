@@ -1,0 +1,75 @@
+.ui-product-card-modal-cart__stepper {
+    display: flex;
+    width: calc(var(--size-5xl) + var(--space-md) + var(--space-px));
+    align-items: stretch;
+    overflow: hidden;
+    border: var(--size-xxs) solid var(--primario-90-color);
+    border-radius: calc(var(--radius-2xl) - var(--space-px));
+}
+
+.ui-product-card-modal-cart__stepper-button {
+    display: grid;
+    flex-shrink: 0;
+    align-items: center;
+    justify-items: center;
+    padding-inline: var(--size-xxs);
+    border-radius: var(--radius-none);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-body-xs);
+    cursor: pointer;
+}
+
+.ui-product-card-modal-cart__stepper-button--decrease {
+    width: var(--size-2xl);
+    padding-block-start: calc(var(--space-xs-2) + var(--size-xxs));
+    padding-block-end: var(--space-xs-2);
+    background-color: var(--b-n-blanco-color);
+    color: var(--terciario-30-color);
+}
+
+.ui-product-card-modal-cart__stepper-value {
+    display: grid;
+    width: calc(var(--size-xl) + var(--size-xxs));
+    flex: 0 0 calc(var(--size-xl) + var(--size-xxs));
+    place-items: center;
+    padding: var(--space-xs-2) var(--size-xxs);
+    border-inline: var(--space-px) solid var(--primario-90-color);
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+.ui-product-card-modal-cart__stepper-button--increase {
+    width: calc(var(--size-xl) + var(--space-xs-2) - var(--space-px));
+    padding-block: var(--space-xs-2);
+    background-color: var(--primario-90-color);
+    color: var(--b-n-blanco-color);
+}
+
+.ui-product-card-modal-cart__stepper-button--decrease:hover {
+    background-color: var(--primario-150-color);
+}
+
+.ui-product-card-modal-cart__stepper-button--increase:hover {
+    background-color: var(--primario-80-color);
+}
+
+.ui-product-card-modal-cart__stepper-button--decrease:active {
+    background-color: var(--primario-140-color);
+}
+
+.ui-product-card-modal-cart__stepper-button--increase:active {
+    background-color: var(--primario-70-color);
+}
+
+.ui-product-card-modal-cart__stepper-button:focus-visible {
+    position: relative;
+    z-index: var(--size-xxs);
+    outline: var(--size-xxs) solid var(--primario-90-color);
+    outline-offset: calc(var(--space-xs-2) * -1);
+}
