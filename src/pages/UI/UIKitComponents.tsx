@@ -10,6 +10,11 @@ import {
     UIProductCard,
     UIProductCardButton,
 } from "../../components/UIKit/UIProductCard"
+import {
+    UIProductCardModalCart,
+    UIProductCardModalCartQuantityStepper,
+} from "../../components/UIKit/UIProductCardModalCart"
+import { UIAppointmentButton } from "../../components/UIKit/UIAppointmentButton"
 
 const productCardExample = {
     imageSrc: new URL(
@@ -22,10 +27,22 @@ const productCardExample = {
     rating: 4,
 }
 
+const productCardModalCartExample = {
+    imageSrc: new URL(
+        "../../components/UIKit/UIProductCardModalCart/assets/product-churu.png",
+        import.meta.url,
+    ).href,
+    imageAlt: "Envase de Ciao Churu de pollo con queso y carne",
+    productName: "Ciao Churu Pollo con Queso y Carne 56g – 4 unidades",
+    price: "$7.490",
+    priceQuantity: 2,
+}
+
 type PaginationExampleProps = {
     title: string
     totalPages: number
     initialPage?: number
+    colorScheme?: "primary" | "secondary"
     disabled?: boolean
 }
 
@@ -33,6 +50,7 @@ function PaginationExample({
     title,
     totalPages,
     initialPage = 1,
+    colorScheme = "primary",
     disabled = false,
 }: PaginationExampleProps) {
     const [currentPage, setCurrentPage] = useState(initialPage)
@@ -44,6 +62,7 @@ function PaginationExample({
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
+                colorScheme={colorScheme}
                 disabled={disabled}
             />
         </section>
@@ -83,12 +102,62 @@ function CarouselPaginationExample({
     )
 }
 
+function ProductCardModalCartExample() {
+    const [quantity, setQuantity] = useState(1)
+    const [removed, setRemoved] = useState(false)
+
+    if (removed) {
+        return (
+            <div className="ui-kit-product-card-example__cards">
+                <p>Producto quitado del carrito de ejemplo.</p>
+                <button type="button" onClick={() => setRemoved(false)}>
+                    Restaurar ejemplo
+                </button>
+            </div>
+        )
+    }
+
+    return (
+        <UIProductCardModalCart
+            {...productCardModalCartExample}
+            quantity={quantity}
+            onRemove={() => setRemoved(true)}
+            onDecrease={() => setQuantity((value) => Math.max(1, value - 1))}
+            onIncrease={() => setQuantity((value) => value + 1)}
+        />
+    )
+}
+
+function ProductCardModalCartQuantityStepperExample() {
+    const [quantity, setQuantity] = useState(1)
+
+    return (
+        <UIProductCardModalCartQuantityStepper
+            quantity={quantity}
+            onDecrease={() => setQuantity((value) => Math.max(1, value - 1))}
+            onIncrease={() => setQuantity((value) => value + 1)}
+        />
+    )
+}
+
 export function UIKitComponents() {
     return (
         <main className="container ui-kit-components-page">
             <h1>UI Kit Components</h1>
+            <p>
+                UIProductPagination usa botones de página de 54 × 54 px, con 10 px de padding
+                exterior y 16 px entre contenedores. La prop <code>colorScheme</code> permite
+                elegir <code>"primary"</code> (predeterminado) o <code>"secondary"</code>, que
+                combina verde claro y verde oscuro para la página seleccionada.
+            </p>
             <div className="ui-kit-components">
                 <PaginationExample title="Paginación básica (5 páginas)" totalPages={5} />
+                <PaginationExample
+                    title="Paginación — variante secundaria (verde)"
+                    totalPages={5}
+                    initialPage={3}
+                    colorScheme="secondary"
+                />
                 <PaginationExample title="Paginación (10 páginas)" totalPages={10} initialPage={4} />
                 <PaginationExample title="Paginación (20 páginas)" totalPages={20} initialPage={12} />
                 <PaginationExample
@@ -340,6 +409,199 @@ export function UIKitComponents() {
   discountPercentage={product.discountPercentage}
   buttonLabel="Agregar al carrito"
   onAddToCart={handleAddToCart}
+/>`}</code></pre>
+                    </div>
+                </section>
+                <section className="ui-kit-pagination-example ui-kit-product-card-example">
+                    <h2>UIProductCardModalCart</h2>
+                    <p>
+                        Muestra un producto del carrito con su imagen, precio, cantidad y acción
+                        para quitarlo. El padre controla el contador y la cantidad mostrada junto
+                        al precio mediante props.
+                    </p>
+                    <ProductCardModalCartExample />
+                    <p>
+                        Prueba los botones de cantidad con clic, hover y teclado. Usa Tab para
+                        comprobar el foco visible; el botón de quitar restaura el ejemplo al usar
+                        “Restaurar ejemplo”. Figma no define estados disabled o loading para esta pieza.
+                    </p>
+                    <div className="ui-kit-product-card-example__api">
+                        <h3>Props de UIProductCardModalCart</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>imageSrc</td><td>string</td><td>Sí</td><td>—</td><td>Origen de la imagen del producto.</td></tr>
+                                    <tr><td>imageAlt</td><td>string</td><td>Sí</td><td>—</td><td>Texto alternativo de la imagen.</td></tr>
+                                    <tr><td>productName</td><td>string</td><td>Sí</td><td>—</td><td>Nombre del producto.</td></tr>
+                                    <tr><td>price</td><td>string</td><td>Sí</td><td>—</td><td>Precio con formato de presentación.</td></tr>
+                                    <tr><td>priceQuantity</td><td>number</td><td>Sí</td><td>—</td><td>Cantidad mostrada junto al precio.</td></tr>
+                                    <tr><td>quantity</td><td>number</td><td>Sí</td><td>—</td><td>Cantidad actual mostrada en el stepper.</td></tr>
+                                    <tr><td>onRemove</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback para quitar el producto.</td></tr>
+                                    <tr><td>onDecrease</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback para solicitar una disminución.</td></tr>
+                                    <tr><td>onIncrease</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback para solicitar un aumento.</td></tr>
+                                    <tr><td>className</td><td>string</td><td>No</td><td>&quot;&quot;</td><td>Clase adicional del artículo.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Uso</h3>
+                        <pre><code>{`<UIProductCardModalCart
+  imageSrc={product.imageSrc}
+  imageAlt={product.imageAlt}
+  productName={product.name}
+  price={product.price}
+  priceQuantity={product.priceQuantity}
+  quantity={quantity}
+  onRemove={handleRemove}
+  onDecrease={handleDecrease}
+  onIncrease={handleIncrease}
+/>`}</code></pre>
+                    </div>
+                </section>
+                <section className="ui-kit-pagination-example ui-kit-product-card-example">
+                    <h2>UIProductCardModalCartQuantityStepper</h2>
+                    <p>
+                        Subcomponente controlado para mostrar y cambiar la cantidad de un producto.
+                        El padre decide las reglas de incremento y decremento.
+                    </p>
+                    <ProductCardModalCartQuantityStepperExample />
+                    <p>
+                        Pasa el puntero sobre los controles y actívalos para ver hover y active.
+                        Usa Tab y Enter o Espacio para comprobar el foco visible y la activación.
+                    </p>
+                    <div className="ui-kit-product-card-example__api">
+                        <h3>Props de UIProductCardModalCartQuantityStepper</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>quantity</td><td>number</td><td>Sí</td><td>—</td><td>Cantidad actual.</td></tr>
+                                    <tr><td>onDecrease</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback para disminuir.</td></tr>
+                                    <tr><td>onIncrease</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback para aumentar.</td></tr>
+                                    <tr><td>className</td><td>string</td><td>No</td><td>&quot;&quot;</td><td>Clase adicional del stepper.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Uso</h3>
+                        <pre><code>{`<UIProductCardModalCartQuantityStepper
+  quantity={quantity}
+  onDecrease={handleDecrease}
+  onIncrease={handleIncrease}
+/>`}</code></pre>
+                    </div>
+                </section>
+                <section className="ui-kit-pagination-example ui-kit-product-card-example">
+                    <h2>Botón de selección de agendamiento</h2>
+                    <p>
+                        Permite elegir entre agendar por fecha y hora o por veterinario.
+                        El estado seleccionado se representa con un fondo específico para cada opción.
+                    </p>
+                    <p>Selecciona o vuelve a presionar cada opción para alternar su estado.</p>
+                    <UIAppointmentButton
+                        appointmentType="date-time"
+                        title="Por fecha y hora"
+                        description="Revisa la disponibilidad de todos los veterinarios según el día."
+                        onClick={() => undefined}
+                    />
+                    <UIAppointmentButton
+                        appointmentType="veterinarian"
+                        title="Por veterinario"
+                        description="Elige un profesional y revisa sus horarios disponibles."
+                        onClick={() => undefined}
+                    />
+                    <p>
+                        El estado seleccionado cambia el fondo, sin agregar bordes al pasar el puntero
+                        o presionar. Usa Tab para comprobar el foco visible.
+                    </p>
+                    <div className="ui-kit-product-card-example__api">
+                        <h3>Props de UIAppointmentButton</h3>
+                        <div className="ui-kit-product-card-example__table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Requerida</th>
+                                        <th>Por defecto</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>appointmentType</td>
+                                        <td>&quot;date-time&quot; | &quot;veterinarian&quot;</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Tipo de agendamiento; determina el icono y el color al seleccionar.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>title</td>
+                                        <td>string</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Texto destacado del botón.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>description</td>
+                                        <td>string</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Descripción debajo del título.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>onClick</td>
+                                        <td>() =&gt; void</td>
+                                        <td>Sí</td>
+                                        <td>—</td>
+                                        <td>Callback al activar la opción.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>state</td>
+                                        <td>&quot;default&quot; | &quot;selected&quot;</td>
+                                        <td>No</td>
+                                        <td>Interno: &quot;default&quot;; controlado: no aplica</td>
+                                        <td>Estado opcional controlado; si se omite, el botón alterna entre default y selected al activarse.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>onStateChange</td>
+                                        <td>(state: UIAppointmentButtonState) =&gt; void</td>
+                                        <td>No</td>
+                                        <td>—</td>
+                                        <td>Notifica el siguiente estado; junto con state permite controlar la selección desde el padre.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>className</td>
+                                        <td>string</td>
+                                        <td>No</td>
+                                        <td>&quot;&quot;</td>
+                                        <td>Clase CSS adicional.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Uso</h3>
+                        <pre><code>{`<UIAppointmentButton
+  appointmentType="date-time"
+  title="Por fecha y hora"
+  description="Revisa la disponibilidad según el día."
+  state="selected"
+  onClick={handleAppointmentTypeChange}
 />`}</code></pre>
                     </div>
                 </section>
