@@ -1,0 +1,103 @@
+
+/* Contenedor principal */
+.ui-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* Input accesible, visualmente oculto */
+.ui-toggle__input {
+  position: absolute;
+  width: 40px;
+  height: 25px;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* Fondo del interruptor */
+.ui-toggle__track {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 25px;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 2px solid #c44808;
+  border-radius: 24px;
+  background-color: #fcebe0;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+/* Círculo interior */
+.ui-toggle__thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #c44808;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Hover */
+.ui-toggle__input:hover:not(:disabled)
+  + .ui-toggle__track {
+  background-color: #ffdbc1;
+}
+
+/* Selected: interruptor encendido */
+.ui-toggle__input:checked + .ui-toggle__track {
+  background-color: #c44808;
+}
+
+.ui-toggle__input:checked
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  transform: translateX(15px);
+  background-color: #ffffff;
+}
+
+/* Focus: navegación con teclado */
+.ui-toggle__input:focus-visible
+  + .ui-toggle__track {
+  outline: 2px solid #c44808;
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.ui-toggle--disabled {
+  cursor: not-allowed;
+  color: #888888;
+}
+
+.ui-toggle__input:disabled + .ui-toggle__track {
+  background-color: #c4c4c4;
+  border-color: #c4c4c4;
+}
+
+.ui-toggle__input:disabled
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  background-color: #ffffff;
+}
+
+/* Error */
+.ui-toggle--error .ui-toggle__track {
+  border-color: #da1616;
+}
+
+.ui-toggle--error
+  .ui-toggle__input:not(:checked)
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  background-color: #da1616;
+}
+
+/* Texto opcional */
+.ui-toggle__label {
+  font-size: 14px;
+}

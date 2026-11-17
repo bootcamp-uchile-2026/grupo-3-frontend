@@ -1,0 +1,74 @@
+
+.ui-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.ui-checkbox__input {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.ui-checkbox__box {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: 2px solid #c44808;
+  border-radius: 5px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+.ui-checkbox__check {
+  width: 16px;
+  height: 16px;
+  display: none;
+}
+
+.ui-checkbox__input:hover:not(:disabled) + .ui-checkbox__box {
+  background-color: #ffdbc1;
+}
+
+.ui-checkbox__input:checked + .ui-checkbox__box {
+  background-color: #c44808;
+}
+
+.ui-checkbox__input:checked + .ui-checkbox__box .ui-checkbox__check {
+  display: block;
+}
+
+.ui-checkbox__input:focus-visible + .ui-checkbox__box {
+  outline: 2px solid #c44808;
+  outline-offset: 2px;
+}
+
+.ui-checkbox__input:disabled + .ui-checkbox__box {
+  background-color: #c4c4c4;
+  border-color: #c4c4c4;
+}
+
+.ui-checkbox--disabled {
+  cursor: not-allowed;
+  color: #888888;
+}
+
+.ui-checkbox--error .ui-checkbox__box {
+  border-color: #ff0000;
+}
+
+.ui-checkbox__label {
+  font-size: 14px;
+}
