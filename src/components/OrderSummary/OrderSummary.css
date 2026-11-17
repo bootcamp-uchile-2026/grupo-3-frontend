@@ -1,7 +1,7 @@
 .order-summary {
   padding: 18px;
   border-radius: var(--cart-radius-card);
-  background: var(--cart-color-surface);
+  background: var(--b-n-blanco-color);
   box-shadow: var(--cart-shadow-card);
 }
 
@@ -10,7 +10,7 @@
   align-items: center;
   gap: 9px;
   margin-bottom: 18px;
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 1rem;
 }
 
@@ -24,7 +24,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 0.9rem;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .order-summary__row--discount {
-  color: var(--cart-color-success);
+  color: var(--exito-90-color);
 }
 
 .order-summary__row--total {
@@ -51,19 +51,19 @@
   min-height: 44px;
   margin-top: 18px;
   padding: 10px 16px;
-  border-radius: var(--cart-radius-pill);
-  background: var(--cart-color-control-strong);
-  color: var(--cart-color-surface);
+  border-radius: var(--radius-full);
+  background: var(--b-n-80-color);
+  color: var(--b-n-blanco-color);
   font-size: 0.9rem;
   font-weight: 700;
   text-align: center;
 }
 
 .order-summary__checkout:hover {
-  background: var(--cart-color-control-hover);
+  background: var(--b-n-70-color);
 }
 
 .order-summary__checkout:focus-visible {
-  outline: 3px solid var(--cart-color-focus);
+  outline: 3px solid var(--info-80-color);
   outline-offset: 3px;
 }

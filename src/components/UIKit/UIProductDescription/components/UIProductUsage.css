@@ -1,0 +1,8 @@
+.ui-product-usage {
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-body-m);
+    font-size: var(--font-size-body-m);
+    line-height: var(--line-height-body-m);
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}

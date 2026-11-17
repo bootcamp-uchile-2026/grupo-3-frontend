@@ -3,9 +3,9 @@
   grid-template-columns: 32px 32px 32px;
   min-height: 34px;
   overflow: hidden;
-  border: 1px solid var(--cart-color-border);
-  border-radius: var(--cart-radius-pill);
-  background: var(--cart-color-surface);
+  border: 1px solid var(--b-n-140-color);
+  border-radius: var(--radius-full);
+  background: var(--b-n-blanco-color);
 }
 
 .quantity-stepper__button {
@@ -14,20 +14,20 @@
   min-width: 0;
   padding: 0;
   border-radius: 0;
-  background: var(--cart-color-control);
-  color: var(--cart-color-text);
+  background: var(--b-n-150-color);
+  color: var(--b-n-40-color);
   font-size: 1rem;
   line-height: 1;
 }
 
 .quantity-stepper__button:last-child {
-  background: var(--cart-color-control-strong);
-  color: var(--cart-color-surface);
+  background: var(--b-n-80-color);
+  color: var(--b-n-blanco-color);
 }
 
 .quantity-stepper__button:hover:not(:disabled) {
-  background: var(--cart-color-control-hover);
-  color: var(--cart-color-surface);
+  background: var(--b-n-70-color);
+  color: var(--b-n-blanco-color);
 }
 
 .quantity-stepper__button:disabled {
@@ -38,8 +38,8 @@
 .quantity-stepper__value {
   display: grid;
   place-items: center;
-  border-right: 1px solid var(--cart-color-border);
-  border-left: 1px solid var(--cart-color-border);
+  border-right: 1px solid var(--b-n-140-color);
+  border-left: 1px solid var(--b-n-140-color);
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -47,6 +47,6 @@
 .quantity-stepper__button:focus-visible {
   position: relative;
   z-index: 1;
-  outline: 2px solid var(--cart-color-focus);
+  outline: 2px solid var(--info-80-color);
   outline-offset: -2px;
 }

@@ -5,8 +5,8 @@
   gap: 16px;
   min-width: 0;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--cart-color-border);
-  background: var(--cart-color-surface);
+  border-bottom: 1px solid var(--b-n-140-color);
+  background: var(--b-n-blanco-color);
 }
 
 .cart-item__image-link,
@@ -16,8 +16,8 @@
   height: 76px;
   overflow: hidden;
   place-items: center;
-  border-radius: var(--cart-radius-small);
-  background: var(--cart-color-placeholder);
+  border-radius: var(--radius-md);
+  background: var(--b-n-140-color);
 }
 
 .cart-item__image {
@@ -35,14 +35,14 @@
 }
 
 .cart-item__name {
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-size: 0.95rem;
   font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 .cart-item__brand {
-  color: var(--cart-color-muted);
+  color: var(--b-n-90-color);
   font-size: 0.8rem;
 }
 
@@ -52,12 +52,12 @@
   gap: 6px;
   padding: 3px 0;
   background: transparent;
-  color: var(--cart-color-danger);
+  color: var(--error-100-color);
   font-size: 0.8rem;
 }
 
 .cart-item__remove:hover {
-  color: var(--cart-color-danger-hover);
+  color: var(--primario-80-color);
   text-decoration: underline;
 }
 
@@ -75,25 +75,25 @@
 }
 
 .cart-item__original-price {
-  color: var(--cart-color-muted);
+  color: var(--b-n-90-color);
   font-size: 0.78rem;
   text-decoration: line-through;
 }
 
 .cart-item__current-price {
-  color: var(--cart-color-text);
+  color: var(--b-n-40-color);
   font-weight: 700;
 }
 
 .cart-item__status {
-  color: var(--cart-color-muted);
+  color: var(--b-n-90-color);
   font-size: 0.75rem;
 }
 
 .cart-item__name:focus-visible,
 .cart-item__image-link:focus-visible,
 .cart-item__remove:focus-visible {
-  outline: 2px solid var(--cart-color-focus);
+  outline: 2px solid var(--info-80-color);
   outline-offset: 3px;
 }
 

@@ -1,0 +1,65 @@
+.ui-appointment-button {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-xl-2);
+    border: var(--space-zero) solid transparent;
+    border-radius: var(--radius-3xl);
+    background-color: var(--terciario-150-color);
+    color: var(--terciario-30-color);
+    cursor: pointer;
+    font-family: var(--font-family-body-m);
+    text-align: center;
+}
+
+.ui-appointment-button--selected.ui-appointment-button--date-time {
+    background-color: var(--primario-140-color);
+}
+
+.ui-appointment-button--selected.ui-appointment-button--veterinarian {
+    background-color: var(--secundario-130-color);
+}
+
+.ui-appointment-button__heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-base);
+}
+
+.ui-appointment-button__icon {
+    width: var(--size-4xl);
+    height: var(--size-4xl);
+    flex: 0 0 auto;
+}
+
+.ui-appointment-button__title {
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-body-l);
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+.ui-appointment-button__description {
+    max-width: calc(
+        var(--space-xl-6) + var(--space-xl-6) + var(--space-xl-6) + var(--space-xl-6) -
+        var(--space-md) - var(--space-px)
+    );
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-body-m);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+.ui-appointment-button:focus-visible {
+    outline: var(--space-xxs) solid var(--primario-90-color);
+    outline-offset: var(--space-xs-2);
+}

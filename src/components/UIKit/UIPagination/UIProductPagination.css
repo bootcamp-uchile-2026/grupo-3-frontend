@@ -1,41 +1,57 @@
 .ui-product-pagination {
+    --ui-pagination-button-size: calc(var(--size-5xl) + var(--size-xs) + var(--size-xxs));
+    --ui-pagination-page-inset: calc(var(--space-sm) - var(--size-xxs));
+    --ui-product-pagination-page-background: var(--primario-150-color);
+    --ui-product-pagination-page-active-background: var(--primario-90-color);
+    --ui-product-pagination-page-hover-background: var(--primario-140-color);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--ui-pagination-navigation-gap, 20px);
+    gap: var(--space-base);
+}
+
+.ui-product-pagination--secondary {
+    --ui-product-pagination-page-background: var(--secundario-150-color);
+    --ui-product-pagination-page-active-background: var(--secundario-70-color);
+    --ui-product-pagination-page-hover-background: var(--secundario-140-color);
 }
 
 .ui-product-pagination__pages {
     display: flex;
     align-items: center;
-    gap: var(--ui-pagination-page-gap, 40px);
+    gap: var(--space-base);
 }
 
 .ui-product-pagination__page {
     display: grid;
-    width: var(--ui-pagination-button-size, 60px);
-    height: var(--ui-pagination-button-size, 60px);
-    flex: 0 0 var(--ui-pagination-button-size, 60px);
+    width: var(--ui-pagination-button-size);
+    height: var(--ui-pagination-button-size);
+    flex: 0 0 var(--ui-pagination-button-size);
     place-items: center;
-    padding: 0;
+    margin: var(--ui-pagination-page-inset);
+    padding: var(--ui-pagination-page-inset);
     border: 0;
     border-radius: 50%;
-    background-color: var(--ui-pagination-inactive-background);
-    color: var(--ui-pagination-text-color);
+    background-color: var(--ui-product-pagination-page-background);
+    color: var(--terciario-30-color);
     font: inherit;
-    font-weight: 600;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: -0.2px;
     cursor: pointer;
     transition: background-color 150ms ease, color 150ms ease;
 }
 
 .ui-product-pagination__page:hover:not(:disabled):not([aria-current="page"]) {
-    background-color: var(--ui-pagination-hover-background, #efc8a9);
+    background-color: var(--ui-product-pagination-page-hover-background);
 }
 
 .ui-product-pagination__page[aria-current="page"] {
-    background-color: var(--ui-pagination-active-background);
-    color: var(--ui-pagination-active-text-color);
+    background-color: var(--ui-product-pagination-page-active-background);
+    color: var(--b-n-blanco-color);
 }
 
 .ui-product-pagination__page:active:not(:disabled) {
@@ -44,7 +60,7 @@
 
 .ui-product-pagination__page:focus-visible,
 .ui-product-pagination__navigation:focus-visible {
-    outline: 3px solid var(--ui-pagination-focus-color, #71320f);
+    outline: 3px solid var(--advertencia-70-color);
     outline-offset: 3px;
 }
 
@@ -55,21 +71,21 @@
 
 .ui-product-pagination__navigation {
     display: grid;
-    width: var(--ui-pagination-navigation-size, 28px);
-    height: var(--ui-pagination-navigation-size, 40px);
-    flex: 0 0 var(--ui-pagination-navigation-size, 28px);
+    width: var(--size-2xl);
+    height: var(--size-2xl);
+    flex: 0 0 var(--size-2xl);
     place-items: center;
     padding: 0;
     border: 0;
     border-radius: 4px;
     background: transparent;
-    color: var(--ui-pagination-navigation-color);
+    color: var(--primario-90-color);
     cursor: pointer;
     transition: color 150ms ease, opacity 150ms ease;
 }
 
 .ui-product-pagination__navigation:hover:not(:disabled) {
-    color: var(--ui-pagination-navigation-hover-color, #71320f);
+    color: var(--advertencia-70-color);
 }
 
 .ui-product-pagination__navigation:active:not(:disabled) {
@@ -83,9 +99,15 @@
 
 @media (max-width: 600px) {
     .ui-product-pagination {
-        --ui-pagination-page-gap: 12px;
-        --ui-pagination-navigation-gap: 8px;
-        --ui-pagination-button-size: 44px;
-        --ui-pagination-navigation-size: 24px;
+        gap: var(--space-xs);
+    }
+
+    .ui-product-pagination__pages {
+        gap: var(--space-sm);
+    }
+
+    .ui-product-pagination__page {
+        --ui-pagination-button-size: calc(var(--size-5xl) - var(--size-xs));
+        margin: 0;
     }
 }
