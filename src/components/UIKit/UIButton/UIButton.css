@@ -1,0 +1,133 @@
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: fit-content;
+  border-radius: 20px;
+  border: 2px solid transparent;
+
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.ui-button__label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ui-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-button__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* TAMAÑOS */
+
+.ui-button--l {
+  min-height: 44px;
+  padding: 10px 30px;
+  font-size: 16px;
+}
+
+.ui-button--m {
+  min-height: 40px;
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+.ui-button--s {
+  min-height: 36px;
+  padding: 6px 8px;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* PRIMARY - NARANJA */
+
+.ui-button--primary {
+  background-color: #c44808;
+  color: #ffffff;
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background-color: #ab3600;
+}
+
+.ui-button--primary:active:not(:disabled) {
+  background-color: #922500;
+}
+
+/* SECONDARY - VERDE */
+
+.ui-button--secondary {
+  background-color: #4c5727;
+  color: #ffffff;
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background-color: #3e4820;
+}
+
+.ui-button--secondary:active:not(:disabled) {
+  background-color: #303819;
+}
+
+/* TERTIARY - BORDE NARANJA */
+
+.ui-button--tertiary {
+  background-color: transparent;
+  border-color: #c44808;
+  color: #c44808;
+}
+
+.ui-button--tertiary:hover:not(:disabled) {
+  background-color: #fcebe0;
+}
+
+.ui-button--tertiary:active:not(:disabled) {
+  background-color: #f5d2be;
+}
+
+/* DISABLED */
+
+.ui-button:disabled {
+  cursor: not-allowed;
+}
+
+.ui-button--primary:disabled {
+  background-color: #e6a080;
+  color: #ffffff;
+}
+
+.ui-button--secondary:disabled {
+  background-color: #97a276;
+  color: #ffffff;
+}
+
+.ui-button--tertiary:disabled {
+  border-color: #e6a080;
+  color: #e6a080;
+}
+
+/* FOCUS - NAVEGACIÓN CON TECLADO */
+
+.ui-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -5px;
+  box-shadow: 0 0 0 2px #333333;
+}

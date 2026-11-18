@@ -1,0 +1,261 @@
+
+/* =====================================
+   FORM SELECTION - PETLOVE
+   ===================================== */
+
+.ui-form-selection {
+  min-width: 0;
+  width: 100%;
+  max-width: 650px;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 3px 8px rgba(80, 40, 20, 0.12);
+}
+
+/* TÍTULO */
+
+.ui-form-selection__title {
+  padding: 0 4px;
+  margin-bottom: 12px;
+  color: #a83200;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* CONTENEDOR DE OPCIONES */
+
+.ui-form-selection__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* OPCIÓN BASE */
+
+.ui-form-selection__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background-color: #fcebe0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* TAMAÑO S - FIGMA */
+
+.ui-form-selection--s .ui-form-selection__option {
+  min-height: 38px;
+}
+
+/* TAMAÑO M - FIGMA */
+
+.ui-form-selection--m .ui-form-selection__option {
+  min-height: 54px;
+}
+
+/* HOVER */
+
+.ui-form-selection__option:hover {
+  background-color: #ffdbc1;
+}
+
+/* SELECTED */
+
+.ui-form-selection__option--selected,
+.ui-form-selection__option--selected:hover {
+  background-color: #ffbe9b;
+}
+
+/* INPUT RADIO */
+
+.ui-form-selection__input {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* CÍRCULO RADIO */
+
+.ui-form-selection__radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: 2px solid #c44808;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+/* RADIO SELECCIONADO */
+
+.ui-form-selection__input:checked
+  + .ui-form-selection__radio::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #c44808;
+}
+
+/* FOCUS */
+
+.ui-form-selection__option:focus-within {
+  outline: 2px solid #c44808;
+  outline-offset: 2px;
+}
+
+/* CONTENIDO */
+
+.ui-form-selection__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ui-form-selection__label {
+  font-size: 13px;
+  line-height: 1.3;
+  color: #23120b;
+}
+
+.ui-form-selection__subtitle {
+  font-size: 11px;
+  color: #4c3b32;
+}
+
+/* PRECIO */
+
+.ui-form-selection__price {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: #c44808;
+  white-space: nowrap;
+}
+
+.ui-form-selection__option--selected
+  .ui-form-selection__price {
+  color: #541b08;
+}
+
+/* =====================================
+   SELECCIÓN DE VETERINARIO
+   ===================================== */
+
+.ui-form-selection--vet {
+  max-width: 661px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ui-form-selection--vet .ui-form-selection__option {
+  min-height: 76px;
+  padding: 8px 40px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 3px 12px rgba(76, 87, 39, 0.2);
+}
+
+.ui-form-selection--vet
+  .ui-form-selection__option--selected,
+.ui-form-selection--vet
+  .ui-form-selection__option--selected:hover {
+  background-color: #ebf3d7;
+}
+
+/* HORA */
+
+.ui-form-selection__time {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* AVATAR */
+
+.ui-form-selection__avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+}
+
+/* RADIO A LA DERECHA */
+
+.ui-form-selection--vet .ui-form-selection__radio {
+  order: 5;
+  margin-left: auto;
+}
+
+.ui-form-selection--vet .ui-form-selection__content {
+  order: 3;
+}
+
+.ui-form-selection--vet .ui-form-selection__input {
+  right: 40px;
+}
+
+/* =====================================
+   DISABLED
+   ===================================== */
+
+.ui-form-selection:disabled .ui-form-selection__option {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =====================================
+   RESPONSIVE
+   ===================================== */
+
+@media (min-width: 768px) {
+  .ui-form-selection--shipping
+    .ui-form-selection__options {
+    flex-direction: row;
+  }
+
+  .ui-form-selection--shipping
+    .ui-form-selection__option {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .ui-form-selection {
+    padding: 12px;
+  }
+
+  .ui-form-selection--vet {
+    padding: 0;
+  }
+
+  .ui-form-selection--vet .ui-form-selection__option {
+    padding: 8px 16px;
+  }
+
+  .ui-form-selection--vet .ui-form-selection__input {
+    right: 16px;
+  }
+
+  .ui-form-selection__label {
+    font-size: 12px;
+  }
+}
