@@ -1,0 +1,45 @@
+
+.ui-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 20px;
+  border: none;
+  border-left: 8px solid transparent;
+  background-color: #ffffff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover */
+.ui-option:hover:not(:disabled) {
+  background-color: #ffdbc1;
+}
+
+/* Selected */
+.ui-option--selected {
+  border-left-color: #c44808;
+}
+
+/* Selected + Hover */
+.ui-option--selected:hover:not(:disabled) {
+  background-color: #ffdbc1;
+  border-left-color: #c44808;
+}
+
+/* Accesibilidad */
+.ui-option:focus-visible {
+  outline: 2px solid #c44808;
+  outline-offset: 2px;
+}
+
+/* Deshabilitado */
+.ui-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
