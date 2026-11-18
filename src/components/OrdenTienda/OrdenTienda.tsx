@@ -1,9 +1,19 @@
+import { UIDropdown, type DropdownOption } from "../UIKit/UIDropdown/UIDropdown";
+import { IconApps, IconAppsList } from "../UIKit/UIIcons";
+
 export type VistaTienda = "grid" | "list";
 export type OrdenTiendaValor = "catalogo" | "precio-asc" | "precio-desc" | "nombre";
 
 function esOrdenTiendaValor(valor: string): valor is OrdenTiendaValor {
     return ["catalogo", "precio-asc", "precio-desc", "nombre"].includes(valor);
 }
+
+const opcionesOrden: DropdownOption[] = [
+    { value: "catalogo", label: "Catálogo" },
+    { value: "precio-asc", label: "Precio menor" },
+    { value: "precio-desc", label: "Precio mayor" },
+    { value: "nombre", label: "Nombre A-Z" },
+];
 
 type OrdenTiendaProps = {
     vista: VistaTienda;
@@ -15,41 +25,38 @@ type OrdenTiendaProps = {
 export function OrdenTienda({ vista, orden, onCambiarVista, onCambiarOrden }: OrdenTiendaProps) {
     return (
         <div className="orden-productos">
-            <div className="orden-productos-botones" role="group" aria-label="Presentación de productos">
+            <div className="orden-productos__botones" role="group" aria-label="Presentación de productos">
                 <button
                     type="button"
-                    className={vista === "grid" ? "is-active" : ""}
+                    className={`orden-productos__boton${vista === "grid" ? " orden-productos__boton--activo" : ""}`}
                     aria-label="Ver productos en grilla"
                     aria-pressed={vista === "grid"}
                     onClick={() => onCambiarVista("grid")}
                 >
-                    <span aria-hidden="true">▦</span>
+                    <IconApps color="var(--primario-90-color)" />
                 </button>
                 <button
                     type="button"
-                    className={vista === "list" ? "is-active" : ""}
+                    className={`orden-productos__boton${vista === "list" ? " orden-productos__boton--activo" : ""}`}
                     aria-label="Ver productos en lista"
                     aria-pressed={vista === "list"}
                     onClick={() => onCambiarVista("list")}
                 >
-                    <span aria-hidden="true">☷</span>
+                    <IconAppsList color="var(--primario-90-color)" />
                 </button>
             </div>
-            <label className="orden-productos__selector">
-                <span>Ordenar:</span>
-                <select
-                    value={orden}
-                    onChange={(event) => {
-                        const valor = event.currentTarget.value;
-                        if (esOrdenTiendaValor(valor)) onCambiarOrden(valor);
-                    }}
-                >
-                    <option value="catalogo">Orden del catálogo</option>
-                    <option value="precio-asc">Precio: menor a mayor</option>
-                    <option value="precio-desc">Precio: mayor a menor</option>
-                    <option value="nombre">Nombre: A-Z</option>
-                </select>
-            </label>
+            <div className="orden-productos__selector" role="group" aria-label="Ordenar productos">
+                <div className="orden-productos__desplegable">
+                    <UIDropdown
+                        options={opcionesOrden}
+                        value={orden}
+                        iconLeft={<span className="orden-productos__prefijo">Orden:</span>}
+                        onChange={(valor) => {
+                            if (esOrdenTiendaValor(valor)) onCambiarOrden(valor);
+                        }}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

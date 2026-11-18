@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardCarrusel } from "../../components/CardCarrusel/CardCarrusel";
 import { Breadcrumbs } from "../../components/Breadcrumbs/Breadcrumbs";
-import { CardProducto } from "../../components/CardProducto/CardProducto";
 import { GaleriaProducto } from "../../components/ProductoIndividual/GaleriaProducto/GaleriaProducto";
 import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProducto/ResenasProducto";
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
 import { TabsProducto } from "../../components/ProductoIndividual/TabsProducto/TabsProducto";
+import { UIProductCard } from "../../components/UIKit/UIProductCard";
 import { useCarrito } from "../../context/CarritoContext";
 import { agregarProductoAlCarrito } from "../../services/carrito";
 
@@ -59,6 +59,61 @@ type ProductoRelacionado = {
 };
 
 type EstadoAccionCarrito = "idle" | "agregando" | "agregado" | "error";
+
+function formatoPrecio(precio: number): string {
+    return new Intl.NumberFormat("es-CL", {
+        style: "currency",
+        currency: "CLP",
+        maximumFractionDigits: 0,
+    }).format(precio);
+}
+
+function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionado }) {
+    const { dispatch } = useCarrito();
+    const [estadoCarrito, setEstadoCarrito] = useState<EstadoAccionCarrito>("idle");
+
+    async function agregarAlCarrito() {
+        setEstadoCarrito("agregando");
+        try {
+            const carrito = await agregarProductoAlCarrito(producto.id, 1);
+            dispatch({ type: "SINCRONIZAR", carrito });
+            setEstadoCarrito("agregado");
+        } catch (error) {
+            console.error("No se pudo agregar el producto al carrito.", error);
+            setEstadoCarrito("error");
+        }
+    }
+
+    return (
+        <div>
+            <UIProductCard
+                imageSrc={producto.imagenes?.[0] || "https://placehold.co/400x400?text=Sin+imagen"}
+                imageAlt={producto.nombre}
+                name={producto.nombre}
+                price={formatoPrecio(producto.precio)}
+                previousPrice={producto.precioOriginal !== undefined
+                    && producto.precioOriginal > producto.precio
+                    ? formatoPrecio(producto.precioOriginal)
+                    : undefined}
+                productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
+                buttonLabel={estadoCarrito === "agregando"
+                    ? "Agregando..."
+                    : estadoCarrito === "agregado"
+                        ? "Agregado"
+                        : "Agregar al carrito"}
+                onAddToCart={agregarAlCarrito}
+                loading={estadoCarrito === "agregando"}
+                selected={estadoCarrito === "agregado"}
+            />
+            {estadoCarrito === "agregado" && (
+                <p role="status">Producto agregado al carrito.</p>
+            )}
+            {estadoCarrito === "error" && (
+                <p role="alert">No se pudo agregar el producto. Inténtalo nuevamente.</p>
+            )}
+        </div>
+    );
+}
 
 function esProductoRelacionado(value: unknown): value is ProductoRelacionado {
     return typeof value === "object" && value !== null
@@ -294,15 +349,9 @@ export function ProductoIndividual() {
                     {relacionadosActuales.productos.length > 0 && (
                         <CardCarrusel>
                             {relacionadosActuales.productos.map((productoRelacionado) => (
-                                <CardProducto
+                                <TarjetaProductoRelacionado
                                     key={productoRelacionado.id}
-                                    id={productoRelacionado.id}
-                                    titulo={productoRelacionado.nombre}
-                                    urlImagen={productoRelacionado.imagenes?.[0] || "https://placehold.co/400x400?text=Sin+imagen"}
-                                    precio={productoRelacionado.precio}
-                                    precioOriginal={productoRelacionado.precioOriginal}
-                                    categoria={productoRelacionado.categoria}
-                                    variant="standard"
+                                    producto={productoRelacionado}
                                 />
                             ))}
                         </CardCarrusel>
