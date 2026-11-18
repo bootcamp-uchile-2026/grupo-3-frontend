@@ -9,10 +9,10 @@ function esOrdenTiendaValor(valor: string): valor is OrdenTiendaValor {
 }
 
 const opcionesOrden: DropdownOption[] = [
-    { value: "catalogo", label: "Catálogo" },
-    { value: "precio-asc", label: "Precio menor" },
-    { value: "precio-desc", label: "Precio mayor" },
-    { value: "nombre", label: "Nombre A-Z" },
+    { value: "catalogo", label: "Relevancia" },
+    { value: "precio-asc", label: "Precio: menor a mayor" },
+    { value: "precio-desc", label: "Precio: mayor a menor" },
+    { value: "nombre", label: "Nombre" },
 ];
 
 type OrdenTiendaProps = {
@@ -28,7 +28,7 @@ export function OrdenTienda({ vista, orden, onCambiarVista, onCambiarOrden }: Or
             <div className="orden-productos__botones" role="group" aria-label="Presentación de productos">
                 <button
                     type="button"
-                    className={`orden-productos__boton${vista === "grid" ? " orden-productos__boton--activo" : ""}`}
+                    className="orden-productos__boton"
                     aria-label="Ver productos en grilla"
                     aria-pressed={vista === "grid"}
                     onClick={() => onCambiarVista("grid")}
@@ -37,7 +37,7 @@ export function OrdenTienda({ vista, orden, onCambiarVista, onCambiarOrden }: Or
                 </button>
                 <button
                     type="button"
-                    className={`orden-productos__boton${vista === "list" ? " orden-productos__boton--activo" : ""}`}
+                    className="orden-productos__boton"
                     aria-label="Ver productos en lista"
                     aria-pressed={vista === "list"}
                     onClick={() => onCambiarVista("list")}

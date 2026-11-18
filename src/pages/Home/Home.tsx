@@ -35,6 +35,7 @@ const productosOfertaSchema = z.array(
         precioOriginal: z.number(),
         imagenes: z.array(z.string()).min(1),
         categoria: z.string(),
+        calificacionPromedio: z.number().min(0).max(5).optional(),
     }).catchall(z.unknown()),
 );
 

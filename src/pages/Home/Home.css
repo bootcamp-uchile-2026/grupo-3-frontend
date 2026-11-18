@@ -110,17 +110,6 @@
     object-fit: cover;
 }
 
-.home__offers .ui-product-card .ui-product-card-discount {
-    top: var(--space-xs);
-    right: var(--space-xs);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-3xl);
-    background-color: var(--secundario-70-color);
-    color: var(--b-n-blanco-color);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-bold);
-}
-
 .home__offers .ui-product-card__link {
     flex: 1;
 }

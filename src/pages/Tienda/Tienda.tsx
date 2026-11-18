@@ -7,11 +7,9 @@ import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs';
 import { FiltroTienda, type FiltroClave, type SeleccionesFiltro } from '../../components/FiltroTienda/FiltroTienda';
 import { subcategoriasMascota } from '../../components/FiltroTienda/subcategoriasMascota';
 import { HeroTienda } from '../../components/HeroTienda/HeroTienda';
+import { OrdenTienda, type OrdenTiendaValor, type VistaTienda } from '../../components/OrdenTienda/OrdenTienda';
 import { useCarrito } from '../../context/CarritoContext';
 import { agregarProductoAlCarrito } from '../../services/carrito';
-
-type OrdenTiendaValor = 'catalogo' | 'precio-asc' | 'precio-desc' | 'nombre';
-type VistaTienda = 'grid' | 'list';
 
 const productoCatalogoSchema = z.object({
   id: z.string(),
@@ -326,31 +324,15 @@ export function Tienda() {
         <h1 className="tienda-pagina__titulo">{tituloCategoria}</h1>
         <div className="tienda-pagina__controles">
           <Breadcrumbs items={itemsBreadcrumb} />
-          <div className="orden-tienda">
-            <label>
-              Ordenar por{' '}
-              <select
-                value={orden}
-                onChange={(event) => {
-                  setOrden(event.target.value as OrdenTiendaValor);
-                  setPaginacion({ pathname, limite: 12 });
-                }}
-              >
-                <option value="catalogo">Relevancia</option>
-                <option value="precio-asc">Precio: menor a mayor</option>
-                <option value="precio-desc">Precio: mayor a menor</option>
-                <option value="nombre">Nombre</option>
-              </select>
-            </label>
-            <div role="group" aria-label="Vista de productos">
-              <button type="button" aria-pressed={vista === 'grid'} onClick={() => setVista('grid')}>
-                Cuadrícula
-              </button>
-              <button type="button" aria-pressed={vista === 'list'} onClick={() => setVista('list')}>
-                Lista
-              </button>
-            </div>
-          </div>
+          <OrdenTienda
+            vista={vista}
+            orden={orden}
+            onCambiarVista={setVista}
+            onCambiarOrden={(nuevoOrden) => {
+              setOrden(nuevoOrden);
+              setPaginacion({ pathname, limite: 12 });
+            }}
+          />
         </div>
         <div className="tienda-pagina__layout">
           <aside className="tienda-pagina__filtros">

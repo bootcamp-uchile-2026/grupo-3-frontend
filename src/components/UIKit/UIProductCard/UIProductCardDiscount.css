@@ -1,20 +1,22 @@
 .ui-product-card-discount {
+    box-sizing: border-box;
     display: inline-flex;
-    min-width: calc(var(--size-5xl) + var(--size-3xl) - var(--space-xxs));
-    min-height: var(--size-5xl);
+    width: calc(var(--size-5xl) + var(--size-3xl) - var(--space-xxs));
+    min-height: calc(var(--size-3xl) + var(--space-base));
     align-items: center;
     justify-content: center;
     gap: var(--space-xxs);
-    padding: var(--space-xs) var(--space-base);
-    border-radius: var(--radius-3xl);
+    padding: var(--space-xs) var(--size-lg);
+    border-radius: var(--radius-none) var(--radius-2xl) var(--radius-none) var(--radius-3xl);
     background-color: var(--secundario-70-color);
     color: var(--b-n-blanco-color);
     font-family: var(--font-family-body-l);
-    font-size: var(--font-size-body-l);
+    font-size: var(--size-xl);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-body-s);
     letter-spacing: var(--letter-spacing-heading-s);
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .ui-product-card-discount__icon {

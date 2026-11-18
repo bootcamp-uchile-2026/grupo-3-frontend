@@ -95,17 +95,18 @@
     display: grid;
     width: min(100%, 1290px);
     min-height: 100%;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(6, 135px);
     align-items: center;
     justify-items: center;
-    gap: var(--space-sm);
+    justify-content: space-between;
     margin: 0 auto;
     padding: 0;
     list-style: none;
 }
 
 .hero-tienda__categoria {
-    width: 135px;
+    width: 100%;
+    max-width: 135px;
 }
 
 .hero-tienda__categoria-enlace {
@@ -126,9 +127,13 @@
 
 .hero-tienda__categoria-imagen {
     display: block;
-    width: 120px;
-    height: 120px;
+    width: min(120px, 100%);
+    height: auto;
+    aspect-ratio: 1;
+    overflow: hidden;
     border-radius: var(--radius-full);
+    background-color: var(--b-n-blanco-color);
+    box-shadow: 0 calc(var(--space-xs-2) - var(--space-px)) 10.5px var(--secundario-140-color);
     object-fit: cover;
 }
 
@@ -163,6 +168,7 @@
     }
 
     .hero-tienda__lista-categorias {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: var(--space-xs);
     }
 }
