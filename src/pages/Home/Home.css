@@ -1,65 +1,359 @@
-#hero{
-    margin-bottom: 30px;
-}
-
-.slider {
+.home {
     display: flex;
-    position: relative;
-}
-
-.slide {
-    position: relative;
-}
-
-.slide img {
+    flex-direction: column;
     width: 100%;
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-primary), sans-serif;
 }
 
-.slide .btn-slide {
-    position: absolute;
-    bottom: 50px;
-    left: 50px;
-    border: none;
-    cursor: pointer;
-}   
+.home__offers-more button:focus-visible {
+    outline: 2px solid var(--secundario-70-color);
+    outline-offset: 3px;
+}
 
-.categorias-home {
+.home__categories {
+    padding: 0 var(--space-xl-4);
+}
+
+.home__categories-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-xl-4);
+    padding: var(--space-md) var(--space-xl-4);
+}
+
+.home__categories .categoria-card-home {
+    flex: 0 1 133px;
+    max-width: 133px;
+}
+
+.home__categories .categoria-card-home a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--terciario-30-color);
+    font-size: var(--font-size-body-s);
+    line-height: var(--line-height-body-s);
+    text-align: center;
+}
+
+.home__categories .categoria-card-home h3 {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-regular);
+}
+
+.home__categories .categoria-card-home img {
+    width: 133px;
+    height: 133px;
+    object-fit: cover;
+    border-radius: var(--radius-full);
+    box-shadow: 0 3px 11px 2px var(--secundario-140-color);
+}
+
+.home__categories-inner > p {
+    flex: 1 0 100%;
+    text-align: center;
+}
+
+.home__offers {
+    padding: var(--space-lg);
+}
+
+.home__offers-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.home__section-title {
+    color: var(--terciario-40-color);
+    font-family: var(--font-family-heading-s), sans-serif;
+    font-size: var(--font-size-heading-s);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading-s);
+    text-align: center;
+}
+
+.home__offers-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 20px;
-    margin: 30px 0;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 276px));
+    justify-content: center;
+    gap: var(--space-xl-4);
 }
 
-.productos-ofertas {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-    margin: 30px 0;
+.home__offers-grid > p {
+    grid-column: 1 / -1;
+    text-align: center;
 }
 
-.petlove-cards {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-    margin: 30px 0;
+.home__offers .producto-card {
+    height: 391px;
+    padding: var(--space-base);
+    border: 0;
+    border-radius: var(--radius-4xl);
+    background-color: var(--primario-150-color);
 }
 
-.ver-mas {
+.home__offers .producto-card__imagen {
+    height: 200px;
+    aspect-ratio: auto;
+    margin-bottom: var(--space-xs);
+    border-radius: var(--radius-xl);
+}
+
+.home__offers .producto-card__insignia {
+    top: var(--space-xs);
+    right: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-3xl);
+    background-color: var(--secundario-70-color);
+    color: var(--b-n-blanco-color);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-bold);
+}
+
+.home__offers .producto-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0;
+    margin-bottom: 0;
+    font-size: var(--font-size-body-s);
+    text-align: center;
+}
+
+.home__offers .producto-info {
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.home__offers .producto-info__titulo {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+}
+
+.home__offers .producto-info__categoria {
+    display: none;
+}
+
+.home__offers .producto-precio {
+    max-width: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-body-s);
+}
+
+.home__offers .producto-precio-original {
+    font-size: var(--font-size-body-s);
+}
+
+.home__offers .producto-precio__actual {
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-bold);
+}
+
+.home__offers .producto-card-actions {
+    width: 100%;
+    margin-top: auto;
+}
+
+.home__offers .producto-card-actions button {
+    display: flex;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--radius-3xl);
+    background-color: var(--primario-90-color);
+    color: var(--b-n-blanco-color);
+    font-family: var(--font-family-primary), sans-serif;
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-body-m);
+}
+
+.home__offers .producto-card-actions button::before {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    background: url("../../assets/Icons/shoppoing-cart.svg") center / contain no-repeat;
+    content: "";
+}
+
+.home__offers-more {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
 }
 
-.ver-mas button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+.home__offers-more button {
+    padding: var(--space-xs) var(--space-xl-3);
+    border-radius: var(--radius-3xl);
+    background-color: var(--secundario-70-color);
+    color: var(--b-n-blanco-color);
+    font-family: var(--font-family-primary), sans-serif;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-body-m);
 }
 
-.ver-mas-categoria {
-    grid-column: 2/3;
+.home__family {
+    padding: var(--space-xl-3) var(--space-lg);
+}
+
+.home__family-inner {
     display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.home__family-grid {
+    --home-family-slides-per-page: 4;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    gap: var(--space-lg);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.home__family-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.home__family-grid > .petlove-card {
+    flex: 0 0 calc((100% - var(--space-lg) - var(--space-lg) - var(--space-lg)) / 4);
+    scroll-snap-align: start;
+}
+
+.home__family-pagination {
+    --ui-kit-carousel-pagination-inactive-color: var(--primario-120-color);
+}
+
+.home__family .petlove-card img {
+    display: block;
+    width: 100%;
+    height: 325px;
+    object-fit: cover;
+    border-radius: var(--radius-2xl);
+}
+
+@media (max-width: 1120px) {
+    .home__categories-inner {
+        gap: var(--space-sm);
+    }
+
+    .home__categories .categoria-card-home img {
+        width: 100%;
+        max-width: 133px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .home__offers-grid {
+        grid-template-columns: repeat(2, minmax(0, 276px));
+        gap: var(--space-lg);
+    }
+
+    .home__family-grid {
+        --home-family-slides-per-page: 2;
+    }
+
+    .home__family-grid > .petlove-card {
+        flex-basis: calc((100% - var(--space-lg)) / 2);
+    }
+}
+
+@media (max-width: 900px) {
+    .home__categories {
+        padding-inline: var(--space-base);
+    }
+
+    .home__categories-inner {
+        padding: var(--space-base);
+    }
+
+    .home__offers-grid {
+        grid-template-columns: repeat(2, minmax(0, 276px));
+    }
+}
+
+@media (max-width: 640px) {
+    .home__offers .producto-card-actions button,
+    .home__offers-more button {
+        min-height: calc(var(--size-5xl) - var(--size-xs));
+    }
+
+    .home__categories-inner {
+        gap: var(--space-sm);
+        padding: var(--space-base) var(--space-xs);
+    }
+
+    .home__offers {
+        padding: var(--space-base);
+    }
+
+    .home__offers-grid {
+        gap: var(--space-sm);
+    }
+
+    .home__offers .producto-card {
+        height: auto;
+        padding: var(--space-sm);
+    }
+
+    .home__offers .producto-card__imagen {
+        height: auto;
+        aspect-ratio: 241 / 200;
+    }
+
+    .home__offers .producto-card-actions button {
+        padding-inline: var(--space-sm);
+        font-size: var(--font-size-body-s);
+    }
+
+    .home__family {
+        padding-inline: var(--space-base);
+    }
+
+    .home__family-grid {
+        gap: var(--space-sm);
+    }
+
+    .home__family .petlove-card img {
+        height: auto;
+        aspect-ratio: 320 / 325;
+    }
+}
+
+@media (max-width: 420px) {
+    .home__section-title {
+        font-size: var(--font-size-heading-xs);
+        line-height: var(--line-height-heading-xs);
+    }
+
+    .home__categories-inner {
+        padding-inline: var(--space-xs);
+    }
+
+    .home__offers-grid {
+        grid-template-columns: minmax(0, 320px);
+        justify-content: center;
+    }
+
+    .home__family-grid {
+        --home-family-slides-per-page: 1;
+    }
+
+    .home__family-grid > .petlove-card {
+        flex-basis: 100%;
+    }
 }

@@ -1,7 +1,6 @@
 
 import { useId } from "react";
 import type { ChangeEvent } from "react";
-import "./UIToggle.css";
 
 export type UIToggleProps = {
   label?: string;

@@ -15,6 +15,7 @@ import {
     UIProductUsage,
     UITechnicalSheet,
 } from "../../components/UIKit"
+import { UIProductPage } from "../../components/UIKit/UIPagination/UIProductPage"
 import {
     UIProductCard,
     UIProductCardButton,
@@ -967,6 +968,20 @@ export function UIKitComponents() {
                     initialPage={3}
                     disabled
                 />
+                <section className="ui-kit-pagination-example">
+                    <h2>UIProductPage</h2>
+                    <p>
+                        Muestra el número de una página. La prop opcional <code>color</code>
+                        acepta una clase CSS para cambiar el fondo.
+                    </p>
+                    <div style={{ display: "flex", gap: "var(--space-base)" }}>
+                        <UIProductPage number={1} />
+                        <UIProductPage number={2} color="bg-color-primary" />
+                    </div>
+                    <p>
+                        <code>{'<UIProductPage number={1} color="bg-color-primary" />'}</code>
+                    </p>
+                </section>
                 <CarouselPaginationExample title="Carrusel — tamaño md (5 diapositivas)" />
                 <CarouselPaginationExample
                     title="Carrusel — tamaño sm (5 diapositivas)"
