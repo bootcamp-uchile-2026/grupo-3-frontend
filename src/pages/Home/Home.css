@@ -6,66 +6,9 @@
     font-family: var(--font-family-primary), sans-serif;
 }
 
-.home__hero {
-    display: flex;
-    min-height: 533px;
-    align-items: center;
-    justify-content: center;
-    gap: calc(var(--space-xl-6) + var(--space-xl-3));
-    padding: 0 var(--space-xl-3);
-    background: linear-gradient(to bottom, var(--primario-150-color), var(--b-n-blanco-color));
-}
-
-.home__hero-content {
-    display: flex;
-    width: 322px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-lg);
-}
-
-.home__hero-title {
-    color: var(--secundario-70-color);
-    font-family: var(--font-family-heading-l), sans-serif;
-    font-size: var(--font-size-heading-l);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-heading-l);
-}
-
-.home__hero-description {
-    font-size: var(--font-size-body-l);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-body-s);
-}
-
-.home__hero-cta {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
-    padding: var(--space-xs) var(--space-xl-2);
-    border-radius: var(--radius-3xl);
-    background-color: var(--primario-90-color);
-    color: var(--b-n-blanco-color);
-    font-family: var(--font-family-primary), sans-serif;
-    font-size: var(--font-size-body-l);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-body-m);
-    text-align: center;
-}
-
-.home__hero-cta:focus-visible,
 .home__offers-more button:focus-visible {
     outline: 2px solid var(--secundario-70-color);
     outline-offset: 3px;
-}
-
-.home__hero-image {
-    display: block;
-    width: 720px;
-    height: 480px;
-    object-fit: contain;
 }
 
 .home__categories {
@@ -273,11 +216,26 @@
 }
 
 .home__family-grid {
-    display: grid;
+    --home-family-slides-per-page: 4;
+    display: flex;
     width: 100%;
-    grid-template-columns: repeat(4, minmax(0, 320px));
-    justify-content: space-between;
+    overflow-x: auto;
     gap: var(--space-lg);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.home__family-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.home__family-grid > .petlove-card {
+    flex: 0 0 calc((100% - var(--space-lg) - var(--space-lg) - var(--space-lg)) / 4);
+    scroll-snap-align: start;
+}
+
+.home__family-pagination {
+    --ui-kit-carousel-pagination-inactive-color: var(--primario-120-color);
 }
 
 .home__family .petlove-card img {
@@ -289,24 +247,6 @@
 }
 
 @media (max-width: 1120px) {
-    .home__hero {
-        min-height: auto;
-        flex-direction: column;
-        gap: var(--space-lg);
-        padding: var(--space-xl-4) var(--space-lg);
-    }
-
-    .home__hero-content {
-        width: min(100%, 480px);
-        align-items: center;
-        text-align: center;
-    }
-
-    .home__hero-image {
-        width: min(100%, 720px);
-        height: auto;
-    }
-
     .home__categories-inner {
         gap: var(--space-sm);
     }
@@ -324,8 +264,11 @@
     }
 
     .home__family-grid {
-        grid-template-columns: repeat(2, minmax(0, 320px));
-        justify-content: center;
+        --home-family-slides-per-page: 2;
+    }
+
+    .home__family-grid > .petlove-card {
+        flex-basis: calc((100% - var(--space-lg)) / 2);
     }
 }
 
@@ -344,17 +287,6 @@
 }
 
 @media (max-width: 640px) {
-    .home__hero {
-        gap: var(--space-lg);
-        padding: var(--space-xl-4) var(--space-base);
-    }
-
-    .home__hero-title {
-        font-size: var(--font-size-heading-s);
-        line-height: var(--line-height-heading-s);
-    }
-
-    .home__hero-cta,
     .home__offers .producto-card-actions button,
     .home__offers-more button {
         min-height: calc(var(--size-5xl) - var(--size-xs));
@@ -403,7 +335,6 @@
 }
 
 @media (max-width: 420px) {
-    .home__hero-title,
     .home__section-title {
         font-size: var(--font-size-heading-xs);
         line-height: var(--line-height-heading-xs);
@@ -413,9 +344,16 @@
         padding-inline: var(--space-xs);
     }
 
-    .home__offers-grid,
-    .home__family-grid {
+    .home__offers-grid {
         grid-template-columns: minmax(0, 320px);
         justify-content: center;
+    }
+
+    .home__family-grid {
+        --home-family-slides-per-page: 1;
+    }
+
+    .home__family-grid > .petlove-card {
+        flex-basis: 100%;
     }
 }

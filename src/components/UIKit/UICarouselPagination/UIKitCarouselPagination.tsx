@@ -3,6 +3,7 @@ export interface UIKitCarouselPaginationProps {
     currentSlide: number
     onSlideChange: (slide: number) => void
     size?: "sm" | "md"
+    colorScheme?: "primary" | "secondary"
     clickable?: boolean
     disabled?: boolean
     className?: string
@@ -13,6 +14,7 @@ export function UIKitCarouselPagination({
     currentSlide,
     onSlideChange,
     size = "md",
+    colorScheme = "primary",
     clickable = true,
     disabled = false,
     className = "",
@@ -29,6 +31,7 @@ export function UIKitCarouselPagination({
     const rootClassName = [
         "ui-kit-carousel-pagination",
         `ui-kit-carousel-pagination--${size}`,
+        `ui-kit-carousel-pagination--${colorScheme}`,
         className,
     ].filter(Boolean).join(" ")
 

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { z } from "zod";
 import type { Categoria, ProductoOferta } from "../../TDATypes";
-import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
 import HomeCategories from "./HomeDivisions/HomeCategories";
+import HomeHero from "./HomeDivisions/HomeHero";
 import HomeOffers from "./HomeDivisions/HomeOffers";
 import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
 
-const heroAnimals = new URL("../../assets/Home/hero-animals.png", import.meta.url).href;
 const petBird = new URL("../../assets/Home/pet-bird.jpg", import.meta.url).href;
 const petCat = new URL("../../assets/Home/pet-cat.png", import.meta.url).href;
 const petDog = new URL("../../assets/Home/pet-dog.jpg", import.meta.url).href;
@@ -19,25 +18,25 @@ const petLoveTeamImages = [
     { url: petDog, alt: "Perro de la familia PetLove" },
 ]
 
-function esCategoria(value: unknown): value is Categoria {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "imagen" in value && typeof value.imagen === "string"
-        && "ruta" in value && typeof value.ruta === "string";
-}
+const categoriasSchema = z.array(
+    z.object({
+        id: z.string(),
+        nombre: z.string(),
+        imagen: z.string(),
+        ruta: z.string(),
+    }).catchall(z.unknown()),
+);
 
-
-function esProductoOferta(value: unknown): value is ProductoOferta {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && "precioOriginal" in value && typeof value.precioOriginal === "number"
-        && "imagenes" in value && Array.isArray(value.imagenes)
-        && value.imagenes.length > 0 && value.imagenes.every((imagen) => typeof imagen === "string")
-        && "categoria" in value && typeof value.categoria === "string";
-}
+const productosOfertaSchema = z.array(
+    z.object({
+        id: z.string(),
+        nombre: z.string(),
+        precio: z.number(),
+        precioOriginal: z.number(),
+        imagenes: z.array(z.string()).min(1),
+        categoria: z.string(),
+    }).catchall(z.unknown()),
+);
 
 export function Home() {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -63,11 +62,12 @@ export function Home() {
                 }
 
                 const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esCategoria)) {
+                const resultado = categoriasSchema.safeParse(data);
+                if (!resultado.success) {
                     throw new Error("La respuesta de categorías tiene un formato inválido.");
                 }
 
-                setCategorias(data);
+                setCategorias(resultado.data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las categorías.", error);
@@ -100,11 +100,12 @@ export function Home() {
                 }
 
                 const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esProductoOferta)) {
+                const resultado = productosOfertaSchema.safeParse(data);
+                if (!resultado.success) {
                     throw new Error("La respuesta de ofertas tiene un formato inválido.");
                 }
 
-                setProductosOferta(data);
+                setProductosOferta(resultado.data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las ofertas.", error);
@@ -124,21 +125,7 @@ export function Home() {
 
     return (
         <div className="home">
-            <section className="home__hero" aria-labelledby="home-hero-title">
-                <div className="home__hero-content">
-                    <h1 className="home__hero-title" id="home-hero-title">
-                        Conozcamos<br />a tu mascota
-                    </h1>
-                    <p className="home__hero-description">
-                        Crea su perfil y acompáñala en cada etapa
-                    </p>
-                    <Link className="home__hero-cta" to="/mi-perfil/perfil-mascota">
-                        <span>Registrar a mi mascota</span>
-                        <UIKitIcon name="Paw" size={20} aria-hidden="true" />
-                    </Link>
-                </div>
-                <img className="home__hero-image" src={heroAnimals} alt="Perros, gatos y otras mascotas" />
-            </section>
+            <HomeHero />
             <section className="home__categories" aria-label="Categorías destacadas">
                 <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias} />
             </section>
