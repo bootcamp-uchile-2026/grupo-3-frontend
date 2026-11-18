@@ -2,19 +2,19 @@ import { CardPetLove } from "../../../components/CardPetLove/CardPetLove";
 
 type HomePetloveTeamProps = {
     title: string
-    urlImages: string[]
+    images: { url: string; alt: string }[]
 }
 
-function HomePetloveTeam({ urlImages, title }:HomePetloveTeamProps){
+function HomePetloveTeam({ images, title }: HomePetloveTeamProps){
     return (
-        <>
-        <div className="container">
-            <h2 className="titulo-seccion titulo-center">{title}</h2>
-            <div className="petlove-cards">
-                {urlImages.map((url) => (<CardPetLove urlImagen={url} />))}
+        <div className="home__family-inner">
+            <h2 className="home__section-title">{title}</h2>
+            <div className="home__family-grid">
+                {images.map(({ url, alt }) => (
+                    <CardPetLove key={url} urlImagen={url} alt={alt} />
+                ))}
             </div>
         </div>
-        </>
     )
 }
 

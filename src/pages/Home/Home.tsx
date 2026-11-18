@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Categoria, ProductoOferta } from "../../TDATypes";
+import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
 import HomeCategories from "./HomeDivisions/HomeCategories";
 import HomeOffers from "./HomeDivisions/HomeOffers";
 import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
 
-const urlPetLoveTeamImages = [
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
+const heroAnimals = new URL("../../assets/Home/hero-animals.png", import.meta.url).href;
+const petBird = new URL("../../assets/Home/pet-bird.jpg", import.meta.url).href;
+const petCat = new URL("../../assets/Home/pet-cat.png", import.meta.url).href;
+const petDog = new URL("../../assets/Home/pet-dog.jpg", import.meta.url).href;
+const petFerret = new URL("../../assets/Home/pet-ferret.png", import.meta.url).href;
+
+const petLoveTeamImages = [
+    { url: petCat, alt: "Gato de la familia PetLove" },
+    { url: petBird, alt: "Ave de la familia PetLove" },
+    { url: petFerret, alt: "Hurón de la familia PetLove" },
+    { url: petDog, alt: "Perro de la familia PetLove" },
 ]
 
 function esCategoria(value: unknown): value is Categoria {
@@ -115,24 +123,37 @@ export function Home() {
     }, []);
 
     return (
-        <>
-            <section>
-                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias}/>
-            </section>
-            <section id="hero">
-                <div className="slider">
-                    <div className="slide">
-                        <img src="https://placehold.co/1920x600" alt="Slide 1" />
-                        <button className="btn-slide">Registra tu Mascota</button>
-                    </div>
+        <div className="home">
+            <section className="home__hero" aria-labelledby="home-hero-title">
+                <div className="home__hero-content">
+                    <h1 className="home__hero-title" id="home-hero-title">
+                        Conozcamos<br />a tu mascota
+                    </h1>
+                    <p className="home__hero-description">
+                        Crea su perfil y acompáñala en cada etapa
+                    </p>
+                    <Link className="home__hero-cta" to="/mi-perfil/perfil-mascota">
+                        <span>Registrar a mi mascota</span>
+                        <UIKitIcon name="Paw" size={20} aria-hidden="true" />
+                    </Link>
                 </div>
+                <img className="home__hero-image" src={heroAnimals} alt="Perros, gatos y otras mascotas" />
             </section>
-            <section>
-                <HomeOffers isLoading={cargandoOfertas} errorMessage={errorOfertas} offers={productosOferta} visibleOffersAmount={cantidadOfertasVisibles} setVisibleOffersAmount={setCantidadOfertasVisibles}/>
+            <section className="home__categories" aria-label="Categorías destacadas">
+                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias} />
             </section>
-            <section>
-                <HomePetloveTeam title={"¡Conoce a la familia PetLove!"} urlImages={urlPetLoveTeamImages}/>
+            <section className="home__offers">
+                <HomeOffers
+                    isLoading={cargandoOfertas}
+                    errorMessage={errorOfertas}
+                    offers={productosOferta}
+                    visibleOffersAmount={cantidadOfertasVisibles}
+                    setVisibleOffersAmount={setCantidadOfertasVisibles}
+                />
             </section>
-        </>
+            <section className="home__family">
+                <HomePetloveTeam title="¡Conoce a la familia PetLove!" images={petLoveTeamImages} />
+            </section>
+        </div>
     )
 }

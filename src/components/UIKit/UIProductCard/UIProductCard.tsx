@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { UIProductCardButton } from "./UIProductCardButton"
 import { UIProductCardDiscount } from "./UIProductCardDiscount"
 import { UIProductCardRating } from "./UIProductCardRating"
@@ -7,10 +8,12 @@ export type UIProductCardProps = {
     imageAlt: string
     name: string
     price: string
-    rating: number
+    rating?: number
     buttonLabel: string
     onAddToCart: () => void
     discountPercentage?: number
+    productTo?: string
+    loading?: boolean
     selected?: boolean
     className?: string
 }
@@ -24,27 +27,35 @@ export function UIProductCard({
     buttonLabel,
     onAddToCart,
     discountPercentage,
+    productTo,
+    loading = false,
     selected = false,
     className = "",
 }: UIProductCardProps) {
     const customClass = className ? ` ${className}` : ""
+    const content = (
+        <div className="ui-product-card__content">
+            <div className="ui-product-card__visual">
+                <img className="ui-product-card__image" src={imageSrc} alt={imageAlt} />
+                {discountPercentage !== undefined && (
+                    <UIProductCardDiscount percentage={discountPercentage} />
+                )}
+            </div>
+            {rating !== undefined && <UIProductCardRating rating={rating} />}
+            <h3 className="ui-product-card__title">{name}</h3>
+            <p className="ui-product-card__price">{price}</p>
+        </div>
+    )
 
     return (
         <article className={`ui-product-card${customClass}`}>
-            <div className="ui-product-card__content">
-                <div className="ui-product-card__visual">
-                    <img className="ui-product-card__image" src={imageSrc} alt={imageAlt} />
-                    {discountPercentage !== undefined && (
-                        <UIProductCardDiscount percentage={discountPercentage} />
-                    )}
-                </div>
-                <UIProductCardRating rating={rating} />
-                <h3 className="ui-product-card__title">{name}</h3>
-                <p className="ui-product-card__price">{price}</p>
-            </div>
+            {productTo
+                ? <Link className="ui-product-card__link" to={productTo}>{content}</Link>
+                : content}
             <UIProductCardButton
                 label={buttonLabel}
                 onClick={onAddToCart}
+                loading={loading}
                 selected={selected}
             />
         </article>
