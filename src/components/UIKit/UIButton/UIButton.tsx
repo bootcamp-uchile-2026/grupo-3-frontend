@@ -1,6 +1,5 @@
 
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-import "./UIButton.css";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary";
 type ButtonSize = "L" | "M" | "S";

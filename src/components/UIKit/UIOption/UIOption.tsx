@@ -1,6 +1,4 @@
 
-import "./UIOption.css";
-
 type UIOptionProps = {
   texto: string;
   selected?: boolean;

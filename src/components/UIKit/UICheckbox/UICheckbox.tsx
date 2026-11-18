@@ -1,7 +1,6 @@
 
 import { useId } from "react";
 import type { ChangeEvent } from "react";
-import "./UICheckbox.css";
 
 export type UICheckboxProps = {
   label: string;

@@ -8,22 +8,22 @@
   width: 100%;
   max-width: 650px;
   margin: 0;
-  padding: 16px;
+  padding: var(--space-base);
   box-sizing: border-box;
   border: none;
-  border-radius: 16px;
-  background-color: #ffffff;
+  border-radius: var(--radius-2xl);
+  background-color: var(--b-n-blanco-color);
   box-shadow: 0 3px 8px rgba(80, 40, 20, 0.12);
 }
 
 /* TÍTULO */
 
 .ui-form-selection__title {
-  padding: 0 4px;
-  margin-bottom: 12px;
-  color: #a83200;
-  font-size: 16px;
-  font-weight: 700;
+  padding: 0 var(--space-xs-2);
+  margin-bottom: var(--space-sm);
+  color: var(--primario-80-color);
+  font-size: var(--font-size-body-m);
+  font-weight: var(--font-weight-bold);
 }
 
 /* CONTENEDOR DE OPCIONES */
@@ -40,12 +40,12 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background-color: #fcebe0;
+  padding: var(--space-xs) var(--space-base);
+  border-radius: var(--radius-3xl);
+  background-color: var(--terciario-150-color);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -65,14 +65,14 @@
 /* HOVER */
 
 .ui-form-selection__option:hover {
-  background-color: #ffdbc1;
+  background-color: var(--primario-150-color);
 }
 
 /* SELECTED */
 
 .ui-form-selection__option--selected,
 .ui-form-selection__option--selected:hover {
-  background-color: #ffbe9b;
+  background-color: var(--primario-140-color);
 }
 
 /* INPUT RADIO */
@@ -96,9 +96,9 @@
   height: 17px;
   flex-shrink: 0;
   box-sizing: border-box;
-  border: 2px solid #c44808;
+  border: var(--size-xxs) solid var(--primario-90-color);
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: var(--b-n-blanco-color);
 }
 
 /* RADIO SELECCIONADO */
@@ -109,14 +109,14 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #c44808;
+  background-color: var(--primario-90-color);
 }
 
 /* FOCUS */
 
 .ui-form-selection__option:focus-within {
-  outline: 2px solid #c44808;
-  outline-offset: 2px;
+  outline: var(--size-xxs) solid var(--primario-90-color);
+  outline-offset: var(--space-xxs);
 }
 
 /* CONTENIDO */
@@ -131,27 +131,27 @@
 .ui-form-selection__label {
   font-size: 13px;
   line-height: 1.3;
-  color: #23120b;
+  color: var(--terciario-30-color);
 }
 
 .ui-form-selection__subtitle {
   font-size: 11px;
-  color: #4c3b32;
+  color: var(--terciario-60-color);
 }
 
 /* PRECIO */
 
 .ui-form-selection__price {
   margin-left: auto;
-  font-size: 12px;
+  font-size: var(--font-size-body-xs);
   font-weight: 700;
-  color: #c44808;
+  color: var(--primario-90-color);
   white-space: nowrap;
 }
 
 .ui-form-selection__option--selected
   .ui-form-selection__price {
-  color: #541b08;
+  color: var(--primario-60-color);
 }
 
 /* =====================================
@@ -167,9 +167,9 @@
 
 .ui-form-selection--vet .ui-form-selection__option {
   min-height: 76px;
-  padding: 8px 40px;
-  border-radius: 20px;
-  background-color: #ffffff;
+  padding: var(--space-xs) var(--space-xl-3);
+  border-radius: var(--radius-3xl);
+  background-color: var(--b-n-blanco-color);
   box-shadow: 0 3px 12px rgba(76, 87, 39, 0.2);
 }
 
@@ -177,7 +177,7 @@
   .ui-form-selection__option--selected,
 .ui-form-selection--vet
   .ui-form-selection__option--selected:hover {
-  background-color: #ebf3d7;
+  background-color: var(--secundario-150-color);
 }
 
 /* HORA */
@@ -195,7 +195,7 @@
   height: 42px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: #d9d9d9;
+  background-color: var(--b-n-140-color);
 }
 
 /* RADIO A LA DERECHA */
@@ -210,7 +210,7 @@
 }
 
 .ui-form-selection--vet .ui-form-selection__input {
-  right: 40px;
+  right: var(--space-xl-3);
 }
 
 /* =====================================
@@ -240,7 +240,7 @@
 
 @media (max-width: 480px) {
   .ui-form-selection {
-    padding: 12px;
+    padding: var(--space-sm);
   }
 
   .ui-form-selection--vet {
@@ -248,14 +248,14 @@
   }
 
   .ui-form-selection--vet .ui-form-selection__option {
-    padding: 8px 16px;
+    padding: var(--space-xs) var(--space-base);
   }
 
   .ui-form-selection--vet .ui-form-selection__input {
-    right: 16px;
+    right: var(--space-base);
   }
 
   .ui-form-selection__label {
-    font-size: 12px;
+    font-size: var(--font-size-body-xs);
   }
 }

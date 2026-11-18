@@ -1,35 +1,42 @@
 import { useEffect, useState } from "react";
+import { z } from "zod";
 import type { Categoria, ProductoOferta } from "../../TDATypes";
 import HomeCategories from "./HomeDivisions/HomeCategories";
+import HomeHero from "./HomeDivisions/HomeHero";
 import HomeOffers from "./HomeDivisions/HomeOffers";
 import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
 
-const urlPetLoveTeamImages = [
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
+const petBird = new URL("../../assets/Home/pet-bird.jpg", import.meta.url).href;
+const petCat = new URL("../../assets/Home/pet-cat.png", import.meta.url).href;
+const petDog = new URL("../../assets/Home/pet-dog.jpg", import.meta.url).href;
+const petFerret = new URL("../../assets/Home/pet-ferret.png", import.meta.url).href;
+
+const petLoveTeamImages = [
+    { url: petCat, alt: "Gato de la familia PetLove" },
+    { url: petBird, alt: "Ave de la familia PetLove" },
+    { url: petFerret, alt: "Hurón de la familia PetLove" },
+    { url: petDog, alt: "Perro de la familia PetLove" },
 ]
 
-function esCategoria(value: unknown): value is Categoria {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "imagen" in value && typeof value.imagen === "string"
-        && "ruta" in value && typeof value.ruta === "string";
-}
+const categoriasSchema = z.array(
+    z.object({
+        id: z.string(),
+        nombre: z.string(),
+        imagen: z.string(),
+        ruta: z.string(),
+    }).catchall(z.unknown()),
+);
 
-
-function esProductoOferta(value: unknown): value is ProductoOferta {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && "precioOriginal" in value && typeof value.precioOriginal === "number"
-        && "imagenes" in value && Array.isArray(value.imagenes)
-        && value.imagenes.length > 0 && value.imagenes.every((imagen) => typeof imagen === "string")
-        && "categoria" in value && typeof value.categoria === "string";
-}
+const productosOfertaSchema = z.array(
+    z.object({
+        id: z.string(),
+        nombre: z.string(),
+        precio: z.number(),
+        precioOriginal: z.number(),
+        imagenes: z.array(z.string()).min(1),
+        categoria: z.string(),
+    }).catchall(z.unknown()),
+);
 
 export function Home() {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -55,11 +62,12 @@ export function Home() {
                 }
 
                 const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esCategoria)) {
+                const resultado = categoriasSchema.safeParse(data);
+                if (!resultado.success) {
                     throw new Error("La respuesta de categorías tiene un formato inválido.");
                 }
 
-                setCategorias(data);
+                setCategorias(resultado.data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las categorías.", error);
@@ -92,11 +100,12 @@ export function Home() {
                 }
 
                 const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esProductoOferta)) {
+                const resultado = productosOfertaSchema.safeParse(data);
+                if (!resultado.success) {
                     throw new Error("La respuesta de ofertas tiene un formato inválido.");
                 }
 
-                setProductosOferta(data);
+                setProductosOferta(resultado.data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las ofertas.", error);
@@ -115,24 +124,23 @@ export function Home() {
     }, []);
 
     return (
-        <>
-            <section>
-                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias}/>
+        <div className="home">
+            <HomeHero />
+            <section className="home__categories" aria-label="Categorías destacadas">
+                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias} />
             </section>
-            <section id="hero">
-                <div className="slider">
-                    <div className="slide">
-                        <img src="https://placehold.co/1920x600" alt="Slide 1" />
-                        <button className="btn-slide">Registra tu Mascota</button>
-                    </div>
-                </div>
+            <section className="home__offers">
+                <HomeOffers
+                    isLoading={cargandoOfertas}
+                    errorMessage={errorOfertas}
+                    offers={productosOferta}
+                    visibleOffersAmount={cantidadOfertasVisibles}
+                    setVisibleOffersAmount={setCantidadOfertasVisibles}
+                />
             </section>
-            <section>
-                <HomeOffers isLoading={cargandoOfertas} errorMessage={errorOfertas} offers={productosOferta} visibleOffersAmount={cantidadOfertasVisibles} setVisibleOffersAmount={setCantidadOfertasVisibles}/>
+            <section className="home__family">
+                <HomePetloveTeam title="¡Conoce a la familia PetLove!" images={petLoveTeamImages} />
             </section>
-            <section>
-                <HomePetloveTeam title={"¡Conoce a la familia PetLove!"} urlImages={urlPetLoveTeamImages}/>
-            </section>
-        </>
+        </div>
     )
 }
