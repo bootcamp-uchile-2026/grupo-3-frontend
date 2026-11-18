@@ -1,7 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import "./UIDropdown.css";
 
 export type DropdownOption = {
   value: string;

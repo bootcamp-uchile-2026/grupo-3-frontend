@@ -1,6 +1,5 @@
 
 import { useId } from "react";
-import "./UIFormSelection.css";
 
 // Tipos de selección disponibles
 export type FormSelectionType = "shipping" | "payment" | "vet";
