@@ -5,6 +5,7 @@ import { CartItem } from "../../components/CartItem/CartItem";
 import { CouponBox } from "../../components/CouponBox/CouponBox";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
+import { IconShoppoingCart } from "../../components/UIKit/UIIcons";
 import { useCarrito } from "../../context/CarritoContext";
 import {
   agregarProductoAlCarrito,
@@ -20,6 +21,7 @@ type ProductoOferta = {
   precioOriginal: number;
   imagenes: string[];
   categoria: string;
+  calificacionPromedio?: number;
 };
 
 type EstadoTarjetaOferta = "idle" | "agregando" | "agregado" | "error";
@@ -58,6 +60,10 @@ function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
         previousPrice={producto.precioOriginal > producto.precio
           ? formatoPrecio(producto.precioOriginal)
           : undefined}
+        rating={producto.calificacionPromedio}
+        discountPercentage={producto.precioOriginal > producto.precio
+          ? Math.round((producto.precioOriginal - producto.precio) / producto.precioOriginal * 100)
+          : undefined}
         productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
         buttonLabel={estado === "agregando"
           ? "Agregando..."
@@ -85,7 +91,15 @@ function esProductoOferta(value: unknown): value is ProductoOferta {
     && "imagenes" in value && Array.isArray(value.imagenes)
     && value.imagenes.length > 0
     && value.imagenes.every((imagen) => typeof imagen === "string")
-    && "categoria" in value && typeof value.categoria === "string";
+    && "categoria" in value && typeof value.categoria === "string"
+    && (!("calificacionPromedio" in value)
+      || value.calificacionPromedio === undefined
+      || (
+        typeof value.calificacionPromedio === "number"
+        && Number.isFinite(value.calificacionPromedio)
+        && value.calificacionPromedio >= 0
+        && value.calificacionPromedio <= 5
+      ));
 }
 
 export function CarritoCompras() {
@@ -301,7 +315,11 @@ export function CarritoCompras() {
         <div className="cart-page__layout">
           <section className="cart-page__items" aria-labelledby="cart-title">
             <h1 className="cart-page__heading" id="cart-title">
-              <span aria-hidden="true">🛒</span>
+              <IconShoppoingCart
+                className="cart-page__heading-icon"
+                color="var(--terciario-30-color)"
+                aria-hidden="true"
+              />
               Carrito de compras ({cantidadArticulos} artículos)
             </h1>
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { ItemCarritoApi } from "../../services/carrito";
+import { IconTrash } from "../UIKit/UIIcons";
 import { QuantityStepper } from "../QuantityStepper/QuantityStepper";
 
 interface CartItemProps {
@@ -55,7 +56,11 @@ export function CartItem({
           disabled={accionesDeshabilitadas}
           onClick={onEliminar}
         >
-          <span aria-hidden="true">▤</span>
+          <IconTrash
+            className="cart-item__remove-icon"
+            color="var(--error-90-color)"
+            aria-hidden="true"
+          />
           {eliminando ? "Eliminando..." : "Eliminar"}
         </button>
       </div>
