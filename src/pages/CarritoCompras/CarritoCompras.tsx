@@ -1,12 +1,13 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { CardCarrusel } from "../../components/CardCarrusel/CardCarrusel";
-import { CardProducto } from "../../components/CardProducto/CardProducto";
 import { CartItem } from "../../components/CartItem/CartItem";
 import { CouponBox } from "../../components/CouponBox/CouponBox";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
+import { UIProductCard } from "../../components/UIKit/UIProductCard";
 import { useCarrito } from "../../context/CarritoContext";
 import {
+  agregarProductoAlCarrito,
   actualizarCantidadProducto,
   eliminarProductoDelCarrito,
   obtenerCarrito,
@@ -20,6 +21,60 @@ type ProductoOferta = {
   imagenes: string[];
   categoria: string;
 };
+
+type EstadoTarjetaOferta = "idle" | "agregando" | "agregado" | "error";
+
+function formatoPrecio(precio: number): string {
+  return new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+    maximumFractionDigits: 0,
+  }).format(precio);
+}
+
+function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
+  const { dispatch } = useCarrito();
+  const [estado, setEstado] = useState<EstadoTarjetaOferta>("idle");
+
+  async function agregarAlCarrito() {
+    setEstado("agregando");
+    try {
+      const carrito = await agregarProductoAlCarrito(producto.id, 1);
+      dispatch({ type: "SINCRONIZAR", carrito });
+      setEstado("agregado");
+    } catch (error) {
+      console.error("No se pudo agregar el producto al carrito.", error);
+      setEstado("error");
+    }
+  }
+
+  return (
+    <div>
+      <UIProductCard
+        imageSrc={producto.imagenes[0]}
+        imageAlt={producto.nombre}
+        name={producto.nombre}
+        price={formatoPrecio(producto.precio)}
+        previousPrice={producto.precioOriginal > producto.precio
+          ? formatoPrecio(producto.precioOriginal)
+          : undefined}
+        productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
+        buttonLabel={estado === "agregando"
+          ? "Agregando..."
+          : estado === "agregado"
+            ? "Agregado"
+            : "Agregar al carrito"}
+        onAddToCart={agregarAlCarrito}
+        loading={estado === "agregando"}
+        selected={estado === "agregado"}
+      />
+      {estado === "agregado" && <p role="status">Producto agregado al carrito.</p>}
+      {estado === "error" && (
+        <p role="alert">No se pudo agregar el producto. Inténtalo nuevamente.</p>
+      )}
+    </div>
+  );
+}
 
 function esProductoOferta(value: unknown): value is ProductoOferta {
   return typeof value === "object" && value !== null
@@ -317,14 +372,9 @@ export function CarritoCompras() {
           {productosRecomendados.length > 0 && (
             <CardCarrusel>
               {productosRecomendados.map((producto) => (
-                <CardProducto
+                <TarjetaOfertaCarrito
                   key={producto.id}
-                  id={producto.id}
-                  titulo={producto.nombre}
-                  urlImagen={producto.imagenes[0]}
-                  precio={producto.precio}
-                  precioOriginal={producto.precioOriginal}
-                  categoria={producto.categoria}
+                  producto={producto}
                 />
               ))}
             </CardCarrusel>

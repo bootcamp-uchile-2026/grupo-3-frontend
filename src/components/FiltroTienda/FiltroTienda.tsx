@@ -1,4 +1,7 @@
 import { subcategoriasMascota } from './subcategoriasMascota';
+import UIButton from '../UIKit/UIButton/UIButton';
+import { UICheckbox } from '../UIKit/UICheckbox/UICheckbox';
+import { IconChevronDown, IconFilters } from '../UIKit/UIIcons';
 
 export type FiltroClave =
   | 'mascota'
@@ -132,17 +135,14 @@ function renderizarOpcion(
   onSelectionChange: FiltroTiendaProps['onSelectionChange'],
 ) {
   return (
-    <label key={opcion.valor}>
-      <input
-        type="checkbox"
+    <UICheckbox
+        key={opcion.valor}
+        label={opcion.etiqueta}
         name={grupo.clave}
-        value={opcion.valor}
         checked={selecciones[grupo.clave].includes(opcion.valor)}
-        onChange={(event) =>
-          onSelectionChange(grupo.clave, opcion.valor, event.target.checked)}
-      />{' '}
-      {opcion.etiqueta}
-    </label>
+        onChange={(seleccionado) =>
+          onSelectionChange(grupo.clave, opcion.valor, seleccionado)}
+    />
   );
 }
 
@@ -154,23 +154,43 @@ export function FiltroTienda({
   const grupoMascota = gruposFiltro[0];
 
   return (
-    <div className="filtro">
-      <h2>Filtros</h2>
-      <div className="filtro-opciones">
-        <form id="filtro-form">
+    <div className="filtro-tienda">
+      <h2 className="filtro-tienda__titulo">
+        <IconFilters color="var(--terciario-30-color)" />
+        Filtros
+      </h2>
+      <div className="filtro-tienda__opciones">
+        <form className="filtro-tienda__form">
           {gruposFiltro.map((grupo) => (
-            <details className="filtro-grupo" key={grupo.clave}>
-              <summary>{grupo.titulo}</summary>
+            <details className="filtro-tienda__grupo" key={grupo.clave}>
+              <summary className="filtro-tienda__resumen">
+                {grupo.titulo}
+                <IconChevronDown
+                  className="filtro-tienda__chevron"
+                  color="var(--terciario-30-color)"
+                  aria-hidden="true"
+                />
+              </summary>
               {grupo.clave === 'mascota' ? (
-                <div className="filtro-opciones-grupo">
+                <div className="filtro-tienda__grupo-opciones">
                   {grupo.opciones
                     .filter((opcion) => especiesDirectas.includes(opcion.valor))
                     .map((opcion) =>
                       renderizarOpcion(grupo, opcion, selecciones, onSelectionChange))}
                   {subcategoriasMascota.map((subcategoria) => (
-                    <details className="filtro-subgrupo" key={subcategoria.titulo}>
-                      <summary>{subcategoria.titulo}</summary>
-                      <div className="filtro-opciones-grupo">
+                    <details
+                      className="filtro-tienda__subgrupo"
+                      key={subcategoria.titulo}
+                    >
+                      <summary className="filtro-tienda__resumen">
+                        {subcategoria.titulo}
+                        <IconChevronDown
+                          className="filtro-tienda__chevron"
+                          color="var(--terciario-30-color)"
+                          aria-hidden="true"
+                        />
+                      </summary>
+                      <div className="filtro-tienda__grupo-opciones">
                         {subcategoria.opciones.map((especie) =>
                           renderizarOpcion(
                             grupoMascota,
@@ -183,16 +203,22 @@ export function FiltroTienda({
                   ))}
                 </div>
               ) : (
-                <div className="filtro-opciones-grupo">
+                <div className="filtro-tienda__grupo-opciones">
                   {grupo.opciones.map((opcion) =>
                     renderizarOpcion(grupo, opcion, selecciones, onSelectionChange))}
                 </div>
               )}
             </details>
           ))}
-          <button type="button" onClick={onClear}>
+          <UIButton
+            className="filtro-tienda__limpiar"
+            variant="secondary"
+            size="M"
+            type="button"
+            onClick={onClear}
+          >
             Resetear filtros
-          </button>
+          </UIButton>
         </form>
       </div>
     </div>

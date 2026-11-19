@@ -1,4 +1,4 @@
-import { IconCheck, IconLoading } from "../UIIcons"
+import { IconCheck, IconLoading, IconShoppoingCart } from "../UIIcons"
 
 export type UIProductCardButtonProps = {
     label: string
@@ -34,7 +34,13 @@ export function UIProductCardButton({
                 <IconLoading className="ui-product-card-button__icon" color="currentColor" />
             ) : selected ? (
                 <IconCheck className="ui-product-card-button__icon" color="currentColor" />
-            ) : null}
+            ) : (
+                <IconShoppoingCart
+                    className="ui-product-card-button__icon"
+                    color="currentColor"
+                    aria-hidden="true"
+                />
+            )}
             <span>{label}</span>
         </button>
     )

@@ -51,6 +51,7 @@ function HomeOfferCard({ product, discountPercentage }: HomeOfferCardProps) {
                 imageAlt={product.nombre}
                 name={product.nombre}
                 price={formatPrice(product.precio)}
+                rating={product.calificacionPromedio}
                 productTo={`/producto-individual/${encodeURIComponent(product.id)}`}
                 discountPercentage={discountPercentage > 0 ? discountPercentage : undefined}
                 buttonLabel={cartStatus === "loading"

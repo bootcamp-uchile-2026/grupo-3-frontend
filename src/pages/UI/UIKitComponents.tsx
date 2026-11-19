@@ -1097,8 +1097,9 @@ export function UIKitComponents() {
                 <section className="ui-kit-pagination-example ui-kit-product-card-example">
                     <h2>Tarjeta de producto</h2>
                     <p>
-                        Tarjeta responsive para mostrar imagen, calificación, precio y descuento
-                        opcional. La variante de Figma corresponde al estado seleccionado.
+                        Tarjeta responsive para mostrar imagen, calificación, precio y descuento.
+                        El precio anterior y el manejo de errores de imagen son opcionales; el
+                        botón muestra el carrito, un indicador de carga o una confirmación.
                     </p>
                     <div className="ui-kit-product-card-example__cards">
                         <div>
@@ -1165,11 +1166,14 @@ export function UIKitComponents() {
                                     <tr><td>imageAlt</td><td>string</td><td>Sí</td><td>—</td><td>Texto alternativo significativo.</td></tr>
                                     <tr><td>name</td><td>string</td><td>Sí</td><td>—</td><td>Nombre que se muestra en la tarjeta.</td></tr>
                                     <tr><td>price</td><td>string</td><td>Sí</td><td>—</td><td>Precio con formato de presentación.</td></tr>
-                                    <tr><td>rating</td><td>number</td><td>Sí</td><td>—</td><td>Calificación redondeada y limitada al rango de 0 a 5.</td></tr>
+                                    <tr><td>previousPrice</td><td>string</td><td>No</td><td>—</td><td>Precio anterior tachado; se omite si no se informa.</td></tr>
+                                    <tr><td>rating</td><td>number</td><td>No</td><td>—</td><td>Calificación opcional redondeada y limitada al rango de 0 a 5.</td></tr>
                                     <tr><td>buttonLabel</td><td>string</td><td>Sí</td><td>—</td><td>Texto accesible del botón.</td></tr>
                                     <tr><td>onAddToCart</td><td>() =&gt; void</td><td>Sí</td><td>—</td><td>Callback al activar el botón.</td></tr>
+                                    <tr><td>onImageError</td><td>ReactEventHandler&lt;HTMLImageElement&gt;</td><td>No</td><td>—</td><td>Callback para manejar errores al cargar la imagen.</td></tr>
                                     <tr><td>discountPercentage</td><td>number</td><td>No</td><td>—</td><td>Porcentaje de descuento; si se omite, no se muestra la insignia.</td></tr>
                                     <tr><td>selected</td><td>boolean</td><td>No</td><td>false</td><td>Representa el estado agregado del diseño.</td></tr>
+                                    <tr><td>buttonDisabled</td><td>boolean</td><td>No</td><td>false</td><td>Deshabilita el botón de agregar al carrito.</td></tr>
                                     <tr><td>className</td><td>string</td><td>No</td><td>&quot;&quot;</td><td>Clase adicional para el artículo.</td></tr>
                                 </tbody>
                             </table>
@@ -1221,6 +1225,7 @@ export function UIKitComponents() {
   imageAlt={product.imageAlt}
   name={product.name}
   price={product.price}
+  previousPrice={product.previousPrice}
   rating={product.rating}
   discountPercentage={product.discountPercentage}
   buttonLabel="Agregar al carrito"
