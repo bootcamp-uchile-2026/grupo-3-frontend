@@ -1,14 +1,251 @@
-.hero-tienda img {
-    display: block;
+.hero-tienda {
     width: 100%;
-    max-height: 130px;
-    object-fit: cover;
-    background: #f3f3f3;
+    color: var(--terciario-30-color);
+    font-family: var(--font-family-primary), sans-serif;
 }
 
-.hero-tienda .titulo-seccion {
+.hero-tienda__banner {
+    overflow: hidden;
+    background: linear-gradient(
+        to bottom,
+        var(--secundario-150-color),
+        var(--b-n-blanco-color)
+    );
+}
+
+.hero-tienda__banner-inner {
+    display: grid;
+    width: min(100%, 1440px);
+    height: 543px;
+    grid-template-columns: 322px 490px 529px;
+    align-items: center;
+    justify-content: end;
+    gap: var(--space-xs);
+    margin: 0 auto;
+}
+
+.hero-tienda__promocion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero-tienda__titulo {
+    margin-bottom: var(--space-xl-3);
+    color: var(--secundario-70-color);
+    font-family: var(--font-family-heading-l), sans-serif;
+    font-size: var(--font-size-heading-l);
+    font-weight: var(--font-weight-bold);
+    line-height: calc(var(--line-height-heading-l) + var(--space-xs-2));
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+.hero-tienda__promocion .ui-button {
+    min-height: var(--size-5xl);
+    padding: var(--space-sm) var(--space-xl-2);
+}
+
+.hero-tienda__promocion .ui-button__icon svg {
+    width: var(--size-2xl);
+    height: var(--size-2xl);
+}
+
+.hero-tienda__productos-imagen,
+.hero-tienda__gatito-imagen {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-tienda__productos-imagen {
+    width: 490px;
+    height: 384px;
+}
+
+.hero-tienda__productos-imagen img {
+    display: block;
+    width: 100%;
+    height: 130.6%;
+    object-fit: contain;
+    object-position: center top;
+}
+
+.hero-tienda__gatito-imagen {
+    width: 529px;
+    height: 543px;
+    align-self: stretch;
+}
+
+.hero-tienda__gatito-imagen img {
+    position: absolute;
+    top: -13.09%;
+    left: -4.89%;
+    display: block;
+    width: 119.98%;
+    max-width: none;
+    height: 207.51%;
+    object-fit: cover;
+}
+
+.hero-tienda__categorias {
+    min-height: 168px;
+    padding: var(--space-xs) var(--space-lg);
+}
+
+.hero-tienda__lista-categorias {
+    display: grid;
+    width: min(100%, 1290px);
+    min-height: 100%;
+    grid-template-columns: repeat(6, 135px);
+    align-items: center;
+    justify-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.hero-tienda__categoria {
+    width: 100%;
+    max-width: 135px;
+}
+
+.hero-tienda__categoria-enlace {
+    display: flex;
+    min-height: var(--size-5xl);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--terciario-30-color);
     text-align: center;
-    padding: 14px 20px;
-    margin: 0;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.hero-tienda__categoria-enlace:focus-visible {
+    border-radius: var(--radius-lg);
+    outline: var(--size-xxs) solid var(--secundario-70-color);
+    outline-offset: var(--space-xs-2);
+}
+
+.hero-tienda__categoria-imagen {
+    display: block;
+    width: min(120px, 100%);
+    height: auto;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background-color: var(--b-n-blanco-color);
+    box-shadow: 0 calc(var(--space-xs-2) - var(--space-px)) 10.5px var(--secundario-140-color);
+    object-fit: cover;
+}
+
+.hero-tienda__categoria-imagen--contain {
+    object-fit: contain;
+}
+
+.hero-tienda__categoria-etiqueta {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+@media (max-width: 1120px) {
+    .hero-tienda__banner-inner {
+        height: clamp(360px, 40vw, 480px);
+        grid-template-columns: minmax(210px, 0.9fr) minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-xs);
+        padding-inline: var(--space-base);
+    }
+
+    .hero-tienda__titulo {
+        font-size: var(--font-size-heading-m);
+        line-height: var(--line-height-heading-m);
+    }
+
+    .hero-tienda__productos-imagen,
+    .hero-tienda__gatito-imagen {
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-tienda__lista-categorias {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: var(--space-xs);
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-tienda__banner-inner {
+        grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .hero-tienda__titulo {
+        font-size: var(--font-size-heading-s);
+        line-height: var(--line-height-heading-s);
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-tienda__banner-inner {
+        height: auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-base);
+        padding: var(--space-xl-4) var(--space-base);
+    }
+
+    .hero-tienda__promocion {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: min(100%, 322px);
+    }
+
+    .hero-tienda__titulo {
+        margin-bottom: var(--space-base);
+    }
+
+    .hero-tienda__productos-imagen,
+    .hero-tienda__gatito-imagen {
+        height: 260px;
+        align-self: center;
+    }
+
+    .hero-tienda__categorias {
+        padding: var(--space-lg) var(--space-base);
+    }
+
+    .hero-tienda__lista-categorias {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-lg) var(--space-base);
+    }
+
+    .hero-tienda__categoria {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-tienda__titulo {
+        font-size: var(--font-size-heading-s);
+        line-height: var(--line-height-heading-s);
+    }
+
+    .hero-tienda__productos-imagen,
+    .hero-tienda__gatito-imagen {
+        height: 220px;
+    }
+
+    .hero-tienda__lista-categorias {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 350px) {
+    .hero-tienda__titulo {
+        font-size: var(--font-size-heading-xs);
+        line-height: var(--line-height-heading-xs);
+    }
+
+    .hero-tienda__productos-imagen,
+    .hero-tienda__gatito-imagen {
+        height: 180px;
+    }
 }

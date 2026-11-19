@@ -21,4 +21,5 @@ export type ProductoOferta = {
     precioOriginal: number;
     imagenes: string[];
     categoria: string;
+    calificacionPromedio?: number;
 };
