@@ -53,15 +53,18 @@
     display: none;
 }
 
-.filtro-tienda__resumen::after {
-    color: var(--terciario-30-color);
-    content: "⌄";
-    font-size: var(--font-size-body-m);
+.filtro-tienda__chevron {
+    display: block;
+    width: var(--size-2xl);
+    height: var(--size-2xl);
+    flex: 0 0 auto;
+    transform-box: fill-box;
+    transform-origin: center center;
     transition: transform 150ms ease;
 }
 
-.filtro-tienda__grupo[open] > .filtro-tienda__resumen::after,
-.filtro-tienda__subgrupo[open] > .filtro-tienda__resumen::after {
+.filtro-tienda__grupo[open] > .filtro-tienda__resumen .filtro-tienda__chevron,
+.filtro-tienda__subgrupo[open] > .filtro-tienda__resumen .filtro-tienda__chevron {
     transform: rotate(180deg);
 }
 

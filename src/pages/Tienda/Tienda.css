@@ -229,11 +229,17 @@
         display: none;
     }
 
-    .tienda-pagina__filtros-desplegable > summary::after {
-        content: "⌄";
+    .tienda-pagina__filtros-chevron {
+        display: block;
+        width: var(--size-2xl);
+        height: var(--size-2xl);
+        flex: 0 0 auto;
+        transform-box: fill-box;
+        transform-origin: center center;
+        transition: transform 150ms ease;
     }
 
-    .tienda-pagina__filtros-desplegable[open] > summary::after {
+    .tienda-pagina__filtros-desplegable[open] > summary .tienda-pagina__filtros-chevron {
         transform: rotate(180deg);
     }
 

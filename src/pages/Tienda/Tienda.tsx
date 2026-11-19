@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { z } from 'zod';
 import UIButton from '../../components/UIKit/UIButton/UIButton';
+import { IconChevronDown } from '../../components/UIKit/UIIcons';
 import { UIProductCard } from '../../components/UIKit/UIProductCard';
 import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs';
 import { FiltroTienda, type FiltroClave, type SeleccionesFiltro } from '../../components/FiltroTienda/FiltroTienda';
@@ -337,7 +338,14 @@ export function Tienda() {
         <div className="tienda-pagina__layout">
           <aside className="tienda-pagina__filtros">
             <details className="tienda-pagina__filtros-desplegable" open>
-              <summary>Filtros</summary>
+              <summary>
+                Filtros
+                <IconChevronDown
+                  className="tienda-pagina__filtros-chevron"
+                  color="var(--terciario-30-color)"
+                  aria-hidden="true"
+                />
+              </summary>
               <FiltroTienda
                 selecciones={selecciones}
                 onSelectionChange={actualizarSeleccion}

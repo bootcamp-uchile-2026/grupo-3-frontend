@@ -1,7 +1,7 @@
 import { subcategoriasMascota } from './subcategoriasMascota';
 import UIButton from '../UIKit/UIButton/UIButton';
 import { UICheckbox } from '../UIKit/UICheckbox/UICheckbox';
-import { IconFilters } from '../UIKit/UIIcons';
+import { IconChevronDown, IconFilters } from '../UIKit/UIIcons';
 
 export type FiltroClave =
   | 'mascota'
@@ -163,7 +163,14 @@ export function FiltroTienda({
         <form className="filtro-tienda__form">
           {gruposFiltro.map((grupo) => (
             <details className="filtro-tienda__grupo" key={grupo.clave}>
-              <summary className="filtro-tienda__resumen">{grupo.titulo}</summary>
+              <summary className="filtro-tienda__resumen">
+                {grupo.titulo}
+                <IconChevronDown
+                  className="filtro-tienda__chevron"
+                  color="var(--terciario-30-color)"
+                  aria-hidden="true"
+                />
+              </summary>
               {grupo.clave === 'mascota' ? (
                 <div className="filtro-tienda__grupo-opciones">
                   {grupo.opciones
@@ -177,6 +184,11 @@ export function FiltroTienda({
                     >
                       <summary className="filtro-tienda__resumen">
                         {subcategoria.titulo}
+                        <IconChevronDown
+                          className="filtro-tienda__chevron"
+                          color="var(--terciario-30-color)"
+                          aria-hidden="true"
+                        />
                       </summary>
                       <div className="filtro-tienda__grupo-opciones">
                         {subcategoria.opciones.map((especie) =>
