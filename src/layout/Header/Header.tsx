@@ -5,7 +5,13 @@ import {
     useCarritoStore,
 } from "../../store/carritoStore";
 import { HeaderOptionsNavBar} from "./HeaderDivisions/HeaderOptionsNavBar";
+import { MegaMenuCategorias } from "./HeaderDivisions/MenuListCategorias";
 import type { HeaderOption } from "../../TDATypes";
+import logoPetLove from "../../assets/brand/logoV1.png";
+import userIcon from "../../assets/Icons/user.svg";
+import cartIcon from "../../assets/Icons/shopping-cart.svg";
+import "./Header.css"
+
 interface HeaderProps {
     logoSrc?: string;
     logoAlt?: string;
@@ -14,17 +20,17 @@ interface HeaderProps {
 }
 
 const headerOptions: HeaderOption[] = [
-    { route: "/tienda", name: "Categorias", icon: "Category", color: "black" },
-    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "Stethoscope", color: "black" },
-    { route: "/categoria/farmacia", name: "Farmacia", icon: "Hospital", color: "black" },
-    { route: "", name: "Contacto", icon: "Telephone", color: "black" }
+    { route: "/tienda", name: "Categorias", icon: "Category", color: "brown" },
+    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "Stethoscope", color: "brown" },
+    { route: "/categoria/farmacia", name: "Farmacia", icon: "Hospital", color: "brown" },
+    { route: "", name: "Contacto", icon: "Telephone", color: "brown" }
 ]
 
 export function Header({
-    logoSrc = "/assets/images/logo-petlove.svg",
+    logoSrc = logoPetLove,
     logoAlt = "Petlove",
-    accountIconSrc = "/assets/images/user.svg",
-    cartIconSrc = "/assets/images/cart.svg" }: HeaderProps) {
+    accountIconSrc = userIcon,
+    cartIconSrc = cartIcon }: HeaderProps) {
 
     const totalItems = useCarritoStore(selectCantidadArticulos);
     const inicializarCarrito = useCarritoStore((state) => state.inicializar);
@@ -48,22 +54,25 @@ export function Header({
                 <div className="center">
                     <form className="search-form" action="/buscar" method="GET" role="search">
                         <span className="search-icon">⌕</span>
-                        <input type="search" name="q" placeholder="Buscar" />
+                        <input className="search-input" type="search" name="q" placeholder="Que Necesita tu mascota?" />
                     </form>
                 </div>
 
                 <div className="right">
-                    <span className="login-link" aria-disabled="true">Iniciar sesión / registrar</span>
+                    <span className="login-link" aria-disabled="true">Iniciar sesión</span>
                     <NavLink to="/mi-perfil/perfil-usuario" aria-label="Mi cuenta">
-                        👤<img src={accountIconSrc} alt="Mi cuenta" />
+                    <img src={accountIconSrc} />
                     </NavLink>
                     <NavLink to="/carrito-compras" aria-label="Carrito">
-                        🛒<img src={cartIconSrc} alt="Carrito" />
+                    <img src={cartIconSrc} />
                         {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
                     </NavLink>
                 </div>
             </div>
-            <HeaderOptionsNavBar options={headerOptions} />
+            <div className="nav-con-menu">
+                <HeaderOptionsNavBar options={headerOptions} />
+                <MegaMenuCategorias />
+            </div>
         </header>
     )
 }
