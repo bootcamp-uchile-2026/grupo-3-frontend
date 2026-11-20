@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCarrito } from "../../context/CarritoContext";
+import {
+    selectCantidadArticulos,
+    useCarritoStore,
+} from "../../store/carritoStore";
 import { HeaderOptionsNavBar } from "./HeaderDivisions/HeaderOptionsNavBar";
 import { MegaMenuCategorias } from "./HeaderDivisions/MenuListCategorias";
 import { UILogo } from "../../components/UIKit/UILogo/UILogo";
@@ -39,9 +42,17 @@ export function Header({
     accountIconSrc = userIcon,
     cartIconSrc = cartIcon,
 }: HeaderProps) {
-    const { state } = useCarrito();
-    const totalItems = state.productos.reduce((acc, p) => acc + p.cantidad, 0);
+    // Carrito (store)
+    const totalItems = useCarritoStore(selectCantidadArticulos);
+    const inicializarCarrito = useCarritoStore((state) => state.inicializar);
 
+    useEffect(() => {
+        void inicializarCarrito().catch((error: unknown) => {
+            console.error("No se pudo inicializar el carrito del header.", error);
+        });
+    }, [inicializarCarrito]);
+
+    // Buscador
     const [busqueda, setBusqueda] = useState("");
     const navigate = useNavigate();
 
@@ -49,7 +60,7 @@ export function Header({
         navigate(`/buscar?q=${encodeURIComponent(termino)}`);
     };
 
-     return (
+    return (
         <header className="site-header">
             <div className="top-bar">
                 <div className="left">

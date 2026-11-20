@@ -114,11 +114,7 @@
   padding: 10px 20px;
 }
 
-<<<<<<< HEAD
 .bottom-bar > ul {
-=======
-.bottom-bar ul {
->>>>>>> develop
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +122,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-<<<<<<< HEAD
 }
 
 /* ================= Menú desplegable Categorías ================= */
@@ -154,61 +149,6 @@
     visibility 0s linear 0.3s;
 }
 
-=======
-  overflow-x: auto;
-}
-
-.bottom-bar ul li a,
-.bottom-bar ul li span {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 14px;
-  color: #1F0B01;
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease;
-}
-
-.bottom-bar ul li a svg,
-.bottom-bar ul li a img {
-  width: 30px;
-  height: 30px;
-}
-
-.bottom-bar ul li a:hover {
-  background-color: #EE7344;
-}
-
-/* ================= Menú desplegable Categorías ================= */
-.nav-con-menu {
-  position: relative;
-}
-
-.mega-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 28px 72px 32px;
-  background: #fff;
-  border-radius: 0 0 16px 16px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition:
-    opacity 0.15s ease 0.15s,
-    transform 0.15s ease 0.15s,
-    visibility 0s linear 0.3s;
-}
-
->>>>>>> develop
 .nav-con-menu:has(a[href="/tienda"]:hover) .mega-menu,
 .nav-con-menu:has(a[href="/tienda"]:focus-visible) .mega-menu,
 .mega-menu:hover,

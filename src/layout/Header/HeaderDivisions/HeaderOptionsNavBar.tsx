@@ -15,7 +15,6 @@ export function HeaderOptionsNavBar({ options, dropdowns }: HeaderOptionsNavBarP
     return (
         <nav className="bottom-bar" aria-label="Categorías principales">
             <ul>
-<<<<<<< HEAD
                 {options.map((headerOption) => {
                     // El ítem de la barra; "abierto" lo deja resaltado mientras su panel está visible
                     const navItem = (abierto: boolean) => (
@@ -57,17 +56,4 @@ export function HeaderOptionsNavBar({ options, dropdowns }: HeaderOptionsNavBarP
             </ul>
         </nav>
     );
-=======
-                {options.map((headerOption) => (
-                    <li key={headerOption.name}>
-                        <NavLink to={headerOption.route}> 
-                            <UIKitIcon name={headerOption.icon} iconColor={headerOption.color} /> 
-                            {headerOption.name} 
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    )
->>>>>>> develop
 }
