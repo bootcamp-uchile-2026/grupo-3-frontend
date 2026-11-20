@@ -99,52 +99,56 @@ No se declara una ruta comodín (`*`) para una página 404.
 
 ## Integración con API
 
-La aplicación usa `fetch` y espera respuestas JSON con las formas comprobadas en el cliente. El código define una URL base fija:
+La aplicación usa `fetch` y valida con Zod las respuestas del catálogo y carrito. La URL base se configura con `VITE_API_URL`:
 
 ```text
-http://18.226.214.170:3000/api/v1/catalogo
+http://18.226.214.170:3000/api/v1
 ```
 
-No se configura mediante una variable de entorno. Los endpoints observados son:
+El ejemplo está en `.env.example`; copia ese archivo a `.env` para desarrollo. Los endpoints usados incluyen:
 
 | Método | Endpoint | Uso |
 |---|---|---|
 | `GET` | `/categorias` | Categorías de la página de inicio. |
 | `GET` | `/productos` | Catálogo; el cliente aplica filtros, orden y carga progresiva. |
-| `GET` | `/productos/ofertas` | Ofertas del inicio y recomendaciones del carrito. |
+| `GET` | `/productos/ofertas` | Ofertas del inicio. |
+| `GET` | `/productos/sugeridos` | Recomendaciones del carrito. |
 | `GET` | `/productos/{id}` | Detalle de un producto. |
-| `GET` | `/productos/{id}/relacionados` | Productos relacionados al detalle. |
-| `GET` | `/carrito?usuarioId=duenio-123` | Carga/sincronización del carrito. |
-| `POST` | `/carrito/items` | Agrega un producto; el cuerpo incluye `productoId`, `cantidad` y `usuarioId`. |
-| `PATCH` | `/carrito/items/{productoId}` | Actualiza cantidad; el cuerpo incluye `cantidad` y `usuarioId`. |
-| `DELETE` | `/carrito/items/{productoId}?usuarioId=duenio-123` | Elimina un producto del carrito. |
-| `POST` | `/pedidos` | Crea un pedido con los datos del checkout. |
-| `GET` | `/pedidos/{id}` | Obtiene un pedido para la confirmación. |
+| `GET` | `/productos/{id}/relacionados?limit=4` | Productos relacionados al detalle. |
+| `GET` | `/carritos/{carritoId}` | Carga el carrito invitado. |
+| `POST` | `/carritos` | Crea un carrito invitado cuando no hay uno guardado o el anterior ya no existe. |
+| `POST` | `/carritos/{carritoId}/items` | Agrega un producto al carrito. |
+| `PATCH` | `/carritos/{carritoId}/items/{productoId}` | Actualiza la cantidad. |
+| `DELETE` | `/carritos/{carritoId}/items/{productoId}` | Elimina un producto del carrito. |
+| `PUT` | `/carritos/{carritoId}/cupon` | Valida y aplica un cupón. |
+| `DELETE` | `/carritos/{carritoId}/cupon` | Quita el cupón aplicado. |
+| `POST` | `/pedidos` | Ruta preexistente del checkout, fuera de la integración documentada de carrito. |
+| `GET` | `/pedidos/{id}` | Consulta preexistente para la confirmación. |
 
-Los servicios de carrito y pedidos están en `src/services/carrito.ts` y `src/services/pedidos.ts`. Las solicitudes de catálogo, categorías, ofertas, detalle y productos relacionados se realizan desde las páginas correspondientes. El carrito recibe el identificador fijo `duenio-123`; no se observa una integración de autenticación que lo determine dinámicamente.
+Los servicios de catálogo y carrito están en `src/services/catalogo.ts` y `src/services/carrito.ts`. El carrito conserva solo el ID del carrito invitado; el servidor es la fuente de verdad para sus productos, cantidades y cupones. Vaciarlo elimina los productos de forma secuencial porque la API no expone una operación masiva.
 
 El checkout permite seleccionar Mercado Pago, tarjeta o Webpay Plus y envía esa selección al crear el pedido. En el frontend no se observa una integración directa con los proveedores de pago ni una URL de redirección de pago.
 
 ## Variables de entorno
 
-No se encontraron lecturas de `import.meta.env`, variables `VITE_*` ni configuración de entorno para la URL del API. Por lo tanto, no se requiere crear un `.env` para ejecutar el proyecto y no corresponde añadir un `.env.example`. Para usar otro servidor API habría que cambiar las URLs codificadas en el código.
+Configura `VITE_API_URL` en `.env` para apuntar a otra instancia. La API documentada usa HTTP; un frontend servido sobre HTTPS puede bloquear estas llamadas por contenido mixto, y la documentación no especifica la política CORS.
 
 ## Funcionalidades implementadas
 
 - Página de inicio con carga de categorías y ofertas desde el API.
 - Catálogo conectado al API, con filtro por categoría y selecciones de especie, tipo de producto, edad, comida, sabor, formato, material y marca; orden por precio o nombre, vista de cuadrícula/lista y botón «Ver más».
 - Detalle de producto, productos relacionados y acción para agregar al carrito.
-- Carrito sincronizado con el API para consultar, agregar, cambiar cantidad y eliminar productos; muestra subtotal, descuento, total y recomendaciones.
-- Cupones reconocidos en la interfaz: `CUPONCLIENTENUEVO`, `CYBERWEEK`, `ENVIOGRATIS`, `BLACKFRIDAY` y `REGALO`. En el código del carrito, los cuatro primeros ajustan el resumen en el cliente y `REGALO` agrega un artículo local; no se observa una solicitud de validación del cupón al API.
+- Carrito sincronizado con el API para consultar, agregar, cambiar cantidad, eliminar productos y vaciar; muestra subtotal, descuento, total y recomendaciones.
+- Los cupones se validan en el API; no se agregan descuentos ni artículos de regalo locales.
 - Checkout con datos del comprador, envío normal o retiro en tienda, y selección de método de pago; creación del pedido y navegación a confirmación.
 - Confirmación que consulta el pedido por ID y muestra estado, fecha, entrega, productos y montos.
 - Vistas de perfil, configuración, perfil de mascota e historial médico, además de pantallas de agendamiento veterinario.
 
 ## Estado y limitaciones conocidas
 
-- Los flujos de catálogo, carrito y pedidos dependen de que el API indicado esté accesible desde el navegador y acepte las solicitudes del frontend.
-- La URL del API y el ID `duenio-123` están codificados en el cliente; no hay variables de entorno ni selección de usuario observables.
+- Los flujos de catálogo y carrito dependen de que el API indicado esté accesible desde el navegador y acepte las solicitudes del frontend.
+- La creación de pedidos usa una ruta preexistente que no forma parte de la sección de carrito documentada en Swagger; la integración de pedidos queda pendiente.
 - Los métodos de pago son opciones del formulario enviadas en la solicitud de pedido; la interfaz no implementa el procesamiento con un proveedor de pago.
 - Las pantallas de perfil y agendamiento contienen datos estáticos o controles de presentación; no se observa en esas páginas una integración API para guardar perfiles, preferencias o reservas. Algunos recursos visuales usan imágenes de `placehold.co`.
-- `package.json` no define un script de pruebas automatizadas. Los comandos de revisión declarados son `npm run lint` y `npm run build` (este último incluye `tsc -b`).
+- `package.json` no define un script de pruebas automatizadas. Los comandos de revisión declarados son `pnpm lint` y `pnpm build` (este último incluye `tsc -b`).
 - El repositorio incluye tanto la aplicación React como páginas independientes en `vanilla html/`; las rutas documentadas arriba corresponden a la aplicación React.

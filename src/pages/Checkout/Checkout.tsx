@@ -9,7 +9,7 @@ import {
   selectTotalCarrito,
   useCarritoStore,
 } from "../../store/carritoStore";
-import { USUARIO_ID_CARRITO, obtenerCarrito } from "../../services/carrito";
+import { USUARIO_ID_CARRITO } from "../../services/carrito";
 import { crearPedido, type CreatePedidoDto } from "../../services/pedidos";
 
 type TipoComprobante = "Boleta" | "Factura";
@@ -37,7 +37,9 @@ const formatoCLP = (monto: number): string =>
 export function Checkout() {
   const navigate = useNavigate();
   const productos = useCarritoStore(useShallow(selectProductos));
-  const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
+  const inicializarCarrito = useCarritoStore((state) => state.inicializar);
+  const estadoCarrito = useCarritoStore((state) => state.estado);
+  const errorCarrito = useCarritoStore((state) => state.error);
   const subtotal = useCarritoStore(selectSubtotalCarrito);
   const descuento = useCarritoStore(selectDescuentoCarrito);
   const totalCarrito = useCarritoStore(selectTotalCarrito);
@@ -58,38 +60,25 @@ export function Checkout() {
   const [tipoEntrega, setTipoEntrega] = useState<TipoEntrega | "">("");
   const [metodoPago, setMetodoPago] = useState<MetodoPago | "">("");
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
-  const [cargandoCarrito, setCargandoCarrito] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const envioEnCurso = useRef(false);
+  const cargandoCarrito = estadoCarrito === "idle" || estadoCarrito === "loading";
 
   useEffect(() => {
     let activo = true;
 
-    async function cargarCarrito() {
-      try {
-        // Consultar el carrito real para que el checkout también funcione al abrirse directamente.
-        const carrito = await obtenerCarrito();
-        if (activo) {
-          sincronizarCarrito({ carrito });
-        }
-      } catch (cause) {
-        if (activo) {
-          console.error("No se pudo cargar el carrito para el checkout.", cause);
-          setError(cause instanceof Error ? cause.message : "No se pudo cargar el carrito.");
-        }
-      } finally {
-        if (activo) {
-          setCargandoCarrito(false);
-        }
+    void inicializarCarrito().catch((cause: unknown) => {
+      if (activo) {
+        console.error("No se pudo cargar el carrito para el checkout.", cause);
+        setError(cause instanceof Error ? cause.message : "No se pudo cargar el carrito.");
       }
-    }
+    });
 
-    void cargarCarrito();
     return () => {
       activo = false;
     };
-  }, [sincronizarCarrito]);
+  }, [inicializarCarrito]);
 
   function actualizarDato(campo: keyof DatosCheckout, valor: string) {
     setDatos((actuales) => ({ ...actuales, [campo]: valor }));
@@ -424,7 +413,9 @@ export function Checkout() {
               </label>
             </div>
 
-            {error && <p className="error-checkout" role="alert">{error}</p>}
+            {(error || errorCarrito) && (
+              <p className="error-checkout" role="alert">{error ?? errorCarrito}</p>
+            )}
 
             <button
               type="submit"

@@ -20,6 +20,10 @@
     gap: var(--space-xl-2);
 }
 
+.cart-page__layout--empty .cart-page__items {
+    grid-column: 1 / -1;
+}
+
 .cart-page__items {
     min-width: 0;
     overflow: hidden;

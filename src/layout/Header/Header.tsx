@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
     selectCantidadArticulos,
@@ -26,6 +27,14 @@ export function Header({
     cartIconSrc = "/assets/images/cart.svg" }: HeaderProps) {
 
     const totalItems = useCarritoStore(selectCantidadArticulos);
+    const inicializarCarrito = useCarritoStore((state) => state.inicializar);
+
+    useEffect(() => {
+        void inicializarCarrito().catch((error: unknown) => {
+            console.error("No se pudo inicializar el carrito del header.", error);
+        });
+    }, [inicializarCarrito]);
+
     return (
         <header className="site-header">
             <div className="top-bar">
