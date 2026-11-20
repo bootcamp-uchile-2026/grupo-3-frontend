@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 .site-header {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins',Arial, sans-serif;
     width: 100%;
 }
 .top-bar {
-    background-color: #4a4a4a;
+    background-color: #FFE9DA;
     /* gris oscuro del wireframe */
     color: white;
     display: flex;
@@ -17,6 +19,21 @@
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+.header-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: #1F0B01;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.header-option:hover {
+    background-color: #EE7344;
 }
 
 .menu-btn {
@@ -37,25 +54,41 @@
     max-width: 500px;
 }
 
+.right img {
+    filter: brightness(0) 
+            saturate(100%) 
+            invert(20%) 
+            sepia(90%) 
+            saturate(2000%) 
+            hue-rotate(350deg) 
+            brightness(0.8);
+}
+
 .search-form {
     display: flex;
     align-items: center;
-    background: white;
+    background: #FFFFFF;
     border-radius: 20px;
     padding: 6px 12px;
     width: 100%;
 }
 
 .search-form .search-icon {
-    color: #888;
+    color: #1F0B01;
     margin-right: 8px;
 }
 
 .search-form input {
+    color: #1F0B01;
     border: none;
     outline: none;
     width: 100%;
     font-size: 14px;
+}
+
+.search-input::placeholder{
+    color: #922500;
+    opacity: 2;
 }
 
 .top-bar .right {
@@ -66,7 +99,7 @@
 
 .top-bar .right a,
 .top-bar .right span {
-    color: white;
+    color: #1F0B01;
     text-decoration: none;
     font-size: 13px;
 }
@@ -75,8 +108,8 @@
     white-space: nowrap;
 }
 .bottom-bar {
-    background-color: #a9a9a9;
-    /* gris claro del wireframe */
+    background-color: #FFA57E;
+    /* ya es un tipo de verde  */
     padding: 10px 20px;
 }
 
@@ -100,15 +133,20 @@
     align-items: center;
     gap: 6px;
     white-space: nowrap;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background-color 0.15s ease;
 }
 
 .bottom-bar ul li a:hover {
-    color: #000;
+    background-color: #EE7344;
+    color: #1F0B01;
 }
+
 .logo-placeholder {
     width: 60px;
     height: 60px;
-    border: 1px solid #000;
+    border: 1px solid #C0C7A8;
     background:
         linear-gradient(to top right, transparent 49.5%, #000 49.5%, #000 50.5%, transparent 50.5%),
         linear-gradient(to bottom right, transparent 49.5%, #000 49.5%, #000 50.5%, transparent 50.5%);
