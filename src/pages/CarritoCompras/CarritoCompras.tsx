@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import { Link } from "react-router-dom";
 import { CardCarrusel } from "../../components/CardCarrusel/CardCarrusel";
 import { CartItem } from "../../components/CartItem/CartItem";
@@ -254,7 +254,7 @@ export function CarritoCompras() {
       break;
   }
 
-  const handleAplicarCupon = (event: FormEvent<HTMLFormElement>) => {
+  const handleAplicarCupon = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorCupon(null);
 
