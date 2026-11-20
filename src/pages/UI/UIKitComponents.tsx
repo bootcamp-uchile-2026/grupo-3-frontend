@@ -11,8 +11,10 @@ import { UIDropdown } from "../../components/UIKit/UIDropdown/UIDropdown";
 import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
 import { UISearchInput } from "../../components/UIKit/UISearchInput/UISearchInput";
 import { UIIconButton } from "../../components/UIKit/UIIconButton/UIIconButton";
+import { UIInput } from "../../components/UIKit/UIInput/UIInput";
 import { UIBadge } from "../../components/UIKit/UIBadge/UIBadge";
 import { UITextLink } from "../../components/UIKit/UITextLink/UITextLink";
+import { UILink } from "../../components/UIKit/UILinks/UILinks";
 import { UINavItem } from "../../components/UIKit/UINavItem/UINavItem";
 import { UILogo } from "../../components/UIKit/UILogo/UILogo";
 import { UIMenuItem } from "../../components/UIKit/UIMenuItem/UIMenuItem";
@@ -22,6 +24,7 @@ import { UIDropDownPanel } from "../../components/UIKit/UIDropDownPanel/UIDropDo
 import { UIInfoBlock } from "../../components/UIKit/UIInfoBlock/UIInfoBlock";
 import { UILinkList } from "../../components/UIKit/UILinkList/UILinkList";
 import { UISocialLinks } from "../../components/UIKit/UISocialLinks/UISocialLinks";
+import { UIQualification } from "../../components/UIKit/UIQualification/UIQualification";
 
 import userIcon from "../../assets/Icons/user.svg";
 import cartIcon from "../../assets/Icons/shopping-cart.svg";
@@ -171,6 +174,129 @@ function SearchInputExample() {
         <UISearchInput value="" onChange={() => undefined} placeholder="No disponible" disabled />
       </div>
       <p>Última búsqueda enviada: {ultimaBusqueda || "—"}</p>
+    </DocSection>
+  );
+}
+
+// ======================================
+// UIInput
+// ======================================
+
+type EstadoInputDemo = {
+  nombre: string;
+  status?: "default" | "error" | "success";
+  forceState?: "hover" | "focus";
+  disabled?: boolean;
+};
+
+const ESTADOS_INPUT: EstadoInputDemo[] = [
+  { nombre: "Default" },
+  { nombre: "Hover", forceState: "hover" },
+  { nombre: "Focus", forceState: "focus" },
+  { nombre: "Error", status: "error" },
+  { nombre: "Success", status: "success" },
+  { nombre: "Disabled", disabled: true },
+];
+
+function InputExample() {
+  const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [tocado, setTocado] = useState(false);
+
+  const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+  const estadoCorreo = !tocado || !correo ? "default" : correoValido ? "success" : "error";
+
+  return (
+    <DocSection
+      title="UIInput"
+      description="Campo de texto con forma de píldora. El nombre del campo va dentro, como placeholder, con asterisco rojo si es obligatorio, y se oculta al escribir. Estados: default, hover, focus, error, success (con ✓) y disabled, en tamaños md y sm."
+      note="Las filas de la tabla usan forceState o status para mostrar cada estado fijo, como en Figma. En el ejemplo interactivo, el correo se valida al salir del campo."
+      props={[
+        {
+          title: "Props de UIInput",
+          rows: [
+            ["label", "string", "Sí", "—", "Nombre del campo, mostrado dentro mientras está vacío."],
+            ["value", "string", "Sí", "—", "Valor actual (componente controlado)."],
+            ["onChange", "(value: string) => void", "Sí", "—", "Se llama con el nuevo texto."],
+            ["onBlur", "(event) => void", "No", "—", "Al salir del campo (útil para validar)."],
+            ["type", "string", "No", '"text"', "Tipo de input: text, email, tel, password…"],
+            ["required", "boolean", "No", "false", "Muestra el asterisco rojo y marca el campo como obligatorio."],
+            ["status", '"default" | "error" | "success"', "No", '"default"', "Borde rojo o verde con ✓."],
+            ["message", "string", "No", "—", "Texto bajo el campo; en error se anuncia a lectores de pantalla."],
+            ["size", '"sm" | "md"', "No", '"md"', "40 px o 48 px de alto."],
+            ["disabled", "boolean", "No", "false", "Fondo gris y sin interacción."],
+            ["id / name / autoComplete / inputMode / maxLength", "—", "No", "—", "Atributos nativos del input."],
+            ["forceState", '"hover" | "focus"', "No", "—", "Solo documentación: fija un estado visual."],
+            ["className", "string", "No", "—", "Clase adicional."],
+          ],
+        },
+      ]}
+      usage={`<UIInput
+  label="Correo"
+  type="email"
+  required
+  value={correo}
+  onChange={setCorreo}
+  onBlur={() => setTocado(true)}
+  status={correoInvalido ? "error" : "default"}
+  message={correoInvalido ? "Ingresa un correo válido" : undefined}
+/>`}
+    >
+      <div className="ui-kit-product-card-example__table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Estado</th>
+              <th>md</th>
+              <th>sm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ESTADOS_INPUT.map((e) => (
+              <tr key={e.nombre}>
+                <td>{e.nombre}</td>
+                {(["md", "sm"] as const).map((tamano) => (
+                  <td key={tamano} style={{ minWidth: "260px" }}>
+                    <UIInput
+                      label="Nombre"
+                      required
+                      value=""
+                      onChange={() => undefined}
+                      size={tamano}
+                      status={e.status}
+                      forceState={e.forceState}
+                      disabled={e.disabled}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Interactivo</h3>
+      <div style={{ ...fondoHeader, flexDirection: "column", alignItems: "stretch", maxWidth: "420px" }}>
+        <UIInput label="Nombre" required value={nombre} onChange={setNombre} autoComplete="given-name" />
+        <UIInput
+          label="Correo"
+          type="email"
+          required
+          value={correo}
+          onChange={setCorreo}
+          onBlur={() => setTocado(true)}
+          autoComplete="email"
+          status={estadoCorreo}
+          message={
+            estadoCorreo === "error"
+              ? "Ingresa un correo válido, por ejemplo nombre@correo.cl"
+              : estadoCorreo === "success"
+                ? "Correo válido"
+                : undefined
+          }
+        />
+        <UIInput label="Teléfono" type="tel" size="sm" value="" onChange={() => undefined} message="Opcional" />
+      </div>
     </DocSection>
   );
 }
@@ -333,6 +459,198 @@ function TextLinkExample() {
 }
 
 // ======================================
+// UILink
+// ======================================
+
+const ESTADOS_LINK = [
+  { nombre: "Default", estado: undefined },
+  { nombre: "Hover", estado: "hover" },
+  { nombre: "Active", estado: "active" },
+  { nombre: "Focus", estado: "focus" },
+] as const;
+
+const COLUMNAS_LINK = [
+  { nombre: "S · subrayado", size: "sm", underline: true },
+  { nombre: "M · subrayado", size: "md", underline: true },
+  { nombre: "S · sin subrayado", size: "sm", underline: false },
+  { nombre: "M · sin subrayado", size: "md", underline: false },
+] as const;
+
+function MatrizLinks({ color, weight }: { color: "brown" | "blue"; weight: "regular" | "bold" }) {
+  return (
+    <div className="ui-kit-product-card-example__table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Estado</th>
+            {COLUMNAS_LINK.map((c) => (
+              <th key={c.nombre}>{c.nombre}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {ESTADOS_LINK.map((e) => (
+            <tr key={e.nombre}>
+              <td>{e.nombre}</td>
+              {COLUMNAS_LINK.map((c) => (
+                <td key={c.nombre}>
+                  <UILink
+                    color={color}
+                    weight={weight}
+                    size={c.size}
+                    underline={c.underline}
+                    forceState={e.estado}
+                  >
+                    Link
+                  </UILink>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function LinkExample() {
+  const [clics, setClics] = useState(0);
+
+  return (
+    <DocSection
+      title="UILink"
+      description="Enlace con flecha ↗ según Figma. Dos esquemas de color (café y azul), dos tamaños, peso regular o bold y subrayado opcional. Estados: default, hover, active y focus (borde redondeado)."
+      note="Las matrices usan forceState para mostrar cada estado fijo, como en Figma. En los ejemplos interactivos pasa el mouse, haz clic y usa Tab para ver los estados reales."
+      props={[
+        {
+          title: "Props de UILink",
+          rows: [
+            ["children", "ReactNode", "Sí", "—", "Texto del enlace."],
+            ["to", "string", "No", "—", "Ruta interna (React Router)."],
+            ["href", "string", "No", "—", "Enlace externo; se abre en otra pestaña y lo anuncia a lectores de pantalla."],
+            ["onClick", "(event) => void", "No", "—", "Acción; sin to ni href se renderiza un <button>."],
+            ["color", '"brown" | "blue"', "No", '"brown"', "Esquema de color."],
+            ["size", '"sm" | "md"', "No", '"sm"', "13 px o 16 px."],
+            ["weight", '"regular" | "bold"', "No", '"regular"', "Peso del texto."],
+            ["underline", "boolean", "No", "true", "Subrayado permanente del texto."],
+            ["icon", "boolean | ReactNode", "No", "true", "Flecha ↗; false la oculta y también acepta un ícono propio."],
+            ["disabled", "boolean", "No", "false", "Se muestra apagado y no navega."],
+            ["forceState", '"hover" | "active" | "focus"', "No", "—", "Solo documentación: fija un estado visual."],
+            ["className", "string", "No", "—", "Clase adicional."],
+          ],
+        },
+      ]}
+      usage={`<UILink to="/terminos-y-condiciones">Términos y condiciones</UILink>
+
+<UILink href="https://www.sag.gob.cl" color="blue" size="md" underline={false}>
+  Más información
+</UILink>`}
+    >
+      <h3>Café · regular</h3>
+      <MatrizLinks color="brown" weight="regular" />
+      <h3>Café · bold</h3>
+      <MatrizLinks color="brown" weight="bold" />
+      <h3>Azul · regular</h3>
+      <MatrizLinks color="blue" weight="regular" />
+
+      <h3>Interactivos</h3>
+      <div style={fondoHeader}>
+        <UILink to="/">Ruta interna</UILink>
+        <UILink href="https://www.google.com" color="blue">Enlace externo</UILink>
+        <UILink onClick={() => setClics((c) => c + 1)} weight="bold" size="md">
+          Como botón ({clics})
+        </UILink>
+        <UILink to="/" icon={false}>Sin flecha</UILink>
+        <UILink to="/" disabled>Deshabilitado</UILink>
+      </div>
+    </DocSection>
+  );
+}
+
+// ======================================
+// UIQualification
+// ======================================
+
+const CALIFICACIONES = [0, 1, 2, 3, 4, 5];
+
+function QualificationExample() {
+  const [miNota, setMiNota] = useState(0);
+
+  return (
+    <DocSection
+      title="UIQualification"
+      description="Calificación en dos variantes: «stars» muestra estrellas llenas y vacías en tres tamaños (con onChange se vuelve seleccionable) y «badge» es la etiqueta compacta «★ n/5» de las reviews."
+      note="En el ejemplo interactivo, pasa el mouse para previsualizar, haz clic para elegir y vuelve a hacer clic en la misma estrella para borrar la nota. También funciona con Tab y Enter."
+      props={[
+        {
+          title: "Props de UIQualification",
+          rows: [
+            ["value", "number", "Sí", "—", "Calificación; en stars se redondea, en badge admite decimales. Siempre entre 0 y max."],
+            ["max", "number", "No", "5", "Cantidad de estrellas / valor máximo."],
+            ["variant", '"stars" | "badge"', "No", '"stars"', "Fila de estrellas o etiqueta «★ n/5»."],
+            ["size", '"sm" | "md" | "lg"', "No", '"md"', "stars: 12, 18 o 24 px. badge: sm o md (lg se muestra como md)."],
+            ["onChange", "(value: number) => void", "No", "—", "Solo stars: las estrellas se vuelven seleccionables."],
+            ["showIcon", "boolean", "No", "true", "Solo badge: muestra la estrella antes del número."],
+            ["disabled", "boolean", "No", "false", "Deshabilita la selección."],
+            ["ariaLabel", "string", "No", "«Calificación: n de max»", "Texto accesible."],
+            ["className", "string", "No", "—", "Clase adicional."],
+          ],
+        },
+      ]}
+      usage={`<UIQualification value={producto.rating} size="md" />
+
+<UIQualification value={nota} onChange={setNota} size="lg" />
+
+<UIQualification value={4} variant="badge" />`}
+    >
+      <h3>variant="stars": 0 a 5 en tamaños lg, md y sm</h3>
+      <div className="ui-kit-product-card-example__table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>lg</th>
+              <th>md</th>
+              <th>sm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {CALIFICACIONES.map((n) => (
+              <tr key={n}>
+                <td>{n}/5</td>
+                <td><UIQualification value={n} size="lg" /></td>
+                <td><UIQualification value={n} size="md" /></td>
+                <td><UIQualification value={n} size="sm" /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>variant="stars" interactivo</h3>
+      <div style={fondoHeader}>
+        <UIQualification value={miNota} onChange={setMiNota} size="lg" ariaLabel="Califica el producto" />
+        <span>Tu calificación: {miNota}/5</span>
+        <UIQualification value={3} onChange={() => undefined} disabled />
+      </div>
+
+      <h3>variant="badge": 0/5 a 5/5</h3>
+      <div style={fila}>
+        {CALIFICACIONES.map((n) => (
+          <UIQualification key={n} value={n} variant="badge" />
+        ))}
+      </div>
+      <h3>variant="badge": tamaño sm, decimales y sin ícono</h3>
+      <div style={fila}>
+        <UIQualification value={4.5} variant="badge" size="sm" />
+        <UIQualification value={3.75} variant="badge" />
+        <UIQualification value={5} variant="badge" showIcon={false} />
+      </div>
+    </DocSection>
+  );
+}
+
+// ======================================
 // UINavItem
 // ======================================
 
@@ -386,13 +704,16 @@ function LogoExample() {
   return (
     <DocSection
       title="UILogo"
-      description="Logo de la marca. Por defecto enlaza al inicio; con to={null} es solo imagen."
+      description="Logo de la marca en sus cuatro versiones de Figma: horizontal (V1), compacto (Mobile), con mascotas (V2) y casa (V3). Por defecto enlaza al inicio; con to={null} es solo imagen."
+      note="Con responsive, la versión horizontal cambia sola a la compacta bajo 768 px (o el breakpoint indicado). Achica la ventana para probarlo."
       props={[
         {
           title: "Props de UILogo",
           rows: [
-            ["variant", '"horizontal" | "con-mascotas"', "No", '"horizontal"', "Imagen del logo (logoV1 o logoV2)."],
-            ["size", '"sm" | "md" | "lg"', "No", '"md"', "Alto según la variante."],
+            ["variant", '"horizontal" | "compact" | "con-mascotas" | "casa"', "No", '"horizontal"', "V1, Mobile, V2 o V3."],
+            ["size", '"sm" | "md" | "lg"', "No", '"md"', "Alto según la variante (ej. horizontal: 32, 44 o 56 px)."],
+            ["responsive", "boolean", "No", "false", "Solo horizontal: usa la versión compacta en pantallas angostas."],
+            ["breakpoint", "number", "No", "768", "Ancho (px) bajo el cual se usa la versión compacta."],
             ["to", "string | null", "No", '"/"', "Ruta al hacer clic; null = sin enlace."],
             ["src", "string", "No", "—", "Reemplaza la imagen de la variante."],
             ["alt", "string", "No", '"PetLove"', "Texto alternativo."],
@@ -400,18 +721,39 @@ function LogoExample() {
           ],
         },
       ]}
-      usage={`<UILogo />
-<UILogo variant="con-mascotas" size="lg" to={null} />`}
+      usage={`<UILogo responsive />                       {/* header */}
+<UILogo variant="con-mascotas" />             {/* footer */}
+<UILogo variant="casa" size="lg" to={null} /> {/* login, estados vacíos */}`}
     >
-      <h3>Horizontal: sm, md y lg</h3>
+      <h3>V1 · horizontal (sm, md, lg)</h3>
       <div style={fondoHeader}>
         <UILogo size="sm" to={null} />
         <UILogo size="md" to={null} />
         <UILogo size="lg" to={null} />
       </div>
-      <h3>Con mascotas</h3>
+
+      <h3>Mobile · compact (sm, md, lg)</h3>
+      <div style={fondoHeader}>
+        <UILogo variant="compact" size="sm" to={null} />
+        <UILogo variant="compact" size="md" to={null} />
+        <UILogo variant="compact" size="lg" to={null} />
+      </div>
+
+      <h3>Responsive (horizontal → compact bajo 768 px)</h3>
+      <div style={fondoHeader}>
+        <UILogo responsive to={null} />
+      </div>
+
+      <h3>V2 · con mascotas</h3>
       <div style={fondoFooter}>
-        <UILogo variant="con-mascotas" to={null} />
+        <UILogo variant="con-mascotas" size="sm" to={null} />
+        <UILogo variant="con-mascotas" size="md" to={null} />
+      </div>
+
+      <h3>V3 · casa (sm, md)</h3>
+      <div style={fondoHeader}>
+        <UILogo variant="casa" size="sm" to={null} />
+        <UILogo variant="casa" size="md" to={null} />
       </div>
     </DocSection>
   );
