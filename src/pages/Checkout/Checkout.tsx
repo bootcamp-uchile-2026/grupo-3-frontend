@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCarrito } from "../../context/CarritoContext";
+import { useShallow } from "zustand/react/shallow";
+import {
+  selectProductos,
+  selectSubtotalCarrito,
+  selectDescuentoCarrito,
+  selectTotalCarrito,
+  useCarritoStore,
+} from "../../store/carritoStore";
 import { USUARIO_ID_CARRITO, obtenerCarrito } from "../../services/carrito";
 import { crearPedido, type CreatePedidoDto } from "../../services/pedidos";
 
@@ -29,7 +36,11 @@ const formatoCLP = (monto: number): string =>
 
 export function Checkout() {
   const navigate = useNavigate();
-  const { state, dispatch } = useCarrito();
+  const productos = useCarritoStore(useShallow(selectProductos));
+  const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
+  const subtotal = useCarritoStore(selectSubtotalCarrito);
+  const descuento = useCarritoStore(selectDescuentoCarrito);
+  const totalCarrito = useCarritoStore(selectTotalCarrito);
   const [datos, setDatos] = useState<DatosCheckout>({
     nombre: "",
     apellidos: "",
@@ -60,7 +71,7 @@ export function Checkout() {
         // Consultar el carrito real para que el checkout también funcione al abrirse directamente.
         const carrito = await obtenerCarrito();
         if (activo) {
-          dispatch({ type: "SINCRONIZAR", carrito });
+          sincronizarCarrito({ carrito });
         }
       } catch (cause) {
         if (activo) {
@@ -78,12 +89,7 @@ export function Checkout() {
     return () => {
       activo = false;
     };
-  }, [dispatch]);
-
-  const subtotal = state.resumenApi?.subtotal
-    ?? state.productos.reduce((suma, producto) => suma + producto.subtotal, 0);
-  const descuento = state.resumenApi?.descuentoCupon ?? 0;
-  const totalCarrito = state.resumenApi?.total ?? subtotal - descuento;
+  }, [sincronizarCarrito]);
 
   function actualizarDato(campo: keyof DatosCheckout, valor: string) {
     setDatos((actuales) => ({ ...actuales, [campo]: valor }));
@@ -98,7 +104,7 @@ export function Checkout() {
       setError("Espera a que cargue el carrito antes de finalizar la compra.");
       return;
     }
-    if (state.productos.length === 0) {
+    if (productos.length === 0) {
       setError("No puedes crear un pedido con el carrito vacío.");
       return;
     }
@@ -358,11 +364,11 @@ export function Checkout() {
           </div>
 
           {cargandoCarrito && <p role="status">Cargando carrito...</p>}
-          {!cargandoCarrito && state.productos.length === 0 && (
+          {!cargandoCarrito && productos.length === 0 && (
             <p>El carrito está vacío.</p>
           )}
           <div className="productos-resumen-pedido">
-            {state.productos.map((producto) => (
+            {productos.map((producto) => (
               <article key={producto.productoId} className="producto-resumen-pedido">
                 <div className="info-producto">
                   {producto.imagen && (
@@ -422,7 +428,7 @@ export function Checkout() {
 
             <button
               type="submit"
-              disabled={cargandoCarrito || enviando || state.productos.length === 0}
+              disabled={cargandoCarrito || enviando || productos.length === 0}
             >
               {enviando ? "Creando pedido..." : "Finalizar compra"}
             </button>

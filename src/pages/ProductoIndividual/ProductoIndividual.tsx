@@ -7,7 +7,7 @@ import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProd
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
 import { TabsProducto } from "../../components/ProductoIndividual/TabsProducto/TabsProducto";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
-import { useCarrito } from "../../context/CarritoContext";
+import { useCarritoStore } from "../../store/carritoStore";
 import { agregarProductoAlCarrito } from "../../services/carrito";
 
 type ProductoDetalle = {
@@ -69,14 +69,14 @@ function formatoPrecio(precio: number): string {
 }
 
 function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionado }) {
-    const { dispatch } = useCarrito();
+    const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
     const [estadoCarrito, setEstadoCarrito] = useState<EstadoAccionCarrito>("idle");
 
     async function agregarAlCarrito() {
         setEstadoCarrito("agregando");
         try {
             const carrito = await agregarProductoAlCarrito(producto.id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito });
+            sincronizarCarrito({ carrito });
             setEstadoCarrito("agregado");
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
@@ -142,7 +142,7 @@ const productoEjemplo: ProductoDetalle = {
 
 export function ProductoIndividual() {
     const { id } = useParams();
-    const { dispatch } = useCarrito();
+    const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
     const [estadoProducto, setEstadoProducto] = useState({
         id,
         cargando: Boolean(id),
@@ -169,7 +169,7 @@ export function ProductoIndividual() {
         try {
             // Sincronizar la vista del carrito con el DTO que entrega el API.
             const carrito = await agregarProductoAlCarrito(producto?.id ?? id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito });
+            sincronizarCarrito({ carrito });
             setEstadoCarrito({ id, estado: "agregado" });
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);

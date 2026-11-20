@@ -9,7 +9,7 @@ import { FiltroTienda, type FiltroClave, type SeleccionesFiltro } from '../../co
 import { subcategoriasMascota } from '../../components/FiltroTienda/subcategoriasMascota';
 import { HeroTienda } from '../../components/HeroTienda/HeroTienda';
 import { OrdenTienda, type OrdenTiendaValor, type VistaTienda } from '../../components/OrdenTienda/OrdenTienda';
-import { useCarrito } from '../../context/CarritoContext';
+import { useCarritoStore } from '../../store/carritoStore';
 import { agregarProductoAlCarrito } from '../../services/carrito';
 
 const productoCatalogoSchema = z.object({
@@ -49,14 +49,14 @@ function TarjetaProductoTienda({
   producto: ProductoCatalogo;
   vista: VistaTienda;
 }) {
-  const { dispatch } = useCarrito();
+  const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
   const [estadoCarrito, setEstadoCarrito] = useState<EstadoCarritoProducto>('idle');
 
   async function agregarAlCarrito() {
     setEstadoCarrito('agregando');
     try {
       const carrito = await agregarProductoAlCarrito(producto.id, 1);
-      dispatch({ type: 'SINCRONIZAR', carrito });
+      sincronizarCarrito({ carrito });
       setEstadoCarrito('agregado');
     } catch (error) {
       console.error('No se pudo agregar el producto al carrito.', error);

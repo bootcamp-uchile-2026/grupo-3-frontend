@@ -6,7 +6,15 @@ import { CouponBox } from "../../components/CouponBox/CouponBox";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
 import { IconShoppoingCart } from "../../components/UIKit/UIIcons";
-import { useCarrito } from "../../context/CarritoContext";
+import { useShallow } from "zustand/react/shallow";
+import {
+  selectCantidadArticulos,
+  selectDescuentoCarrito,
+  selectProductos,
+  selectSubtotalCarrito,
+  selectTotalCarrito,
+  useCarritoStore,
+} from "../../store/carritoStore";
 import {
   agregarProductoAlCarrito,
   actualizarCantidadProducto,
@@ -35,14 +43,14 @@ function formatoPrecio(precio: number): string {
 }
 
 function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
-  const { dispatch } = useCarrito();
+  const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
   const [estado, setEstado] = useState<EstadoTarjetaOferta>("idle");
 
   async function agregarAlCarrito() {
     setEstado("agregando");
     try {
       const carrito = await agregarProductoAlCarrito(producto.id, 1);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      sincronizarCarrito({ carrito });
       setEstado("agregado");
     } catch (error) {
       console.error("No se pudo agregar el producto al carrito.", error);
@@ -103,8 +111,14 @@ function esProductoOferta(value: unknown): value is ProductoOferta {
 }
 
 export function CarritoCompras() {
-  const { state, dispatch } = useCarrito();
-  const productos = state.productos;
+  const productos = useCarritoStore(useShallow(selectProductos));
+  const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
+  const agregarProducto = useCarritoStore((state) => state.agregarProducto);
+  const limpiarCarrito = useCarritoStore((state) => state.limpiarCarrito);
+  const cantidadArticulos = useCarritoStore(selectCantidadArticulos);
+  const subtotal = useCarritoStore(selectSubtotalCarrito);
+  const descuentoApi = useCarritoStore(selectDescuentoCarrito);
+  const totalApiDerivado = useCarritoStore(selectTotalCarrito);
   const [cupon, setCupon] = useState("");
   const [cuponAplicado, setCuponAplicado] = useState("");
   const [errorCupon, setErrorCupon] = useState<string | null>(null);
@@ -123,7 +137,7 @@ export function CarritoCompras() {
       try {
         const carrito = await obtenerCarrito();
         if (activo) {
-          dispatch({ type: "SINCRONIZAR", carrito });
+          sincronizarCarrito({ carrito });
         }
       } catch (error) {
         if (activo) {
@@ -143,7 +157,7 @@ export function CarritoCompras() {
     return () => {
       activo = false;
     };
-  }, [dispatch]);
+  }, [sincronizarCarrito]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -196,7 +210,7 @@ export function CarritoCompras() {
     setErrorCarrito(null);
     try {
       const carrito = await eliminarProductoDelCarrito(id);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      sincronizarCarrito({ carrito });
     } catch (error) {
       console.error("No se pudo eliminar el producto del carrito.", error);
       setErrorCarrito(
@@ -222,7 +236,7 @@ export function CarritoCompras() {
     setErrorCarrito(null);
     try {
       const carrito = await actualizarCantidadProducto(id, cantidad);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      sincronizarCarrito({ carrito });
     } catch (error) {
       console.error("No se pudo actualizar la cantidad del producto.", error);
       setErrorCarrito(
@@ -236,24 +250,19 @@ export function CarritoCompras() {
   }
 
   const handleVaciar = () => {
-    dispatch({ type: "LIMPIAR" });
+    limpiarCarrito();
     setCuponAplicado("");
   };
 
-  const subtotal = productos.reduce(
-    (acc, producto) => acc + producto.precioUnitario * producto.cantidad,
-    0,
-  );
-
-  let descuento = state.resumenApi?.descuentoCupon ?? 0;
-  let total = state.resumenApi?.total ?? subtotal;
+  let descuento = descuentoApi;
+  let total = totalApiDerivado;
   switch (cuponAplicado) {
     case "CUPONCLIENTENUEVO":
       descuento = Math.min(subtotal, 10);
       total = subtotal - descuento;
       break;
     case "CYBERWEEK":
-      descuento = subtotal * 0.2;
+      descuento = Math.round(subtotal * 0.2);
       total = subtotal - descuento;
       break;
     case "ENVIOGRATIS":
@@ -262,7 +271,7 @@ export function CarritoCompras() {
       break;
     case "BLACKFRIDAY":
       if (subtotal > 100) {
-        descuento = subtotal * 0.15;
+        descuento = Math.round(subtotal * 0.15);
         total = subtotal - descuento;
       }
       break;
@@ -281,8 +290,7 @@ export function CarritoCompras() {
         setCuponAplicado(codigo);
         break;
       case "REGALO":
-        dispatch({
-          type: "AGREGAR",
+        agregarProducto({
           producto: {
             productoId: "regalo",
             nombre: "Producto de regalo",
@@ -303,8 +311,6 @@ export function CarritoCompras() {
   const productosRecomendados = ofertas.filter(
     (oferta) => !productos.some((producto) => producto.productoId === oferta.id),
   );
-  const cantidadArticulos = state.resumenApi?.totalArticulos
-    ?? productos.reduce((totalItems, producto) => totalItems + producto.cantidad, 0);
   const accionesDeshabilitadas = cargando
     || actualizandoProductoId !== null
     || eliminandoProductoId !== null;

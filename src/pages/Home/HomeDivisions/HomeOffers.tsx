@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { ProductoOferta } from "../../../TDATypes";
 import type { Dispatch, SetStateAction } from "react";
 import { UIProductCard } from "../../../components/UIKit/UIProductCard";
-import { useCarrito } from "../../../context/CarritoContext";
+import { useCarritoStore } from "../../../store/carritoStore";
 import { agregarProductoAlCarrito } from "../../../services/carrito";
 
 type HomeOffersProps = {
@@ -29,14 +29,14 @@ function formatPrice(price: number): string {
 }
 
 function HomeOfferCard({ product, discountPercentage }: HomeOfferCardProps) {
-    const { dispatch } = useCarrito();
+    const sincronizarCarrito = useCarritoStore((state) => state.sincronizarCarrito);
     const [cartStatus, setCartStatus] = useState<CartStatus>("idle");
 
     async function addToCart() {
         setCartStatus("loading");
         try {
             const cart = await agregarProductoAlCarrito(product.id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito: cart });
+            sincronizarCarrito({ carrito: cart });
             setCartStatus("added");
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);

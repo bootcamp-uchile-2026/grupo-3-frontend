@@ -1,5 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { useCarrito } from "../../context/CarritoContext";
+import {
+    selectCantidadArticulos,
+    useCarritoStore,
+} from "../../store/carritoStore";
 import { HeaderOptionsNavBar} from "./HeaderDivisions/HeaderOptionsNavBar";
 import type { HeaderOption } from "../../TDATypes";
 interface HeaderProps {
@@ -22,8 +25,7 @@ export function Header({
     accountIconSrc = "/assets/images/user.svg",
     cartIconSrc = "/assets/images/cart.svg" }: HeaderProps) {
 
-    const { state } = useCarrito();
-    const totalItems = state.productos.reduce((acc, p) => acc + p.cantidad, 0);
+    const totalItems = useCarritoStore(selectCantidadArticulos);
     return (
         <header className="site-header">
             <div className="top-bar">

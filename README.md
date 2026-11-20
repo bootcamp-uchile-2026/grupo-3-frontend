@@ -94,7 +94,7 @@ No se declara una ruta comodín (`*`) para una página 404.
 - **Carrito:** `CartItem`, `QuantityStepper`, `CouponBox` y `OrderSummary` separan el producto del carrito, el ajuste de cantidades, la entrada de cupones y el resumen de compra.
 - **Pedido:** `CardProductoConfirmacion` presenta cada producto en la confirmación.
 - **Mascotas e historial:** `DatosMascota`, `InformacionMascota`, `ResumenHistorialMascota`, `ResumenVacunasMascota`, `TabConsultas`, `TabVacunas` y `TabExamenes` componen las vistas del perfil médico.
-- **Estructura compartida:** `MainLayout`, `Header`, `Body` y `Footer` organizan las páginas; `CarritoProvider` comparte el estado del carrito.
+- **Estructura compartida:** `MainLayout`, `Header`, `Body` y `Footer` organizan las páginas; el store Zustand comparte el estado persistido del carrito.
 - **Iconografía:** `UIKit/UIIcons` contiene iconos SVG reutilizables.
 
 ## Integración con API

@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { App } from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
-import { CarritoProvider } from "./context/CarritoContext";
 /*
 BrowserRouter es un componente que permite la navegación en una aplicación React 
 utilizando rutas basadas en el historial del navegador. 
@@ -14,9 +13,7 @@ definir rutas y navegar entre ellas sin recargar la página.
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter> 
-      <CarritoProvider>
-        <App />
-      </CarritoProvider>
+      <App />
     </BrowserRouter>
   </StrictMode>,
 )
