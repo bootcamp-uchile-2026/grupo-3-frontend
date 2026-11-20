@@ -8,16 +8,17 @@ type HeaderOptionsNavBarProps = {
 
 export function HeaderOptionsNavBar({ options }: HeaderOptionsNavBarProps) {
     return (
-        <>
-            <nav className="bottom-bar" aria-label="Categorías principales">
-                <ul>
-                    {options.map((headerOption) => (
-                        <li>
-                            <NavLink to={headerOption.route}> <UIKitIcon name={headerOption.icon} iconColor={headerOption.color} /> {headerOption.name} </NavLink>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </>
+        <nav className="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                {options.map((headerOption) => (
+                    <li key={headerOption.name}>
+                        <NavLink to={headerOption.route}> 
+                            <UIKitIcon name={headerOption.icon} iconColor={headerOption.color} /> 
+                            {headerOption.name} 
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+        </nav>
     )
 }

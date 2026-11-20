@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
 import { HeaderOptionsNavBar} from "./HeaderDivisions/HeaderOptionsNavBar";
+import { MegaMenuCategorias } from "./HeaderDivisions/MenuListCategorias";
 import type { HeaderOption } from "../../TDATypes";
 import logoPetLove from "../../assets/brand/logoV1.png";
 import userIcon from "../../assets/Icons/user.svg";
@@ -57,7 +58,10 @@ export function Header({
                     </NavLink>
                 </div>
             </div>
-            <HeaderOptionsNavBar options={headerOptions} />
+            <div className="nav-con-menu">
+                <HeaderOptionsNavBar options={headerOptions} />
+                <MegaMenuCategorias />
+            </div>
         </header>
     )
 }
