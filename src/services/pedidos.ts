@@ -1,4 +1,6 @@
-const PEDIDOS_API_URL = "http://18.226.214.170:3000/api/v1/catalogo/pedidos";
+import { obtenerApiBaseUrl } from "./apiClient";
+
+const PEDIDOS_API_PATH = "/catalogo/pedidos";
 
 export type CreatePedidoDto = {
   nombre: string;
@@ -71,7 +73,7 @@ function esPedidoCreado(value: unknown): value is PedidoCreado {
 }
 
 export async function crearPedido(datos: CreatePedidoDto): Promise<PedidoCreado> {
-  const response = await fetch(PEDIDOS_API_URL, {
+  const response = await fetch(`${obtenerApiBaseUrl()}${PEDIDOS_API_PATH}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -94,7 +96,10 @@ export async function crearPedido(datos: CreatePedidoDto): Promise<PedidoCreado>
 }
 
 export async function obtenerPedido(id: string, signal?: AbortSignal): Promise<PedidoCreado> {
-  const response = await fetch(`${PEDIDOS_API_URL}/${encodeURIComponent(id)}`, { signal });
+  const response = await fetch(
+    `${obtenerApiBaseUrl()}${PEDIDOS_API_PATH}/${encodeURIComponent(id)}`,
+    { signal },
+  );
   if (!response.ok) {
     const detalle = await response.text();
     throw new Error(

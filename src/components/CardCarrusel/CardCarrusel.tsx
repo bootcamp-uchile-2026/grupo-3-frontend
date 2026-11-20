@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { IconChevronLeft, IconChevronRight } from "../UIKit/UIIcons";
 
 interface CardCarruselProps {
     children: ReactNode;
@@ -105,7 +106,11 @@ export function CardCarrusel({ children }: CardCarruselProps) {
                 disabled={!puedeRetroceder}
                 onClick={() => desplazar(-1)}
             >
-                ‹
+                <IconChevronLeft
+                    className="card-carrusel__arrow-icon"
+                    color="var(--terciario-30-color)"
+                    aria-hidden="true"
+                />
             </button>
             <div
                 role="region"
@@ -133,7 +138,11 @@ export function CardCarrusel({ children }: CardCarruselProps) {
                 disabled={!puedeAvanzar}
                 onClick={() => desplazar(1)}
             >
-                ›
+                <IconChevronRight
+                    className="card-carrusel__arrow-icon"
+                    color="var(--terciario-30-color)"
+                    aria-hidden="true"
+                />
             </button>
         </div>
     );

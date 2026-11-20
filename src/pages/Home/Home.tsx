@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { z } from "zod";
 import type { Categoria, ProductoOferta } from "../../TDATypes";
 import HomeCategories from "./HomeDivisions/HomeCategories";
 import HomeHero from "./HomeDivisions/HomeHero";
 import HomeOffers from "./HomeDivisions/HomeOffers";
 import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
+import {
+    adaptarProductoOferta,
+    obtenerCategorias,
+    obtenerOfertas,
+} from "../../services/catalogo";
 
 const petBird = new URL("../../assets/Home/pet-bird.jpg", import.meta.url).href;
 const petCat = new URL("../../assets/Home/pet-cat.png", import.meta.url).href;
@@ -17,27 +21,6 @@ const petLoveTeamImages = [
     { url: petFerret, alt: "Hurón de la familia PetLove" },
     { url: petDog, alt: "Perro de la familia PetLove" },
 ]
-
-const categoriasSchema = z.array(
-    z.object({
-        id: z.string(),
-        nombre: z.string(),
-        imagen: z.string(),
-        ruta: z.string(),
-    }).catchall(z.unknown()),
-);
-
-const productosOfertaSchema = z.array(
-    z.object({
-        id: z.string(),
-        nombre: z.string(),
-        precio: z.number(),
-        precioOriginal: z.number(),
-        imagenes: z.array(z.string()).min(1),
-        categoria: z.string(),
-        calificacionPromedio: z.number().min(0).max(5).optional(),
-    }).catchall(z.unknown()),
-);
 
 export function Home() {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -53,26 +36,14 @@ export function Home() {
 
         async function cargarCategorias() {
             try {
-                const response = await fetch(
-                    "http://18.226.214.170:3000/api/v1/catalogo/categorias",
-                    { signal: controller.signal }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`Error al cargar categorías: ${response.status}`);
-                }
-
-                const data: unknown = await response.json();
-                const resultado = categoriasSchema.safeParse(data);
-                if (!resultado.success) {
-                    throw new Error("La respuesta de categorías tiene un formato inválido.");
-                }
-
-                setCategorias(resultado.data);
+                const data = await obtenerCategorias(controller.signal);
+                setCategorias(data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las categorías.", error);
-                    setErrorCategorias("No se pudieron cargar las categorías.");
+                    setErrorCategorias(
+                        error instanceof Error ? error.message : "No se pudieron cargar las categorías.",
+                    );
                 }
             } finally {
                 if (!controller.signal.aborted) {
@@ -91,26 +62,14 @@ export function Home() {
 
         async function cargarOfertas() {
             try {
-                const response = await fetch(
-                    "http://18.226.214.170:3000/api/v1/catalogo/productos/ofertas",
-                    { signal: controller.signal }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`Error al cargar ofertas: ${response.status}`);
-                }
-
-                const data: unknown = await response.json();
-                const resultado = productosOfertaSchema.safeParse(data);
-                if (!resultado.success) {
-                    throw new Error("La respuesta de ofertas tiene un formato inválido.");
-                }
-
-                setProductosOferta(resultado.data);
+                const data = await obtenerOfertas({}, controller.signal);
+                setProductosOferta(data.map(adaptarProductoOferta));
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las ofertas.", error);
-                    setErrorOfertas("No se pudieron cargar las ofertas.");
+                    setErrorOfertas(
+                        error instanceof Error ? error.message : "No se pudieron cargar las ofertas.",
+                    );
                 }
             } finally {
                 if (!controller.signal.aborted) {
