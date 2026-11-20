@@ -2,6 +2,9 @@ import { NavLink } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
 import { HeaderOptionsNavBar} from "./HeaderDivisions/HeaderOptionsNavBar";
 import type { HeaderOption } from "../../TDATypes";
+import logoPetLove from "../../assets/brand/logoV1.png";
+import userIcon from "../../assets/Icons/user.svg";
+import cartIcon from "../../assets/Icons/shopping-cart.svg";
 import "./Header.css"
 
 interface HeaderProps {
@@ -19,10 +22,10 @@ const headerOptions: HeaderOption[] = [
 ]
 
 export function Header({
-    logoSrc = "/assets/images/logo-petlove.svg",
+    logoSrc = logoPetLove,
     logoAlt = "Petlove",
-    accountIconSrc = "/src/assets/Icons/user.svg",
-    cartIconSrc = "/src/assets/Icons/shopping-cart.svg" }: HeaderProps) {
+    accountIconSrc = userIcon,
+    cartIconSrc = cartIcon }: HeaderProps) {
 
     const { state } = useCarrito();
     const totalItems = state.productos.reduce((acc, p) => acc + p.cantidad, 0);

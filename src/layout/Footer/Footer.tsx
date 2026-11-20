@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "./Footer.css";
+import mascotasImg from "../../assets/brand/logo-petlove-mascotas.png";
+import instagramIcon from "../../assets/Icons/instagram.svg";
+import tiktokIcon from "../../assets/Icons/tiktok.svg";
+import whatsappIcon from "../../assets/Icons/whatsapp.svg";
+import facebookIcon from "../../assets/Icons/facebook.svg";
 
 interface FooterBranch {
   title?: string;
@@ -10,6 +15,8 @@ interface FooterBranch {
 interface FooterProps {
   companyName?: string;
   year?: number;
+  logoSrc?: string;
+  illustrationSrc?: string;
   branch?: FooterBranch;
    sections?: { title?: string; items: { to?: string; label: string }[] }[];
   socialLinks?: { href?: string; iconSrc: string; alt: string }[];
@@ -18,6 +25,7 @@ interface FooterProps {
 export function Footer({
   companyName = "PetLove",
   year = new Date().getFullYear(),
+  illustrationSrc = mascotasImg,
   branch = {
     title: "Sucursal",
     address: "Avenida Nueva Providencia 2556",
@@ -42,20 +50,23 @@ export function Footer({
     },
   ],
   socialLinks = [
-    { iconSrc: "../../assets/Icons/instagram.svg", alt: "Instagram" },
-    { iconSrc: "../../assets/Icons/tiktok.svg", alt: "TikTok" },
-    { iconSrc: "../../assets/Icons/whatsapp.svg", alt: "WhatsApp" },
-    { iconSrc: "../../assets/icons/facebook.svg", alt: "Facebook" },
+    { iconSrc: instagramIcon, alt: "Instagram" },
+    { iconSrc: tiktokIcon, alt: "TikTok" },
+    { iconSrc: whatsappIcon, alt: "WhatsApp" },
+    { iconSrc: facebookIcon, alt: "Facebook" },
   ],
 }: FooterProps) {
 
   return (
     <footer className="site-footer">
       <div className="footer-top">
-        <div className="footer-logo">
-          <NavLink to="/">
-            <div className="logo-placeholder"></div>
-            <span>{companyName}</span>
+        <div className="footer-brand">
+          <img src={illustrationSrc} alt="" className="footer-mascotas" />
+
+          <NavLink
+            to="/"
+            className="footer-logo"
+            aria-label={`${companyName}, ir al inicio`}>
           </NavLink>
         </div>
 
