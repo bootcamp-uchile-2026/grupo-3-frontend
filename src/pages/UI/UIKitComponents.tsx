@@ -20,6 +20,7 @@ import { UILogo } from "../../components/UIKit/UILogo/UILogo";
 import { UIMenuItem } from "../../components/UIKit/UIMenuItem/UIMenuItem";
 import { UIMenuGroup } from "../../components/UIKit/UIMenuGroup/UIMenuGroup";
 import { UISubMenu } from "../../components/UIKit/UISubMenu/UISubMenu";
+import { UIStepper } from "../../components/UIKit/UIStepper/UIStepper";
 import { UIDropDownPanel } from "../../components/UIKit/UIDropDownPanel/UIDropDownPanel";
 import { UIInfoBlock } from "../../components/UIKit/UIInfoBlock/UIInfoBlock";
 import { UILinkList } from "../../components/UIKit/UILinkList/UILinkList";
@@ -296,6 +297,81 @@ function InputExample() {
           }
         />
         <UIInput label="Teléfono" type="tel" size="sm" value="" onChange={() => undefined} message="Opcional" />
+      </div>
+    </DocSection>
+  );
+}
+
+// ======================================
+// UIStepper
+// ======================================
+
+const PASOS_AGENDAMIENTO = ["Selección de servicio", "Fecha, hora y profesional", "Datos de contacto"];
+const PASOS_COMPRA = ["Datos", "Tipo de entrega", "Pago"];
+
+function StepperExample() {
+  const [paso, setPaso] = useState(0);
+
+  return (
+    <DocSection
+      title="UIStepper"
+      description="Indicador de progreso de un proceso por pasos. El paso actual se muestra relleno y los demás en tono claro, unidos por líneas. Esquema verde (agendamiento) o naranjo (compra)."
+      note="En el ejemplo interactivo usa Anterior y Siguiente; con onStepClick, los pasos ya completados se pueden presionar para volver a ellos. En pantallas angostas solo se muestra el nombre del paso actual."
+      props={[
+        {
+          title: "Props de UIStepper",
+          rows: [
+            ["steps", "string[]", "Sí", "—", "Nombre de cada paso, en orden."],
+            ["current", "number", "Sí", "—", "Paso actual, empezando en 0."],
+            ["color", '"green" | "orange"', "No", '"green"', "Esquema de color."],
+            ["size", '"sm" | "md"', "No", '"md"', "Círculo de 32 px o 40 px."],
+            ["onStepClick", "(index: number) => void", "No", "—", "Permite volver a pasos completados."],
+            ["ariaLabel", "string", "No", '"Progreso"', "Nombre accesible del proceso."],
+            ["className", "string", "No", "—", "Clase adicional."],
+          ],
+        },
+      ]}
+      usage={`<UIStepper
+  steps={["Selección de servicio", "Fecha, hora y profesional", "Datos de contacto"]}
+  current={pasoActual}
+  onStepClick={setPasoActual}
+  ariaLabel="Pasos del agendamiento"
+/>`}
+    >
+      <h3>Verde: paso 1, 2 y 3</h3>
+      <div style={{ ...fondoHeader, flexDirection: "column", alignItems: "stretch" }}>
+        <UIStepper steps={PASOS_AGENDAMIENTO} current={0} />
+        <UIStepper steps={PASOS_AGENDAMIENTO} current={1} />
+        <UIStepper steps={PASOS_AGENDAMIENTO} current={2} />
+      </div>
+
+      <h3>Naranjo y tamaño sm</h3>
+      <div style={{ ...fondoHeader, flexDirection: "column", alignItems: "stretch" }}>
+        <UIStepper steps={PASOS_COMPRA} current={0} color="orange" />
+        <UIStepper steps={PASOS_COMPRA} current={1} color="orange" size="sm" />
+      </div>
+
+      <h3>Interactivo</h3>
+      <div style={{ ...fondoHeader, flexDirection: "column", alignItems: "stretch" }}>
+        <UIStepper
+          steps={PASOS_AGENDAMIENTO}
+          current={paso}
+          onStepClick={setPaso}
+          ariaLabel="Pasos del agendamiento"
+        />
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+          <UIButton variant="tertiary" size="S" disabled={paso === 0} onClick={() => setPaso((p) => p - 1)}>
+            Anterior
+          </UIButton>
+          <UIButton
+            variant="secondary"
+            size="S"
+            disabled={paso === PASOS_AGENDAMIENTO.length - 1}
+            onClick={() => setPaso((p) => p + 1)}
+          >
+            Siguiente
+          </UIButton>
+        </div>
       </div>
     </DocSection>
   );
@@ -1038,25 +1114,6 @@ function FooterPiecesExample() {
   );
 }
 
-// ======================================
-// EXPORT: A todas las secciones
-// ======================================
-
-export function UIKitLayoutExamples() {
-  return (
-    <>
-      <SearchInputExample />
-      <IconButtonExample />
-      <BadgeExample />
-      <TextLinkExample />
-      <NavItemExample />
-      <LogoExample />
-      <MenuExample />
-      <DropDownPanelExample />
-      <FooterPiecesExample />
-    </>
-  );
-}
 
 import {
     UIProductDescription,
@@ -2000,6 +2057,44 @@ export function UIKitComponents() {
 
         {/* COMPONENTE BUTTONS */}
         <ButtonsExample />
+        {/* COMPONENTE SEARCH INPUT */}
+                <SearchInputExample />
+
+                {/* COMPONENTE INPUT */}
+                <InputExample />
+
+                {/* COMPONENTE STEPPER */}
+                <StepperExample />
+
+                {/* COMPONENTE ICON BUTTON */}
+                <IconButtonExample />
+
+                {/* COMPONENTE BADGE */}
+                <BadgeExample />
+
+                {/* COMPONENTE TEXT LINK */}
+                <TextLinkExample />
+
+                {/* COMPONENTE LINK */}
+                <LinkExample />
+
+                {/* COMPONENTE QUALIFICATION */}
+                <QualificationExample />
+
+                {/* COMPONENTE NAV ITEM */}
+                <NavItemExample />
+
+                {/* COMPONENTE LOGO */}
+                <LogoExample />
+
+                {/* COMPONENTES MENU GROUP, MENU ITEM Y SUBMENU */}
+                <MenuExample />
+
+                {/* COMPONENTE DROPDOWN PANEL */}
+                <DropDownPanelExample />
+
+                {/* COMPONENTES FOOTER: INFO BLOCK, LINK LIST Y SOCIAL LINKS */}
+                <FooterPiecesExample />
 
         {/* COMPONENTE DROPDOWN */}
         <DropdownExample />
