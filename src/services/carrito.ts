@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const API_URL = import.meta.env.VITE_API_URL ?? "http://18.226.214.170:3000"
 const CARRITO_API = `${API_URL}/api/v1/carritos`;
 export const USUARIO_ID_CARRITO = "duenio-123";
@@ -15,16 +16,30 @@ export type ItemCarritoApi = {
     cantidad: number;
     subtotal: number;
 };
+=======
+import {
+    agregarAlCarritoApiInputSchema,
+    actualizarItemCarritoApiInputSchema,
+    aplicarCuponCarritoApiInputSchema,
+    carritoApiDtoSchema,
+    carritoSnapshotSchema,
+    eliminarProductoDelCarritoInputSchema,
+    obtenerCarritoApiInputSchema,
+    quitarCuponCarritoApiInputSchema,
+} from "../schemas/carrito";
+import type { CarritoApiDto, CarritoSnapshot } from "../schemas/carrito";
+import { apiFetch, ApiError } from "./apiClient";
 
-export type CarritoApiResponse = {
-    items: ItemCarritoApi[];
-    totalArticulos: number;
-    subtotal: number;
-    cuponAplicado?: string | null;
-    descuentoCupon: number;
-    total: number;
-};
+export const USUARIO_ID_CARRITO = "duenio-123";
 
+export type { ItemCarrito as ItemCarritoApi } from "../schemas/carrito";
+>>>>>>> develop
+
+type ResultadoValidacion<T> =
+    | { success: true; data: T }
+    | { success: false; error: { message: string } };
+
+<<<<<<< HEAD
 type Operacion = "crear" | "obtener" | "agregar" | "actualizar" | "eliminar" ;
 
 function esItemCarritoApi(value: unknown): value is ItemCarritoApi {
@@ -160,16 +175,32 @@ export async function agregarProductoAlCarrito(
         body: JSON.stringify({ productoId, cantidad }),
     });
     return carritoDesdeRespuesta(response, "agregar");
+=======
+function adaptarCarritoApi(carrito: CarritoApiDto): CarritoSnapshot {
+    return carritoSnapshotSchema.parse({
+        carritoId: carrito.id,
+        productos: carrito.items.map((item) => ({
+            ...item,
+            marca: item.marca ?? "",
+            precioOriginal: item.precioOriginal ?? item.precioUnitario,
+        })),
+        cuponAplicado: carrito.cuponAplicado ?? null,
+        descuentoCupon: carrito.descuentoCupon ?? 0,
+    });
+>>>>>>> develop
 }
 
-export async function actualizarCantidadProducto(
-    productoId: string,
-    cantidad: number,
-): Promise<CarritoApiResponse> {
-    if (!Number.isInteger(cantidad) || cantidad < 1) {
-        throw new Error("La cantidad debe ser un número entero mayor que cero.");
+function validarEntrada<Output>(
+    resultado: ResultadoValidacion<Output>,
+    mensaje: string,
+): Output {
+    if (!resultado.success) {
+        throw new ApiError(`${mensaje}: ${resultado.error.message}`);
     }
+    return resultado.data;
+}
 
+<<<<<<< HEAD
     const carritoId = await obtenerCarritoId();
     const response = await fetch(urlItem(carritoId, productoId), {
         method: "PATCH",
@@ -177,12 +208,125 @@ export async function actualizarCantidadProducto(
         body: JSON.stringify({ cantidad }),
     });
     return carritoDesdeRespuesta(response, "actualizar");
+=======
+export async function crearCarritoInvitado(signal?: AbortSignal): Promise<CarritoSnapshot> {
+    const carrito = await apiFetch("/carritos", carritoApiDtoSchema, {
+        method: "POST",
+        signal,
+    });
+    return adaptarCarritoApi(carrito);
 }
 
-export async function eliminarProductoDelCarrito(
+export async function obtenerCarritoPorId(
+    carritoId: string,
+    signal?: AbortSignal,
+): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        obtenerCarritoApiInputSchema.safeParse({ carritoId }),
+        "El identificador del carrito es inválido",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(entrada.carritoId)}`,
+        carritoApiDtoSchema,
+        { signal },
+    );
+    return adaptarCarritoApi(carrito);
+}
+
+export async function agregarItemAlCarritoApi(
+    valores: { carritoId: string; productoId: string; cantidad?: number },
+): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        agregarAlCarritoApiInputSchema.safeParse(valores),
+        "Los datos del producto son inválidos",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(entrada.carritoId)}/items`,
+        carritoApiDtoSchema,
+        {
+            method: "POST",
+            body: JSON.stringify({
+                productoId: entrada.productoId,
+                ...(entrada.cantidad !== undefined && { cantidad: entrada.cantidad }),
+            }),
+        },
+    );
+    return adaptarCarritoApi(carrito);
+>>>>>>> develop
+}
+
+export async function actualizarItemCarritoApi(
+    valores: { carritoId: string; productoId: string; cantidad: number },
+): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        actualizarItemCarritoApiInputSchema.safeParse(valores),
+        "La cantidad del producto es inválida",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(entrada.carritoId)}/items/${encodeURIComponent(entrada.productoId)}`,
+        carritoApiDtoSchema,
+        {
+            method: "PATCH",
+            body: JSON.stringify({ cantidad: entrada.cantidad }),
+        },
+    );
+    return adaptarCarritoApi(carrito);
+}
+
+export async function eliminarItemDelCarritoApi(
+    carritoId: string,
     productoId: string,
+<<<<<<< HEAD
 ): Promise<CarritoApiResponse> {
     const carritoId = await obtenerCarritoId();
     const response = await fetch(urlItem(carritoId, productoId), { method: "DELETE" });
     return carritoDesdeRespuesta(response, "eliminar");
+=======
+): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        eliminarProductoDelCarritoInputSchema.safeParse({ productoId }),
+        "El identificador del producto es inválido",
+    );
+    const cart = validarEntrada(
+        obtenerCarritoApiInputSchema.safeParse({ carritoId }),
+        "El identificador del carrito es inválido",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(cart.carritoId)}/items/${encodeURIComponent(entrada.productoId)}`,
+        carritoApiDtoSchema,
+        { method: "DELETE" },
+    );
+    return adaptarCarritoApi(carrito);
+}
+
+export async function aplicarCuponCarritoApi(
+    valores: { carritoId: string; codigoCupon: string },
+): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        aplicarCuponCarritoApiInputSchema.safeParse(valores),
+        "El código del cupón es inválido",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(entrada.carritoId)}/cupon`,
+        carritoApiDtoSchema,
+        {
+            method: "PUT",
+            body: JSON.stringify({ codigoCupon: entrada.codigoCupon }),
+        },
+    );
+    return adaptarCarritoApi(carrito);
+}
+
+export async function quitarCuponCarritoApi(carritoId: string): Promise<CarritoSnapshot> {
+    const entrada = validarEntrada(
+        quitarCuponCarritoApiInputSchema.safeParse({ carritoId }),
+        "El identificador del carrito es inválido",
+    );
+    const carrito = await apiFetch(
+        `/carritos/${encodeURIComponent(entrada.carritoId)}/cupon`,
+        carritoApiDtoSchema,
+        { method: "DELETE" },
+    );
+    return adaptarCarritoApi(carrito);
+>>>>>>> develop
 }

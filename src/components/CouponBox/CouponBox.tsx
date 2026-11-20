@@ -1,4 +1,5 @@
 import type { FormEvent } from "react";
+import { IconTicket } from "../UIKit/UIIcons";
 
 interface CouponBoxProps {
   value: string;
@@ -20,7 +21,11 @@ export function CouponBox({
       <h2 className="coupon-box__title" id="coupon-box-title">Cupón</h2>
       <form className="coupon-box__form" onSubmit={onApply}>
         <label className="coupon-box__field">
-          <span className="coupon-box__icon" aria-hidden="true">%</span>
+          <IconTicket
+            className="coupon-box__icon"
+            color="var(--b-n-90-color)"
+            aria-hidden="true"
+          />
           <span className="coupon-box__visually-hidden">Código promocional</span>
           <input
             className="coupon-box__input"
