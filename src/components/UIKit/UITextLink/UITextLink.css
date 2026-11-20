@@ -1,0 +1,87 @@
+.ui-text-link {
+  --ui-text-link-color: #922500;
+  --ui-text-link-hover: #EE7344;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ui-text-link-color);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-decoration: none;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+/* ===== Diferente Tamaño ===== */
+.ui-text-link--sm {
+  font-size: 13px;
+}
+
+/* ===== so variante ===== */
+.ui-text-link--strong {
+  --ui-text-link-color: #1F0B01;
+  --ui-text-link-hover: #922500;
+  font-weight: 700;
+}
+
+.ui-text-link--muted {
+  --ui-text-link-color: #6B5B53;
+  --ui-text-link-hover: #1F0B01;
+  font-weight: 400;
+}
+
+/* ===== el subrayado ===== */
+.ui-text-link--underline-always {
+  text-decoration-line: underline;
+}
+
+.ui-text-link--underline-hover:hover,
+.ui-text-link--underline-always:hover {
+  text-decoration-line: underline;
+}
+
+/* ===== para cada estado ===== */
+.ui-text-link:hover {
+  color: var(--ui-text-link-hover);
+}
+
+.ui-text-link:focus-visible {
+  outline: 2px solid #EE7344;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.ui-text-link--disabled,
+.ui-text-link--disabled:hover {
+  color: var(--ui-text-link-color);
+  text-decoration-line: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ui-text-link__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+  transition: transform 0.15s;
+}
+
+.ui-text-link__icon > svg,
+.ui-text-link__icon > img {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-text-link:hover .ui-text-link__icon {
+  transform: translateX(2px);
+}

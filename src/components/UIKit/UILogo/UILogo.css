@@ -1,0 +1,42 @@
+.ui-logo {
+  --ui-logo-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.ui-logo--sm {
+  --ui-logo-height: 32px;
+}
+
+.ui-logo--lg {
+  --ui-logo-height: 56px;
+}
+
+.ui-logo--con-mascotas {
+  --ui-logo-height: 72px;
+}
+
+.ui-logo--con-mascotas.ui-logo--sm {
+  --ui-logo-height: 52px;
+}
+
+.ui-logo--con-mascotas.ui-logo--lg {
+  --ui-logo-height: 100px;
+}
+
+.ui-logo__img {
+  display: block;
+  height: var(--ui-logo-height);
+  width: auto;
+  max-width: 100%;
+}
+
+a.ui-logo:focus-visible {
+  outline: 2px solid #EE7344;
+  outline-offset: 4px;
+}
