@@ -1,6 +1,6 @@
 .order-summary {
-  padding: 18px;
-  border-radius: var(--cart-radius-card);
+  padding: var(--space-lg);
+  border-radius: var(--radius-3xl);
   background: var(--b-n-blanco-color);
   box-shadow: var(--cart-shadow-card);
 }
@@ -8,24 +8,35 @@
 .order-summary__title {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 18px;
-  color: var(--b-n-40-color);
-  font-size: 1rem;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+  color: var(--terciario-30-color);
+  font-family: var(--font-family-heading-xs), sans-serif;
+  font-size: var(--font-size-heading-xs);
+  line-height: var(--line-height-heading-xs);
+}
+
+.order-summary__title-icon {
+  flex: 0 0 auto;
+  width: var(--size-2xl);
+  height: var(--size-2xl);
 }
 
 .order-summary__totals {
   display: grid;
-  gap: 16px;
+  gap: var(--space-base);
+  padding-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--b-n-120-color);
 }
 
 .order-summary__row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
-  color: var(--b-n-40-color);
-  font-size: 0.9rem;
+  gap: var(--space-sm);
+  color: var(--terciario-30-color);
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-body-m);
 }
 
 .order-summary__row dd {
@@ -38,9 +49,11 @@
 }
 
 .order-summary__row--total {
-  margin-top: 2px;
-  font-size: 1.25rem;
-  font-weight: 700;
+  margin-top: var(--space-xs-2);
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-heading-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading-s);
 }
 
 .order-summary__checkout {
@@ -48,19 +61,19 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 44px;
-  margin-top: 18px;
-  padding: 10px 16px;
-  border-radius: var(--radius-full);
-  background: var(--b-n-80-color);
+  min-height: var(--size-5xl);
+  margin-top: var(--space-lg);
+  padding: var(--space-xs) var(--space-base);
+  border-radius: var(--radius-3xl);
+  background: var(--primario-90-color);
   color: var(--b-n-blanco-color);
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-regular);
   text-align: center;
 }
 
 .order-summary__checkout:hover {
-  background: var(--b-n-70-color);
+  background: var(--primario-80-color);
 }
 
 .order-summary__checkout:focus-visible {

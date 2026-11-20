@@ -7,56 +7,14 @@ import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProd
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
 import { TabsProducto } from "../../components/ProductoIndividual/TabsProducto/TabsProducto";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
-import { useCarrito } from "../../context/CarritoContext";
-import { agregarProductoAlCarrito } from "../../services/carrito";
-
-type ProductoDetalle = {
-    id: string;
-    nombre: string;
-    descripcion: string;
-    precio: number;
-    precioOriginal?: number;
-    imagenes?: string[];
-    categoria: string;
-    subcategoria: string;
-    especie: string;
-    sku?: string;
-    fichaTecnica?: string;
-    modoDeUso?: string;
-    fichaTecnicaDetalle?: Record<string, string>;
-};
-
-function esFichaTecnicaDetalle(value: unknown): value is Record<string, string> {
-    return typeof value === "object" && value !== null
-        && Object.values(value).every((dato) => typeof dato === "string");
-}
-
-function esProductoDetalle(value: unknown): value is ProductoDetalle {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "descripcion" in value && typeof value.descripcion === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && (!("precioOriginal" in value) || typeof value.precioOriginal === "number")
-        && (!("imagenes" in value) || (Array.isArray(value.imagenes)
-            && value.imagenes.every((imagen) => typeof imagen === "string")))
-        && "categoria" in value && typeof value.categoria === "string"
-        && "subcategoria" in value && typeof value.subcategoria === "string"
-        && "especie" in value && typeof value.especie === "string"
-        && (!("sku" in value) || typeof value.sku === "string")
-        && (!("fichaTecnica" in value) || typeof value.fichaTecnica === "string")
-        && (!("modoDeUso" in value) || typeof value.modoDeUso === "string")
-        && (!("fichaTecnicaDetalle" in value) || esFichaTecnicaDetalle(value.fichaTecnicaDetalle));
-}
-
-type ProductoRelacionado = {
-    id: string;
-    nombre: string;
-    precio: number;
-    precioOriginal?: number;
-    imagenes?: string[];
-    categoria: string;
-};
+import { useCarritoStore } from "../../store/carritoStore";
+import {
+    adaptarProductoDetalle,
+    adaptarProductoRelacionado,
+    obtenerProducto,
+    obtenerProductosRelacionados,
+} from "../../services/catalogo";
+import type { ProductoDetalleView, ProductoRelacionadoView } from "../../schemas/catalogo";
 
 type EstadoAccionCarrito = "idle" | "agregando" | "agregado" | "error";
 
@@ -68,15 +26,14 @@ function formatoPrecio(precio: number): string {
     }).format(precio);
 }
 
-function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionado }) {
-    const { dispatch } = useCarrito();
+function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionadoView }) {
+    const agregarProducto = useCarritoStore((state) => state.agregarProducto);
     const [estadoCarrito, setEstadoCarrito] = useState<EstadoAccionCarrito>("idle");
 
     async function agregarAlCarrito() {
         setEstadoCarrito("agregando");
         try {
-            const carrito = await agregarProductoAlCarrito(producto.id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito });
+            await agregarProducto({ productoId: producto.id, cantidad: 1 });
             setEstadoCarrito("agregado");
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
@@ -115,18 +72,7 @@ function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionad
     );
 }
 
-function esProductoRelacionado(value: unknown): value is ProductoRelacionado {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && (!("precioOriginal" in value) || typeof value.precioOriginal === "number")
-        && (!("imagenes" in value) || (Array.isArray(value.imagenes)
-            && value.imagenes.every((imagen) => typeof imagen === "string")))
-        && "categoria" in value && typeof value.categoria === "string";
-}
-
-const productoEjemplo: ProductoDetalle = {
+const productoEjemplo: ProductoDetalleView = {
     id: "ejemplo",
     nombre: "Comedero Elevado 450 ml",
     descripcion: "Comedero elevado estilo gatitos, práctico para servir agua o alimento de manera cómoda y segura.",
@@ -142,7 +88,7 @@ const productoEjemplo: ProductoDetalle = {
 
 export function ProductoIndividual() {
     const { id } = useParams();
-    const { dispatch } = useCarrito();
+    const agregarProducto = useCarritoStore((state) => state.agregarProducto);
     const [estadoProducto, setEstadoProducto] = useState({
         id,
         cargando: Boolean(id),
@@ -152,7 +98,7 @@ export function ProductoIndividual() {
     const [estadoRelacionados, setEstadoRelacionados] = useState({
         id,
         cargando: Boolean(id),
-        productos: [] as ProductoRelacionado[],
+        productos: [] as ProductoRelacionadoView[],
         error: null as string | null,
     });
     // Vincular el estado al ID evita que otro producto herede el resultado anterior.
@@ -167,9 +113,7 @@ export function ProductoIndividual() {
 
         setEstadoCarrito({ id, estado: "agregando" });
         try {
-            // Sincronizar la vista del carrito con el DTO que entrega el API.
-            const carrito = await agregarProductoAlCarrito(producto?.id ?? id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito });
+            await agregarProducto({ productoId: producto?.id ?? id, cantidad: 1 });
             setEstadoCarrito({ id, estado: "agregado" });
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
@@ -184,24 +128,13 @@ export function ProductoIndividual() {
         const controller = new AbortController();
         async function cargarProducto() {
             try {
-                const response = await fetch(
-                    `http://18.226.214.170:3000/api/v1/catalogo/productos/${encodeURIComponent(productId)}`,
-                    { signal: controller.signal }
-                );
-
-                if (response.status === 404) {
-                    throw new Error("No se encontró el producto solicitado.");
-                }
-                if (!response.ok) {
-                    throw new Error(`No se pudo cargar el producto (${response.status}).`);
-                }
-
-                const data: unknown = await response.json();
-                if (!esProductoDetalle(data)) {
-                    throw new Error("La respuesta del producto tiene un formato inválido.");
-                }
-
-                setEstadoProducto({ id: productId, cargando: false, producto: data, error: null });
+                const data = await obtenerProducto(productId, controller.signal);
+                setEstadoProducto({
+                    id: productId,
+                    cargando: false,
+                    producto: adaptarProductoDetalle(data),
+                    error: null,
+                });
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudo cargar el detalle del producto.", error);
@@ -227,24 +160,16 @@ export function ProductoIndividual() {
         const controller = new AbortController();
         async function cargarRelacionados() {
             try {
-                const response = await fetch(
-                    `http://18.226.214.170:3000/api/v1/catalogo/productos/${encodeURIComponent(productId)}/relacionados`,
-                    { signal: controller.signal }
+                const data = await obtenerProductosRelacionados(
+                    productId,
+                    { limit: 4 },
+                    controller.signal,
                 );
-
-                if (!response.ok) {
-                    throw new Error(`No se pudieron cargar los productos relacionados (${response.status}).`);
-                }
-
-                const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esProductoRelacionado)) {
-                    throw new Error("La respuesta de productos relacionados tiene un formato inválido.");
-                }
 
                 setEstadoRelacionados({
                     id: productId,
                     cargando: false,
-                    productos: data,
+                    productos: data.map(adaptarProductoRelacionado),
                     error: null,
                 });
             } catch (error) {

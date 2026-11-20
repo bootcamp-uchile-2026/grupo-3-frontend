@@ -5,22 +5,18 @@ import { CartItem } from "../../components/CartItem/CartItem";
 import { CouponBox } from "../../components/CouponBox/CouponBox";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
-import { useCarrito } from "../../context/CarritoContext";
+import { IconShoppoingCart } from "../../components/UIKit/UIIcons";
+import { useShallow } from "zustand/react/shallow";
 import {
-  agregarProductoAlCarrito,
-  actualizarCantidadProducto,
-  eliminarProductoDelCarrito,
-  obtenerCarrito,
-} from "../../services/carrito";
-
-type ProductoOferta = {
-  id: string;
-  nombre: string;
-  precio: number;
-  precioOriginal: number;
-  imagenes: string[];
-  categoria: string;
-};
+  selectCantidadArticulos,
+  selectDescuentoCarrito,
+  selectProductos,
+  selectSubtotalCarrito,
+  selectTotalCarrito,
+  useCarritoStore,
+} from "../../store/carritoStore";
+import { adaptarProductoOferta, obtenerSugeridos } from "../../services/catalogo";
+import type { ProductoOfertaView } from "../../schemas/catalogo";
 
 type EstadoTarjetaOferta = "idle" | "agregando" | "agregado" | "error";
 
@@ -32,15 +28,14 @@ function formatoPrecio(precio: number): string {
   }).format(precio);
 }
 
-function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
-  const { dispatch } = useCarrito();
+function TarjetaOfertaCarrito({ producto }: { producto: ProductoOfertaView }) {
+  const agregarProducto = useCarritoStore((state) => state.agregarProducto);
   const [estado, setEstado] = useState<EstadoTarjetaOferta>("idle");
 
   async function agregarAlCarrito() {
     setEstado("agregando");
     try {
-      const carrito = await agregarProductoAlCarrito(producto.id, 1);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      await agregarProducto({ productoId: producto.id, cantidad: 1 });
       setEstado("agregado");
     } catch (error) {
       console.error("No se pudo agregar el producto al carrito.", error);
@@ -57,6 +52,10 @@ function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
         price={formatoPrecio(producto.precio)}
         previousPrice={producto.precioOriginal > producto.precio
           ? formatoPrecio(producto.precioOriginal)
+          : undefined}
+        rating={producto.calificacionPromedio}
+        discountPercentage={producto.precioOriginal > producto.precio
+          ? Math.round((producto.precioOriginal - producto.precio) / producto.precioOriginal * 100)
           : undefined}
         productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
         buttonLabel={estado === "agregando"
@@ -76,85 +75,51 @@ function TarjetaOfertaCarrito({ producto }: { producto: ProductoOferta }) {
   );
 }
 
-function esProductoOferta(value: unknown): value is ProductoOferta {
-  return typeof value === "object" && value !== null
-    && "id" in value && typeof value.id === "string"
-    && "nombre" in value && typeof value.nombre === "string"
-    && "precio" in value && typeof value.precio === "number"
-    && "precioOriginal" in value && typeof value.precioOriginal === "number"
-    && "imagenes" in value && Array.isArray(value.imagenes)
-    && value.imagenes.length > 0
-    && value.imagenes.every((imagen) => typeof imagen === "string")
-    && "categoria" in value && typeof value.categoria === "string";
-}
-
 export function CarritoCompras() {
-  const { state, dispatch } = useCarrito();
-  const productos = state.productos;
+  const productos = useCarritoStore(useShallow(selectProductos));
+  const inicializar = useCarritoStore((state) => state.inicializar);
+  const estadoStore = useCarritoStore((state) => state.estado);
+  const errorStore = useCarritoStore((state) => state.error);
+  const eliminarProducto = useCarritoStore((state) => state.eliminarProducto);
+  const cambiarCantidad = useCarritoStore((state) => state.cambiarCantidad);
+  const aplicarCupon = useCarritoStore((state) => state.aplicarCupon);
+  const vaciarCarrito = useCarritoStore((state) => state.vaciarCarrito);
+  const cantidadArticulos = useCarritoStore(selectCantidadArticulos);
+  const subtotal = useCarritoStore(selectSubtotalCarrito);
+  const descuento = useCarritoStore(selectDescuentoCarrito);
+  const total = useCarritoStore(selectTotalCarrito);
   const [cupon, setCupon] = useState("");
-  const [cuponAplicado, setCuponAplicado] = useState("");
   const [errorCupon, setErrorCupon] = useState<string | null>(null);
-  const [cargando, setCargando] = useState(true);
   const [actualizandoProductoId, setActualizandoProductoId] = useState<string | null>(null);
   const [eliminandoProductoId, setEliminandoProductoId] = useState<string | null>(null);
-  const [errorCarrito, setErrorCarrito] = useState<string | null>(null);
-  const [ofertas, setOfertas] = useState<ProductoOferta[]>([]);
+  const [vaciando, setVaciando] = useState(false);
+  const [aplicandoCupon, setAplicandoCupon] = useState(false);
+  const [errorOperacion, setErrorOperacion] = useState<string | null>(null);
+  const [ofertas, setOfertas] = useState<ProductoOfertaView[]>([]);
   const [cargandoOfertas, setCargandoOfertas] = useState(true);
   const [errorOfertas, setErrorOfertas] = useState<string | null>(null);
+  const cargando = estadoStore === "idle" || estadoStore === "loading";
+  const errorCarrito = errorOperacion ?? errorStore;
 
   useEffect(() => {
     let activo = true;
 
-    async function cargarCarrito() {
-      try {
-        const carrito = await obtenerCarrito();
-        if (activo) {
-          dispatch({ type: "SINCRONIZAR", carrito });
-        }
-      } catch (error) {
-        if (activo) {
-          console.error("No se pudo cargar el carrito.", error);
-          setErrorCarrito(
-            error instanceof Error ? error.message : "No se pudo cargar el carrito.",
-          );
-        }
-      } finally {
-        if (activo) {
-          setCargando(false);
-        }
-      }
-    }
+    void inicializar().catch((error: unknown) => {
+      if (activo) console.error("No se pudo cargar el carrito.", error);
+    });
 
-    void cargarCarrito();
     return () => {
       activo = false;
     };
-  }, [dispatch]);
+  }, [inicializar]);
 
   useEffect(() => {
     const controller = new AbortController();
 
     async function cargarOfertas() {
       try {
-        const response = await fetch(
-          "http://18.226.214.170:3000/api/v1/catalogo/productos/ofertas",
-          { signal: controller.signal },
-        );
-        if (!response.ok) {
-          throw new Error(`No se pudieron cargar las recomendaciones (${response.status}).`);
-        }
-
-        const data: unknown = await response.json();
-        if (!Array.isArray(data)) {
-          throw new Error("La respuesta de recomendaciones tiene un formato inválido.");
-        }
-
-        const ofertasValidas = data.filter(esProductoOferta);
-        const invalidas = data.length - ofertasValidas.length;
-        setOfertas(ofertasValidas);
-        if (invalidas > 0) {
-          setErrorOfertas(`${invalidas} recomendación(es) tienen datos incompletos y no se muestran.`);
-        }
+        const response = await obtenerSugeridos({}, controller.signal);
+        setOfertas(response.map(adaptarProductoOferta));
       } catch (error) {
         if (!controller.signal.aborted) {
           console.error("No se pudieron cargar las recomendaciones del carrito.", error);
@@ -179,13 +144,12 @@ export function CarritoCompras() {
     if (cargando || actualizandoProductoId !== null || eliminandoProductoId !== null) return;
 
     setEliminandoProductoId(id);
-    setErrorCarrito(null);
+    setErrorOperacion(null);
     try {
-      const carrito = await eliminarProductoDelCarrito(id);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      await eliminarProducto({ productoId: id });
     } catch (error) {
       console.error("No se pudo eliminar el producto del carrito.", error);
-      setErrorCarrito(
+      setErrorOperacion(
         error instanceof Error
           ? error.message
           : "No se pudo eliminar el producto del carrito.",
@@ -205,13 +169,12 @@ export function CarritoCompras() {
     if (cantidad === producto.cantidad) return;
 
     setActualizandoProductoId(id);
-    setErrorCarrito(null);
+    setErrorOperacion(null);
     try {
-      const carrito = await actualizarCantidadProducto(id, cantidad);
-      dispatch({ type: "SINCRONIZAR", carrito });
+      await cambiarCantidad({ productoId: id, cantidad });
     } catch (error) {
       console.error("No se pudo actualizar la cantidad del producto.", error);
-      setErrorCarrito(
+      setErrorOperacion(
         error instanceof Error
           ? error.message
           : "No se pudo actualizar la cantidad del producto.",
@@ -221,87 +184,58 @@ export function CarritoCompras() {
     }
   }
 
-  const handleVaciar = () => {
-    dispatch({ type: "LIMPIAR" });
-    setCuponAplicado("");
-  };
-
-  const subtotal = productos.reduce(
-    (acc, producto) => acc + producto.precioUnitario * producto.cantidad,
-    0,
-  );
-
-  let descuento = state.resumenApi?.descuentoCupon ?? 0;
-  let total = state.resumenApi?.total ?? subtotal;
-  switch (cuponAplicado) {
-    case "CUPONCLIENTENUEVO":
-      descuento = Math.min(subtotal, 10);
-      total = subtotal - descuento;
-      break;
-    case "CYBERWEEK":
-      descuento = subtotal * 0.2;
-      total = subtotal - descuento;
-      break;
-    case "ENVIOGRATIS":
-      descuento = 0;
-      total = subtotal;
-      break;
-    case "BLACKFRIDAY":
-      if (subtotal > 100) {
-        descuento = subtotal * 0.15;
-        total = subtotal - descuento;
-      }
-      break;
-  }
-
-  const handleAplicarCupon = (event: SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setErrorCupon(null);
-
-    const codigo = cupon.trim().toUpperCase();
-    switch (codigo) {
-      case "CUPONCLIENTENUEVO":
-      case "CYBERWEEK":
-      case "ENVIOGRATIS":
-      case "BLACKFRIDAY":
-        setCuponAplicado(codigo);
-        break;
-      case "REGALO":
-        dispatch({
-          type: "AGREGAR",
-          producto: {
-            productoId: "regalo",
-            nombre: "Producto de regalo",
-            marca: "PetLove",
-            imagen: "",
-            precioOriginal: 0,
-            precioUnitario: 0,
-            cantidad: 1,
-            subtotal: 0,
-          },
-        });
-        break;
-      default:
-        setErrorCupon("Cupón no válido.");
+  async function handleVaciar() {
+    setVaciando(true);
+    setErrorOperacion(null);
+    try {
+      await vaciarCarrito();
+    } catch (error) {
+      console.error("No se pudo vaciar el carrito.", error);
+      setErrorOperacion(
+        error instanceof Error ? error.message : "No se pudo vaciar el carrito.",
+      );
+    } finally {
+      setVaciando(false);
     }
   };
 
-  const productosRecomendados = ofertas.filter(
-    (oferta) => !productos.some((producto) => producto.productoId === oferta.id),
-  );
-  const cantidadArticulos = state.resumenApi?.totalArticulos
-    ?? productos.reduce((totalItems, producto) => totalItems + producto.cantidad, 0);
+  const handleAplicarCupon = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorCupon(null);
+    setAplicandoCupon(true);
+    try {
+      await aplicarCupon(cupon.trim().toUpperCase());
+    } catch (error) {
+      console.error("No se pudo aplicar el cupón.", error);
+      setErrorCupon(
+        error instanceof Error ? error.message : "No se pudo aplicar el cupón.",
+      );
+    } finally {
+      setAplicandoCupon(false);
+    }
+  };
+
+  const productosRecomendados = ofertas;
+  const layoutClassName = !cargando && productos.length === 0
+    ? "cart-page__layout cart-page__layout--empty"
+    : "cart-page__layout";
   const accionesDeshabilitadas = cargando
     || actualizandoProductoId !== null
-    || eliminandoProductoId !== null;
+    || eliminandoProductoId !== null
+    || vaciando
+    || aplicandoCupon;
 
   return (
     <div className="cart-page">
       <div className="container cart-page__container">
-        <div className="cart-page__layout">
+        <div className={layoutClassName}>
           <section className="cart-page__items" aria-labelledby="cart-title">
             <h1 className="cart-page__heading" id="cart-title">
-              <span aria-hidden="true">🛒</span>
+              <IconShoppoingCart
+                className="cart-page__heading-icon"
+                color="var(--terciario-30-color)"
+                aria-hidden="true"
+              />
               Carrito de compras ({cantidadArticulos} artículos)
             </h1>
 
@@ -348,7 +282,7 @@ export function CarritoCompras() {
             <aside className="cart-page__sidebar" aria-label="Cupón y resumen del pedido">
               <CouponBox
                 value={cupon}
-                isLoading={cargando}
+                isLoading={cargando || aplicandoCupon}
                 error={errorCupon}
                 onChange={setCupon}
                 onApply={handleAplicarCupon}
