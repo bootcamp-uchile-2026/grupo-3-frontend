@@ -4,7 +4,7 @@ import perroIcon from "../../../assets/Icons/dog.svg";
 import exoticosIcon from "../../../assets/Icons/paw.svg";
 import flechaIcon from "../../../assets/Icons/chevron-right.svg";
 
-type ItemMenu = { label: string; sub?: boolean };
+type ItemMenu = { label: string; subitems?: string[] };
 type GrupoMenu = { titulo: string; icon: string; items: ItemMenu[] };
 
 const GRUPOS: GrupoMenu[] = [
@@ -12,10 +12,10 @@ const GRUPOS: GrupoMenu[] = [
     titulo: "Gato",
     icon: gatoIcon,
     items: [
-      { label: "Alimentos y Snack", sub: true },
-      { label: "Higiene y Cuidado", sub: true },
-      { label: "Accesorios", sub: true },
-      { label: "Farmacia", sub: true },
+      { label: "Alimentos y Snack", subitems: ["Alimentos húmedos", "Alimentos secos", "Snack"] },
+      { label: "Higiene y Cuidado", subitems: ["Higiene", "Anti-estrés", "Pelos y uñas", "Limpieza del hogar"] },
+      { label: "Accesorios", subitems: ["Camas y rascadores", "Transporte y seguridad", "Platos y bebederos", "Vestuario", "Juguetes"] },
+      { label: "Farmacia", subitems: ["Antiparasitarios", "Internos", "Externos", "Medicamentos", "Vitaminas y Suplementos"] },
       { label: "Arenas y Areneros" },
       { label: "Outlet" },
     ],
@@ -24,10 +24,10 @@ const GRUPOS: GrupoMenu[] = [
     titulo: "Perro",
     icon: perroIcon,
     items: [
-      { label: "Alimentos y Snack", sub: true },
-      { label: "Salud y Bienestar", sub: true },
-      { label: "Accesorios", sub: true },
-      { label: "Farmacia", sub: true },
+      { label: "Alimentos y Snack", subitems: ["Alimentos húmedos", "Alimentos secos", "Snack"] },
+      { label: "Salud y Bienestar", subitems: ["Higiene", "Anti-estrés", "Pelos y uñas", "Limpieza del hogar"] },
+      { label: "Accesorios", subitems: ["Camas", "Transporte y seguridad", "Platos y bebederos", "Vestuario", "Juguetes"] },
+      { label: "Farmacia", subitems: ["Antiparasitarios", "Internos", "Externos", "Medicamentos", "Vitaminas y Suplementos"] },
       { label: "Outlet" },
     ],
   },
@@ -35,11 +35,11 @@ const GRUPOS: GrupoMenu[] = [
     titulo: "Exóticos",
     icon: exoticosIcon,
     items: [
-      { label: "Aves", sub: true },
-      { label: "Reptiles", sub: true },
-      { label: "Roedores", sub: true },
-      { label: "Conejos", sub: true },
-      { label: "Hurones", sub: true },
+      { label: "Aves", subitems: ["Alimentos", "Periquitos", "Canarios", "Ninfas", "Agarponis", "Loros", "Jaulas y Accesorios", "Juguetes y Enriquecimiento" ] },
+      { label: "Reptiles", subitems: ["Alimentos", "Tortugas", "Geckos", "Dragones Barbudos", "Iguanas", "Serpientes", "Terrarios y Accesorios"] },
+      { label: "Roedores", subitems: ["Alimentos", "Hámsters", "Cobayos (Cuyes)", "Chinchillas", "Ratas", "Ratones", "Jaulas y Accesorios", "Juguetes y Enriquecimiento"] },
+      { label: "Conejos", subitems: ["Alimentos", "Jaulas y Accesorios", "Juguetes y Enriquecimiento"] },
+      { label: "Hurones", subitems: ["Alimentos", "Jaulas y Accesorios", "Juguetes y Enriquecimiento"] },
     ],
   },
 ];
@@ -57,30 +57,53 @@ const mascara = (src: string) => ({
 });
 
 export function MegaMenuCategorias() {
- return (
+  return (
     <div className="mega-menu" aria-label="Categorías">
       <div className="mega-menu-grid">
-        {GRUPOS.map((grupo) => (
-          <section key={grupo.titulo} className="mega-col">
-            <h3 className="mega-titulo">
-              <span className="mega-icono" aria-hidden="true" style={mascara(grupo.icon)} />
-              {grupo.titulo}
-            </h3>
+        {GRUPOS.map((grupo) => {
+          const rutaGrupo = `/categoria/${slug(grupo.titulo)}`;
 
-            <ul>
-              {grupo.items.map((item) => (
-                <li key={item.label}>
-                  <NavLink to={`/categoria/${slug(grupo.titulo)}/${slug(item.label)}`}>
-                    <span>{item.label}</span>
-                    {item.sub && (
-                      <span className="mega-chevron" aria-hidden="true" style={mascara(flechaIcon)} />
-                    )}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+          return (
+            <section key={grupo.titulo} className="mega-col">
+              <h3 className="mega-titulo">
+                <span className="mega-icono" aria-hidden="true" style={mascara(grupo.icon)} />
+                {grupo.titulo}
+              </h3>
+
+              <ul>
+                {grupo.items.map((item) => {
+                  const rutaItem = `${rutaGrupo}/${slug(item.label)}`;
+                  const tieneSub = !!item.subitems?.length;
+
+                  return (
+                    <li key={item.label} className={tieneSub ? "con-submenu" : undefined}>
+                      <NavLink to={rutaItem} aria-haspopup={tieneSub ? "true" : undefined}>
+                        <span>{item.label}</span>
+                        {tieneSub && (
+                            <svg className="mega-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6" />
+                            </svg>
+                            )}
+                      </NavLink>
+
+                      {tieneSub && (
+                        <div className="submenu">
+                          <ul>
+                            {item.subitems!.map((sub) => (
+                              <li key={sub}>
+                                <NavLink to={`${rutaItem}/${slug(sub)}`}>{sub}</NavLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          );
+        })}
       </div>
     </div>
   );
