@@ -114,7 +114,7 @@
   padding: 10px 20px;
 }
 
-.bottom-bar ul {
+.bottom-bar > ul {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,32 +122,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
-}
-
-.bottom-bar ul li a,
-.bottom-bar ul li span {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 14px;
-  color: #1F0B01;
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease;
-}
-
-.bottom-bar ul li a svg,
-.bottom-bar ul li a img {
-  width: 30px;
-  height: 30px;
-}
-
-.bottom-bar ul li a:hover {
-  background-color: #EE7344;
 }
 
 /* ================= Menú desplegable Categorías ================= */
