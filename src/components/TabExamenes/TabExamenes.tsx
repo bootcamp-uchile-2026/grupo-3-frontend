@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import { Campo, ModalClinicaVet } from "../ModalClinicaVet/ModalClinicaVet";
+import "./TabExamenes.css";
 
 type Examen = {
     id: number;
@@ -91,6 +92,7 @@ export function TabExamenes() {
                                 name="fecha"
                                 value={filtros.fecha}
                                 onChange={handleChange}
+                                onClick={(e) => e.currentTarget.showPicker?.()}
                             />
                         </div>
 

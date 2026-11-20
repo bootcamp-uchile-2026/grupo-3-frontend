@@ -1,11 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 .site-footer {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    /* gris claro del wireframe */
-    color: #333;
-    border: 1px solid #333;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #D5DFBB;
+    color: #1F0B01;
+    border: 1px solid #D5DFBB;
     width: 100%;
 }
+
+.footer-branch h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.footer-branch p {
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: inherit;
+}
+
 .footer-top {
     display: flex;
     justify-content: space-between;
@@ -44,6 +59,11 @@
     color: #000;
     font-size: 12px;
     font-weight: 600;
+}
+
+.footer-links ul li.section-title {
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
 .footer-links ul li a:hover {

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { z } from 'zod';
 import UIButton from '../../components/UIKit/UIButton/UIButton';
 import { IconChevronDown } from '../../components/UIKit/UIIcons';
 import { UIProductCard } from '../../components/UIKit/UIProductCard';
@@ -9,28 +8,11 @@ import { FiltroTienda, type FiltroClave, type SeleccionesFiltro } from '../../co
 import { subcategoriasMascota } from '../../components/FiltroTienda/subcategoriasMascota';
 import { HeroTienda } from '../../components/HeroTienda/HeroTienda';
 import { OrdenTienda, type OrdenTiendaValor, type VistaTienda } from '../../components/OrdenTienda/OrdenTienda';
-import { useCarrito } from '../../context/CarritoContext';
-import { agregarProductoAlCarrito } from '../../services/carrito';
+import { useCarritoStore } from '../../store/carritoStore';
+import { adaptarProductoCatalogo, obtenerProductos } from '../../services/catalogo';
+import type { ProductoCatalogoView } from '../../schemas/catalogo';
 
-const productoCatalogoSchema = z.object({
-  id: z.string(),
-  nombre: z.string(),
-  precio: z.number(),
-  precioOriginal: z.number().optional(),
-  imagenes: z.array(z.string()).min(1),
-  categoria: z.string(),
-  marca: z.string().optional(),
-  descuento: z.number().optional(),
-  calificacionPromedio: z.number().min(0).max(5).optional(),
-  especie: z.string().optional(),
-  subcategoria: z.string().optional(),
-  descripcion: z.string().optional(),
-  fichaTecnica: z.string().optional(),
-  modoDeUso: z.string().optional(),
-  fichaTecnicaDetalle: z.record(z.string(), z.union([z.string(), z.number()])).optional(),
-}).catchall(z.unknown());
-
-type ProductoCatalogo = z.infer<typeof productoCatalogoSchema>;
+type ProductoCatalogo = ProductoCatalogoView;
 
 type EstadoCarritoProducto = 'idle' | 'agregando' | 'agregado' | 'error';
 
@@ -49,14 +31,13 @@ function TarjetaProductoTienda({
   producto: ProductoCatalogo;
   vista: VistaTienda;
 }) {
-  const { dispatch } = useCarrito();
+  const agregarProducto = useCarritoStore((state) => state.agregarProducto);
   const [estadoCarrito, setEstadoCarrito] = useState<EstadoCarritoProducto>('idle');
 
   async function agregarAlCarrito() {
     setEstadoCarrito('agregando');
     try {
-      const carrito = await agregarProductoAlCarrito(producto.id, 1);
-      dispatch({ type: 'SINCRONIZAR', carrito });
+      await agregarProducto({ productoId: producto.id, cantidad: 1 });
       setEstadoCarrito('agregado');
     } catch (error) {
       console.error('No se pudo agregar el producto al carrito.', error);
@@ -190,29 +171,8 @@ export function Tienda() {
 
     async function cargarProductos() {
       try {
-        const response = await fetch(
-          'http://18.226.214.170:3000/api/v1/catalogo/productos',
-          { signal: controller.signal },
-        );
-        if (!response.ok) {
-          throw new Error(`No se pudo cargar el catálogo (${response.status}).`);
-        }
-
-        const data: unknown = await response.json();
-        if (!Array.isArray(data)) {
-          throw new Error('La respuesta del catálogo tiene un formato inválido.');
-        }
-
-        // Omitir elementos incompletos, pero informar el problema en lugar de fingir un catálogo completo.
-        const productosValidos = data.flatMap((producto: unknown) => {
-          const resultado = productoCatalogoSchema.safeParse(producto);
-          return resultado.success ? [resultado.data] : [];
-        });
-        const invalidos = data.length - productosValidos.length;
-        setProductos(productosValidos);
-        if (invalidos > 0) {
-          setErrorCatalogo(`${invalidos} producto(s) del catálogo tienen datos incompletos y no se muestran.`);
-        }
+        const data = await obtenerProductos({}, controller.signal);
+        setProductos(data.map(adaptarProductoCatalogo));
       } catch (error) {
         if (!controller.signal.aborted) {
           console.error('No se pudo cargar el catálogo de productos.', error);

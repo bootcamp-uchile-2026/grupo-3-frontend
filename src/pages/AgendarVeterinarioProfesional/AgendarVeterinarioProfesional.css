@@ -117,7 +117,61 @@
 /* ========================================
    CONTENIDO PERFIL
 ======================================== */
+.pasos {
+  --paso-fondo: #fde9df;
+  --paso-oscuro: #a43a06;
+  --paso-claro: #ff8c5f;
+  --paso-texto: #1f1f1f;
+  --paso-circulo: 48px;
+  --paso-ancho: 130px; 
 
+  background: var(--paso-fondo);
+  padding: 24px 16px;
+}
+
+.pasos ol {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pasos li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: var(--paso-ancho);
+  text-align: center;
+  color: var(--paso-texto);
+  font-size: 15px;
+}
+
+.pasos .numero-paso {
+  display: grid;
+  place-items: center;
+  width: var(--paso-circulo);
+  height: var(--paso-circulo);
+  border-radius: 50%;
+  background: var(--paso-claro);
+  color: var(--paso-texto);
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pasos li.paso-activo .numero-paso,
+.pasos li.paso-completado .numero-paso {
+  background: var(--paso-oscuro);
+  color: #fff;
+}
+
+.pasos .texto-paso {
+  line-height: 1.2;
+}
 
 /* ========================================
    CONFIGURACIÓN
