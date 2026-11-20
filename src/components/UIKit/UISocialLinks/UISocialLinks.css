@@ -1,0 +1,27 @@
+.ui-social-links {
+  --ui-social-color: #4A5A24; /* verde oliva del footer */
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-social-links__item {
+  margin: 0;
+  padding: 0;
+}
+
+/* Color de los íconos (UIIconButton usa esta variable) */
+.ui-social-links .ui-social-links__btn {
+  --ui-icon-btn-color: var(--ui-social-color);
+  --ui-icon-btn-hover: rgba(74, 90, 36, 0.14);
+}
+
+/* Sin URL todavía: se ve normal, solo no es clickeable */
+.ui-social-links .ui-social-links__btn:disabled {
+  opacity: 1;
+  cursor: default;
+}
