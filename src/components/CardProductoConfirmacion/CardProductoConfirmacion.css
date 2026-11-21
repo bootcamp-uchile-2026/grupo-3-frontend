@@ -1,16 +1,62 @@
-.producto-cart-confirmacion{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    padding: 10px;
-}
-
-.info-producto-cart-confirmacion{
+.card-producto-confirmacion {
     display: flex;
-    justify-content: space-between;
-    gap: 5px;
+    align-items: center;
+    min-width: 0;
+    gap: var(--space-base);
+    padding: var(--space-base);
+    border-bottom: var(--space-px) solid var(--b-n-140-color);
+    font-size: var(--font-size-body-m);
+    line-height: var(--line-height-body-s);
 }
 
-.precio-producto-cart-confirmacion{
-    font-weight: 600;
+.card-producto-confirmacion__imagen {
+    width: var(--space-xl-6);
+    height: var(--space-xl-6);
+    flex: none;
+    border-radius: var(--radius-lg);
+    object-fit: contain;
+}
+
+.card-producto-confirmacion__texto {
+    display: grid;
+    flex: 1;
+    gap: var(--space-xs);
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.card-producto-confirmacion__nombre {
+    font: inherit;
+}
+
+.card-producto-confirmacion__nombre a {
+    color: inherit;
+}
+
+.card-producto-confirmacion__nombre a:hover {
+    text-decoration: underline;
+}
+
+.card-producto-confirmacion__precio {
+    color: var(--terciario-30-color);
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 600px) {
+    .card-producto-confirmacion {
+        gap: var(--space-xs);
+        padding: var(--space-sm) 0;
+        font-size: var(--font-size-body-s);
+    }
+
+    .card-producto-confirmacion__imagen {
+        width: var(--size-5xl);
+        height: var(--size-5xl);
+    }
+
+    .card-producto-confirmacion__precio {
+        color: var(--b-n-50-color);
+        font-size: inherit;
+    }
 }
