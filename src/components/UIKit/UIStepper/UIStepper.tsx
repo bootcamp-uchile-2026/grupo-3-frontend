@@ -2,19 +2,11 @@ import { Fragment } from "react";
 import "./UIStepper.css";
 
 export type UIStepperProps = {
-  /** Nombre de cada paso, en orden. */
   steps: string[];
-  /** Paso actual, empezando en 0. */
   current: number;
-  /** Esquema de color: verde (agendamiento) o naranjo (compra). */
   color?: "green" | "orange";
   size?: "sm" | "md";
-  /**
-   * Si se pasa, los pasos ya completados se pueden presionar para volver a ellos.
-   * Recibe el índice del paso (empezando en 0).
-   */
   onStepClick?: (index: number) => void;
-  /** Nombre accesible del proceso (ej. "Pasos del agendamiento"). */
   ariaLabel?: string;
   className?: string;
 };

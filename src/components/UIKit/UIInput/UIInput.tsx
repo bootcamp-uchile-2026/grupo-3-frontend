@@ -3,18 +3,14 @@ import type { ChangeEvent, FocusEvent, HTMLInputTypeAttribute } from "react";
 import "./UIInput.css";
 
 export type UIInputProps = {
-  /** Texto dentro del campo cuando está vacío (ej. "Nombre"). */
   label: string;
   value: string;
   onChange: (value: string) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 
   type?: HTMLInputTypeAttribute;
-  /** Muestra el asterisco rojo y marca el campo como obligatorio. */
   required?: boolean;
-  /** Estado de validación: borde rojo (error) o verde con ✓ (success). */
   status?: "default" | "error" | "success";
-  /** Mensaje bajo el campo. En error se anuncia a lectores de pantalla. */
   message?: string;
   size?: "sm" | "md";
   disabled?: boolean;

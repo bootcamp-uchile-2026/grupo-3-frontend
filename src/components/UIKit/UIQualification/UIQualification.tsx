@@ -2,22 +2,13 @@ import { useState } from "react";
 import "./UIQualification.css";
 
 export type UIQualificationProps = {
-  /** Calificación actual. En "stars" se redondea; en "badge" admite decimales (ej. 4.5). */
   value: number;
   max?: number;
-  /**
-   * "stars": fila de estrellas llenas y vacías.
-   * "badge": etiqueta compacta «★ n/5» (reviews).
-   */
   variant?: "stars" | "badge";
-  /** stars: 12 / 18 / 24 px por estrella. badge: sm y md (lg se muestra como md). */
   size?: "sm" | "md" | "lg";
-  /** Solo "stars": si se pasa, las estrellas se pueden seleccionar. */
   onChange?: (value: number) => void;
-  /** Solo "badge": muestra la estrella antes del número. */
   showIcon?: boolean;
   disabled?: boolean;
-  /** Texto accesible. Por defecto: "Calificación: 3 de 5". */
   ariaLabel?: string;
   className?: string;
 };
@@ -54,7 +45,7 @@ export function UIQualification({
 
   const limitado = Math.min(max, Math.max(0, value));
 
-  /* ================= Variante badge: «★ n/5» ================= */
+
   if (variant === "badge") {
     const tamano = size === "sm" ? "sm" : "md";
     const clases = [
@@ -80,7 +71,6 @@ export function UIQualification({
     );
   }
 
-  /* ================= Variante stars ================= */
   const actual = Math.round(limitado);
   const interactivo = Boolean(onChange) && !disabled;
   const mostrado = interactivo && hover !== null ? hover : actual;
@@ -98,7 +88,6 @@ export function UIQualification({
     .filter(Boolean)
     .join(" ");
 
-  // Solo lectura: una imagen con texto accesible
   if (!onChange) {
     return (
       <span className={clases} role="img" aria-label={etiqueta}>
@@ -109,7 +98,6 @@ export function UIQualification({
     );
   }
 
-  // Interactivo: un botón por estrella
   return (
     <span className={clases} role="group" aria-label={etiqueta} onMouseLeave={() => setHover(null)}>
       {posiciones.map((n) => (

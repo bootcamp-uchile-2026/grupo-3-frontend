@@ -5,13 +5,6 @@ import logoConMascotas from "../../../assets/brand/logo-petlove-mascotas.png";
 import logoCasa from "../../../assets/brand/logoV3.png";
 import "./UILogo.css";
 
-/**
- * Variantes según Figma:
- * - horizontal   (V1)     «PetLove» completo. Header en escritorio.
- * - compact      (Mobile) «Pet♥». Header en móvil o espacios reducidos.
- * - con-mascotas (V2)     Mascotas + «PetLove». Footer.
- * - casa         (V3)     Ilustración de la casa con mascotas. Login, estados vacíos, 404.
- */
 const LOGOS = {
   horizontal: logoHorizontal,
   compact: logoCompacto,
@@ -24,16 +17,9 @@ export type UILogoVariant = keyof typeof LOGOS;
 export type UILogoProps = {
   variant?: UILogoVariant;
   size?: "sm" | "md" | "lg";
-  /**
-   * Cambia automáticamente a la variante `compact` en pantallas angostas.
-   * Solo aplica a la variante `horizontal`.
-   */
   responsive?: boolean;
-  /** Ancho (px) bajo el cual se usa la versión compacta. */
   breakpoint?: number;
-  /** Ruta al hacer clic. `null` = el logo no es un enlace. */
   to?: string | null;
-  /** Reemplaza la imagen de la variante (ej. otra versión del logo). */
   src?: string;
   alt?: string;
   className?: string;

@@ -4,24 +4,16 @@ import "./UILinks.css";
 
 export type UILinkProps = {
   children: ReactNode;
-  /** Ruta interna (React Router). */
   to?: string;
-  /** Enlace externo: se abre en otra pestaña. */
   href?: string;
-  /** Acción; sin `to` ni `href` se renderiza un <button> con aspecto de enlace. */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
-
-  /** Esquema de color: café (marca) o azul (enlace estándar). */
   color?: "brown" | "blue";
   size?: "sm" | "md";
   weight?: "regular" | "bold";
-  /** Subrayado permanente. */
   underline?: boolean;
-  /** Flecha ↗ después del texto. `true` = flecha por defecto; también acepta un ícono propio. */
   icon?: boolean | ReactNode;
 
   disabled?: boolean;
-  /** Solo para documentación: muestra un estado de forma fija (como en Figma). */
   forceState?: "hover" | "active" | "focus";
   className?: string;
 };
