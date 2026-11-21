@@ -2,76 +2,88 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardCarrusel } from "../../components/CardCarrusel/CardCarrusel";
 import { Breadcrumbs } from "../../components/Breadcrumbs/Breadcrumbs";
-import { CardProducto } from "../../components/CardProducto/CardProducto";
 import { GaleriaProducto } from "../../components/ProductoIndividual/GaleriaProducto/GaleriaProducto";
 import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProducto/ResenasProducto";
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
-import { TabsProducto } from "../../components/ProductoIndividual/TabsProducto/TabsProducto";
-import { useCarrito } from "../../context/CarritoContext";
-import { agregarProductoAlCarrito } from "../../services/carrito";
-
-type ProductoDetalle = {
-    id: string;
-    nombre: string;
-    descripcion: string;
-    precio: number;
-    precioOriginal?: number;
-    imagenes?: string[];
-    categoria: string;
-    subcategoria: string;
-    especie: string;
-    sku?: string;
-    fichaTecnica?: string;
-    modoDeUso?: string;
-    fichaTecnicaDetalle?: Record<string, string>;
-};
-
-function esFichaTecnicaDetalle(value: unknown): value is Record<string, string> {
-    return typeof value === "object" && value !== null
-        && Object.values(value).every((dato) => typeof dato === "string");
-}
-
-function esProductoDetalle(value: unknown): value is ProductoDetalle {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "descripcion" in value && typeof value.descripcion === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && (!("precioOriginal" in value) || typeof value.precioOriginal === "number")
-        && (!("imagenes" in value) || (Array.isArray(value.imagenes)
-            && value.imagenes.every((imagen) => typeof imagen === "string")))
-        && "categoria" in value && typeof value.categoria === "string"
-        && "subcategoria" in value && typeof value.subcategoria === "string"
-        && "especie" in value && typeof value.especie === "string"
-        && (!("sku" in value) || typeof value.sku === "string")
-        && (!("fichaTecnica" in value) || typeof value.fichaTecnica === "string")
-        && (!("modoDeUso" in value) || typeof value.modoDeUso === "string")
-        && (!("fichaTecnicaDetalle" in value) || esFichaTecnicaDetalle(value.fichaTecnicaDetalle));
-}
-
-type ProductoRelacionado = {
-    id: string;
-    nombre: string;
-    precio: number;
-    precioOriginal?: number;
-    imagenes?: string[];
-    categoria: string;
-};
+import { IconExclamationCircle } from "../../components/UIKit/UIIcons";
+import { UIProductDescription, UIProductUsage, UITechnicalSheet } from "../../components/UIKit/UIProductDescription";
+import { UIProductCard } from "../../components/UIKit/UIProductCard";
+import { useCarritoStore } from "../../store/carritoStore";
+import {
+    adaptarProductoDetalle,
+    adaptarProductoRelacionado,
+    obtenerProducto,
+    obtenerProductosRelacionados,
+} from "../../services/catalogo";
+import type { ProductoDetalleView, ProductoRelacionadoView } from "../../schemas/catalogo";
 
 type EstadoAccionCarrito = "idle" | "agregando" | "agregado" | "error";
 
-function esProductoRelacionado(value: unknown): value is ProductoRelacionado {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && (!("precioOriginal" in value) || typeof value.precioOriginal === "number")
-        && (!("imagenes" in value) || (Array.isArray(value.imagenes)
-            && value.imagenes.every((imagen) => typeof imagen === "string")))
-        && "categoria" in value && typeof value.categoria === "string";
+const ordenFichaTecnica = ["Especie", "Función", "Capacidad", "Peso", "Medidas", "Material", "Características"];
+const compararCampos = new Intl.Collator("es", { sensitivity: "base" });
+
+function posicionCampoFicha(campo: string): number {
+    const posicion = ordenFichaTecnica.findIndex((label) => compararCampos.compare(label, campo.trim()) === 0);
+    return posicion < 0 ? ordenFichaTecnica.length : posicion;
 }
 
-const productoEjemplo: ProductoDetalle = {
+function formatoPrecio(precio: number): string {
+    return new Intl.NumberFormat("es-CL", {
+        style: "currency",
+        currency: "CLP",
+        maximumFractionDigits: 0,
+    }).format(precio);
+}
+
+function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionadoView }) {
+    const agregarProducto = useCarritoStore((state) => state.agregarProducto);
+    const [estadoCarrito, setEstadoCarrito] = useState<EstadoAccionCarrito>("idle");
+
+    async function agregarAlCarrito() {
+        setEstadoCarrito("agregando");
+        try {
+            await agregarProducto({ productoId: producto.id, cantidad: 1 });
+            setEstadoCarrito("agregado");
+        } catch (error) {
+            console.error("No se pudo agregar el producto al carrito.", error);
+            setEstadoCarrito("error");
+        }
+    }
+
+    return (
+        <div>
+            <UIProductCard
+                imageSrc={producto.imagenes?.[0] || "https://placehold.co/400x400?text=Sin+imagen"}
+                imageAlt={producto.nombre}
+                name={producto.nombre}
+                rating={producto.calificacionPromedio}
+                showUnrated
+                price={formatoPrecio(producto.precio)}
+                previousPrice={producto.precioOriginal !== undefined
+                    && producto.precioOriginal > producto.precio
+                    ? formatoPrecio(producto.precioOriginal)
+                    : undefined}
+                productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
+                buttonLabel={estadoCarrito === "agregando"
+                    ? "Agregando..."
+                    : estadoCarrito === "agregado"
+                        ? "Agregado"
+                        : "Añadir al carrito"}
+                onAddToCart={agregarAlCarrito}
+                loading={estadoCarrito === "agregando"}
+                selected={estadoCarrito === "agregado"}
+            />
+            {estadoCarrito === "agregado" && (
+                <p role="status">Producto agregado al carrito.</p>
+            )}
+            {estadoCarrito === "error" && (
+                <p role="alert">No se pudo agregar el producto. Inténtalo nuevamente.</p>
+            )}
+        </div>
+    );
+}
+
+const productoEjemplo: ProductoDetalleView = {
     id: "ejemplo",
     nombre: "Comedero Elevado 450 ml",
     descripcion: "Comedero elevado estilo gatitos, práctico para servir agua o alimento de manera cómoda y segura.",
@@ -87,7 +99,7 @@ const productoEjemplo: ProductoDetalle = {
 
 export function ProductoIndividual() {
     const { id } = useParams();
-    const { dispatch } = useCarrito();
+    const agregarProducto = useCarritoStore((state) => state.agregarProducto);
     const [estadoProducto, setEstadoProducto] = useState({
         id,
         cargando: Boolean(id),
@@ -97,7 +109,7 @@ export function ProductoIndividual() {
     const [estadoRelacionados, setEstadoRelacionados] = useState({
         id,
         cargando: Boolean(id),
-        productos: [] as ProductoRelacionado[],
+        productos: [] as ProductoRelacionadoView[],
         error: null as string | null,
     });
     // Vincular el estado al ID evita que otro producto herede el resultado anterior.
@@ -112,9 +124,7 @@ export function ProductoIndividual() {
 
         setEstadoCarrito({ id, estado: "agregando" });
         try {
-            // Sincronizar la vista del carrito con el DTO que entrega el API.
-            const carrito = await agregarProductoAlCarrito(producto?.id ?? id, 1);
-            dispatch({ type: "SINCRONIZAR", carrito });
+            await agregarProducto({ productoId: producto?.id ?? id, cantidad: 1 });
             setEstadoCarrito({ id, estado: "agregado" });
         } catch (error) {
             console.error("No se pudo agregar el producto al carrito.", error);
@@ -129,24 +139,13 @@ export function ProductoIndividual() {
         const controller = new AbortController();
         async function cargarProducto() {
             try {
-                const response = await fetch(
-                    `http://18.226.214.170:3000/api/v1/catalogo/productos/${encodeURIComponent(productId)}`,
-                    { signal: controller.signal }
-                );
-
-                if (response.status === 404) {
-                    throw new Error("No se encontró el producto solicitado.");
-                }
-                if (!response.ok) {
-                    throw new Error(`No se pudo cargar el producto (${response.status}).`);
-                }
-
-                const data: unknown = await response.json();
-                if (!esProductoDetalle(data)) {
-                    throw new Error("La respuesta del producto tiene un formato inválido.");
-                }
-
-                setEstadoProducto({ id: productId, cargando: false, producto: data, error: null });
+                const data = await obtenerProducto(productId, controller.signal);
+                setEstadoProducto({
+                    id: productId,
+                    cargando: false,
+                    producto: adaptarProductoDetalle(data),
+                    error: null,
+                });
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudo cargar el detalle del producto.", error);
@@ -172,24 +171,16 @@ export function ProductoIndividual() {
         const controller = new AbortController();
         async function cargarRelacionados() {
             try {
-                const response = await fetch(
-                    `http://18.226.214.170:3000/api/v1/catalogo/productos/${encodeURIComponent(productId)}/relacionados`,
-                    { signal: controller.signal }
+                const data = await obtenerProductosRelacionados(
+                    productId,
+                    { limit: 4 },
+                    controller.signal,
                 );
-
-                if (!response.ok) {
-                    throw new Error(`No se pudieron cargar los productos relacionados (${response.status}).`);
-                }
-
-                const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esProductoRelacionado)) {
-                    throw new Error("La respuesta de productos relacionados tiene un formato inválido.");
-                }
 
                 setEstadoRelacionados({
                     id: productId,
                     cargando: false,
-                    productos: data,
+                    productos: data.map(adaptarProductoRelacionado),
                     error: null,
                 });
             } catch (error) {
@@ -242,8 +233,13 @@ export function ProductoIndividual() {
         );
     }
 
+    const fichaTexto = producto.fichaTecnica?.trim();
+    const camposFicha = Object.entries(producto.fichaTecnicaDetalle ?? {})
+        .filter(([, valor]) => valor.trim())
+        .sort(([primero], [segundo]) => posicionCampoFicha(primero) - posicionCampoFicha(segundo));
+
     return (
-        <main className="producto-detalle">
+        <div className="producto-detalle">
             <div className="producto-detalle__contenedor">
                 <section className="producto-detalle__principal" aria-label="Detalle del producto">
                     <GaleriaProducto
@@ -252,7 +248,7 @@ export function ProductoIndividual() {
                         imagenes={producto.imagenes ?? []}
                     />
                     <div className="producto-detalle__informacion">
-                        <Breadcrumbs items={[
+                        <Breadcrumbs variant="product-detail" items={[
                             { label: "Inicio", to: "/" },
                             { label: producto.especie, to: "/tienda" },
                             { label: producto.categoria, to: "/tienda" },
@@ -265,7 +261,10 @@ export function ProductoIndividual() {
                             precioOriginal={producto.precioOriginal}
                             categoria={producto.categoria}
                             subcategoria={producto.subcategoria}
+                            especie={producto.especie}
                             sku={producto.sku}
+                            stock={producto.stock}
+                            calificacion={producto.calificacionPromedio}
                             agregando={estadoCarritoActual === "agregando"}
                             agregado={estadoCarritoActual === "agregado"}
                             errorCarrito={estadoCarritoActual === "error"}
@@ -274,17 +273,27 @@ export function ProductoIndividual() {
                         />
                     </div>
                 </section>
-                <TabsProducto
-                    descripcion={producto.descripcion}
-                    modoDeUso={producto.modoDeUso}
-                    fichaTecnica={producto.fichaTecnica}
-                    fichaTecnicaDetalle={producto.fichaTecnicaDetalle}
-                />
+                <div className="producto-detalle__acordeones" key={producto.id}>
+                    <UIProductDescription defaultOpen>
+                        {fichaTexto && (
+                            <p className="producto-detalle__texto-ficha">{fichaTexto}</p>
+                        )}
+                        {camposFicha.length > 0 && (
+                            <UITechnicalSheet variant="custom" data={Object.fromEntries(camposFicha)} />
+                        )}
+                        {!fichaTexto && camposFicha.length === 0 && (
+                            <p>No hay ficha técnica disponible para este producto.</p>
+                        )}
+                    </UIProductDescription>
+                    <UIProductDescription type="usage" icon={<IconExclamationCircle color="var(--primario-90-color)" />}>
+                        <UIProductUsage description={producto.modoDeUso || "No hay instrucciones de uso disponibles para este producto."} />
+                    </UIProductDescription>
+                </div>
                 <ResenasProducto />
             </div>
-            <section className="producto-relacionados">
+            <section className="producto-detalle__relacionados">
                 <div className="producto-detalle__contenedor">
-                    <h2>Productos relacionados</h2>
+                    <h2 className="producto-detalle__titulo-relacionados">Productos relacionados</h2>
                     {relacionadosActuales.cargando && <p role="status">Cargando productos relacionados...</p>}
                     {relacionadosActuales.error && <p role="alert">{relacionadosActuales.error}</p>}
                     {!relacionadosActuales.cargando && !relacionadosActuales.error
@@ -294,21 +303,15 @@ export function ProductoIndividual() {
                     {relacionadosActuales.productos.length > 0 && (
                         <CardCarrusel>
                             {relacionadosActuales.productos.map((productoRelacionado) => (
-                                <CardProducto
+                                <TarjetaProductoRelacionado
                                     key={productoRelacionado.id}
-                                    id={productoRelacionado.id}
-                                    titulo={productoRelacionado.nombre}
-                                    urlImagen={productoRelacionado.imagenes?.[0] || "https://placehold.co/400x400?text=Sin+imagen"}
-                                    precio={productoRelacionado.precio}
-                                    precioOriginal={productoRelacionado.precioOriginal}
-                                    categoria={productoRelacionado.categoria}
-                                    variant="standard"
+                                    producto={productoRelacionado}
                                 />
                             ))}
                         </CardCarrusel>
                     )}
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

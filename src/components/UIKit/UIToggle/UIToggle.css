@@ -1,0 +1,103 @@
+
+/* Contenedor principal */
+.ui-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* Input accesible, visualmente oculto */
+.ui-toggle__input {
+  position: absolute;
+  width: var(--size-4xl);
+  height: 25px;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* Fondo del interruptor */
+.ui-toggle__track {
+  display: flex;
+  align-items: center;
+  width: var(--size-4xl);
+  height: 25px;
+  padding: 5px;
+  box-sizing: border-box;
+  border: var(--size-xxs) solid var(--primario-90-color);
+  border-radius: var(--radius-full);
+  background-color: var(--terciario-150-color);
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+/* Círculo interior */
+.ui-toggle__thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: var(--primario-90-color);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Hover */
+.ui-toggle__input:hover:not(:disabled)
+  + .ui-toggle__track {
+  background-color: var(--primario-150-color);
+}
+
+/* Selected: interruptor encendido */
+.ui-toggle__input:checked + .ui-toggle__track {
+  background-color: var(--primario-90-color);
+}
+
+.ui-toggle__input:checked
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  transform: translateX(15px);
+  background-color: var(--b-n-blanco-color);
+}
+
+/* Focus: navegación con teclado */
+.ui-toggle__input:focus-visible
+  + .ui-toggle__track {
+  outline: var(--size-xxs) solid var(--primario-90-color);
+  outline-offset: var(--space-xxs);
+}
+
+/* Disabled */
+.ui-toggle--disabled {
+  cursor: not-allowed;
+  color: var(--b-n-100-color);
+}
+
+.ui-toggle__input:disabled + .ui-toggle__track {
+  background-color: var(--b-n-130-color);
+  border-color: var(--b-n-130-color);
+}
+
+.ui-toggle__input:disabled
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  background-color: var(--b-n-blanco-color);
+}
+
+/* Error */
+.ui-toggle--error .ui-toggle__track {
+  border-color: var(--error-90-color);
+}
+
+.ui-toggle--error
+  .ui-toggle__input:not(:checked)
+  + .ui-toggle__track
+  .ui-toggle__thumb {
+  background-color: var(--error-90-color);
+}
+
+/* Texto opcional */
+.ui-toggle__label {
+  font-size: var(--font-size-body-s);
+}

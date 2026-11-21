@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { IconDocument } from "../UIKit/UIIcons";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -18,7 +19,11 @@ export function OrderSummary({ subtotal, descuento, total }: OrderSummaryProps) 
   return (
     <section className="order-summary" aria-labelledby="order-summary-title">
       <h2 className="order-summary__title" id="order-summary-title">
-        <span aria-hidden="true">▤</span>
+        <IconDocument
+          className="order-summary__title-icon"
+          color="var(--primario-90-color)"
+          aria-hidden="true"
+        />
         Resumen del pedido
       </h2>
       <dl className="order-summary__totals">

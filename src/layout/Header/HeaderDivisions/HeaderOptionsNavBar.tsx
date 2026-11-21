@@ -1,32 +1,59 @@
-import { NavLink } from "react-router-dom";
+import type { ReactNode } from "react";
 import { UIKitIcon } from "../../../components/UIKit/UIIcons/UIKitIcon";
+import { UINavItem } from "../../../components/UIKit/UINavItem/UINavItem";
+import { UIDropDownPanel } from "../../../components/UIKit/UIDropDownPanel/UIDropDownPanel";
 import type { HeaderOption } from "../../../TDATypes";
 
+
 type HeaderOptionsNavBarProps = {
-    options: HeaderOption[]
-}
+    options: HeaderOption[];
+    /** Panel desplegable por ruta. Ej: { "/tienda": <MegaMenuCategorias /> } */
+    dropdowns?: Record<string, ReactNode>;
+};
 
-function HeaderOptionsNavBar({ options }: HeaderOptionsNavBarProps) {
+export function HeaderOptionsNavBar({ options, dropdowns }: HeaderOptionsNavBarProps) {
     return (
-        <>
-            <nav className="bottom-bar" aria-label="Categorías principales">
-                <ul>
-                    {options.map((headerOption) => (
-                        <li>
-                            <NavLink to={headerOption.route}> <UIKitIcon name={headerOption.icon} iconColor={headerOption.color} /> {headerOption.name} </NavLink>
-                        </li>
-                    ))}
-                    {/*<li><NavLink to="/servicios-veterinarios/agendar-veterinario-lista-servicios">🩺 Servicios veterinarios</NavLink></li>
-                    <li><NavLink to="/categoria/farmacia">💊 Farmacia</NavLink></li>
-                    <li><NavLink to="/categoria/gatos">🐱 Gato</NavLink></li>
-                    <li><NavLink to="/categoria/perros">🐶 Perro</NavLink></li>
-                    <li><NavLink to="/categoria/exoticos">🦎 Exóticos</NavLink></li>
-                    <li><NavLink to="/categoria/ofertas">🏷️ Outlet</NavLink></li>
-                    <li><span aria-disabled="true">📞 Contacto</span></li>*/}
-                </ul>
-            </nav>
-        </>
-    )
-}
+        <nav className="bottom-bar" aria-label="Categorías principales">
+            <ul>
+                {options.map((headerOption) => {
+                    // El ítem de la barra; "abierto" lo deja resaltado mientras su panel está visible
+                    const navItem = (abierto: boolean) => (
+                        <UINavItem
+                            label={headerOption.name}
+                            to={headerOption.route}
+                            active={abierto}
+                            icon={
+                                <UIKitIcon
+                                    name={headerOption.icon}
+                                    iconColor={headerOption.color}
+                                />
+                            }
+                        />
+                    );
 
-export default HeaderOptionsNavBar;
+                    const panel = headerOption.route
+                        ? dropdowns?.[headerOption.route]
+                        : undefined;
+
+                    return (
+                        <li key={headerOption.name}>
+                            {panel ? (
+                                <UIDropDownPanel
+                                    align="full"
+                                    openOn="hover"
+                                    ariaLabel={headerOption.name}
+                                    panelClassName="mega-menu"
+                                    trigger={navItem}
+                                >
+                                    {panel}
+                                </UIDropDownPanel>
+                            ) : (
+                                navItem(false)
+                            )}
+                        </li>
+                    );
+                })}
+            </ul>
+        </nav>
+    );
+}

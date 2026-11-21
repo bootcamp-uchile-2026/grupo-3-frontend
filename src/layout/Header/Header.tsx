@@ -1,9 +1,22 @@
-import { NavLink } from "react-router-dom";
-import { useCarrito } from "../../context/CarritoContext";
-import { UIKitIcon } from "../../components/UIKit/UIIcons/UIKitIcon";
-import HeaderOptionsNavBar from "./HeaderDivisions/HeaderOptionsNavBar";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    selectCantidadArticulos,
+    useCarritoStore,
+} from "../../store/carritoStore";
+import { HeaderOptionsNavBar } from "./HeaderDivisions/HeaderOptionsNavBar";
+import { MegaMenuCategorias } from "./HeaderDivisions/MenuListCategorias";
+import { UILogo } from "../../components/UIKit/UILogo/UILogo";
+import { UISearchInput } from "../../components/UIKit/UISearchInput/UISearchInput";
+import { UITextLink } from "../../components/UIKit/UITextLink/UITextLink";
+import { UIIconButton } from "../../components/UIKit/UIIconButton/UIIconButton";
 import type { HeaderOption } from "../../TDATypes";
+import userIcon from "../../assets/Icons/user.svg";
+import cartIcon from "../../assets/Icons/shopping-cart.svg";
+import "./Header.css";
+
 interface HeaderProps {
+    /** Si no se pasa, UILogo usa el logo horizontal por defecto. */
     logoSrc?: string;
     logoAlt?: string;
     accountIconSrc?: string;
@@ -11,49 +24,90 @@ interface HeaderProps {
 }
 
 const headerOptions: HeaderOption[] = [
-    { route: "/tienda", name: "Categorias", icon: "categories", color: "black" },
-    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "stethoscope", color: "black" },
-    { route: "/categoria/farmacia", name: "Farmacia", icon: "hospital", color: "black" },
-    { route: "", name: "Contacto", icon: "telephone", color: "black" }
-]
+    { route: "/tienda", name: "Categorías", icon: "Category", color: "brown" },
+    { route: "/servicios-veterinarios/agendar-veterinario-lista-servicios", name: "Servicios Veterinarios", icon: "Stethoscope", color: "brown" },
+    { route: "/categoria/farmacia", name: "Farmacia", icon: "Hospital", color: "brown" },
+    { route: "", name: "Contacto", icon: "Telephone", color: "brown" },
+];
+
+const IconoMenu = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+);
 
 export function Header({
-    logoSrc = "/assets/images/logo-petlove.svg",
-    logoAlt = "Petlove",
-    accountIconSrc = "/assets/images/user.svg",
-    cartIconSrc = "/assets/images/cart.svg" }: HeaderProps) {
+    logoSrc,
+    logoAlt = "PetLove",
+    accountIconSrc = userIcon,
+    cartIconSrc = cartIcon,
+}: HeaderProps) {
+    // Carrito (store)
+    const totalItems = useCarritoStore(selectCantidadArticulos);
+    const inicializarCarrito = useCarritoStore((state) => state.inicializar);
 
-    const { state } = useCarrito();
-    const totalItems = state.productos.reduce((acc, p) => acc + p.cantidad, 0);
+    useEffect(() => {
+        void inicializarCarrito().catch((error: unknown) => {
+            console.error("No se pudo inicializar el carrito del header.", error);
+        });
+    }, [inicializarCarrito]);
+
+    // Buscador
+    const [busqueda, setBusqueda] = useState("");
+    const navigate = useNavigate();
+
+    const buscar = (termino: string) => {
+        navigate(`/buscar?q=${encodeURIComponent(termino)}`);
+    };
+
     return (
         <header className="site-header">
             <div className="top-bar">
                 <div className="left">
-                    <button className="menu-btn" aria-label="Menú">☰</button>
-                    <NavLink to="/" className="logo">
-                        <img src={logoSrc} alt={logoAlt} />
-                    </NavLink>
+                    <UIIconButton
+                        ariaLabel="Menú"
+                        icon={IconoMenu}
+                        className="menu-btn"
+                    />
+                    <UILogo src={logoSrc} alt={logoAlt} />
                 </div>
 
                 <div className="center">
-                    <form className="search-form" action="/buscar" method="GET" role="search">
-                        <span className="search-icon">⌕</span>
-                        <input type="search" name="q" placeholder="Buscar" />
-                    </form>
+                    <UISearchInput
+                        value={busqueda}
+                        onChange={setBusqueda}
+                        onSubmit={buscar}
+                        placeholder="¿Qué necesita tu mascota?"
+                        label="Buscar productos"
+                    />
                 </div>
 
                 <div className="right">
-                    <span className="login-link" aria-disabled="true">Iniciar sesión / registrar</span>
-                    <NavLink to="/mi-perfil/perfil-usuario" aria-label="Mi cuenta">
-                        👤<img src={accountIconSrc} alt="Mi cuenta" />
-                    </NavLink>
-                    <NavLink to="/carrito-compras" aria-label="Carrito">
-                        🛒<img src={cartIconSrc} alt="Carrito" />
-                        {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
-                    </NavLink>
+                    <UITextLink size="sm" disabled>
+                        Iniciar sesión
+                    </UITextLink>
+
+                    <UIIconButton
+                        ariaLabel="Mi cuenta"
+                        iconSrc={accountIconSrc}
+                        to="/mi-perfil/perfil-usuario"
+                    />
+
+                    <UIIconButton
+                        ariaLabel="Carrito"
+                        iconSrc={cartIconSrc}
+                        to="/carrito-compras"
+                        badge={totalItems}
+                    />
                 </div>
             </div>
-            <HeaderOptionsNavBar options={headerOptions} />
+
+            <div className="nav-con-menu">
+                <HeaderOptionsNavBar
+                    options={headerOptions}
+                    dropdowns={{ "/tienda": <MegaMenuCategorias /> }}
+                />
+            </div>
         </header>
-    )
+    );
 }

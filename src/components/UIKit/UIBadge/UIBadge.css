@@ -1,0 +1,57 @@
+.ui-badge {
+  --ui-badge-bg: #EE7344;
+  --ui-badge-color: #FFFFFF;
+  --ui-badge-height: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ui-badge-height);
+  height: var(--ui-badge-height);
+  padding: 0 6px;
+  border-radius: 999px;
+  background-color: var(--ui-badge-bg);
+  color: var(--ui-badge-color);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* ===== Tamaños ===== */
+.ui-badge--md {
+  --ui-badge-height: 24px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+/* ===== Variantes ===== */
+.ui-badge--brown {
+  --ui-badge-bg: #922500;
+  --ui-badge-color: #FFFFFF;
+}
+
+.ui-badge--soft {
+  --ui-badge-bg: #FFE9DA;
+  --ui-badge-color: #922500;
+}
+
+.ui-badge--success {
+  --ui-badge-bg: #1E8E4E;
+  --ui-badge-color: #FFFFFF;
+}
+
+.ui-badge--neutral {
+  --ui-badge-bg: #E9E4E1;
+  --ui-badge-color: #1F0B01;
+}
+
+/* ===== Punto ===== */
+.ui-badge--dot {
+  min-width: 0;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+}

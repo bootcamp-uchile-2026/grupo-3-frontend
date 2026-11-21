@@ -1,4 +1,6 @@
 @import url('./App.css');
+@import url('./components/UIKit/UIKit.css');
+@import url('./pages/UI/UIKitComponents.css');
 @import url('./components/Breadcrumbs/Breadcrumbs.css');
 @import url('./components/CardCarrusel/CardCarrusel.css');
 @import url('./components/CardCategoria/CardCategoria.css');
@@ -27,6 +29,7 @@
 @import url('./components/QuantityStepper/QuantityStepper.css');
 @import url('./pages/Tienda/Tienda.css');
 @import url('./layout/Footer/Footer.css');
+@import url('./pages/UI/UIKitIcons/UIKitIcons.css');
 @import url('./layout/Header/Header.css');
 @import url('./pages/AgendarVeterinarioDatosContacto/AgendarVeterinarioDatosContacto.css');
 @import url('./pages/AgendarVeterinarioProfesional/AgendarVeterinarioProfesional.css');
@@ -36,6 +39,7 @@
 @import url('./pages/ConfirmacionPedido/ConfirmacionPedido.css');
 @import url('./pages/HistorialMedico/HistorialMedico.css');
 @import url('./pages/Home/Home.css');
+@import url('./pages/Home/HomeDivisions/HomeHero.css');
 @import url('./pages/PerfilMascota/PerfilMascota.css');
 @import url('./pages/PerfilUsuario/PerfilUsuario.css');
 @import url('./pages/ProductoIndividual/ProductoIndividual.css');

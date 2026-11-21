@@ -1,0 +1,11 @@
+.ui-product-card-rating {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-product-card-rating__star {
+    width: var(--size-2xl);
+    height: calc(var(--size-2xl) - var(--space-px));
+    flex: 0 0 auto;
+}

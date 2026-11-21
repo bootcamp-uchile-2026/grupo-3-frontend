@@ -1,22 +1,21 @@
-import { UIKitCategoryIcon } from "./UIKitCategoryIcon"
-import { UIKitStethoscopeIcon } from "./UIKitStethoscopeIcon"
-import { UIKitTelephoneIcon } from "./UIKitTelephoneIcon"
-import { UIKitHospitalIcon } from "./UIKitHospitalIcon"
+import type { UIIconProps } from "./types"
+import { iconRegistry } from "./iconRegistry"
+import type { UIKitIconName } from "./iconRegistry"
 
-type UIKitIconProps = {
-    name: string,
-    iconColor: string
+export type { UIKitIconName } from "./iconRegistry"
+
+export type UIKitIconProps = UIIconProps & {
+    name: UIKitIconName
+    iconColor?: string
 }
 
-export function UIKitIcon({ name, iconColor }: UIKitIconProps){
-    return (
-        <>
-        <div>
-            {(name === 'categories') && <UIKitCategoryIcon color={iconColor}/>}
-            {(name === 'stethoscope') && <UIKitStethoscopeIcon color={iconColor}/>}
-            {(name === 'telephone') && <UIKitTelephoneIcon color={iconColor}/>}
-            {(name === 'hospital') && <UIKitHospitalIcon color={iconColor}/>}
-        </div>
-        </>
-    )
+export function UIKitIcon({ name, color, iconColor, ...props }: UIKitIconProps) {
+    const icon = iconRegistry[name]
+
+    if (!icon) {
+        throw new RangeError(`Unknown UIKit icon: ${name}`)
+    }
+
+    const IconComponent = icon.component
+    return <IconComponent {...props} color={color ?? iconColor} />
 }

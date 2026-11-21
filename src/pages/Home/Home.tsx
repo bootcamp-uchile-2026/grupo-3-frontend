@@ -1,35 +1,26 @@
 import { useEffect, useState } from "react";
 import type { Categoria, ProductoOferta } from "../../TDATypes";
 import HomeCategories from "./HomeDivisions/HomeCategories";
+import HomeHero from "./HomeDivisions/HomeHero";
 import HomeOffers from "./HomeDivisions/HomeOffers";
 import HomePetloveTeam from "./HomeDivisions/HomePetLoveTeam";
+import {
+    adaptarProductoOferta,
+    obtenerCategorias,
+    obtenerOfertas,
+} from "../../services/catalogo";
 
-const urlPetLoveTeamImages = [
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
-    "https://placehold.co/400x400",
+const petBird = new URL("../../assets/Home/pet-bird.jpg", import.meta.url).href;
+const petCat = new URL("../../assets/Home/pet-cat.png", import.meta.url).href;
+const petDog = new URL("../../assets/Home/pet-dog.jpg", import.meta.url).href;
+const petFerret = new URL("../../assets/Home/pet-ferret.png", import.meta.url).href;
+
+const petLoveTeamImages = [
+    { url: petCat, alt: "Gato de la familia PetLove" },
+    { url: petBird, alt: "Ave de la familia PetLove" },
+    { url: petFerret, alt: "Hurón de la familia PetLove" },
+    { url: petDog, alt: "Perro de la familia PetLove" },
 ]
-
-function esCategoria(value: unknown): value is Categoria {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "imagen" in value && typeof value.imagen === "string"
-        && "ruta" in value && typeof value.ruta === "string";
-}
-
-
-function esProductoOferta(value: unknown): value is ProductoOferta {
-    return typeof value === "object" && value !== null
-        && "id" in value && typeof value.id === "string"
-        && "nombre" in value && typeof value.nombre === "string"
-        && "precio" in value && typeof value.precio === "number"
-        && "precioOriginal" in value && typeof value.precioOriginal === "number"
-        && "imagenes" in value && Array.isArray(value.imagenes)
-        && value.imagenes.length > 0 && value.imagenes.every((imagen) => typeof imagen === "string")
-        && "categoria" in value && typeof value.categoria === "string";
-}
 
 export function Home() {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -45,25 +36,14 @@ export function Home() {
 
         async function cargarCategorias() {
             try {
-                const response = await fetch(
-                    "http://18.226.214.170:3000/api/v1/catalogo/categorias",
-                    { signal: controller.signal }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`Error al cargar categorías: ${response.status}`);
-                }
-
-                const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esCategoria)) {
-                    throw new Error("La respuesta de categorías tiene un formato inválido.");
-                }
-
+                const data = await obtenerCategorias(controller.signal);
                 setCategorias(data);
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las categorías.", error);
-                    setErrorCategorias("No se pudieron cargar las categorías.");
+                    setErrorCategorias(
+                        error instanceof Error ? error.message : "No se pudieron cargar las categorías.",
+                    );
                 }
             } finally {
                 if (!controller.signal.aborted) {
@@ -82,25 +62,14 @@ export function Home() {
 
         async function cargarOfertas() {
             try {
-                const response = await fetch(
-                    "http://18.226.214.170:3000/api/v1/catalogo/productos/ofertas",
-                    { signal: controller.signal }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`Error al cargar ofertas: ${response.status}`);
-                }
-
-                const data: unknown = await response.json();
-                if (!Array.isArray(data) || !data.every(esProductoOferta)) {
-                    throw new Error("La respuesta de ofertas tiene un formato inválido.");
-                }
-
-                setProductosOferta(data);
+                const data = await obtenerOfertas({}, controller.signal);
+                setProductosOferta(data.map(adaptarProductoOferta));
             } catch (error) {
                 if (!controller.signal.aborted) {
                     console.error("No se pudieron cargar las ofertas.", error);
-                    setErrorOfertas("No se pudieron cargar las ofertas.");
+                    setErrorOfertas(
+                        error instanceof Error ? error.message : "No se pudieron cargar las ofertas.",
+                    );
                 }
             } finally {
                 if (!controller.signal.aborted) {
@@ -115,24 +84,23 @@ export function Home() {
     }, []);
 
     return (
-        <>
-            <section>
-                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias}/>
+        <div className="home">
+            <HomeHero />
+            <section className="home__categories" aria-label="Categorías destacadas">
+                <HomeCategories isLoading={cargandoCategorias} errorMessage={errorCategorias} categories={categorias} />
             </section>
-            <section id="hero">
-                <div className="slider">
-                    <div className="slide">
-                        <img src="https://placehold.co/1920x600" alt="Slide 1" />
-                        <button className="btn-slide">Registra tu Mascota</button>
-                    </div>
-                </div>
+            <section className="home__offers">
+                <HomeOffers
+                    isLoading={cargandoOfertas}
+                    errorMessage={errorOfertas}
+                    offers={productosOferta}
+                    visibleOffersAmount={cantidadOfertasVisibles}
+                    setVisibleOffersAmount={setCantidadOfertasVisibles}
+                />
             </section>
-            <section>
-                <HomeOffers isLoading={cargandoOfertas} errorMessage={errorOfertas} offers={productosOferta} visibleOffersAmount={cantidadOfertasVisibles} setVisibleOffersAmount={setCantidadOfertasVisibles}/>
+            <section className="home__family">
+                <HomePetloveTeam title="¡Conoce a la familia PetLove!" images={petLoveTeamImages} />
             </section>
-            <section>
-                <HomePetloveTeam title={"¡Conoce a la familia PetLove!"} urlImages={urlPetLoveTeamImages}/>
-            </section>
-        </>
+        </div>
     )
 }

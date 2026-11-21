@@ -1,0 +1,16 @@
+import type { UIIconProps } from "./types"
+
+export function IconChevronDown({ color = "#ffffff", size, ...props }: UIIconProps) {
+    return (
+        <svg
+            {...props}
+            width={size ?? 24}
+            height={size ?? 23}
+            viewBox="0 0 24 23"
+            fill="none"
+            color={color}
+        >
+            <path d="M19.5615 6.40274C20.1194 5.86575 21.0237 5.86575 21.5816 6.40274C22.1395 6.93972 22.1395 7.81013 21.5816 8.34711L13.0101 16.5973C12.4522 17.1342 11.5478 17.1342 10.9899 16.5973L2.41842 8.34711C1.86053 7.81013 1.86053 6.93972 2.41842 6.40274C2.97632 5.86575 3.88064 5.86575 4.43853 6.40274L12 13.6807L19.5615 6.40274Z" fill="currentColor" />
+        </svg>
+    )
+}

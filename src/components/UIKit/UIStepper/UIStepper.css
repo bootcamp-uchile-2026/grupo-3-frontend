@@ -1,0 +1,136 @@
+.ui-stepper {
+  /* Verde (por defecto) */
+  --ui-stepper-active-bg: #4A5A24;
+  --ui-stepper-active-text: #FFFFFF;
+  --ui-stepper-idle-bg: #E5EDD3;
+  --ui-stepper-idle-text: #1F0B01;
+  --ui-stepper-line: #4A5A24;
+  --ui-stepper-label: #1F0B01;
+
+  --ui-stepper-circle: 40px;
+  --ui-stepper-font: 14px;
+  --ui-stepper-label-size: 13px;
+
+  width: 100%;
+  font-family: inherit;
+}
+
+/* ===== Naranjo (flujo de compra) ===== */
+.ui-stepper--orange {
+  --ui-stepper-active-bg: #A43A06;
+  --ui-stepper-active-text: #FFFFFF;
+  --ui-stepper-idle-bg: #FF8C5F;
+  --ui-stepper-idle-text: #1F0B01;
+  --ui-stepper-line: #A43A06;
+}
+
+/* ===== Tamaños ===== */
+.ui-stepper--sm {
+  --ui-stepper-circle: 32px;
+  --ui-stepper-font: 13px;
+  --ui-stepper-label-size: 12px;
+}
+
+/* ===== Lista: paso — línea — paso — línea — paso ===== */
+.ui-stepper__list {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-stepper__step {
+  flex-shrink: 0;
+}
+
+/* Línea entre pasos, a la altura del centro del círculo */
+.ui-stepper__connector {
+  flex: 1;
+  min-width: 24px;
+  height: 0;
+  margin: calc(var(--ui-stepper-circle) / 2) 24px 0;
+  border-top: 1.5px solid var(--ui-stepper-line);
+}
+
+/* ===== Paso ===== */
+.ui-stepper__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+}
+
+button.ui-stepper__btn {
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+button.ui-stepper__btn:focus-visible {
+  outline: 2px solid var(--ui-stepper-active-bg);
+  outline-offset: 4px;
+}
+
+.ui-stepper__circle {
+  display: grid;
+  place-items: center;
+  width: var(--ui-stepper-circle);
+  height: var(--ui-stepper-circle);
+  border-radius: 50%;
+  background: var(--ui-stepper-idle-bg);
+  color: var(--ui-stepper-idle-text);
+  font-size: var(--ui-stepper-font);
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.ui-stepper__step--current .ui-stepper__circle {
+  background: var(--ui-stepper-active-bg);
+  color: var(--ui-stepper-active-text);
+}
+
+button.ui-stepper__btn:hover .ui-stepper__circle {
+  transform: scale(1.06);
+}
+
+.ui-stepper__label {
+  max-width: 160px;
+  color: var(--ui-stepper-label);
+  font-size: var(--ui-stepper-label-size);
+  line-height: 1.3;
+}
+
+/* Texto solo para lectores de pantalla */
+.ui-stepper__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Móvil: solo se muestra el nombre del paso actual ===== */
+@media (max-width: 600px) {
+  .ui-stepper__connector {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .ui-stepper__step:not(.ui-stepper__step--current) .ui-stepper__label {
+    display: none;
+  }
+
+  .ui-stepper__label {
+    max-width: 110px;
+  }
+}

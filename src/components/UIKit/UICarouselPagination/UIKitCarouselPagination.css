@@ -1,0 +1,70 @@
+.ui-kit-carousel-pagination {
+    --ui-kit-carousel-pagination-inactive-color: var(--primario-150-color);
+    --ui-kit-carousel-pagination-active-color: var(--primario-90-color);
+    --ui-kit-carousel-pagination-focus-color: var(--primario-90-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.ui-kit-carousel-pagination--secondary {
+    --ui-kit-carousel-pagination-inactive-color: var(--secundario-150-color);
+    --ui-kit-carousel-pagination-active-color: var(--secundario-70-color);
+    --ui-kit-carousel-pagination-focus-color: var(--secundario-70-color);
+}
+
+.ui-kit-carousel-pagination--md {
+    --ui-kit-carousel-pagination-dot-size: var(--size-xl);
+}
+
+.ui-kit-carousel-pagination--sm {
+    --ui-kit-carousel-pagination-dot-size: 6.4px;
+    gap: 3.84px;
+}
+
+.ui-kit-carousel-pagination__dot {
+    display: block;
+    width: var(--ui-kit-carousel-pagination-dot-size, var(--size-xl));
+    height: var(--ui-kit-carousel-pagination-dot-size, var(--size-xl));
+    flex: 0 0 var(--ui-kit-carousel-pagination-dot-size, var(--size-xl));
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ui-kit-carousel-pagination-inactive-color);
+    cursor: default;
+    transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.ui-kit-carousel-pagination__dot[aria-current="true"] {
+    background-color: var(--ui-kit-carousel-pagination-active-color);
+}
+
+button.ui-kit-carousel-pagination__dot {
+    cursor: pointer;
+}
+
+button.ui-kit-carousel-pagination__dot:hover:not(:disabled) {
+    transform: scale(1.12);
+}
+
+.ui-kit-carousel-pagination__dot:focus-visible {
+    outline: 3px solid var(--ui-kit-carousel-pagination-focus-color);
+    outline-offset: 4px;
+}
+
+.ui-kit-carousel-pagination__dot:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.ui-kit-carousel-pagination[data-disabled="true"] .ui-kit-carousel-pagination__dot {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-kit-carousel-pagination__dot {
+        transition: none;
+    }
+}

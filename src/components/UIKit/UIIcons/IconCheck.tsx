@@ -1,0 +1,16 @@
+import type { UIIconProps } from "./types"
+
+export function IconCheck({ color = "#ffffff", size, ...props }: UIIconProps) {
+    return (
+        <svg
+            {...props}
+            width={size ?? 24}
+            height={size ?? 25}
+            viewBox="0 0 24 25"
+            fill="none"
+            color={color}
+        >
+            <path d="M20.1034 5.32544C20.5373 4.89152 21.2406 4.89152 21.6746 5.32544C22.1085 5.75936 22.1085 6.46271 21.6746 6.89663L9.45224 19.119C9.01832 19.5529 8.31496 19.5529 7.88104 19.119L2.32544 13.5634C1.89152 13.1294 1.89152 12.4261 2.32544 11.9922C2.75936 11.5582 3.46271 11.5582 3.89663 11.9922L8.66664 16.7622L20.1034 5.32544Z" fill="currentColor" />
+        </svg>
+    )
+}

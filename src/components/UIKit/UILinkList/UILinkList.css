@@ -1,0 +1,33 @@
+.ui-link-list {
+  --ui-link-list-color: #1F0B01;
+  --ui-link-list-gap: 14px;
+}
+
+.ui-link-list__title {
+  margin: 0 0 14px;
+  color: var(--ui-link-list-color);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ui-link-list__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ui-link-list-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-link-list__item {
+  margin: 0;
+  padding: 0;
+}
+
+/* Enlaces sin destino todavía: se ven normales (no apagados) en una lista informativa */
+.ui-link-list .ui-text-link--disabled {
+  opacity: 1;
+  cursor: default;
+}

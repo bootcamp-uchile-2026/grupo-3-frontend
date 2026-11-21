@@ -10,8 +10,8 @@
 /* Barra superior */
 
 .top-bar {
-  background-color: #4a4a4a;
-  color: white;
+  background-color: #FFE9DA;
+  color: #922500;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,7 +71,7 @@
 }
 
 .top-bar .right a {
-  color: white;
+  color: #922500;
   text-decoration: none;
   font-size: 13px;
 }
@@ -79,40 +79,6 @@
 .login-link {
   white-space: nowrap;
 }
-
-/* Barra inferior */
-
-.bottom-bar {
-  background-color: #a9a9a9;
-  padding: 10px 20px;
-}
-
-.bottom-bar ul {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-  gap: 30px;
-  align-items: center;
-  overflow-x: auto;
-  margin: 0;
-  padding: 0;
-}
-
-.bottom-bar ul li a {
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-
-.bottom-bar ul li a:hover {
-  color: #000;
-}
-
 
 /* ========================================
    CONTENIDO PERFIL
@@ -194,9 +160,9 @@
 
 .site-footer {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: #D5DFBB;
   color: #333;
-  border: 1px solid #333;
+  border: 1px solid #D5DFBB;
   width: 100%;
 }
 

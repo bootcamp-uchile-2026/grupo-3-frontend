@@ -1,28 +1,84 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import UIButton from '../../components/UIKit/UIButton/UIButton';
+import { IconChevronDown } from '../../components/UIKit/UIIcons';
+import { UIProductCard } from '../../components/UIKit/UIProductCard';
 import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs';
-import { CardProducto } from '../../components/CardProducto/CardProducto';
 import { FiltroTienda, type FiltroClave, type SeleccionesFiltro } from '../../components/FiltroTienda/FiltroTienda';
 import { subcategoriasMascota } from '../../components/FiltroTienda/subcategoriasMascota';
 import { HeroTienda } from '../../components/HeroTienda/HeroTienda';
 import { OrdenTienda, type OrdenTiendaValor, type VistaTienda } from '../../components/OrdenTienda/OrdenTienda';
+import { useCarritoStore } from '../../store/carritoStore';
+import { adaptarProductoCatalogo, obtenerProductos } from '../../services/catalogo';
+import type { ProductoCatalogoView } from '../../schemas/catalogo';
 
-type ProductoCatalogo = {
-  id: string;
-  nombre: string;
-  precio: number;
-  precioOriginal?: number;
-  imagenes: string[];
-  categoria: string;
-  marca?: string;
-  descuento?: number;
-  especie?: string;
-  subcategoria?: string;
-  descripcion?: string;
-  fichaTecnica?: string;
-  modoDeUso?: string;
-  fichaTecnicaDetalle?: Record<string, string>;
-};
+type ProductoCatalogo = ProductoCatalogoView;
+
+type EstadoCarritoProducto = 'idle' | 'agregando' | 'agregado' | 'error';
+
+function formatoPrecio(precio: number): string {
+  return new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    maximumFractionDigits: 0,
+  }).format(precio);
+}
+
+function TarjetaProductoTienda({
+  producto,
+  vista,
+}: {
+  producto: ProductoCatalogo;
+  vista: VistaTienda;
+}) {
+  const agregarProducto = useCarritoStore((state) => state.agregarProducto);
+  const [estadoCarrito, setEstadoCarrito] = useState<EstadoCarritoProducto>('idle');
+
+  async function agregarAlCarrito() {
+    setEstadoCarrito('agregando');
+    try {
+      await agregarProducto({ productoId: producto.id, cantidad: 1 });
+      setEstadoCarrito('agregado');
+    } catch (error) {
+      console.error('No se pudo agregar el producto al carrito.', error);
+      setEstadoCarrito('error');
+    }
+  }
+
+  return (
+    <div className={`tienda-pagina__tarjeta tienda-pagina__tarjeta--${vista}`}>
+      <UIProductCard
+        className={`tienda-pagina__producto-card tienda-pagina__producto-card--${vista}`}
+        imageSrc={producto.imagenes[0]}
+        imageAlt={producto.nombre}
+        name={producto.nombre}
+        price={formatoPrecio(producto.precio)}
+        previousPrice={producto.precioOriginal !== undefined && producto.precioOriginal > producto.precio
+          ? formatoPrecio(producto.precioOriginal)
+          : undefined}
+        rating={producto.calificacionPromedio}
+        discountPercentage={typeof producto.descuento === 'number' && producto.descuento > 0
+          ? producto.descuento
+          : undefined}
+        productTo={`/producto-individual/${encodeURIComponent(producto.id)}`}
+        buttonLabel={estadoCarrito === 'agregando'
+          ? 'Agregando...'
+          : estadoCarrito === 'agregado'
+            ? 'Agregado'
+            : 'Añadir al carrito'}
+        onAddToCart={agregarAlCarrito}
+        buttonDisabled={!producto.id}
+        loading={estadoCarrito === 'agregando'}
+        selected={estadoCarrito === 'agregado'}
+      />
+      {estadoCarrito === 'error' && (
+        <p className="tienda-pagina__feedback" role="alert">
+          No se pudo agregar el producto. Inténtalo nuevamente.
+        </p>
+      )}
+    </div>
+  );
+}
 
 const filtrosIniciales: SeleccionesFiltro = {
   mascota: [],
@@ -34,31 +90,6 @@ const filtrosIniciales: SeleccionesFiltro = {
   material: [],
   marca: [],
 };
-
-function esFichaTecnicaDetalle(value: unknown): value is Record<string, string> {
-  return typeof value === 'object' && value !== null
-    && Object.values(value).every((dato) => typeof dato === 'string');
-}
-
-function esProductoCatalogo(value: unknown): value is ProductoCatalogo {
-  return typeof value === 'object' && value !== null
-    && 'id' in value && typeof value.id === 'string'
-    && 'nombre' in value && typeof value.nombre === 'string'
-    && 'precio' in value && typeof value.precio === 'number'
-    && (!('precioOriginal' in value) || typeof value.precioOriginal === 'number')
-    && 'imagenes' in value && Array.isArray(value.imagenes)
-    && value.imagenes.length > 0
-    && value.imagenes.every((imagen) => typeof imagen === 'string')
-    && 'categoria' in value && typeof value.categoria === 'string'
-    && (!('marca' in value) || typeof value.marca === 'string')
-    && (!('descuento' in value) || typeof value.descuento === 'number')
-    && (!('especie' in value) || typeof value.especie === 'string')
-    && (!('subcategoria' in value) || typeof value.subcategoria === 'string')
-    && (!('descripcion' in value) || typeof value.descripcion === 'string')
-    && (!('fichaTecnica' in value) || typeof value.fichaTecnica === 'string')
-    && (!('modoDeUso' in value) || typeof value.modoDeUso === 'string')
-    && (!('fichaTecnicaDetalle' in value) || esFichaTecnicaDetalle(value.fichaTecnicaDetalle));
-}
 
 function normalizarTexto(texto: string): string {
   return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -77,15 +108,16 @@ function textosTecnicos(producto: ProductoCatalogo): string[] {
     producto.descripcion,
     producto.fichaTecnica,
     producto.modoDeUso,
-    ...Object.entries(producto.fichaTecnicaDetalle ?? {}).flat(),
+    ...Object.entries(producto.fichaTecnicaDetalle ?? {})
+      .flatMap(([clave, valor]) => [clave, String(valor)]),
   ].filter((valor): valor is string => typeof valor === 'string');
 }
 
 function etiquetaCategoria(slug: string): string {
   const etiquetas: Record<string, string> = {
     farmacia: 'Farmacia',
-    gatos: 'Gatos',
-    perros: 'Perros',
+    gatos: 'Gato',
+    perros: 'Perro',
     exoticos: 'Exóticos',
     ofertas: 'Outlet',
   };
@@ -139,26 +171,8 @@ export function Tienda() {
 
     async function cargarProductos() {
       try {
-        const response = await fetch(
-          'http://18.226.214.170:3000/api/v1/catalogo/productos',
-          { signal: controller.signal },
-        );
-        if (!response.ok) {
-          throw new Error(`No se pudo cargar el catálogo (${response.status}).`);
-        }
-
-        const data: unknown = await response.json();
-        if (!Array.isArray(data)) {
-          throw new Error('La respuesta del catálogo tiene un formato inválido.');
-        }
-
-        // Omitir elementos incompletos, pero informar el problema en lugar de fingir un catálogo completo.
-        const productosValidos = data.filter(esProductoCatalogo);
-        const invalidos = data.length - productosValidos.length;
-        setProductos(productosValidos);
-        if (invalidos > 0) {
-          setErrorCatalogo(`${invalidos} producto(s) del catálogo tienen datos incompletos y no se muestran.`);
-        }
+        const data = await obtenerProductos({}, controller.signal);
+        setProductos(data.map(adaptarProductoCatalogo));
       } catch (error) {
         if (!controller.signal.aborted) {
           console.error('No se pudo cargar el catálogo de productos.', error);
@@ -265,23 +279,33 @@ export function Tienda() {
   };
 
   return (
-    <main className="tienda-pagina">
-      <HeroTienda titulo={tituloCategoria} />
-      <div className="tienda-contenedor">
-        <Breadcrumbs items={itemsBreadcrumb} />
-        <OrdenTienda
-          vista={vista}
-          orden={orden}
-          onCambiarVista={setVista}
-          onCambiarOrden={(nuevoOrden) => {
-            setOrden(nuevoOrden);
-            setPaginacion({ pathname, limite: 12 });
-          }}
-        />
-        <div className="tienda-layout">
-          <aside className="tienda-filtros">
-            <details className="tienda-filtros__desplegable" open>
-              <summary>Filtros</summary>
+    <div className="tienda-pagina">
+      <HeroTienda />
+      <div className="tienda-pagina__contenedor">
+        <h1 className="tienda-pagina__titulo">{tituloCategoria}</h1>
+        <div className="tienda-pagina__controles">
+          <Breadcrumbs items={itemsBreadcrumb} />
+          <OrdenTienda
+            vista={vista}
+            orden={orden}
+            onCambiarVista={setVista}
+            onCambiarOrden={(nuevoOrden) => {
+              setOrden(nuevoOrden);
+              setPaginacion({ pathname, limite: 12 });
+            }}
+          />
+        </div>
+        <div className="tienda-pagina__layout">
+          <aside className="tienda-pagina__filtros">
+            <details className="tienda-pagina__filtros-desplegable" open>
+              <summary>
+                Filtros
+                <IconChevronDown
+                  className="tienda-pagina__filtros-chevron"
+                  color="var(--terciario-30-color)"
+                  aria-hidden="true"
+                />
+              </summary>
               <FiltroTienda
                 selecciones={selecciones}
                 onSelectionChange={actualizarSeleccion}
@@ -289,55 +313,53 @@ export function Tienda() {
               />
             </details>
           </aside>
-          <section className="tienda-resultados" aria-label="Productos">
+          <section
+            className="tienda-pagina__resultados"
+            id="tienda-resultados"
+            aria-label="Productos"
+          >
             {cargando && <p role="status">Cargando productos...</p>}
             {errorCatalogo && <p role="alert">{errorCatalogo}</p>}
-            {!cargando && productosOrdenados.length > 0 && (
-              <p className="tienda-resultados__cantidad">
-                {productosOrdenados.length} productos
-              </p>
-            )}
-            <div className={`tienda-productos tienda-productos--${vista}`}>
+            <div className={`tienda-pagina__productos tienda-pagina__productos--${vista}`}>
               {productosMostrados.map((producto) => (
-                <CardProducto
+                <TarjetaProductoTienda
                   key={producto.id}
-                  id={producto.id}
-                  titulo={producto.nombre}
-                  urlImagen={producto.imagenes[0]}
-                  precio={producto.precio}
-                  precioOriginal={producto.precioOriginal}
-                  categoria={producto.categoria}
-                  descuento={producto.descuento}
-                  variant={vista === 'list' ? 'store-list' : 'standard'}
+                  producto={producto}
+                  vista={vista}
                 />
               ))}
             </div>
             {!cargando && productosOrdenados.length === 0 && productos.length > 0 && (
-              <div className="tienda-vacio">
+              <div className="tienda-pagina__vacio">
                 <p>No hay productos que coincidan con los criterios seleccionados.</p>
                 {hayFiltrosActivos && (
-                  <button type="button" onClick={limpiarFiltros}>Limpiar filtros</button>
+                  <UIButton variant="tertiary" size="M" onClick={limpiarFiltros}>
+                    Limpiar filtros
+                  </UIButton>
                 )}
               </div>
             )}
             {!cargando && productos.length === 0 && !errorCatalogo && (
-              <p className="tienda-vacio">No hay productos disponibles en el catálogo.</p>
+              <p className="tienda-pagina__vacio">
+                No hay productos disponibles en el catálogo.
+              </p>
             )}
             {productosMostrados.length < productosOrdenados.length && (
-              <button
-                className="tienda-ver-mas"
-                type="button"
+              <UIButton
+                className="tienda-pagina__ver-mas"
+                variant="secondary"
+                size="L"
                 onClick={() => setPaginacion({
                   pathname,
                   limite: limiteProductos + 12,
                 })}
               >
                 Ver más
-              </button>
+              </UIButton>
             )}
           </section>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,10 +1,37 @@
 .resenas-producto {
-    padding: 34px 0 10px;
+    padding-bottom: var(--space-sm);
 }
 
 .resenas-producto__mensaje {
-    margin-top: 12px;
-    color: #555;
-    font-size: 0.8rem;
+    margin-top: var(--space-sm);
+    color: var(--b-n-80-color);
+    font-size: var(--font-size-body-s);
     text-align: center;
+}
+
+.resenas-producto__paginacion.ui-product-pagination {
+    --ui-product-pagination-page-background: var(--producto-detalle-durazno);
+
+    margin-top: var(--line-height-heading-s);
+}
+
+@media (max-width: 600px) {
+    .resenas-producto__paginacion.ui-product-pagination,
+    .resenas-producto__paginacion .ui-product-pagination__pages {
+        gap: var(--space-xs-2);
+    }
+
+    .resenas-producto__paginacion .ui-product-pagination__pages {
+        min-width: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .resenas-producto__paginacion .ui-product-pagination__navigation,
+    .resenas-producto__paginacion .ui-product-pagination__page {
+        --ui-pagination-button-size: calc(var(--size-5xl) - var(--size-xs));
+        flex-basis: var(--ui-pagination-button-size);
+        width: var(--ui-pagination-button-size);
+        height: var(--ui-pagination-button-size);
+    }
 }

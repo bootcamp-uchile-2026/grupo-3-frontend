@@ -1,0 +1,55 @@
+.ui-submenu__list {
+  position: relative; /* para submenús de un tercer nivel */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ================= placement="right" ================= */
+/* Se posiciona respecto a la lista del UIMenuGroup: queda alineado
+   con la primera opción, a la derecha de la columna. */
+.ui-submenu--right {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 1;
+  min-width: 200px;
+  padding-left: 20px; /* espacio entre la flecha y el submenú */
+  background: #fff;   /* tapa la columna vecina si se superpone */
+
+  opacity: 0;
+  visibility: hidden;
+  /* al cerrar espera: permite mover el mouse en diagonal */
+  transition: opacity 0.1s ease 0.2s, visibility 0s linear 0.3s;
+}
+
+.ui-menu-item:hover > .ui-submenu--right,
+.ui-menu-item:focus-within > .ui-submenu--right,
+.ui-submenu--right.ui-submenu--open {
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+  /* al abrir espera un instante: no se abre al pasar de largo */
+  transition: opacity 0.1s ease 0.1s, visibility 0s linear 0.1s;
+}
+
+/* ================= placement="below" ================= */
+.ui-submenu--below {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.ui-submenu--below > .ui-submenu__list {
+  min-height: 0;
+  overflow: hidden;
+  padding-left: 14px;
+}
+
+.ui-menu-item:hover > .ui-submenu--below,
+.ui-menu-item:focus-within > .ui-submenu--below,
+.ui-submenu--below.ui-submenu--open {
+  grid-template-rows: 1fr;
+}
