@@ -5,7 +5,8 @@ import { Breadcrumbs } from "../../components/Breadcrumbs/Breadcrumbs";
 import { GaleriaProducto } from "../../components/ProductoIndividual/GaleriaProducto/GaleriaProducto";
 import { ResenasProducto } from "../../components/ProductoIndividual/ResenasProducto/ResenasProducto";
 import { ResumenProducto } from "../../components/ProductoIndividual/ResumenProducto/ResumenProducto";
-import { TabsProducto } from "../../components/ProductoIndividual/TabsProducto/TabsProducto";
+import { IconExclamationCircle } from "../../components/UIKit/UIIcons";
+import { UIProductDescription, UIProductUsage, UITechnicalSheet } from "../../components/UIKit/UIProductDescription";
 import { UIProductCard } from "../../components/UIKit/UIProductCard";
 import { useCarritoStore } from "../../store/carritoStore";
 import {
@@ -17,6 +18,14 @@ import {
 import type { ProductoDetalleView, ProductoRelacionadoView } from "../../schemas/catalogo";
 
 type EstadoAccionCarrito = "idle" | "agregando" | "agregado" | "error";
+
+const ordenFichaTecnica = ["Especie", "Función", "Capacidad", "Peso", "Medidas", "Material", "Características"];
+const compararCampos = new Intl.Collator("es", { sensitivity: "base" });
+
+function posicionCampoFicha(campo: string): number {
+    const posicion = ordenFichaTecnica.findIndex((label) => compararCampos.compare(label, campo.trim()) === 0);
+    return posicion < 0 ? ordenFichaTecnica.length : posicion;
+}
 
 function formatoPrecio(precio: number): string {
     return new Intl.NumberFormat("es-CL", {
@@ -47,6 +56,8 @@ function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionad
                 imageSrc={producto.imagenes?.[0] || "https://placehold.co/400x400?text=Sin+imagen"}
                 imageAlt={producto.nombre}
                 name={producto.nombre}
+                rating={producto.calificacionPromedio}
+                showUnrated
                 price={formatoPrecio(producto.precio)}
                 previousPrice={producto.precioOriginal !== undefined
                     && producto.precioOriginal > producto.precio
@@ -57,7 +68,7 @@ function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionad
                     ? "Agregando..."
                     : estadoCarrito === "agregado"
                         ? "Agregado"
-                        : "Agregar al carrito"}
+                        : "Añadir al carrito"}
                 onAddToCart={agregarAlCarrito}
                 loading={estadoCarrito === "agregando"}
                 selected={estadoCarrito === "agregado"}
@@ -222,8 +233,13 @@ export function ProductoIndividual() {
         );
     }
 
+    const fichaTexto = producto.fichaTecnica?.trim();
+    const camposFicha = Object.entries(producto.fichaTecnicaDetalle ?? {})
+        .filter(([, valor]) => valor.trim())
+        .sort(([primero], [segundo]) => posicionCampoFicha(primero) - posicionCampoFicha(segundo));
+
     return (
-        <main className="producto-detalle">
+        <div className="producto-detalle">
             <div className="producto-detalle__contenedor">
                 <section className="producto-detalle__principal" aria-label="Detalle del producto">
                     <GaleriaProducto
@@ -232,7 +248,7 @@ export function ProductoIndividual() {
                         imagenes={producto.imagenes ?? []}
                     />
                     <div className="producto-detalle__informacion">
-                        <Breadcrumbs items={[
+                        <Breadcrumbs variant="product-detail" items={[
                             { label: "Inicio", to: "/" },
                             { label: producto.especie, to: "/tienda" },
                             { label: producto.categoria, to: "/tienda" },
@@ -245,7 +261,10 @@ export function ProductoIndividual() {
                             precioOriginal={producto.precioOriginal}
                             categoria={producto.categoria}
                             subcategoria={producto.subcategoria}
+                            especie={producto.especie}
                             sku={producto.sku}
+                            stock={producto.stock}
+                            calificacion={producto.calificacionPromedio}
                             agregando={estadoCarritoActual === "agregando"}
                             agregado={estadoCarritoActual === "agregado"}
                             errorCarrito={estadoCarritoActual === "error"}
@@ -254,17 +273,27 @@ export function ProductoIndividual() {
                         />
                     </div>
                 </section>
-                <TabsProducto
-                    descripcion={producto.descripcion}
-                    modoDeUso={producto.modoDeUso}
-                    fichaTecnica={producto.fichaTecnica}
-                    fichaTecnicaDetalle={producto.fichaTecnicaDetalle}
-                />
+                <div className="producto-detalle__acordeones" key={producto.id}>
+                    <UIProductDescription defaultOpen>
+                        {fichaTexto && (
+                            <p className="producto-detalle__texto-ficha">{fichaTexto}</p>
+                        )}
+                        {camposFicha.length > 0 && (
+                            <UITechnicalSheet variant="custom" data={Object.fromEntries(camposFicha)} />
+                        )}
+                        {!fichaTexto && camposFicha.length === 0 && (
+                            <p>No hay ficha técnica disponible para este producto.</p>
+                        )}
+                    </UIProductDescription>
+                    <UIProductDescription type="usage" icon={<IconExclamationCircle color="var(--primario-90-color)" />}>
+                        <UIProductUsage description={producto.modoDeUso || "No hay instrucciones de uso disponibles para este producto."} />
+                    </UIProductDescription>
+                </div>
                 <ResenasProducto />
             </div>
-            <section className="producto-relacionados">
+            <section className="producto-detalle__relacionados">
                 <div className="producto-detalle__contenedor">
-                    <h2>Productos relacionados</h2>
+                    <h2 className="producto-detalle__titulo-relacionados">Productos relacionados</h2>
                     {relacionadosActuales.cargando && <p role="status">Cargando productos relacionados...</p>}
                     {relacionadosActuales.error && <p role="alert">{relacionadosActuales.error}</p>}
                     {!relacionadosActuales.cargando && !relacionadosActuales.error
@@ -283,6 +312,6 @@ export function ProductoIndividual() {
                     )}
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

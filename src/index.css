@@ -20,11 +20,9 @@
 @import url('./components/ProductoIndividual/FichaTecnica/FichaTecnica.css');
 @import url('./components/ProductoIndividual/GaleriaProducto/GaleriaProducto.css');
 @import url('./components/ProductoIndividual/ListaResenas/ListaResenas.css');
-@import url('./components/ProductoIndividual/PaginacionResenas/PaginacionResenas.css');
 @import url('./components/ProductoIndividual/ResenasProducto/ResenasProducto.css');
 @import url('./components/ProductoIndividual/ResumenProducto/ResumenProducto.css');
 @import url('./components/ProductoIndividual/ResumenResenas/ResumenResenas.css');
-@import url('./components/ProductoIndividual/TabsProducto/TabsProducto.css');
 @import url('./components/QuantityStepper/QuantityStepper.css');
 @import url('./pages/Tienda/Tienda.css');
 @import url('./pages/UI/UIKitIcons/UIKitIcons.css');

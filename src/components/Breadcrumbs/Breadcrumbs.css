@@ -17,3 +17,37 @@
 .breadcrumbs a:hover {
     text-decoration: underline;
 }
+
+.breadcrumbs--product-detail {
+    width: fit-content;
+    max-width: 100%;
+    --breadcrumbs-spacing: calc(var(--space-xs) + var(--space-xxs));
+
+    gap: var(--breadcrumbs-spacing);
+    margin: 0;
+    padding: var(--breadcrumbs-spacing);
+    color: var(--b-n-negro-color);
+    font-family: var(--font-family-body-m), sans-serif;
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: var(--letter-spacing-heading-s);
+}
+
+.breadcrumbs--product-detail .breadcrumbs__item {
+    min-width: 0;
+    max-width: 100%;
+    gap: var(--breadcrumbs-spacing);
+    overflow-wrap: anywhere;
+}
+
+.breadcrumbs--product-detail .breadcrumbs__item:first-child {
+    min-width: calc(var(--size-4xl) + var(--size-xs));
+    justify-content: center;
+}
+
+.breadcrumbs__separator {
+    flex: none;
+    width: var(--size-xl);
+    height: var(--size-xl);
+}

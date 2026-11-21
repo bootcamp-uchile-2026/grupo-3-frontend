@@ -1,17 +1,17 @@
 import { IconStar, IconStarFill } from "../UIIcons"
 
 export type UIProductCardRatingProps = {
-    rating: number
+    rating?: number
 }
 
 export function UIProductCardRating({ rating }: UIProductCardRatingProps) {
-    const filledStars = Math.min(5, Math.max(0, Math.round(rating)))
+    const filledStars = Math.min(5, Math.max(0, Math.round(rating ?? 0)))
 
     return (
         <span
             className="ui-product-card-rating"
             role="img"
-            aria-label={`Calificación: ${filledStars} de 5`}
+            aria-label={rating === undefined ? "Sin valoraciones" : `Calificación: ${rating.toLocaleString("es-CL")} de 5`}
         >
             {Array.from({ length: 5 }, (_, index) => {
                 const StarIcon = index < filledStars ? IconStarFill : IconStar

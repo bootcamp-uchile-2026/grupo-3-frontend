@@ -12,6 +12,7 @@ export type UIProductCardProps = {
     price: string
     previousPrice?: string
     rating?: number
+    showUnrated?: boolean
     buttonLabel: string
     onAddToCart: () => void
     onImageError?: ReactEventHandler<HTMLImageElement>
@@ -30,6 +31,7 @@ export function UIProductCard({
     price,
     previousPrice,
     rating,
+    showUnrated = false,
     buttonLabel,
     onAddToCart,
     onImageError,
@@ -68,7 +70,7 @@ export function UIProductCard({
                     <UIProductCardDiscount percentage={discountPercentage} />
                 )}
             </div>
-            {rating !== undefined && <UIProductCardRating rating={rating} />}
+            {(rating !== undefined || showUnrated) && <UIProductCardRating rating={rating} />}
             <h3 className="ui-product-card__title">{name}</h3>
             <div className="ui-product-card__prices">
                 {previousPrice && (
