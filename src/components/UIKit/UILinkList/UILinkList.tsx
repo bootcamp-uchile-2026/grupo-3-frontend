@@ -4,17 +4,13 @@ import "./UILinkList.css";
 
 export type UILinkListItem = {
   label: string;
-  /** Ruta interna. */
   to?: string;
-  /** Enlace externo. */
   href?: string;
 };
 
 export type UILinkListProps = {
   links: UILinkListItem[];
-  /** Título opcional (ej. "Nosotros"). */
   title?: string;
-  /** Nombre para lectores de pantalla cuando no hay título visible. */
   ariaLabel?: string;
   variant?: "default" | "strong" | "muted";
   size?: "sm" | "md";

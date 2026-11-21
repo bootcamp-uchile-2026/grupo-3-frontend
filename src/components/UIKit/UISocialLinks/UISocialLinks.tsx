@@ -3,19 +3,14 @@ import { UIIconButton } from "../UIIconButton/UIIconButton";
 import "./UISocialLinks.css";
 
 export type UISocialLink = {
-  /** Nombre de la red (se usa como texto accesible). */
   name: string;
-  /** Ícono como archivo .svg importado. */
   iconSrc?: string;
-  /** Ícono como elemento. */
   icon?: ReactNode;
-  /** URL del perfil. Si falta, el ícono se muestra deshabilitado. */
   href?: string;
 };
 
 export type UISocialLinksProps = {
   links: UISocialLink[];
-  /** Color de los íconos. */
   color?: string;
   size?: "sm" | "md" | "lg";
   variant?: "ghost" | "filled" | "outline";

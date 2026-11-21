@@ -6,15 +6,10 @@ import "./UIMenuItem.css";
 
 export type UIMenuItemProps = {
   label: string;
-  /** Ruta interna (React Router). */
   to?: string;
-  /** Acción (si no hay `to`, se renderiza un <button>). */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
-  /** Ícono opcional antes del texto. */
   icon?: ReactNode;
-  /** Subopciones (otros <UIMenuItem />). Se muestran en un UISubMenu. */
   children?: ReactNode;
-  /** Muestra la flecha aunque no haya children. Por defecto: solo si hay children. */
   hasSubmenu?: boolean;
   submenuPlacement?: "right" | "below";
   active?: boolean;
