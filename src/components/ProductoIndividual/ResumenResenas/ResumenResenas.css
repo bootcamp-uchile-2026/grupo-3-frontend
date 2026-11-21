@@ -1,111 +1,210 @@
 .resumen-resenas {
-    width: 100%;
+    position: relative;
+    width: min(100%, 1326px);
+    margin-inline: auto;
     text-align: center;
 }
 
+.resumen-resenas__ilustracion-gato {
+    display: block;
+    width: min(340px, 70%);
+    height: auto;
+    margin-inline: auto;
+    aspect-ratio: 340 / 151;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.resumen-resenas__ilustraciones-laterales {
+    position: absolute;
+    inset-block-start: 204px;
+    inset-inline: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-inline: 9% 7.1%;
+    pointer-events: none;
+}
+
+.resumen-resenas__ilustracion-conejo,
+.resumen-resenas__ilustracion-huron {
+    display: block;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.resumen-resenas__ilustracion-conejo {
+    width: min(219px, 20%);
+    aspect-ratio: 219 / 171;
+}
+
+.resumen-resenas__ilustracion-huron {
+    width: min(245px, 22%);
+    aspect-ratio: 245 / 193;
+    margin-block-start: -7px;
+}
+
 .resumen-resenas h2 {
-    margin-bottom: 6px;
-    font-size: 1.5rem;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-xs);
+    color: var(--primario-70-color);
+    font-family: var(--font-family-heading-m), sans-serif;
+    font-size: var(--font-size-heading-m);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading-s);
 }
 
 .resumen-resenas__aviso {
-    margin-bottom: 14px;
-    color: #666;
-    font-size: 0.75rem;
+    margin-bottom: var(--space-base);
+    color: var(--b-n-80-color);
+    font-size: var(--font-size-body-s);
 }
 
 .resumen-resenas__filtros {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
-    margin-bottom: 18px;
+    gap: calc(var(--space-xs) + var(--space-xxs));
+    margin-bottom: var(--space-lg);
 }
 
-.resumen-resenas__filtros button {
-    padding: 6px 12px;
-    border: 1px solid #777;
-    border-radius: 16px;
-    background: #fff;
-    font-size: 0.75rem;
+.resumen-resenas__filtros .ui-button {
+    min-height: calc(var(--size-3xl) + var(--size-xs));
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: inherit;
 }
 
-.resumen-resenas__filtros button.is-active {
-    background: #777;
-    color: #fff;
+.resumen-resenas__filtros .ui-button[aria-pressed="true"] {
+    border-color: var(--primario-70-color);
+    background: var(--producto-detalle-durazno);
+    color: var(--primario-60-color);
 }
 
 .resumen-resenas__puntuaciones {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(24px, 7vw, 76px);
-    margin-bottom: 18px;
+    gap: var(--line-height-heading-s);
+    margin-bottom: var(--space-lg);
 }
 
 .resumen-resenas__promedio {
     display: grid;
     justify-items: center;
-    gap: 4px;
+    gap: var(--space-lg);
+}
+
+.resumen-resenas__promedio .ui-qualification {
+    --ui-qualification-size: 29px;
 }
 
 .resumen-resenas__promedio strong {
-    font-size: 2rem;
+    font-family: var(--font-family-heading-l), sans-serif;
+    font-size: var(--font-size-heading-l);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading-s);
 }
 
-.resumen-resenas__promedio > span:last-child {
-    color: #555;
-    font-size: 0.75rem;
-}
-
-.resumen-resenas__estrellas {
-    color: #333;
-    letter-spacing: 2px;
-    white-space: nowrap;
+.resumen-resenas__total {
+    margin-bottom: var(--space-lg);
+    color: var(--b-n-negro-color);
+    font-family: var(--font-family-heading-s), sans-serif;
+    font-size: var(--font-size-heading-s);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading-s);
 }
 
 .resumen-resenas__distribucion {
     display: grid;
-    width: min(230px, 45vw);
-    gap: 4px;
+    width: min(190px, 100%);
+    gap: var(--space-xxs);
     text-align: left;
 }
 
 .resumen-resenas__fila {
     display: grid;
-    grid-template-columns: 35px minmax(0, 1fr) 22px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
+    gap: var(--space-xs);
+    font-size: var(--font-size-body-s);
+    line-height: var(--line-height-body-s);
+}
+
+.resumen-resenas__cantidad {
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-light);
+    line-height: var(--line-height-body-m);
 }
 
 .resumen-resenas__barra {
-    height: 6px;
+    height: var(--size-sm);
     overflow: hidden;
-    border-radius: 4px;
-    background: #e3e3e3;
+    border-radius: calc(var(--radius-lg) + var(--space-xxs));
+    background: var(--terciario-150-color);
 }
 
 .resumen-resenas__barra span {
     display: block;
     height: 100%;
-    background: #777;
+    background: var(--primario-90-color);
 }
 
-.resumen-resenas__escribir {
-    min-width: min(260px, 100%);
-    border: 1px solid #777;
-    border-radius: 18px;
-    background: #f5f5f5;
-    font-size: 0.8rem;
+.resumen-resenas .resumen-resenas__escribir {
+    width: min(226px, 100%);
+    padding: var(--space-xs) var(--space-md);
+    min-height: calc(var(--size-5xl) - var(--size-xs));
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body-s);
+    letter-spacing: inherit;
+    white-space: normal;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1120px) {
+    .resumen-resenas__ilustraciones-laterales {
+        padding-inline: var(--space-base);
+    }
+}
+
+@media (max-width: 900px) {
+    .resumen-resenas__ilustraciones-laterales {
+        position: static;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-base);
+    }
+
+    .resumen-resenas__ilustracion-conejo,
+    .resumen-resenas__ilustracion-huron {
+        width: min(120px, 38%);
+        margin-block-start: 0;
+    }
+}
+
+@media (max-width: 720px) {
+    .resumen-resenas h2 {
+        font-size: var(--font-size-heading-s);
+    }
+
     .resumen-resenas__puntuaciones {
-        gap: 18px;
+        flex-direction: column;
+        gap: var(--space-lg);
     }
 
     .resumen-resenas__promedio strong {
-        font-size: 1.6rem;
+        font-size: var(--font-size-heading-s);
+    }
+
+    .resumen-resenas__filtros .ui-button {
+        min-height: calc(var(--size-5xl) - var(--size-xs));
+    }
+
+    .resumen-resenas__total {
+        font-size: var(--font-size-heading-xs);
+        line-height: var(--line-height-heading-xs);
     }
 }

@@ -154,6 +154,8 @@ export function adaptarProductoDetalle(producto: ProductoApi): ProductoDetalleVi
     subcategoria: producto.subcategoria ?? producto.categoria,
     especie: producto.especie,
     sku: producto.sku,
+    stock: producto.stock,
+    calificacionPromedio: producto.totalResenas > 0 ? producto.calificacionPromedio : undefined,
     fichaTecnica: producto.fichaTecnica,
     modoDeUso: producto.modoDeUso,
     fichaTecnicaDetalle: producto.fichaTecnicaDetalle
@@ -175,5 +177,6 @@ export function adaptarProductoRelacionado(producto: ProductoApi): ProductoRelac
     precioOriginal: producto.precioOriginal,
     imagenes: producto.imagenes,
     categoria: producto.categoria,
+    calificacionPromedio: producto.totalResenas > 0 ? producto.calificacionPromedio : undefined,
   });
 }

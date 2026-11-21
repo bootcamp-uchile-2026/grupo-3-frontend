@@ -1,3 +1,4 @@
+import { UIQualification } from "../../UIKit/UIQualification/UIQualification";
 import type { Resena } from "../Resenas/DatosResenasDemo";
 
 type ListaResenasProps = {
@@ -13,15 +14,15 @@ export function ListaResenas({ resenas }: ListaResenasProps) {
         <div className="lista-resenas">
             {resenas.map((resena) => (
                 <article className="lista-resenas__item" key={resena.id}>
-                    <div className="lista-resenas__avatar" aria-hidden="true">
-                        {resena.nombre.charAt(0).toUpperCase()}
+                    <div className="lista-resenas__perfil">
+                        <strong className="lista-resenas__nombre">{resena.nombre}</strong>
+                        <div className="lista-resenas__avatar" aria-hidden="true">
+                            {resena.nombre.charAt(0).toUpperCase()}
+                        </div>
                     </div>
                     <div className="lista-resenas__contenido">
                         <div className="lista-resenas__autor">
-                            <strong>{resena.nombre}</strong>
-                            <span className="lista-resenas__estrellas" aria-label={`${resena.puntuacion} de 5 estrellas`}>
-                                {"★".repeat(resena.puntuacion)}{"☆".repeat(5 - resena.puntuacion)}
-                            </span>
+                            <UIQualification value={resena.puntuacion} size="lg" />
                             <time dateTime={resena.fecha}>
                                 {new Intl.DateTimeFormat("es-CL", { dateStyle: "long" }).format(new Date(`${resena.fecha}T12:00:00`))}
                             </time>

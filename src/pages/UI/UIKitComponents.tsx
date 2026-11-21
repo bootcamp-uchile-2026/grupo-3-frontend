@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import UIOption from "../../components/UIKit/UIOption/UIOption";
 import UIRadio from "../../components/UIKit/UIRadio/UIRadio";

@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import type { FiltroResenas } from "../Resenas/DatosResenasDemo";
 import { ListaResenas } from "../ListaResenas/ListaResenas";
-import { PaginacionResenas } from "../PaginacionResenas/PaginacionResenas";
+import { UIProductPagination } from "../../UIKit/UIPagination";
 import { resenasDemostracion } from "../Resenas/DatosResenasDemo";
 import { ResumenResenas } from "../ResumenResenas/ResumenResenas";
 
-const resenasPorPagina = 3;
+const resenasPorPagina = 5;
 
 export function ResenasProducto() {
     const [filtro, setFiltro] = useState<FiltroResenas>("todas");
@@ -22,6 +22,8 @@ export function ResenasProducto() {
                 return resenasDemostracion.filter((resena) => resena.puntuacion >= 4);
             case "criticas":
                 return resenasDemostracion.filter((resena) => resena.puntuacion <= 2);
+            case "cinco-estrellas":
+                return resenasDemostracion.filter((resena) => resena.puntuacion === 5);
             default:
                 return resenasDemostracion;
         }
@@ -47,11 +49,14 @@ export function ResenasProducto() {
             />
             {mensajeResena && <p className="resenas-producto__mensaje" role="status">{mensajeResena}</p>}
             <ListaResenas resenas={resenasVisibles} />
-            <PaginacionResenas
-                paginaActual={pagina}
-                totalPaginas={totalPaginas}
-                onCambiarPagina={setPagina}
-            />
+            {totalPaginas > 1 && (
+                <UIProductPagination
+                    className="resenas-producto__paginacion"
+                    currentPage={pagina}
+                    totalPages={totalPaginas}
+                    onPageChange={setPagina}
+                />
+            )}
         </section>
     );
 }

@@ -1,4 +1,4 @@
-export type FiltroResenas = "todas" | "recientes" | "positivas" | "criticas";
+export type FiltroResenas = "todas" | "recientes" | "positivas" | "criticas" | "cinco-estrellas";
 
 export type Resena = {
     id: string;
