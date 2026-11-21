@@ -1,154 +1,217 @@
-# PetLove — Frontend
+# PetLove - Frontend
 
-Aplicación web frontend para PetLove, una tienda y plataforma de servicios para mascotas. Reúne una página de inicio, catálogo de productos, detalle de producto, carrito y flujo de compra, además de vistas de perfil de usuario y mascota y pantallas demostrativas para agendar servicios veterinarios.
+Aplicacion web de comercio electronico y servicios para mascotas. El proyecto incluye el catalogo de productos, detalle de producto, carrito persistido, checkout, confirmacion de pedidos, perfil de usuario y mascota, historial medico y un flujo demostrativo de agendamiento veterinario.
 
-## Tecnologías
+## Estado del proyecto
 
-- **React** y **React DOM** (`^19.3.0`) para la interfaz.
-- **TypeScript** (`~6.0.2`) para tipado estático.
-- **Vite** (`^8.3.0`) y `@vitejs/plugin-react` para desarrollo y compilación.
-- **React Router** (`react-router-dom ^7.18.4`, `react-router ^8.4.0`) para navegación en el cliente.
-- **Oxlint** (`^1.81.0`) para revisión estática.
-- CSS propio; no se declara un framework de estilos.
+Avance actual del frontend:
 
-Las versiones indicadas corresponden a los rangos declarados en `package.json`.
+- Diseno responsive implementado con React y CSS global basado en tokens.
+- Catalogo conectado al API con categorias, ofertas, filtros y productos relacionados.
+- Carrito invitado sincronizado con el API y persistido en el navegador.
+- Cupones, cantidades, eliminacion y vaciado de carrito.
+- Checkout con datos de entrega, compra y metodo de pago.
+- Creacion y consulta de pedidos.
+- Store de pedidos para controlar envios duplicados y reintentos pendientes.
+- Paginas de perfil, mascota e historial con datos locales o demostrativos.
+- Paginas de UIKit para consultar componentes e iconos reutilizables.
 
-## Requisitos previos
+## Tecnologias
 
-- Node.js **20.19 o superior**, o **22.12 o superior**. Es el rango requerido por la versión de Vite declarada.
-- npm. El proyecto no fija una versión mínima de npm; se recomienda utilizar la versión incluida con una instalación compatible de Node.js.
+- React 19
+- TypeScript
+- Vite
+- React Router
+- Zustand
+- Zod
+- CSS global con variables CSS
+- Oxlint
 
-## Instalación y ejecución
+Las versiones exactas se encuentran en `package.json`.
+
+## Requisitos
+
+- Node.js 20.19+ o 22.12+
+- pnpm
+
+Vite 8 requiere una version de Node.js compatible con los rangos anteriores.
+
+## Instalacion y ejecucion
 
 ```bash
 git clone https://github.com/bootcamp-uchile-2026/grupo-3-frontend.git
 cd grupo-3-frontend
-npm ci
+pnpm install --frozen-lockfile
 ```
 
-Comandos disponibles, según los scripts del `package.json`:
+Configura la variable de entorno antes de iniciar la aplicacion:
 
 ```bash
-npm run dev       # Servidor de desarrollo con Vite
-npm run build     # Verificación TypeScript y compilación de producción
-npm run preview   # Sirve localmente el resultado compilado en dist/
-npm run lint      # Revisión estática con Oxlint
+cp .env.example .env
 ```
 
-Vite muestra en la terminal la URL local del servidor de desarrollo. Para revisar la compilación de producción, ejecuta primero `npm run build` y luego `npm run preview`.
+Edita `VITE_API_URL` en `.env` si necesitas apuntar a otra instancia del backend.
 
-## Estructura del proyecto
-
-```text
-.
-├── public/                    # Recursos estáticos servidos tal cual
-├── src/
-│   ├── assets/                # Imágenes, iconos y datos de ejemplo
-│   ├── components/            # Componentes reutilizables y sus estilos
-│   ├── context/               # Contexto y reducer del carrito
-│   ├── layout/                # Estructura compartida, encabezado y pie
-│   ├── pages/                 # Vistas asociadas a las rutas
-│   ├── services/              # Funciones de acceso a carrito y pedidos
-│   ├── App.tsx                # Definición de rutas con React Router
-│   ├── TDATypes.tsx           # Tipos de datos compartidos
-│   ├── index.css              # Importaciones de estilos globales y de páginas
-│   └── main.tsx               # Punto de entrada; monta router y proveedor del carrito
-├── vanilla html/              # Vistas HTML independientes de la aplicación React
-├── index.html                 # Documento HTML de entrada de Vite
-├── package.json               # Dependencias y scripts npm
-├── package-lock.json          # Lockfile utilizado por npm ci
-├── tsconfig*.json             # Configuración de TypeScript
-└── vite.config.ts             # Configuración de Vite y plugin de React
+```bash
+pnpm dev       # Servidor de desarrollo
+pnpm build     # Verificacion TypeScript y build de produccion
+pnpm preview   # Sirve la compilacion de dist/
+pnpm lint      # Revision estatica con Oxlint
 ```
 
-Los estilos de páginas y componentes se encuentran junto a sus archivos `.tsx` en `src/pages/` y `src/components/`. `src/index.css` los importa globalmente junto con `src/App.css`. La carpeta `vanilla html/` contiene documentos HTML separados; no son las rutas React definidas en `App.tsx`.
-
-## Páginas y navegación
-
-Las rutas están declaradas en `src/App.tsx` y renderizan dentro de `MainLayout`, que aporta encabezado, contenido y pie de página. La aplicación utiliza `BrowserRouter`, inicializado en `src/main.tsx`.
-
-| Ruta | Página | Propósito según la implementación |
-|---|---|---|
-| `/` | `Home` | Inicio con categorías, ofertas y secciones promocionales. Categorías y ofertas se solicitan al API. |
-| `/tienda` | `Tienda` | Catálogo general con filtros, orden, selector de vista y carga progresiva de resultados. |
-| `/categoria/*` | `Tienda` | Catálogo filtrado por la categoría derivada del segmento de la ruta. |
-| `/producto-individual` | `ProductoIndividual` | Vista de producto de ejemplo cuando no se proporciona un identificador. |
-| `/producto-individual/:id` | `ProductoIndividual` | Detalle del producto solicitado, con información y productos relacionados. |
-| `/carrito-compras` | `CarritoCompras` | Productos del carrito, control de cantidades, cupones, resumen y recomendaciones. |
-| `/checkout` y `/carrito-compras/checkout` | `Checkout` | Formulario de datos de compra, entrega y selección de método de pago; envía la creación del pedido al API. |
-| `/confirmacion-pedido` y `/carrito-compras/confirmacion-pedido` | `ConfirmacionPedido` | Confirmación sin identificador; la vista informa que falta el ID del pedido. |
-| `/confirmacion-pedido/:id` y `/carrito-compras/confirmacion-pedido/:id` | `ConfirmacionPedido` | Consulta y muestra los datos del pedido identificado. |
-| `/mi-perfil/perfil-usuario` | `PerfilUsuario` | Vista de perfil de usuario y accesos de cuenta. |
-| `/mi-perfil/configuracion` | `Configuracion` | Preferencias de notificaciones presentadas en la interfaz. |
-| `/mi-perfil/perfil-mascota` | `PerfilMascota` | Datos, información, historial y resumen de vacunas de una mascota. |
-| `/mi-perfil/perfil-mascota/historial-medico` | `HistorialMedico` | Historial con pestañas de consultas, vacunas y exámenes. |
-| `/servicios-veterinarios/agendar-veterinario-lista-servicios` | `AgendarVeterinarioProfesional` | Selección de profesional en un flujo de agendamiento. |
-| `/servicios-veterinarios/agendar-veterinario-datos-contacto` | `AgendarVeterinarioDatosContacto` | Formulario de contacto del flujo de agendamiento. |
-
-No se declara una ruta comodín (`*`) para una página 404.
-
-## Componentes principales
-
-- **Tienda:** `CardProducto`, `CardCarrusel`, `CardCategoria`, `Breadcrumbs`, `HeroTienda`, `FiltroTienda` y `OrdenTienda` presentan y permiten explorar el catálogo.
-- **Producto:** `GaleriaProducto`, `ResumenProducto`, `FichaTecnica`, `TabsProducto` y componentes de reseñas organizan el detalle y sus secciones.
-- **Carrito:** `CartItem`, `QuantityStepper`, `CouponBox` y `OrderSummary` separan el producto del carrito, el ajuste de cantidades, la entrada de cupones y el resumen de compra.
-- **Pedido:** `CardProductoConfirmacion` presenta cada producto en la confirmación.
-- **Mascotas e historial:** `DatosMascota`, `InformacionMascota`, `ResumenHistorialMascota`, `ResumenVacunasMascota`, `TabConsultas`, `TabVacunas` y `TabExamenes` componen las vistas del perfil médico.
-- **Estructura compartida:** `MainLayout`, `Header`, `Body` y `Footer` organizan las páginas; el store Zustand comparte el estado persistido del carrito.
-- **Iconografía:** `UIKit/UIIcons` contiene iconos SVG reutilizables.
-
-## Integración con API
-
-La aplicación usa `fetch` y valida con Zod las respuestas del catálogo y carrito. La URL base se configura con `VITE_API_URL`:
-
-```text
-http://18.226.214.170:3000/api/v1
-```
-
-El ejemplo está en `.env.example`; copia ese archivo a `.env` para desarrollo. Los endpoints usados incluyen:
-
-| Método | Endpoint | Uso |
-|---|---|---|
-| `GET` | `/categorias` | Categorías de la página de inicio. |
-| `GET` | `/productos` | Catálogo; el cliente aplica filtros, orden y carga progresiva. |
-| `GET` | `/productos/ofertas` | Ofertas del inicio. |
-| `GET` | `/productos/sugeridos` | Recomendaciones del carrito. |
-| `GET` | `/productos/{id}` | Detalle de un producto. |
-| `GET` | `/productos/{id}/relacionados?limit=4` | Productos relacionados al detalle. |
-| `GET` | `/carritos/{carritoId}` | Carga el carrito invitado. |
-| `POST` | `/carritos` | Crea un carrito invitado cuando no hay uno guardado o el anterior ya no existe. |
-| `POST` | `/carritos/{carritoId}/items` | Agrega un producto al carrito. |
-| `PATCH` | `/carritos/{carritoId}/items/{productoId}` | Actualiza la cantidad. |
-| `DELETE` | `/carritos/{carritoId}/items/{productoId}` | Elimina un producto del carrito. |
-| `PUT` | `/carritos/{carritoId}/cupon` | Valida y aplica un cupón. |
-| `DELETE` | `/carritos/{carritoId}/cupon` | Quita el cupón aplicado. |
-| `POST` | `/pedidos` | Ruta preexistente del checkout, fuera de la integración documentada de carrito. |
-| `GET` | `/pedidos/{id}` | Consulta preexistente para la confirmación. |
-
-Los servicios de catálogo y carrito están en `src/services/catalogo.ts` y `src/services/carrito.ts`. El carrito conserva solo el ID del carrito invitado; el servidor es la fuente de verdad para sus productos, cantidades y cupones. Vaciarlo elimina los productos de forma secuencial porque la API no expone una operación masiva.
-
-El checkout permite seleccionar Mercado Pago, tarjeta o Webpay Plus y envía esa selección al crear el pedido. En el frontend no se observa una integración directa con los proveedores de pago ni una URL de redirección de pago.
+El servidor muestra en la terminal la URL local generada por Vite.
 
 ## Variables de entorno
 
-Configura `VITE_API_URL` en `.env` para apuntar a otra instancia. La API documentada usa HTTP; un frontend servido sobre HTTPS puede bloquear estas llamadas por contenido mixto, y la documentación no especifica la política CORS.
+El unico valor requerido por el frontend es:
 
-## Funcionalidades implementadas
+```text
+VITE_API_URL=http://18.226.214.170:3000/api/v1
+```
 
-- Página de inicio con carga de categorías y ofertas desde el API.
-- Catálogo conectado al API, con filtro por categoría y selecciones de especie, tipo de producto, edad, comida, sabor, formato, material y marca; orden por precio o nombre, vista de cuadrícula/lista y botón «Ver más».
-- Detalle de producto, productos relacionados y acción para agregar al carrito.
-- Carrito sincronizado con el API para consultar, agregar, cambiar cantidad, eliminar productos y vaciar; muestra subtotal, descuento, total y recomendaciones.
-- Los cupones se validan en el API; no se agregan descuentos ni artículos de regalo locales.
-- Checkout con datos del comprador, envío normal o retiro en tienda, y selección de método de pago; creación del pedido y navegación a confirmación.
-- Confirmación que consulta el pedido por ID y muestra estado, fecha, entrega, productos y montos.
-- Vistas de perfil, configuración, perfil de mascota e historial médico, además de pantallas de agendamiento veterinario.
+`apiClient.ts` exige que `VITE_API_URL` exista y elimina automaticamente las barras finales. Las respuestas de los servicios pasan por schemas de Zod antes de usarse en la interfaz.
 
-## Estado y limitaciones conocidas
+Una API HTTP puede presentar problemas de contenido mixto si el frontend se sirve mediante HTTPS. Tambien deben revisarse las reglas CORS del backend.
 
-- Los flujos de catálogo y carrito dependen de que el API indicado esté accesible desde el navegador y acepte las solicitudes del frontend.
-- La creación de pedidos usa una ruta preexistente que no forma parte de la sección de carrito documentada en Swagger; la integración de pedidos queda pendiente.
-- Los métodos de pago son opciones del formulario enviadas en la solicitud de pedido; la interfaz no implementa el procesamiento con un proveedor de pago.
-- Las pantallas de perfil y agendamiento contienen datos estáticos o controles de presentación; no se observa en esas páginas una integración API para guardar perfiles, preferencias o reservas. Algunos recursos visuales usan imágenes de `placehold.co`.
-- `package.json` no define un script de pruebas automatizadas. Los comandos de revisión declarados son `pnpm lint` y `pnpm build` (este último incluye `tsc -b`).
-- El repositorio incluye tanto la aplicación React como páginas independientes en `vanilla html/`; las rutas documentadas arriba corresponden a la aplicación React.
+## Navegacion
+
+Las rutas se encuentran en `src/App.tsx` y se renderizan dentro de `MainLayout`, que incluye el header y el footer compartidos.
+
+| Ruta | Pagina | Funcionalidad |
+|---|---|---|
+| `/` | `Home` | Inicio con categorias y ofertas obtenidas del API |
+| `/tienda` | `Tienda` | Catalogo completo con filtros, orden y vista de resultados |
+| `/categoria/*` | `Tienda` | Catalogo filtrado segun la categoria de la URL |
+| `/producto-individual` | `ProductoIndividual` | Vista de producto de ejemplo |
+| `/producto-individual/:id` | `ProductoIndividual` | Detalle y productos relacionados desde el API |
+| `/carrito-compras` | `CarritoCompras` | Consulta y modificacion del carrito |
+| `/checkout` | `Checkout` | Datos de entrega y pago para crear el pedido |
+| `/carrito-compras/checkout` | `Checkout` | Ruta alternativa del checkout |
+| `/confirmacion-pedido/:id` | `ConfirmacionPedido` | Detalle del pedido |
+| `/carrito-compras/confirmacion-pedido/:id` | `ConfirmacionPedido` | Ruta alternativa de confirmacion |
+| `/confirmacion-pedido` | `ConfirmacionPedido` | Estado sin identificador |
+| `/mi-perfil/perfil-usuario` | `PerfilUsuario` | Perfil de usuario |
+| `/mi-perfil/configuracion` | `Configuracion` | Preferencias de notificaciones |
+| `/mi-perfil/perfil-mascota` | `PerfilMascota` | Datos e historial resumido de la mascota |
+| `/mi-perfil/perfil-mascota/historial-medico` | `HistorialMedico` | Consultas, vacunas y examenes |
+| `/servicios-veterinarios/agendar-veterinario-lista-servicios` | `AgendarVeterinarioProfesional` | Seleccion de profesional |
+| `/servicios-veterinarios/agendar-veterinario-datos-contacto` | `AgendarVeterinarioDatosContacto` | Datos de contacto del agendamiento |
+| `/ui-kit/icons` | `UIKitIcons` | Catalogo de iconos |
+| `/ui-kit/components` | `UIKitComponents` | Catalogo de componentes reutilizables |
+
+No existe actualmente una ruta comodin (`*`) para mostrar una pagina 404.
+
+## Integracion con API
+
+Todas las llamadas pasan por `src/services/apiClient.ts`, que maneja JSON, errores HTTP y validacion de respuestas.
+
+### Catalogo
+
+| Metodo | Endpoint | Uso |
+|---|---|---|
+| `GET` | `/catalogo/categorias` | Categorias |
+| `GET` | `/catalogo/productos` | Listado y filtros del catalogo |
+| `GET` | `/catalogo/productos/ofertas` | Productos en oferta |
+| `GET` | `/catalogo/productos/sugeridos` | Productos sugeridos |
+| `GET` | `/catalogo/productos/{id}` | Detalle de producto |
+| `GET` | `/catalogo/productos/{id}/relacionados?limit=4` | Productos relacionados |
+
+Los servicios de catalogo estan en `src/services/catalogo.ts`. Sus schemas estan en `src/schemas/catalogo.ts`.
+
+### Carrito
+
+| Metodo | Endpoint | Uso |
+|---|---|---|
+| `POST` | `/carritos` | Crear carrito invitado |
+| `GET` | `/carritos/{carritoId}` | Consultar carrito |
+| `POST` | `/carritos/{carritoId}/items` | Agregar producto |
+| `PATCH` | `/carritos/{carritoId}/items/{productoId}` | Cambiar cantidad |
+| `DELETE` | `/carritos/{carritoId}/items/{productoId}` | Eliminar producto |
+| `PUT` | `/carritos/{carritoId}/cupon` | Aplicar cupon |
+| `DELETE` | `/carritos/{carritoId}/cupon` | Quitar cupon |
+
+Los servicios estan en `src/services/carrito.ts` y el estado global en `src/store/carritoStore.ts`.
+
+Solo se persiste el ID del carrito en `localStorage`, bajo la clave `petlove-carrito`. Los productos, cantidades y cupones se consultan al API y se mantienen como fuente de verdad. Las mutaciones se encadenan para evitar solicitudes simultaneas.
+
+Si el carrito persistido ya no existe, el store elimina el estado de carrito antiguo y crea uno nuevo. Vaciarlo elimina los items uno por uno porque no existe una operacion masiva.
+
+### Pedidos
+
+| Metodo | Endpoint | Uso |
+|---|---|---|
+| `POST` | `/carritos/{carritoId}/pedido` | Crear pedido |
+| `GET` | `/catalogo/pedidos/{id}` | Consultar detalle |
+| `GET` | `/catalogo/pedidos/{id}/seguimiento` | Consultar seguimiento |
+
+La implementacion esta en `src/services/pedidos.ts` y `src/store/pedidosStore.ts`. El store usa `sessionStorage` para recordar temporalmente un envio pendiente y evitar que el usuario repita el POST.
+
+## Estado y funcionalidad
+
+- El catalogo permite buscar, filtrar por categoria y atributos, ordenar y cargar mas resultados.
+- El detalle muestra informacion, stock, ficha tecnica, modo de uso y productos relacionados.
+- El carrito sincroniza productos, cantidades, subtotal, descuento y total con el API.
+- El checkout valida datos de comprador, entrega y pago con Zod antes del envio.
+- Se admiten Mercado Pago, tarjeta y Webpay Plus como metodos seleccionables.
+- La confirmacion consulta el pedido por ID y presenta montos y estado.
+- El historial veterinario usa tabs y datos locales o demostrativos.
+- Las pantallas de perfil y agendamiento no tienen aun persistencia completa en el backend.
+
+## Estado global
+
+- `src/store/carritoStore.ts`: carrito invitado, persistencia del ID y mutaciones sincronizadas.
+- `src/store/pedidosStore.ts`: estado de envio del pedido y proteccion ante envios duplicados.
+- El proyecto ya usa Zustand. No se conserva el Context/Provider anterior del carrito.
+
+## Componentes principales
+
+- `components/UIKit/`: botones, campos, dropdowns, tarjetas, paginacion, enlaces, toggles e iconos.
+- `components/CartItem`, `QuantityStepper`, `CouponBox` y `OrderSummary`: componentes del carrito.
+- `components/FiltroTienda` y `OrdenTienda`: filtros y orden del catalogo.
+- `components/ProductoIndividual/`: galeria, resumen, ficha tecnica, tabs y resenas.
+- `components/DatosMascota`, `InformacionMascota` y componentes de tabs: informacion veterinaria.
+- `layout/`: `Header`, `Footer`, `Body` y `MainLayout` compartidos por las rutas.
+
+## Estructura
+
+```text
+.
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── layout/
+│   ├── pages/
+│   ├── schemas/
+│   ├── services/
+│   ├── store/
+│   ├── App.css
+│   ├── App.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   └── TDATypes.tsx
+├── vanilla html/
+├── .env.example
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig*.json
+└── vite.config.ts
+```
+
+Los estilos viven junto a sus componentes o paginas. `src/index.css` registra los imports CSS globales. `vanilla html/` contiene vistas independientes y no forma parte de las rutas React.
+
+## Convenciones
+
+- Navegacion interna con `Link`, `NavLink` o `useNavigate`.
+- Clases CSS con convencion BEM y prefijo `ui-` para componentes UIKit.
+- Colores, tipografia, espaciado y radios obtenidos de las variables de `App.css`.
+- TypeScript estricto, sin uso de `any` en el codigo nuevo.
+- Validacion de datos externos con Zod.
+
+## Limitaciones conocidas
+
+- Las vistas de perfil, configuracion, mascota y agendamiento contienen datos locales o demostrativos; faltan integraciones completas de backend.
+- No se implementa el procesamiento real de Mercado Pago, tarjeta o Webpay Plus.
+- No hay script de pruebas automatizadas definido en `package.json`.
+- No existe una ruta 404.
+- La disponibilidad de los datos depende de que el API configurado sea accesible y admita solicitudes CORS.
