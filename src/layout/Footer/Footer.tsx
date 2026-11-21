@@ -1,5 +1,8 @@
-import { NavLink } from "react-router-dom";
 import "./Footer.css";
+import { UILogo } from "../../components/UIKit/UILogo/UILogo";
+import { UIInfoBlock } from "../../components/UIKit/UIInfoBlock/UIInfoBlock";
+import { UILinkList } from "../../components/UIKit/UILinkList/UILinkList";
+import { UISocialLinks } from "../../components/UIKit/UISocialLinks/UISocialLinks";
 import mascotasImg from "../../assets/brand/logo-petlove-mascotas.png";
 import instagramIcon from "../../assets/Icons/instagram.svg";
 import tiktokIcon from "../../assets/Icons/tiktok.svg";
@@ -15,11 +18,12 @@ interface FooterBranch {
 interface FooterProps {
   companyName?: string;
   year?: number;
-  logoSrc?: string;
   illustrationSrc?: string;
   branch?: FooterBranch;
-   sections?: { title?: string; items: { to?: string; label: string }[] }[];
+  sections?: { title?: string; items: { to?: string; label: string }[] }[];
   socialLinks?: { href?: string; iconSrc: string; alt: string }[];
+  /** El diseño actual no muestra copyright. Actívalo si lo necesitas. */
+  showCopyright?: boolean;
 }
 
 export function Footer({
@@ -55,77 +59,55 @@ export function Footer({
     { iconSrc: whatsappIcon, alt: "WhatsApp" },
     { iconSrc: facebookIcon, alt: "Facebook" },
   ],
+  showCopyright = false,
 }: FooterProps) {
-
   return (
     <footer className="site-footer">
       <div className="footer-top">
+        {/* Mascotas + logo, con enlace al inicio */}
         <div className="footer-brand">
-          <img src={illustrationSrc} alt="" className="footer-mascotas" />
-
-          <NavLink
-            to="/"
-            className="footer-logo"
-            aria-label={`${companyName}, ir al inicio`}>
-          </NavLink>
+          <UILogo variant="con-mascotas" src={illustrationSrc} alt={companyName} />
         </div>
 
-        <div className="footer-links">
-          <div className="footer-branch">
-            {branch.title && <h4>{branch.title}</h4>}
-            <p>{branch.address}</p>
-            {branch.hours.map((line, i) => <p key={i}>{line}</p>)}
+        {/* Columnas + redes */}
+        <div className="footer-info">
+          <div className="footer-links">
+            <UIInfoBlock
+              title={branch.title ?? "Sucursal"}
+              lines={[branch.address, ...branch.hours]}
+              asAddress
+            />
+
+            {sections.map((section, i) => (
+              <UILinkList
+                key={section.title ?? i}
+                title={section.title}
+                ariaLabel={section.title ?? "Información"}
+                links={section.items}
+                /* Lista sin título en negrita; "Nosotros" en peso normal */
+                variant={section.title ? "default" : "strong"}
+              />
+            ))}
           </div>
 
-          {sections.map((section, i) => (
-            <ul key={i}>
-              {section.title && <li className="section-title">{section.title}</li>}
-              {section.items.map((item, j) => (
-                <li key={j}>
-                  {item.to ? (
-                    <NavLink to={item.to}>{item.label}</NavLink>
-                  ) : (
-                    <span aria-disabled="true">{item.label}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ))}
+          <UISocialLinks
+            className="footer-social"
+            links={socialLinks.map((social) => ({
+              name: social.alt,
+              iconSrc: social.iconSrc,
+              href: social.href,
+            }))}
+          />
         </div>
       </div>
 
-      <div className="footer-bottom">
-        <p>Copyright © {year} {companyName}. All Rights Reserved</p>
-        <div className="social">
-          {socialLinks.map((social) => {
-            const icono = (
-              <span
-                className="social-icon"
-                style={{
-                  maskImage: `url(${social.iconSrc})`,
-                  WebkitMaskImage: `url(${social.iconSrc})`,
-                }}
-              />
-            );
-
-            return social.href ? (
-              <a
-                key={social.alt}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.alt}
-              >
-                {icono}
-              </a>
-            ) : (
-              <span key={social.alt} aria-label={social.alt} aria-disabled="true">
-                {icono}
-              </span>
-            );
-          })}
+      {showCopyright && (
+        <div className="footer-bottom">
+          <p className="footer-copyright">
+            Copyright © {year} {companyName}. All Rights Reserved
+          </p>
         </div>
-      </div>
+      )}
     </footer>
   );
 }

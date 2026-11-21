@@ -1,0 +1,51 @@
+.ui-logo {
+  --ui-logo-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.ui-logo__picture {
+  display: contents;
+}
+
+.ui-logo__img {
+  display: block;
+  height: var(--ui-logo-height);
+  width: auto;
+  max-width: 100%;
+}
+
+a.ui-logo:focus-visible {
+  outline: 2px solid #EE7344;
+  outline-offset: 4px;
+}
+
+.ui-logo--horizontal.ui-logo--sm { --ui-logo-height: 32px; }
+.ui-logo--horizontal.ui-logo--md { --ui-logo-height: 44px; }
+.ui-logo--horizontal.ui-logo--lg { --ui-logo-height: 56px; }
+
+
+.ui-logo--compact.ui-logo--sm { --ui-logo-height: 24px; }
+.ui-logo--compact.ui-logo--md { --ui-logo-height: 32px; }
+.ui-logo--compact.ui-logo--lg { --ui-logo-height: 40px; }
+
+
+.ui-logo--con-mascotas.ui-logo--sm { --ui-logo-height: 52px; }
+.ui-logo--con-mascotas.ui-logo--md { --ui-logo-height: 72px; }
+.ui-logo--con-mascotas.ui-logo--lg { --ui-logo-height: 100px; }
+
+
+.ui-logo--casa.ui-logo--sm { --ui-logo-height: 120px; }
+.ui-logo--casa.ui-logo--md { --ui-logo-height: 200px; }
+.ui-logo--casa.ui-logo--lg { --ui-logo-height: 280px; }
+
+@media (max-width: 768px) {
+  .ui-logo--responsive.ui-logo--sm { --ui-logo-height: 24px; }
+  .ui-logo--responsive.ui-logo--md { --ui-logo-height: 32px; }
+  .ui-logo--responsive.ui-logo--lg { --ui-logo-height: 40px; }
+}

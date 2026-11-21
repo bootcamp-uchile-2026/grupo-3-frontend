@@ -1,0 +1,126 @@
+.ui-search {
+  --ui-search-bg: #FFFFFF;
+  --ui-search-color: #922500;
+  --ui-search-text: #1F0B01;
+  --ui-search-focus: rgba(238, 115, 68, 0.35);
+  --ui-search-height: 48px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: var(--ui-search-height);
+  padding: 0 12px 0 10px;
+  background: var(--ui-search-bg);
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ui-search--md {
+  --ui-search-height: 40px;
+}
+
+/* Foco en cualquier parte del buscador */
+.ui-search:focus-within {
+  border-color: #EE7344;
+  box-shadow: 0 0 0 3px var(--ui-search-focus);
+}
+
+/* Label solo para lectores de pantalla */
+.ui-search__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Botón lupa */
+.ui-search__submit,
+.ui-search__clear {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ui-search-color);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.ui-search__submit {
+  width: 34px;
+  height: 34px;
+}
+
+.ui-search__submit:hover:not(:disabled),
+.ui-search__clear:hover {
+  background-color: #FFE9DA;
+}
+
+.ui-search__icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Campo de texto */
+.ui-search__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ui-search-text);
+}
+
+.ui-search__input::placeholder {
+  color: var(--ui-search-color);
+  opacity: 1;
+}
+
+/* Quitar la "x" nativa de Chrome/Safari (usamos la nuestra) */
+.ui-search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Botón borrar */
+.ui-search__clear {
+  width: 28px;
+  height: 28px;
+}
+
+.ui-search__clear svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+/* Deshabilitado */
+.ui-search--disabled {
+  opacity: 0.55;
+}
+
+.ui-search--disabled .ui-search__submit,
+.ui-search--disabled .ui-search__input {
+  cursor: not-allowed;
+}
