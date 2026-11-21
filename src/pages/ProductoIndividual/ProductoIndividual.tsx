@@ -57,6 +57,7 @@ function TarjetaProductoRelacionado({ producto }: { producto: ProductoRelacionad
                 imageAlt={producto.nombre}
                 name={producto.nombre}
                 rating={producto.calificacionPromedio}
+                showUnrated
                 price={formatoPrecio(producto.precio)}
                 previousPrice={producto.precioOriginal !== undefined
                     && producto.precioOriginal > producto.precio
