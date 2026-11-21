@@ -1,0 +1,111 @@
+.ui-qualification {
+  --ui-qualification-color: #4A5A24;   /* estrellas */
+  --ui-qualification-badge-bg: #D6E0B9; /* fondo del badge */
+  --ui-qualification-text: #1F0B01;    /* texto del badge */
+}
+
+/* =========================================================
+   Variante "stars"
+   ========================================================= */
+.ui-qualification--stars {
+  --ui-qualification-size: 18px;
+  --ui-qualification-gap: 4px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-qualification-gap);
+  line-height: 0;
+  vertical-align: middle;
+}
+
+.ui-qualification--sm {
+  --ui-qualification-size: 12px;
+  --ui-qualification-gap: 3px;
+}
+
+.ui-qualification--lg {
+  --ui-qualification-size: 24px;
+  --ui-qualification-gap: 6px;
+}
+
+.ui-qualification__star {
+  display: block;
+  width: var(--ui-qualification-size);
+  height: var(--ui-qualification-size);
+  fill: transparent;
+  stroke: var(--ui-qualification-color);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  transition: fill 0.12s, transform 0.12s;
+}
+
+.ui-qualification__star--filled {
+  fill: var(--ui-qualification-color);
+}
+
+/* Interactivo */
+.ui-qualification__btn {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.ui-qualification--interactive .ui-qualification__btn:hover .ui-qualification__star {
+  transform: scale(1.12);
+}
+
+.ui-qualification__btn:focus-visible {
+  outline: 2px solid var(--ui-qualification-color);
+  outline-offset: 2px;
+}
+
+.ui-qualification--disabled {
+  opacity: 0.45;
+}
+
+.ui-qualification--disabled .ui-qualification__btn {
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   Variante "badge" («★ n/5»)
+   ========================================================= */
+.ui-qualification--badge {
+  --ui-qualification-icon-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background-color: var(--ui-qualification-badge-bg);
+  color: var(--ui-qualification-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ui-qualification--badge-sm {
+  --ui-qualification-icon-size: 14px;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.ui-qualification__badge-icon {
+  display: block;
+  flex-shrink: 0;
+  width: var(--ui-qualification-icon-size);
+  height: var(--ui-qualification-icon-size);
+  fill: var(--ui-qualification-color);
+  stroke: var(--ui-qualification-color);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}

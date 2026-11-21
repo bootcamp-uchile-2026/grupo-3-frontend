@@ -1,0 +1,123 @@
+.ui-icon-btn {
+  --ui-icon-btn-color: #922500;
+  --ui-icon-btn-hover: rgba(238, 115, 68, 0.16);
+  --ui-icon-btn-accent: #EE7344;
+  --ui-icon-btn-size: 40px;
+  --ui-icon-btn-icon: 24px;
+
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ui-icon-btn-size);
+  height: var(--ui-icon-btn-size);
+  padding: 0;
+  border: 1.5px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ui-icon-btn-color);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+/* ===== Tamaños ===== */
+.ui-icon-btn--sm {
+  --ui-icon-btn-size: 32px;
+  --ui-icon-btn-icon: 18px;
+}
+
+.ui-icon-btn--lg {
+  --ui-icon-btn-size: 48px;
+  --ui-icon-btn-icon: 28px;
+}
+
+/* ===== Ícono ===== */
+.ui-icon-btn__icon {
+  display: grid;
+  place-items: center;
+  width: var(--ui-icon-btn-icon);
+  height: var(--ui-icon-btn-icon);
+  line-height: 0;
+}
+
+/* Lo que venga como `icon` (svg, img, UIKitIcon) ocupa el tamaño del ícono */
+.ui-icon-btn__icon > svg,
+.ui-icon-btn__icon > img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ícono desde archivo .svg (máscara): toma el color del botón */
+.ui-icon-btn__mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* ===== Distintas Variantes ===== */
+
+.ui-icon-btn--ghost:hover:not(:disabled) {
+  background-color: var(--ui-icon-btn-hover);
+}
+
+.ui-icon-btn--filled {
+  background-color: var(--ui-icon-btn-accent);
+  color: #fff;
+}
+
+.ui-icon-btn--filled:hover:not(:disabled) {
+  background-color: #D85E2F;
+}
+
+.ui-icon-btn--outline {
+  border-color: currentColor;
+}
+
+.ui-icon-btn--outline:hover:not(:disabled) {
+  background-color: var(--ui-icon-btn-hover);
+}
+
+/* ===== Por cada Estado ===== */
+.ui-icon-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.ui-icon-btn:focus-visible {
+  outline: 2px solid var(--ui-icon-btn-accent);
+  outline-offset: 2px;
+}
+
+.ui-icon-btn--disabled,
+.ui-icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ===== Implemento el contador (Badge) ===== */
+.ui-icon-btn__badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 2px solid #FFE9DA; /* separa el badge del fondo del header */
+  border-radius: 999px;
+  background-color: var(--ui-icon-btn-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+  box-sizing: content-box;
+  pointer-events: none;
+}
