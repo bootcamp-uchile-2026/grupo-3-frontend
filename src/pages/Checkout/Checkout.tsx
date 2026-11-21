@@ -9,20 +9,22 @@ import {
   selectTotalCarrito,
   useCarritoStore,
 } from "../../store/carritoStore";
-import { USUARIO_ID_CARRITO } from "../../services/carrito";
-import { crearPedido, type CreatePedidoDto } from "../../services/pedidos";
+import { mensajePedidoPendiente, usePedidosStore } from "../../store/pedidosStore";
+import type { CreatePedidoDto, MetodoPago, TipoComprobante, TipoEntrega } from "../../schemas/pedidos";
+import { CouponBox } from "../../components/CouponBox/CouponBox";
+import { UIInput } from "../../components/UIKit/UIInput/UIInput";
+import { UIStepper } from "../../components/UIKit/UIStepper/UIStepper";
 import { UIFormSelection } from "../../components/UIKit/UIFormSelection/UIFormSelection";
 import { UICheckbox } from "../../components/UIKit/UICheckbox/UICheckbox";
 import UIButton from "../../components/UIKit/UIButton/UIButton";
 import {
+  IconChevronLeft,
   IconDocument,
   IconLocation,
+  IconPayment,
+  IconTruck,
   IconUser,
 } from "../../components/UIKit/UIIcons";
-
-type TipoComprobante = "Boleta" | "Factura";
-type TipoEntrega = "EnvioNormal" | "RetiroEnTienda";
-type MetodoPago = "MercadoPago" | "Tarjeta" | "WebpayPlus";
 
 type DatosCheckout = {
   nombre: string;
@@ -39,6 +41,16 @@ type DatosCheckout = {
   sucursalRetiro: string;
 };
 
+const pasos = ["Datos", "Tipo de entrega", "Pago"];
+const consultaPasosMoviles = "(max-width: 600px)";
+const formularioCupon = "checkout-cupon";
+
+function validarCampos(contenedor: HTMLElement | null): boolean {
+  if (!contenedor) return false;
+  return Array.from(contenedor.querySelectorAll<HTMLInputElement | HTMLSelectElement>("input, select"))
+    .every((campo) => campo.reportValidity());
+}
+
 const formatoCLP = (monto: number): string =>
   `$${new Intl.NumberFormat("es-CL", { maximumFractionDigits: 0 }).format(monto)}`;
 
@@ -48,7 +60,7 @@ function ImagenProductoResumen({ src, nombre }: { src: string; nombre: string })
   if (!src || urlFallida === src) {
     return (
       <div
-        className="imagen-producto-resumen imagen-producto-resumen--fallback"
+        className="checkout-page__imagen checkout-page__imagen--sin-foto"
         role="img"
         aria-label={`Imagen no disponible para ${nombre}`}
       >
@@ -61,7 +73,7 @@ function ImagenProductoResumen({ src, nombre }: { src: string; nombre: string })
     <img
       src={src}
       alt={nombre}
-      className="imagen-producto-resumen"
+      className="checkout-page__imagen"
       onError={() => setUrlFallida(src)}
     />
   );
@@ -69,8 +81,11 @@ function ImagenProductoResumen({ src, nombre }: { src: string; nombre: string })
 
 export function Checkout() {
   const navigate = useNavigate();
+  const carritoId = useCarritoStore((state) => state.carritoId);
   const productos = useCarritoStore(useShallow(selectProductos));
   const inicializarCarrito = useCarritoStore((state) => state.inicializar);
+  const aplicarCupon = useCarritoStore((state) => state.aplicarCupon);
+  const cuponAplicado = useCarritoStore((state) => state.cuponAplicado);
   const estadoCarrito = useCarritoStore((state) => state.estado);
   const errorCarrito = useCarritoStore((state) => state.error);
   const subtotal = useCarritoStore(selectSubtotalCarrito);
@@ -93,23 +108,34 @@ export function Checkout() {
   const [tipoEntrega, setTipoEntrega] = useState<TipoEntrega | "">("");
   const [metodoPago, setMetodoPago] = useState<MetodoPago | "">("");
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
-  const [enviando, setEnviando] = useState(false);
+  const enviarPedido = usePedidosStore((state) => state.enviarPedido);
+  const enviando = usePedidosStore((state) => state.estado === "submitting");
+  const carritoPendiente = usePedidosStore((state) => state.carritoPendiente);
+  const compraPendiente = carritoId !== null && carritoPendiente === carritoId;
   const [error, setError] = useState<string | null>(null);
-  const envioEnCurso = useRef(false);
+  const [paso, setPaso] = useState(0);
+  const [errorPaso, setErrorPaso] = useState("");
+  const [cupon, setCupon] = useState("");
+  const [errorCupon, setErrorCupon] = useState<string | null>(null);
+  const [aplicandoCupon, setAplicandoCupon] = useState(false);
+  const datosPanel = useRef<HTMLDivElement>(null);
+  const entregaPanel = useRef<HTMLDivElement>(null);
+  const inicioPasos = useRef<HTMLDivElement>(null);
+  const cuponEnCurso = useRef(false);
+  const montado = useRef(false);
   const cargandoCarrito = estadoCarrito === "idle" || estadoCarrito === "loading";
 
   useEffect(() => {
-    let activo = true;
+    montado.current = true;
 
     void inicializarCarrito().catch((cause: unknown) => {
-      if (activo) {
-        console.error("No se pudo cargar el carrito para el checkout.", cause);
+      if (montado.current) {
         setError(cause instanceof Error ? cause.message : "No se pudo cargar el carrito.");
       }
     });
 
     return () => {
-      activo = false;
+      montado.current = false;
     };
   }, [inicializarCarrito]);
 
@@ -117,16 +143,71 @@ export function Checkout() {
     setDatos((actuales) => ({ ...actuales, [campo]: valor }));
   }
 
+  function cambiarPaso(siguiente: number) {
+    setErrorPaso("");
+    setPaso(siguiente);
+    requestAnimationFrame(() => inicioPasos.current?.focus());
+  }
+
+  function avanzarPaso() {
+    if (paso === 0 && !validarCampos(datosPanel.current)) return;
+    if (paso === 1) {
+      if (!tipoEntrega) {
+        setErrorPaso("Selecciona cómo quieres recibir tu pedido.");
+        return;
+      }
+      if (!validarCampos(entregaPanel.current)) return;
+    }
+    cambiarPaso(paso + 1);
+  }
+
+  async function enviarCupon(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (cuponEnCurso.current || usePedidosStore.getState().estado === "submitting" || compraPendiente || cargandoCarrito || !productos.length) return;
+    const codigo = cupon.trim().toUpperCase();
+    if (!codigo) {
+      setErrorCupon("Ingresa un código promocional.");
+      return;
+    }
+    cuponEnCurso.current = true;
+    setAplicandoCupon(true);
+    setErrorCupon(null);
+    try {
+      await aplicarCupon(codigo);
+      setCupon("");
+    } catch (cause) {
+      setErrorCupon(cause instanceof Error ? cause.message : "No se pudo aplicar el cupón.");
+    } finally {
+      cuponEnCurso.current = false;
+      setAplicandoCupon(false);
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
+    const movil = window.matchMedia(consultaPasosMoviles).matches;
+    if (movil && paso < 2) {
+      avanzarPaso();
+      return;
+    }
 
-    if (envioEnCurso.current || enviando) return;
+    setError(null);
+    if (enviando || compraPendiente || cuponEnCurso.current) return;
+    const primerCampoInvalido = event.currentTarget.querySelector<HTMLInputElement | HTMLSelectElement>("input:invalid, select:invalid");
+    if (primerCampoInvalido) {
+      if (movil) {
+        cambiarPaso(datosPanel.current?.contains(primerCampoInvalido) ? 0 : 1);
+        requestAnimationFrame(() => primerCampoInvalido.reportValidity());
+      } else {
+        primerCampoInvalido.reportValidity();
+      }
+      return;
+    }
     if (cargandoCarrito) {
       setError("Espera a que cargue el carrito antes de finalizar la compra.");
       return;
     }
-    if (productos.length === 0) {
+    if (!carritoId || productos.length === 0) {
       setError("No puedes crear un pedido con el carrito vacío.");
       return;
     }
@@ -150,149 +231,113 @@ export function Checkout() {
       return;
     }
 
-    const datosPedido: CreatePedidoDto = {
-      nombre: datos.nombre.trim(),
-      apellidos: datos.apellidos.trim(),
-      correoElectronico: datos.correoElectronico.trim(),
-      telefono: datos.telefono.trim(),
+    const comprador = {
+      nombre: datos.nombre,
+      apellidos: datos.apellidos,
+      correoElectronico: datos.correoElectronico,
+      telefono: datos.telefono,
       tipoComprobante: datos.tipoComprobante,
-      rutDocumento: datos.rutDocumento.trim(),
-      tipoEntrega,
+      rutDocumento: datos.rutDocumento,
       metodoPago,
       aceptaTerminos,
-      usuarioId: USUARIO_ID_CARRITO,
-      ...(tipoEntrega === "EnvioNormal" && {
-        region: datos.region.trim(),
-        comuna: datos.comuna.trim(),
-        direccion: datos.direccion.trim(),
-        ...(datos.departamentoOficina.trim() && {
-          departamentoOficina: datos.departamentoOficina.trim(),
-        }),
-        ...(datos.referencia.trim() && { referencia: datos.referencia.trim() }),
-      }),
-      ...(tipoEntrega === "RetiroEnTienda" && {
-        sucursalRetiro: datos.sucursalRetiro.trim(),
-      }),
     };
+    const datosPedido: CreatePedidoDto = tipoEntrega === "EnvioNormal"
+      ? {
+        ...comprador,
+        tipoEntrega,
+        region: datos.region,
+        comuna: datos.comuna,
+        direccion: datos.direccion,
+        departamentoOficina: datos.departamentoOficina.trim() || undefined,
+        referencia: datos.referencia.trim() || undefined,
+      }
+      : { ...comprador, tipoEntrega, sucursalRetiro: datos.sucursalRetiro };
 
-    // El ref bloquea dobles clics antes de que React alcance a renderizar el estado de carga.
-    envioEnCurso.current = true;
-    setEnviando(true);
     try {
-      const pedido = await crearPedido(datosPedido);
-      // La consulta de confirmación recibe el ID únicamente tras una creación exitosa.
-      navigate(`/carrito-compras/confirmacion-pedido/${encodeURIComponent(pedido.id)}`);
+      const pedido = await enviarPedido(carritoId, datosPedido);
+      if (montado.current) {
+        navigate(`/carrito-compras/confirmacion-pedido/${encodeURIComponent(pedido.id)}`);
+      }
     } catch (cause) {
-      console.error("No se pudo crear el pedido.", cause);
-      setError(cause instanceof Error ? cause.message : "No se pudo crear el pedido.");
-    } finally {
-      envioEnCurso.current = false;
-      setEnviando(false);
+      if (montado.current) {
+        setError(cause instanceof Error ? cause.message : "No se pudo crear el pedido.");
+      }
     }
   }
 
   return (
     <section className="checkout-page">
-      <form onSubmit={handleSubmit} className="checkout-page__container checkout-container">
-        <div className="datos-envio-div">
-          <div className="titulo-icono">
+      {!enviando && !error && carritoPendiente && (compraPendiente || productos.length === 0) && (
+        <p className="checkout-page__error" role="alert">{mensajePedidoPendiente}</p>
+      )}
+      <form id={formularioCupon} onSubmit={enviarCupon} />
+      <form noValidate onSubmit={handleSubmit} className="checkout-page__container" data-paso={paso}>
+        <div className="checkout-page__progreso" ref={inicioPasos} tabIndex={-1}>
+          <UIButton
+            variant="tertiary"
+            size="M"
+            iconLeft={<IconChevronLeft color="currentColor" />}
+            onClick={() => paso > 0 ? cambiarPaso(paso - 1) : navigate("/carrito-compras")}
+          >
+            Volver
+          </UIButton>
+          <UIStepper steps={pasos} current={paso} color="orange" size="sm" onStepClick={cambiarPaso} ariaLabel="Pasos de compra" />
+        </div>
+        <div className="checkout-page__datos" ref={datosPanel}>
+          <div className="checkout-page__titulo">
             <IconUser color="var(--primario-70-color)" size={24} aria-hidden="true" />
             <h1>Datos para el despacho</h1>
           </div>
-          <div id="datos-envio">
-            <div className="form-row">
-              <label className="checkout-field">
-                <span>Nombre<span className="checkout-field__required">*</span></span>
-                <input
-                  type="text"
-                  name="nombre"
-                  placeholder="Nombre"
-                  autoComplete="given-name"
-                  value={datos.nombre}
-                  onChange={(event) => actualizarDato("nombre", event.target.value)}
-                  required
-                />
-              </label>
-              <label className="checkout-field">
-                <span>Apellido<span className="checkout-field__required">*</span></span>
-                <input
-                  type="text"
-                  name="apellidos"
-                  placeholder="Apellido"
-                  autoComplete="family-name"
-                  value={datos.apellidos}
-                  onChange={(event) => actualizarDato("apellidos", event.target.value)}
-                  required
-                />
-              </label>
+          <div className="checkout-page__campos-datos">
+            <div className="checkout-page__fila-nombre">
+              <UIInput label="Nombre" name="nombre" autoComplete="given-name" value={datos.nombre}
+                onChange={(valor) => actualizarDato("nombre", valor)} required />
+              <UIInput label="Apellido" name="apellidos" autoComplete="family-name" value={datos.apellidos}
+                onChange={(valor) => actualizarDato("apellidos", valor)} required />
             </div>
-
-            <div className="form-row">
-              <label className="checkout-field">
-                <span>E-Mail<span className="checkout-field__required">*</span></span>
-                <input
-                  type="email"
-                  inputMode="email"
-                  name="correoElectronico"
-                  placeholder="nombre.apellido@ejemplo.com"
-                  autoComplete="email"
-                  pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
-                  title="Ingresa un correo válido, por ejemplo nombre@dominio.com"
-                  value={datos.correoElectronico}
-                  onChange={(event) => actualizarDato("correoElectronico", event.target.value)}
-                  required
-                />
-              </label>
-              <label className="checkout-field">
-                <span>Teléfono<span className="checkout-field__required">*</span></span>
-                <input
-                  type="tel"
-                  name="telefono"
-                  placeholder="+56 9 XXXX XXXX"
-                  autoComplete="tel"
-                  value={datos.telefono}
-                  onChange={(event) => actualizarDato("telefono", event.target.value)}
-                  required
-                />
-              </label>
-            </div>
-
-            <label className="checkout-field" htmlFor="tipo-comprobante">
-              <span>Boleta o Factura<span className="checkout-field__required">*</span></span>
-              <select
-                id="tipo-comprobante"
-                value={datos.tipoComprobante}
-                onChange={(event) => actualizarDato("tipoComprobante", event.target.value)}
+            <label className="checkout-page__campo">
+              <span>E-Mail<span className="checkout-page__requerido">*</span></span>
+              <input
+                type="email"
+                inputMode="email"
+                name="correoElectronico"
+                placeholder="nombre.apellido@ejemplo.com"
+                autoComplete="email"
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Ingresa un correo válido, por ejemplo nombre@dominio.com"
+                value={datos.correoElectronico}
+                onChange={(event) => actualizarDato("correoElectronico", event.target.value)}
                 required
-              >
+              />
+            </label>
+            <label className="checkout-page__campo" htmlFor="tipo-comprobante">
+              <span>Boleta o Factura<span className="checkout-page__requerido">*</span></span>
+              <select id="tipo-comprobante" value={datos.tipoComprobante}
+                onChange={(event) => actualizarDato("tipoComprobante", event.target.value)} required>
                 <option value="" disabled>¿Boleta o factura?</option>
                 <option value="Boleta">Boleta</option>
                 <option value="Factura">Factura</option>
               </select>
             </label>
-
-            <label className="checkout-field">
-              <span>RUT o Nro. de documento</span>
-              <input
-                type="text"
-                name="rutDocumento"
-                placeholder="12.345.678-9"
-                value={datos.rutDocumento}
-                onChange={(event) => actualizarDato("rutDocumento", event.target.value)}
-                required
-              />
-            </label>
+            <UIInput label="Teléfono" type="tel" name="telefono" autoComplete="tel" inputMode="tel"
+              value={datos.telefono} onChange={(valor) => actualizarDato("telefono", valor)} required />
+            <UIInput label="RUT o Nro. de documento" name="rutDocumento" value={datos.rutDocumento}
+              onChange={(valor) => actualizarDato("rutDocumento", valor)} required />
           </div>
         </div>
 
-        <div className="metodo-envio-div">
+        <div className="checkout-page__entrega" ref={entregaPanel}>
           <UIFormSelection
             type="shipping"
+            titleIcon={<IconTruck color="currentColor" aria-hidden="true" />}
             size="M"
             name="tipoEntrega"
             title="¿Recibes o retiras tu pedido?"
             value={tipoEntrega}
-            onChange={(value) => setTipoEntrega(value as TipoEntrega)}
+            onChange={(value) => {
+              setTipoEntrega(value as TipoEntrega);
+              setErrorPaso("");
+            }}
             options={[
               { value: "EnvioNormal", label: "Envío normal", price: "$3.990" },
               { value: "RetiroEnTienda", label: "Retiro en tienda", price: "Gratis" },
@@ -300,13 +345,13 @@ export function Checkout() {
           />
 
           {tipoEntrega === "EnvioNormal" && (
-            <div id="datos-envio" className="checkout-entrega">
+            <div className="checkout-page__detalle-entrega">
               <h2>Dirección de entrega</h2>
-              <div className="checkout-entrega__domicilio">
+              <div className="checkout-page__domicilio">
                 <IconLocation color="var(--primario-90-color)" size={24} aria-hidden="true" />
-                <div className="checkout-entrega__campos">
-                  <label className="checkout-field">
-                    <span>Región<span className="checkout-field__required">*</span></span>
+                <div className="checkout-page__campos-entrega">
+                  <label className="checkout-page__campo">
+                    <span>Región<span className="checkout-page__requerido">*</span></span>
                     <input
                       type="text"
                       name="region"
@@ -316,8 +361,8 @@ export function Checkout() {
                       required
                     />
                   </label>
-                  <label className="checkout-field">
-                    <span>Comuna<span className="checkout-field__required">*</span></span>
+                  <label className="checkout-page__campo">
+                    <span>Comuna<span className="checkout-page__requerido">*</span></span>
                     <input
                       type="text"
                       name="comuna"
@@ -327,8 +372,8 @@ export function Checkout() {
                       required
                     />
                   </label>
-                  <label className="checkout-field checkout-entrega__direccion">
-                    <span>Dirección, calle y número<span className="checkout-field__required">*</span></span>
+                  <label className="checkout-page__campo checkout-page__direccion">
+                    <span>Dirección, calle y número<span className="checkout-page__requerido">*</span></span>
                     <input
                       type="text"
                       name="direccion"
@@ -339,7 +384,7 @@ export function Checkout() {
                       required
                     />
                   </label>
-                  <label className="checkout-field">
+                  <label className="checkout-page__campo">
                     <span>Departamento u oficina (opcional)</span>
                     <input
                       type="text"
@@ -349,7 +394,7 @@ export function Checkout() {
                       onChange={(event) => actualizarDato("departamentoOficina", event.target.value)}
                     />
                   </label>
-                  <label className="checkout-field">
+                  <label className="checkout-page__campo">
                     <span>Referencia para el repartidor (opcional)</span>
                     <input
                       type="text"
@@ -365,17 +410,17 @@ export function Checkout() {
           )}
 
           {tipoEntrega === "RetiroEnTienda" && (
-            <div className="checkout-sucursal">
+            <div className="checkout-page__detalle-sucursal">
               <h2>Sucursal de retiro</h2>
-              <div className="checkout-sucursal__card">
+              <div className="checkout-page__tarjeta-sucursal">
                 <IconLocation color="var(--primario-70-color)" size={24} aria-hidden="true" />
                 <div>
                   <strong>Av. Providencia 2556</strong>
                   <p>Horarios: Lunes a Viernes 10:00–20:00 · Sábado, Domingo y Feriados 10:00–18:00</p>
                 </div>
               </div>
-              <label className="checkout-field">
-                <span>Sucursal de retiro<span className="checkout-field__required">*</span></span>
+              <label className="checkout-page__campo">
+                <span>Sucursal de retiro<span className="checkout-page__requerido">*</span></span>
                 <input
                   type="text"
                   name="sucursalRetiro"
@@ -389,9 +434,10 @@ export function Checkout() {
           )}
         </div>
 
-        <div className="metodo-pago-div">
+        <div className="checkout-page__pago">
           <UIFormSelection
             type="payment"
+            titleIcon={<IconPayment color="currentColor" aria-hidden="true" />}
             size="M"
             name="metodoPago"
             title="¿Cómo vas a pagar?"
@@ -405,8 +451,8 @@ export function Checkout() {
           />
         </div>
 
-        <div className="resumen-pedido-div">
-          <div className="titulo-icono">
+        <div className="checkout-page__resumen">
+          <div className="checkout-page__titulo">
             <IconDocument color="var(--primario-90-color)" size={24} aria-hidden="true" />
             <h2>Resumen del pedido</h2>
           </div>
@@ -415,17 +461,17 @@ export function Checkout() {
           {!cargandoCarrito && productos.length === 0 && (
             <p>El carrito está vacío.</p>
           )}
-          <div className="productos-resumen-pedido">
+          <div className="checkout-page__productos">
             {productos.map((producto) => (
-              <article key={producto.productoId} className="producto-resumen-pedido">
-                <div className="info-producto">
+              <article key={producto.productoId} className="checkout-page__producto">
+                <div className="checkout-page__info-producto">
                   <ImagenProductoResumen src={producto.imagen} nombre={producto.nombre} />
                   <div>
-                    <p className="nombre-producto-resumen">{producto.nombre}</p>
+                    <p className="checkout-page__nombre">{producto.nombre}</p>
                     <p>Cantidad: {producto.cantidad}</p>
                   </div>
                 </div>
-                <p className="precio-producto-resumen">
+                <p className="checkout-page__precio">
                   {formatoCLP(producto.precioUnitario)} c/u
                   <br />
                   Subtotal: {formatoCLP(producto.subtotal)}
@@ -434,29 +480,46 @@ export function Checkout() {
             ))}
           </div>
 
-          <div className="subtotal-total-resumen-div">
-            <div className="subtotal-div">
+          {productos.length > 0 && (
+            <div className="checkout-page__cupon">
+              <CouponBox
+                title="Cupón de descuento o Gift card"
+                value={cupon}
+                error={errorCupon}
+                isLoading={aplicandoCupon}
+                formId={formularioCupon}
+                onChange={(valor) => {
+                  setCupon(valor);
+                  setErrorCupon(null);
+                }}
+              />
+              {cuponAplicado && <p role="status">Cupón aplicado: {cuponAplicado}</p>}
+            </div>
+          )}
+
+          <div className="checkout-page__montos">
+            <div className="checkout-page__subtotal">
               <p>Subtotal:</p>
               <p>{formatoCLP(subtotal)}</p>
             </div>
             {descuento > 0 && (
-              <div className="subtotal-div">
+              <div className="checkout-page__subtotal">
                 <p>Descuento aplicado:</p>
                 <p>-{formatoCLP(descuento)}</p>
               </div>
             )}
-            <div className="subtotal-div">
+            <div className="checkout-page__subtotal">
               <p>Envío:</p>
               <p>Calculado al crear el pedido</p>
             </div>
-            <div className="total-div">
+            <div className="checkout-page__total">
               <p>Total del carrito (sin envío):</p>
               <span>{formatoCLP(totalCarrito)}</span>
             </div>
           </div>
 
-          <div id="finalizar-compra">
-            <div className="check-termino">
+          <div className="checkout-page__finalizar">
+            <div className="checkout-page__terminos">
               <UICheckbox
                 name="aceptaTerminos"
                 id="terminos-condiciones"
@@ -467,7 +530,7 @@ export function Checkout() {
             </div>
 
             {(error || errorCarrito) && (
-              <p className="error-checkout" role="alert">{error ?? errorCarrito}</p>
+              <p className="checkout-page__error" role="alert">{error ?? errorCarrito}</p>
             )}
 
             <UIButton
@@ -475,12 +538,18 @@ export function Checkout() {
               variant="primary"
               size="L"
               className="checkout-page__submit"
-              disabled={cargandoCarrito || enviando || productos.length === 0}
+              disabled={cargandoCarrito || enviando || compraPendiente || aplicandoCupon || productos.length === 0}
             >
               {enviando ? "Creando pedido..." : "Finalizar compra"}
             </UIButton>
           </div>
         </div>
+        {paso < 2 && (
+          <div className="checkout-page__avance">
+            {errorPaso && <p className="checkout-page__error" role="alert">{errorPaso}</p>}
+            <UIButton onClick={avanzarPaso}>{paso === 0 ? "Ir a entrega" : "Ir a pago"}</UIButton>
+          </div>
+        )}
       </form>
     </section>
   );

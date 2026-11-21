@@ -1,115 +1,84 @@
-import { obtenerApiBaseUrl } from "./apiClient";
+import { z } from "zod";
+import {
+  crearPedidoSchema,
+  idPedidoSchema,
+  pedidoSchema,
+  referenciaPedidoSchema,
+  seguimientoPedidoSchema,
+  type CreatePedidoDto,
+} from "../schemas/pedidos";
+import { apiFetch, ApiError } from "./apiClient";
 
-const PEDIDOS_API_PATH = "/catalogo/pedidos";
+export type { CreatePedidoDto, PedidoCreado, SeguimientoPedido } from "../schemas/pedidos";
 
-export type CreatePedidoDto = {
-  nombre: string;
-  apellidos: string;
-  correoElectronico: string;
-  telefono: string;
-  tipoComprobante: "Boleta" | "Factura";
-  rutDocumento: string;
-  tipoEntrega: "EnvioNormal" | "RetiroEnTienda";
-  metodoPago: "MercadoPago" | "Tarjeta" | "WebpayPlus";
-  aceptaTerminos: boolean;
-  usuarioId: string;
-  direccionId?: string;
-  region?: string;
-  comuna?: string;
-  direccion?: string;
-  departamentoOficina?: string;
-  referencia?: string;
-  sucursalRetiro?: string;
-};
+const rutaPedidos = "/catalogo/pedidos";
+const respuestaCreacionSchema = z.union([pedidoSchema, referenciaPedidoSchema]);
 
-type ItemPedidoCreado = {
-  productoId: string;
-  nombre: string;
-  imagen: string;
-  cantidad: number;
-  precioUnitario: number;
-  subtotal: number;
-};
-
-export type PedidoCreado = {
-  id: string;
-  nombreCliente: string;
-  correoElectronico?: string;
-  telefono?: string;
-  modoEntrega?: string;
-  tiempoEstimadoEntrega?: string;
-  direccionEntrega?: string;
-  sucursalRetiro?: string;
-  items: ItemPedidoCreado[];
-  subtotal: number;
-  costoEnvio: number;
-  descuento: number;
-  total: number;
-  estadoPedido: string;
-  fechaCreacion: string;
-};
-
-function esItemPedido(value: unknown): value is ItemPedidoCreado {
-  return typeof value === "object" && value !== null
-    && "productoId" in value && typeof value.productoId === "string"
-    && "nombre" in value && typeof value.nombre === "string"
-    && "imagen" in value && typeof value.imagen === "string"
-    && "cantidad" in value && typeof value.cantidad === "number"
-    && "precioUnitario" in value && typeof value.precioUnitario === "number"
-    && "subtotal" in value && typeof value.subtotal === "number";
+export class DetallePedidoPendienteError extends ApiError {
+  constructor(pedidoId: string) {
+    super(`El servidor devolvió el número de pedido ${pedidoId}, pero no pudimos cargar el detalle. Consulta la confirmación sin volver a realizar la compra.`);
+  }
 }
 
-function esPedidoCreado(value: unknown): value is PedidoCreado {
-  return typeof value === "object" && value !== null
-    && "id" in value && typeof value.id === "string"
-    && "nombreCliente" in value && typeof value.nombreCliente === "string"
-    && "items" in value && Array.isArray(value.items) && value.items.every(esItemPedido)
-    && "subtotal" in value && typeof value.subtotal === "number"
-    && "costoEnvio" in value && typeof value.costoEnvio === "number"
-    && "descuento" in value && typeof value.descuento === "number"
-    && "total" in value && typeof value.total === "number"
-    && "estadoPedido" in value && typeof value.estadoPedido === "string"
-    && "fechaCreacion" in value && typeof value.fechaCreacion === "string";
+function codificarId(id: string): string {
+  const resultado = idPedidoSchema.safeParse(id);
+  if (!resultado.success) {
+    throw new ApiError("Falta un identificador válido.", 400);
+  }
+  return encodeURIComponent(resultado.data);
 }
 
-export async function crearPedido(datos: CreatePedidoDto): Promise<PedidoCreado> {
-  const response = await fetch(`${obtenerApiBaseUrl()}${PEDIDOS_API_PATH}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(datos),
-  });
-
-  if (!response.ok) {
-    const detalle = await response.text();
-    throw new Error(
-      `No se pudo crear el pedido (${response.status})${detalle ? `: ${detalle}` : "."}`,
-    );
+export async function crearPedido(carritoId: string, datos: CreatePedidoDto) {
+  const id = codificarId(carritoId);
+  const resultado = crearPedidoSchema.safeParse(datos);
+  if (!resultado.success) {
+    throw new ApiError("Revisa los datos obligatorios de contacto, entrega y pago.", 400);
   }
 
-  const data: unknown = await response.json();
-  if (!esPedidoCreado(data)) {
-    throw new Error("La respuesta de creación del pedido tiene un formato inválido.");
+  let respuesta: z.infer<typeof respuestaCreacionSchema>;
+  try {
+    respuesta = await apiFetch(`/carritos/${id}/pedido`, respuestaCreacionSchema, {
+      method: "POST",
+      body: JSON.stringify(resultado.data),
+    });
+  } catch (error) {
+    if (!(error instanceof ApiError)) throw error;
+
+    switch (error.status) {
+      case 400:
+        throw new ApiError("Revisa los datos del pedido y verifica que el carrito tenga productos.", 400);
+      case 404:
+        throw new ApiError("El carrito ya no está disponible. Puede haber expirado o haberse usado para una compra. Revisa si recibiste una confirmación antes de volver a comprar.", 404);
+      case 409:
+        throw new ApiError("El stock cambió. Revisa las cantidades en el carrito antes de volver a intentar.", 409);
+      default:
+        throw error;
+    }
   }
-  return data;
+
+  if ("items" in respuesta) return respuesta;
+
+  // Con el número de orden podemos recuperar el detalle sin repetir el POST.
+  try {
+    const pedido = await obtenerPedido(respuesta.id);
+    if (pedido.id !== respuesta.id) throw new Error("El identificador del pedido no coincide.");
+    return pedido;
+  } catch {
+    throw new DetallePedidoPendienteError(respuesta.id);
+  }
 }
 
-export async function obtenerPedido(id: string, signal?: AbortSignal): Promise<PedidoCreado> {
-  const response = await fetch(
-    `${obtenerApiBaseUrl()}${PEDIDOS_API_PATH}/${encodeURIComponent(id)}`,
-    { signal },
-  );
-  if (!response.ok) {
-    const detalle = await response.text();
-    throw new Error(
-      `No se pudo consultar el pedido (${response.status})${detalle ? `: ${detalle}` : "."}`,
-    );
+export async function obtenerPedido(id: string, signal?: AbortSignal) {
+  try {
+    return await apiFetch(`${rutaPedidos}/${codificarId(id)}`, pedidoSchema, { signal });
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      throw new ApiError("No se encontró el pedido solicitado.", 404);
+    }
+    throw error;
   }
+}
 
-  const data: unknown = await response.json();
-  if (!esPedidoCreado(data)) {
-    throw new Error("La respuesta del pedido tiene un formato inválido.");
-  }
-  return data;
+export async function obtenerSeguimientoPedido(id: string, signal?: AbortSignal) {
+  return apiFetch(`${rutaPedidos}/${codificarId(id)}/seguimiento`, seguimientoPedidoSchema, { signal });
 }
