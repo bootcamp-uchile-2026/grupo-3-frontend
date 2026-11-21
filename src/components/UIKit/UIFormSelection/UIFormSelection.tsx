@@ -1,5 +1,5 @@
 
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 
 // Tipos de selección disponibles
 export type FormSelectionType = "shipping" | "payment" | "vet";
@@ -23,6 +23,7 @@ export type UIFormSelectionProps = {
   value: string;
   onChange: (value: string) => void;
   title?: string;
+  titleIcon?: ReactNode;
   name?: string;
   disabled?: boolean;
   size?: FormSelectionSize;
@@ -34,6 +35,7 @@ export function UIFormSelection({
   value,
   onChange,
   title,
+  titleIcon,
   name,
   disabled = false,
   size = "S",
@@ -61,7 +63,7 @@ export function UIFormSelection({
       {type !== "vet" && (
         <legend className="ui-form-selection__title">
           <span aria-hidden="true">
-            {type === "shipping" ? "♧ " : "▭ "}
+            {titleIcon ?? (type === "shipping" ? "♧ " : "▭ ")}
           </span>
           {heading}
         </legend>
