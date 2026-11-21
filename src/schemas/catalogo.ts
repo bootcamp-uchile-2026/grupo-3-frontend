@@ -66,6 +66,8 @@ export const productoDetalleViewSchema = z.object({
   subcategoria: z.string(),
   especie: z.string(),
   sku: z.string().optional(),
+  stock: montoSchema.optional(),
+  calificacionPromedio: productoApiSchema.shape.calificacionPromedio.optional(),
   fichaTecnica: z.string().optional(),
   modoDeUso: z.string().optional(),
   fichaTecnicaDetalle: z.record(z.string(), z.string()).optional(),
@@ -78,6 +80,7 @@ export const productoRelacionadoViewSchema = z.object({
   precioOriginal: montoSchema.optional(),
   imagenes: z.array(z.string()).optional(),
   categoria: z.string(),
+  calificacionPromedio: productoApiSchema.shape.calificacionPromedio.optional(),
 });
 
 export const categoriasCatalogoSchema = z.array(

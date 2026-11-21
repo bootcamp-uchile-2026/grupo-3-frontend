@@ -24,6 +24,7 @@ export interface FoodTechnicalSheetData {
 export type UITechnicalSheetProps =
     | { variant: "common"; data: CommonTechnicalSheetData }
     | { variant: "food"; data: FoodTechnicalSheetData }
+    | { variant: "custom"; data: Record<string, string> }
 
 type TechnicalSheetField = {
     label: string
@@ -68,7 +69,7 @@ export function UITechnicalSheet(props: UITechnicalSheetProps) {
                     : undefined,
             },
         ]
-    } else {
+    } else if (props.variant === "food") {
         fields = [
             { label: "Especie", value: props.data.especie },
             { label: "Etapa de vida", value: props.data.etapaVida },
@@ -79,6 +80,8 @@ export function UITechnicalSheet(props: UITechnicalSheetProps) {
             { label: "Conservantes", value: props.data.conservantes },
             { label: "Información nutricional", value: props.data.informacionNutricional },
         ]
+    } else {
+        fields = Object.entries(props.data).map(([label, value]) => ({ label, value }));
     }
 
     return (
