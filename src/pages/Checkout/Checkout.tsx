@@ -11,6 +11,14 @@ import {
 } from "../../store/carritoStore";
 import { USUARIO_ID_CARRITO } from "../../services/carrito";
 import { crearPedido, type CreatePedidoDto } from "../../services/pedidos";
+import { UIFormSelection } from "../../components/UIKit/UIFormSelection/UIFormSelection";
+import { UICheckbox } from "../../components/UIKit/UICheckbox/UICheckbox";
+import UIButton from "../../components/UIKit/UIButton/UIButton";
+import {
+  IconDocument,
+  IconLocation,
+  IconUser,
+} from "../../components/UIKit/UIIcons";
 
 type TipoComprobante = "Boleta" | "Factura";
 type TipoEntrega = "EnvioNormal" | "RetiroEnTienda";
@@ -33,6 +41,31 @@ type DatosCheckout = {
 
 const formatoCLP = (monto: number): string =>
   `$${new Intl.NumberFormat("es-CL", { maximumFractionDigits: 0 }).format(monto)}`;
+
+function ImagenProductoResumen({ src, nombre }: { src: string; nombre: string }) {
+  const [urlFallida, setUrlFallida] = useState<string | null>(null);
+
+  if (!src || urlFallida === src) {
+    return (
+      <div
+        className="imagen-producto-resumen imagen-producto-resumen--fallback"
+        role="img"
+        aria-label={`Imagen no disponible para ${nombre}`}
+      >
+        Imagen no disponible
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={nombre}
+      className="imagen-producto-resumen"
+      onError={() => setUrlFallida(src)}
+    />
+  );
+}
 
 export function Checkout() {
   const navigate = useNavigate();
@@ -159,196 +192,222 @@ export function Checkout() {
   }
 
   return (
-    <section>
-      <form onSubmit={handleSubmit} className="container checkout-container">
+    <section className="checkout-page">
+      <form onSubmit={handleSubmit} className="checkout-page__container checkout-container">
         <div className="datos-envio-div">
           <div className="titulo-icono">
-            <h1>Datos de compra y entrega</h1>
+            <IconUser color="var(--primario-70-color)" size={24} aria-hidden="true" />
+            <h1>Datos para el despacho</h1>
           </div>
           <div id="datos-envio">
             <div className="form-row">
-              <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre*"
-                autoComplete="given-name"
-                value={datos.nombre}
-                onChange={(event) => actualizarDato("nombre", event.target.value)}
-                required
-              />
-              <input
-                type="text"
-                name="apellidos"
-                placeholder="Apellidos*"
-                autoComplete="family-name"
-                value={datos.apellidos}
-                onChange={(event) => actualizarDato("apellidos", event.target.value)}
-                required
-              />
+              <label className="checkout-field">
+                <span>Nombre<span className="checkout-field__required">*</span></span>
+                <input
+                  type="text"
+                  name="nombre"
+                  placeholder="Nombre"
+                  autoComplete="given-name"
+                  value={datos.nombre}
+                  onChange={(event) => actualizarDato("nombre", event.target.value)}
+                  required
+                />
+              </label>
+              <label className="checkout-field">
+                <span>Apellido<span className="checkout-field__required">*</span></span>
+                <input
+                  type="text"
+                  name="apellidos"
+                  placeholder="Apellido"
+                  autoComplete="family-name"
+                  value={datos.apellidos}
+                  onChange={(event) => actualizarDato("apellidos", event.target.value)}
+                  required
+                />
+              </label>
             </div>
 
             <div className="form-row">
-              <input
-                type="text"
-                inputMode="email"
-                name="correoElectronico"
-                placeholder="Correo electrónico*"
-                autoComplete="email"
-                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
-                title="Ingresa un correo válido, por ejemplo nombre@dominio.com"
-                value={datos.correoElectronico}
-                onChange={(event) => actualizarDato("correoElectronico", event.target.value)}
-                required
-              />
-              <input
-                type="tel"
-                name="telefono"
-                placeholder="Teléfono*"
-                autoComplete="tel"
-                value={datos.telefono}
-                onChange={(event) => actualizarDato("telefono", event.target.value)}
-                required
-              />
+              <label className="checkout-field">
+                <span>E-Mail<span className="checkout-field__required">*</span></span>
+                <input
+                  type="email"
+                  inputMode="email"
+                  name="correoElectronico"
+                  placeholder="nombre.apellido@ejemplo.com"
+                  autoComplete="email"
+                  pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                  title="Ingresa un correo válido, por ejemplo nombre@dominio.com"
+                  value={datos.correoElectronico}
+                  onChange={(event) => actualizarDato("correoElectronico", event.target.value)}
+                  required
+                />
+              </label>
+              <label className="checkout-field">
+                <span>Teléfono<span className="checkout-field__required">*</span></span>
+                <input
+                  type="tel"
+                  name="telefono"
+                  placeholder="+56 9 XXXX XXXX"
+                  autoComplete="tel"
+                  value={datos.telefono}
+                  onChange={(event) => actualizarDato("telefono", event.target.value)}
+                  required
+                />
+              </label>
             </div>
 
-            <label htmlFor="tipo-comprobante">Tipo de comprobante*</label>
-            <select
-              id="tipo-comprobante"
-              value={datos.tipoComprobante}
-              onChange={(event) => actualizarDato("tipoComprobante", event.target.value)}
-              required
-            >
-              <option value="" disabled>Selecciona un comprobante</option>
-              <option value="Boleta">Boleta</option>
-              <option value="Factura">Factura</option>
-            </select>
+            <label className="checkout-field" htmlFor="tipo-comprobante">
+              <span>Boleta o Factura<span className="checkout-field__required">*</span></span>
+              <select
+                id="tipo-comprobante"
+                value={datos.tipoComprobante}
+                onChange={(event) => actualizarDato("tipoComprobante", event.target.value)}
+                required
+              >
+                <option value="" disabled>¿Boleta o factura?</option>
+                <option value="Boleta">Boleta</option>
+                <option value="Factura">Factura</option>
+              </select>
+            </label>
 
-            <input
-              type="text"
-              name="rutDocumento"
-              placeholder="RUT o documento*"
-              value={datos.rutDocumento}
-              onChange={(event) => actualizarDato("rutDocumento", event.target.value)}
-              required
-            />
+            <label className="checkout-field">
+              <span>RUT o Nro. de documento</span>
+              <input
+                type="text"
+                name="rutDocumento"
+                placeholder="12.345.678-9"
+                value={datos.rutDocumento}
+                onChange={(event) => actualizarDato("rutDocumento", event.target.value)}
+                required
+              />
+            </label>
           </div>
         </div>
 
         <div className="metodo-envio-div">
-          <div className="titulo-icono">
-            <h2>Entrega o retiro</h2>
-          </div>
-          <div className="sel-metodos">
-            <label className="sel-metodo" htmlFor="envio-normal">
-              <span>Envío normal</span>
-              <input
-                id="envio-normal"
-                type="radio"
-                name="tipoEntrega"
-                value="EnvioNormal"
-                checked={tipoEntrega === "EnvioNormal"}
-                onChange={() => setTipoEntrega("EnvioNormal")}
-                required
-              />
-            </label>
-            <label className="sel-metodo" htmlFor="retiro-tienda">
-              <span>Retiro en tienda</span>
-              <input
-                id="retiro-tienda"
-                type="radio"
-                name="tipoEntrega"
-                value="RetiroEnTienda"
-                checked={tipoEntrega === "RetiroEnTienda"}
-                onChange={() => setTipoEntrega("RetiroEnTienda")}
-                required
-              />
-            </label>
-          </div>
+          <UIFormSelection
+            type="shipping"
+            size="M"
+            name="tipoEntrega"
+            title="¿Recibes o retiras tu pedido?"
+            value={tipoEntrega}
+            onChange={(value) => setTipoEntrega(value as TipoEntrega)}
+            options={[
+              { value: "EnvioNormal", label: "Envío normal", price: "$3.990" },
+              { value: "RetiroEnTienda", label: "Retiro en tienda", price: "Gratis" },
+            ]}
+          />
 
           {tipoEntrega === "EnvioNormal" && (
-            <div id="datos-envio">
-              <input
-                type="text"
-                name="region"
-                placeholder="Región*"
-                value={datos.region}
-                onChange={(event) => actualizarDato("region", event.target.value)}
-                required
-              />
-              <input
-                type="text"
-                name="comuna"
-                placeholder="Comuna*"
-                value={datos.comuna}
-                onChange={(event) => actualizarDato("comuna", event.target.value)}
-                required
-              />
-              <input
-                type="text"
-                name="direccion"
-                placeholder="Dirección, calle y número*"
-                autoComplete="street-address"
-                value={datos.direccion}
-                onChange={(event) => actualizarDato("direccion", event.target.value)}
-                required
-              />
-              <input
-                type="text"
-                name="departamentoOficina"
-                placeholder="Departamento u oficina (opcional)"
-                value={datos.departamentoOficina}
-                onChange={(event) => actualizarDato("departamentoOficina", event.target.value)}
-              />
-              <input
-                type="text"
-                name="referencia"
-                placeholder="Referencia para el repartidor (opcional)"
-                value={datos.referencia}
-                onChange={(event) => actualizarDato("referencia", event.target.value)}
-              />
+            <div id="datos-envio" className="checkout-entrega">
+              <h2>Dirección de entrega</h2>
+              <div className="checkout-entrega__domicilio">
+                <IconLocation color="var(--primario-90-color)" size={24} aria-hidden="true" />
+                <div className="checkout-entrega__campos">
+                  <label className="checkout-field">
+                    <span>Región<span className="checkout-field__required">*</span></span>
+                    <input
+                      type="text"
+                      name="region"
+                      placeholder="Región"
+                      value={datos.region}
+                      onChange={(event) => actualizarDato("region", event.target.value)}
+                      required
+                    />
+                  </label>
+                  <label className="checkout-field">
+                    <span>Comuna<span className="checkout-field__required">*</span></span>
+                    <input
+                      type="text"
+                      name="comuna"
+                      placeholder="Comuna"
+                      value={datos.comuna}
+                      onChange={(event) => actualizarDato("comuna", event.target.value)}
+                      required
+                    />
+                  </label>
+                  <label className="checkout-field checkout-entrega__direccion">
+                    <span>Dirección, calle y número<span className="checkout-field__required">*</span></span>
+                    <input
+                      type="text"
+                      name="direccion"
+                      placeholder="Dirección, calle y número"
+                      autoComplete="street-address"
+                      value={datos.direccion}
+                      onChange={(event) => actualizarDato("direccion", event.target.value)}
+                      required
+                    />
+                  </label>
+                  <label className="checkout-field">
+                    <span>Departamento u oficina (opcional)</span>
+                    <input
+                      type="text"
+                      name="departamentoOficina"
+                      placeholder="Departamento u oficina"
+                      value={datos.departamentoOficina}
+                      onChange={(event) => actualizarDato("departamentoOficina", event.target.value)}
+                    />
+                  </label>
+                  <label className="checkout-field">
+                    <span>Referencia para el repartidor (opcional)</span>
+                    <input
+                      type="text"
+                      name="referencia"
+                      placeholder="Referencia"
+                      value={datos.referencia}
+                      onChange={(event) => actualizarDato("referencia", event.target.value)}
+                    />
+                  </label>
+                </div>
+              </div>
             </div>
           )}
 
           {tipoEntrega === "RetiroEnTienda" && (
-            <input
-              type="text"
-              name="sucursalRetiro"
-              placeholder="Sucursal de retiro*"
-              value={datos.sucursalRetiro}
-              onChange={(event) => actualizarDato("sucursalRetiro", event.target.value)}
-              required
-            />
+            <div className="checkout-sucursal">
+              <h2>Sucursal de retiro</h2>
+              <div className="checkout-sucursal__card">
+                <IconLocation color="var(--primario-70-color)" size={24} aria-hidden="true" />
+                <div>
+                  <strong>Av. Providencia 2556</strong>
+                  <p>Horarios: Lunes a Viernes 10:00–20:00 · Sábado, Domingo y Feriados 10:00–18:00</p>
+                </div>
+              </div>
+              <label className="checkout-field">
+                <span>Sucursal de retiro<span className="checkout-field__required">*</span></span>
+                <input
+                  type="text"
+                  name="sucursalRetiro"
+                  placeholder="Sucursal de retiro"
+                  value={datos.sucursalRetiro}
+                  onChange={(event) => actualizarDato("sucursalRetiro", event.target.value)}
+                  required
+                />
+              </label>
+            </div>
           )}
         </div>
 
         <div className="metodo-pago-div">
-          <div className="titulo-icono">
-            <h2>Método de pago</h2>
-          </div>
-          <div id="metodo-pago" className="sel-metodos">
-            {([
-              ["MercadoPago", "Mercado Pago"],
-              ["Tarjeta", "Tarjeta crédito, débito y prepago"],
-              ["WebpayPlus", "Webpay Plus"],
-            ] as const).map(([value, label]) => (
-              <label className="sel-metodo" htmlFor={`pago-${value}`} key={value}>
-                <span>{label}</span>
-                <input
-                  id={`pago-${value}`}
-                  type="radio"
-                  name="metodoPago"
-                  value={value}
-                  checked={metodoPago === value}
-                  onChange={() => setMetodoPago(value)}
-                  required
-                />
-              </label>
-            ))}
-          </div>
+          <UIFormSelection
+            type="payment"
+            size="M"
+            name="metodoPago"
+            title="¿Cómo vas a pagar?"
+            value={metodoPago}
+            onChange={(value) => setMetodoPago(value as MetodoPago)}
+            options={[
+              { value: "MercadoPago", label: "Mercado Pago" },
+              { value: "Tarjeta", label: "Tarjeta de crédito, débito o prepago" },
+              { value: "WebpayPlus", label: "Webpay Plus" },
+            ]}
+          />
         </div>
 
         <div className="resumen-pedido-div">
           <div className="titulo-icono">
+            <IconDocument color="var(--primario-90-color)" size={24} aria-hidden="true" />
             <h2>Resumen del pedido</h2>
           </div>
 
@@ -360,9 +419,7 @@ export function Checkout() {
             {productos.map((producto) => (
               <article key={producto.productoId} className="producto-resumen-pedido">
                 <div className="info-producto">
-                  {producto.imagen && (
-                    <img src={producto.imagen} alt={producto.nombre} className="imagen-producto-resumen" />
-                  )}
+                  <ImagenProductoResumen src={producto.imagen} nombre={producto.nombre} />
                   <div>
                     <p className="nombre-producto-resumen">{producto.nombre}</p>
                     <p>Cantidad: {producto.cantidad}</p>
@@ -400,29 +457,28 @@ export function Checkout() {
 
           <div id="finalizar-compra">
             <div className="check-termino">
-              <input
-                type="checkbox"
+              <UICheckbox
                 name="aceptaTerminos"
                 id="terminos-condiciones"
                 checked={aceptaTerminos}
-                onChange={(event) => setAceptaTerminos(event.target.checked)}
-                required
+                onChange={setAceptaTerminos}
+                label="He leído y estoy de acuerdo con los términos y condiciones."
               />
-              <label htmlFor="terminos-condiciones">
-                He leído y estoy de acuerdo con los términos y condiciones.
-              </label>
             </div>
 
             {(error || errorCarrito) && (
               <p className="error-checkout" role="alert">{error ?? errorCarrito}</p>
             )}
 
-            <button
+            <UIButton
               type="submit"
+              variant="primary"
+              size="L"
+              className="checkout-page__submit"
               disabled={cargandoCarrito || enviando || productos.length === 0}
             >
               {enviando ? "Creando pedido..." : "Finalizar compra"}
-            </button>
+            </UIButton>
           </div>
         </div>
       </form>
